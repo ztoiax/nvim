@@ -1,0 +1,39 @@
+{
+  "adapters": {
+    "lldb-vscode": {
+      "variables": {
+        "LLVM": {
+          "shell": "brew --prefix llvm"
+        }
+      },
+      "attach": {
+        "pidProperty": "pid",
+        "pidSelect": "ask"
+      },
+      "command": [
+        "${LLVM}/bin/lldb-vscode"
+      ],
+      "env": {
+        "LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY": "YES"
+      },
+      "name": "lldb"
+    },
+    "vscode-cpptools": {
+      "attach": {
+        "pidProperty": "processId", 
+        "pidSelect": "ask"
+      }, 
+      "command": [
+        "${gadgetDir}/vscode-cpptools/debugAdapters/OpenDebugAD7"
+      ], 
+      "name": "cppdbg"
+    }, 
+    "vscode-python": {
+      "command": [
+        "node", 
+        "${gadgetDir}/vscode-python/out/client/debugger/debugAdapter/main.js"
+      ], 
+      "name": "vscode-python"
+    }
+  }
+}
