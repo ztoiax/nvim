@@ -127,6 +127,8 @@ imap <C-Q> <esc>:wq<CR>
 " noremap <C-l> <C-w>l
 noremap <Tab> :wincmd w <cr>
 noremap <Leader>sm :only <cr>
+noremap <Leader>s :vsplit <cr>
+noremap <Leader>sk :split <cr>
 noremap <Leader>sl :belowright vsplit <cr>
 noremap <Leader>sj :belo split <cr>
 noremap <Leader>sz :Goyo <cr>
@@ -149,7 +151,7 @@ norema  <space> `
 noremap q :q <CR>
 
 
-noremap  <Leader>t  :tabe<CR>
+noremap  <Leader>tt  :tabe<CR>
 "关闭高亮
 noremap  <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 "ag
@@ -157,15 +159,15 @@ noremap  <Leader>a  :Ag <CR>
 "change theme
 noremap  <Leader>fc :Colors<CR>
 "目录
-nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+" nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+" nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
 "git版本回溯
-nnoremap <Leader>m  :MundoToggle <CR>
+nnoremap <Leader>tm  :MundoToggle <CR>
 "align
 xmap     <Leader>ia <Plug>(EasyAlign)
 nmap     <Leader>ia <Plug>(EasyAlign)
 
-" vim-easymotion 
+" vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
 nmap <Leader>L  <Plug>(easymotion-overwin-line)
@@ -216,8 +218,10 @@ hi FloatermBorderNF guibg=#282828 guifg=#504945
 command! Ranger FloatermNew ranger
 command! Lazygit FloatermNew lazygit
 let g:floaterm_type = 'norrmal'
-autocmd FileType floaterm wincmd H
 " let g:floaterm_position = 'center'
+autocmd FileType floaterm wincmd H
+map <Leader>fr :Ranger<CR>
+map <Leader>tg :Lazygit<CR>
 
 "edgemotion
 map <space>j <Plug>(edgemotion-j)
@@ -232,8 +236,20 @@ function! OpenAnimatedHtop() abort
   " Animate height to 66%
   call animate#window_percent_height(0.66)
 endfunction
-
 command! Htop call OpenAnimatedHtop()
+
+function! OpenAnimatedGtop() abort
+  " Open a gtop in terminal
+  new term://gtop
+  " Send window to bottom and start with small height
+  wincmd J | resize 1
+  " Animate height to 66%
+  call animate#window_percent_height(0.86)
+endfunction
+command! Gtop call OpenAnimatedGtop()
+
+map <Leader>th :Htop<CR>
+map <Leader>tg :Gtop<CR>
 
 "neomake
 let g:neomake_open_list = 2
