@@ -28,6 +28,7 @@ Plug 'haya14busa/vim-edgemotion'   "函数快速移动
 Plug 'neomake/neomake'             "语法检查
 Plug 'jsfaint/gen_tags.vim'        "tags
 Plug 'guns/xterm-color-table.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " Plug 'farmergreg/vim-lastplace'    "恢复光标位置
 " Plug 'liuchengxu/vim-which-key'    "按键提示
 
@@ -71,7 +72,10 @@ source  ~/.config/nvim/config/vim-translate-me.vim
 source  ~/.config/nvim/config/indentLine.vim
 source  ~/.config/nvim/config/fzf.vim              "fzf & LeaderF
 source  ~/.config/nvim/config/vim-buffet.vim
+source  ~/.config/nvim/config/markdown-preview.vim
 
+"snippets
+source  ~/.config/nvim/snippets/md.vim
 set termguicolors          "enable true colors support
 set ignorecase             "不区分大小写
 set smartcase              "小写包含大写
@@ -127,10 +131,11 @@ imap <C-Q> <esc>:wq<CR>
 " noremap <C-l> <C-w>l
 noremap <Tab> :wincmd w <cr>
 noremap <Leader>sm :only <cr>
-noremap <Leader>s :vsplit <cr>
+noremap <Leader>sh :vsplit <cr>
 noremap <Leader>sk :split <cr>
 noremap <Leader>sl :belowright vsplit <cr>
 noremap <Leader>sj :belo split <cr>
+noremap <Leader>sq <C-w>c
 noremap <Leader>sz :Goyo <cr>
 
 " incert keymap like emacs
@@ -170,8 +175,8 @@ nmap     <Leader>ia <Plug>(EasyAlign)
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
-nmap <Leader>L  <Plug>(easymotion-overwin-line)
-nmap <Leader>F  <Plug>(easymotion-overwin-w)
+nmap <Leader>0  <Plug>(easymotion-overwin-line)
+nmap <Leader>fw  <Plug>(easymotion-overwin-w)
 "coc-git
 set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "coc-translate
@@ -238,18 +243,19 @@ function! OpenAnimatedHtop() abort
 endfunction
 command! Htop call OpenAnimatedHtop()
 
-function! OpenAnimatedGtop() abort
-  " Open a gtop in terminal
-  new term://gtop
+
+function! OpenAnimatedbashtop() abort
+  " Open a bashtop in terminal
+  new term://bashtop
   " Send window to bottom and start with small height
   wincmd J | resize 1
   " Animate height to 66%
   call animate#window_percent_height(0.86)
 endfunction
-command! Gtop call OpenAnimatedGtop()
+command! Bashtop call OpenAnimatedbashtop()
 
 map <Leader>th :Htop<CR>
-map <Leader>tg :Gtop<CR>
+map <Leader>tb :Bashtop<CR>
 
 "neomake
 let g:neomake_open_list = 2
