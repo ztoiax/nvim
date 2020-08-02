@@ -13,7 +13,7 @@ nmap <leader>0 <Plug>BuffetSwitch(10)
 noremap <Leader>x :Bw<CR>
 noremap <Leader><Tab>   :bn<CR>
 noremap <Leader><S-Tab> :bp<CR>
-noremap <Leader>t :tabnew new<CR>
+" noremap <Leader>t :tabnew<CR>
 let g:buffet_use_devicons = 1
 let g:buffet_show_index   = 1
 let g:buffet_always_show_tabline = 0

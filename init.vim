@@ -26,11 +26,14 @@ Plug 'luochen1990/rainbow'
 Plug 'puremourning/vimspector'     "debug
 Plug 'haya14busa/vim-edgemotion'   "函数快速移动
 Plug 'neomake/neomake'             "语法检查
+Plug 'sbdchd/neoformat'            "排版
 Plug 'jsfaint/gen_tags.vim'        "tags
 Plug 'guns/xterm-color-table.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'padde/jump.vim'              "autojump
+Plug 'simnalamburt/vim-mundo'      "undo tree
 " Plug 'farmergreg/vim-lastplace'    "恢复光标位置
-" Plug 'liuchengxu/vim-which-key'    "按键提示
+Plug 'liuchengxu/vim-which-key'    "按键提示
 
 Plug 'xolox/vim-session'           "打开时恢复分屏
 Plug 'xolox/vim-misc'
@@ -39,8 +42,6 @@ Plug 'xolox/vim-misc'
 Plug 'junegunn/gv.vim'             "git commit 浏览器
 Plug 'tpope/vim-fugitive'          "在 vim 里使用 git
 Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
-Plug 'simnalamburt/vim-mundo'
-Plug 'lambdalisue/gina.vim'
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -164,9 +165,11 @@ noremap  <Leader>a  :Ag <CR>
 "change theme
 noremap  <Leader>fc :Colors<CR>
 "目录
-" nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-" nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-"git版本回溯
+nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+"git浏览器
+nnoremap <Leader>tv  :GV <CR>
+"undo tree
 nnoremap <Leader>tm  :MundoToggle <CR>
 "align
 xmap     <Leader>ia <Plug>(EasyAlign)
@@ -222,9 +225,11 @@ hi FloatermNF guibg=#282828
 hi FloatermBorderNF guibg=#282828 guifg=#504945
 command! Ranger FloatermNew ranger
 command! Lazygit FloatermNew lazygit
-let g:floaterm_type = 'norrmal'
+let g:floaterm_height = 0.9
+let g:floaterm_width = 0.7
+" let g:floaterm_wintype = 'normal'
+" autocmd FileType floaterm wincmd H
 " let g:floaterm_position = 'center'
-autocmd FileType floaterm wincmd H
 map <Leader>fr :Ranger<CR>
 map <Leader>tg :Lazygit<CR>
 
@@ -261,6 +266,21 @@ map <Leader>tb :Bashtop<CR>
 let g:neomake_open_list = 2
 " call neomake#configure#automake('rw', 1000)
 call neomake#configure#automake('w')
+" 选择pylint作py检查
+let g:neomake_python_enabled_makers = ['pylint']
+
+" neoformat
+let g:neoformat_python_autopep8 = {
+            \ 'exe': 'autopep8',
+            \ 'args': ['-s 4', '-E'],
+            \ 'replace': 1,
+            \ 'stdin': 1,
+            \ 'env': ["DEBUG=1"],
+            \ 'valid_exit_codes': [0, 23],
+            \ 'no_append': 1,
+            \ }
+
+let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
 
 "highlight
 highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
@@ -268,3 +288,7 @@ match ExtraWhitespace /\s\+$/
 
 "tags
 let g:gen_tags#gtags_default_map = 1
+
+"vim-which-key
+nnoremap <silent> <leader> :WhichKey ','<CR>
+set timeoutlen=800
