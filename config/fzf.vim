@@ -25,7 +25,7 @@ noremap <F2> :LeaderfFunction<cr>
 " noremap <F2> :LeaderfFunction!<cr>
 
 " search visually selected text literally
-noremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", Leaderf#Rg#visual())<CR>
+xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", Leaderf#Rg#visual())<CR>
 noremap  go :<C-U>Leaderf! ag --recall<CR>
 
 let g:Lf_GtagsAutoGenerate = 0

@@ -4,7 +4,7 @@ Plug 'voldikss/vim-translate-me'  "翻译
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'          "启动界面
-Plug 'taigacute/spaceline.vim'     "spacemcas状态栏
+Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
 Plug 'morhetz/gruvbox'             "主题
 Plug 'ryanoasis/vim-devicons'      "图标
 Plug 'tpope/vim-surround'          "S("'
@@ -29,20 +29,20 @@ Plug 'sbdchd/neoformat'            "排版
 Plug 'jsfaint/gen_tags.vim'        "tags
 Plug 'guns/xterm-color-table.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'mzlogin/vim-markdown-toc'  "自动生成目录
+Plug 'mzlogin/vim-markdown-toc'    "自动生成目录
 Plug 'padde/jump.vim'              "autojump
 Plug 'simnalamburt/vim-mundo'      "undo tree
 " Plug 'farmergreg/vim-lastplace'    "恢复光标位置
 Plug 'liuchengxu/vim-which-key'    "按键提示
 Plug 'bagrat/vim-buffet'           "标签
-
+Plug 'rhysd/accelerated-jk'        "快速移动
+Plug 'psliwka/vim-smoothie'        "移动动画
 Plug 'xolox/vim-session'           "打开时恢复分屏
 Plug 'xolox/vim-misc'
 
 "git
 Plug 'junegunn/gv.vim'             "git commit 浏览器
 Plug 'tpope/vim-fugitive'          "在 vim 里使用 git
-" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -60,14 +60,13 @@ syntax on
 colorscheme gruvbox
 
 let g:mapleader = ","
-let $nvim  = "~/.config/nvim"
-let $share = "/mnt/C/Users/ztoia/Desktop/share"
 let g:python3_host_prog = "/usr/bin/python3"
 let g:python_host_prog  = "/usr/bin/python"
 
+let g:spaceline_seperate_style= 'slant-cons'
+let g:spaceline_colorscheme = 'space'
 "config
 source  ~/.config/nvim/defx/config.vim                 "defx
-source  ~/.config/nvim/defx/defx-git.vim
 source  ~/.config/nvim/coc/config.vim                 "coc
 source  ~/.config/nvim/config/keysound.vim
 source  ~/.config/nvim/config/vim-translate-me.vim
@@ -134,8 +133,8 @@ nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :noh
 
 noremap Y y$
 noremap E v$
-noremap j gj
-noremap k gk
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
 " tags
 " noremap <F5> :!ctags -R .
 noremap <Leader>k <C-i>
@@ -179,7 +178,7 @@ noremap  <space> `
 noremap Q q
 noremap q :q <CR>
 
-noremap  <Leader>tt  :tabe<CR>
+nnoremap <silent> <Leader>tt :Bw<CR>
 "关闭高亮
 noremap  <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 "ag
