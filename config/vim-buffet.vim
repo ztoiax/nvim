@@ -11,14 +11,16 @@ nmap <leader>9 <Plug>BuffetSwitch(9)
 nmap <leader>0 <Plug>BuffetSwitch(10)
 
 noremap <Leader>x :Bw<CR>
-noremap <Leader><Tab>   :bn<CR>
-noremap <Leader><S-Tab> :bp<CR>
+noremap <Leader>n :bn<CR>
+noremap <Leader>p :bp<CR>
 " noremap <Leader>t :tabnew<CR>
 let g:buffet_use_devicons = 1
-let g:buffet_show_index   = 1
+" let g:buffet_show_index   = 1
 let g:buffet_always_show_tabline = 0
-"colors
 let g:buffet_tab_icon = "\uf00a"
+" let g:buffet_left_trunc_icon = "\uf0a8"
+" let g:buffet_right_trunc_icon = "\uf0a9"
+"colors
 function! g:BuffetSetCustomColors()
     hi! BuffetCurrentBuffer cterm=NONE ctermbg=106 ctermfg=8 guibg=#b8bb26 guifg=#000000
     hi! BuffetTrunc cterm=bold ctermbg=66 ctermfg=8 guibg=#458588 guifg=#000000

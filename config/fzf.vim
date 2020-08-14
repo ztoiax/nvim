@@ -25,8 +25,8 @@ noremap <F2> :LeaderfFunction<cr>
 " noremap <F2> :LeaderfFunction!<cr>
 
 " search visually selected text literally
-xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", Leaderf#Rg#visual())<CR>
-noremap  go :<C-U>Leaderf! rg --recall<CR>
+noremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", Leaderf#Rg#visual())<CR>
+noremap  go :<C-U>Leaderf! ag --recall<CR>
 
 let g:Lf_GtagsAutoGenerate = 0
 let g:Lf_Gtagslabel = 'native-pygments'

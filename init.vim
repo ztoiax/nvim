@@ -1,10 +1,9 @@
 call plug#begin('~/.config/nvim/plugins')
-" Plug 'voldikss/vim-translate-me'  "翻译
+Plug 'voldikss/vim-translate-me'  "翻译
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'          "启动界面
-Plug 'bagrat/vim-buffet'           "标签
 Plug 'taigacute/spaceline.vim'     "spacemcas状态栏
 Plug 'morhetz/gruvbox'             "主题
 Plug 'ryanoasis/vim-devicons'      "图标
@@ -15,7 +14,7 @@ Plug 'itchyny/vim-cursorword'      "下划线
 Plug 'Yggdroot/indentLine'         "缩进线
 Plug 'tpope/vim-commentary'        "注释
 Plug 'junegunn/vim-easy-align'     "对齐
-Plug 'skywind3000/vim-keysound'    "打字机声音
+" Plug 'skywind3000/vim-keysound'    "打字机声音
 Plug 'junegunn/goyo.vim'           "沉浸阅读
 Plug 'easymotion/vim-easymotion'   "跳转
 Plug 'MattesGroeger/vim-bookmarks' "收藏跳转
@@ -30,10 +29,12 @@ Plug 'sbdchd/neoformat'            "排版
 Plug 'jsfaint/gen_tags.vim'        "tags
 Plug 'guns/xterm-color-table.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mzlogin/vim-markdown-toc'  "自动生成目录
 Plug 'padde/jump.vim'              "autojump
 Plug 'simnalamburt/vim-mundo'      "undo tree
 " Plug 'farmergreg/vim-lastplace'    "恢复光标位置
 Plug 'liuchengxu/vim-which-key'    "按键提示
+Plug 'bagrat/vim-buffet'           "标签
 
 Plug 'xolox/vim-session'           "打开时恢复分屏
 Plug 'xolox/vim-misc'
@@ -41,7 +42,7 @@ Plug 'xolox/vim-misc'
 "git
 Plug 'junegunn/gv.vim'             "git commit 浏览器
 Plug 'tpope/vim-fugitive'          "在 vim 里使用 git
-Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
+" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -74,12 +75,14 @@ source  ~/.config/nvim/config/indentLine.vim
 source  ~/.config/nvim/config/fzf.vim              "fzf & LeaderF
 source  ~/.config/nvim/config/vim-buffet.vim
 source  ~/.config/nvim/config/markdown-preview.vim
+" source  ~/.config/nvim/config/coc.vim
 
 "snippets
 source  ~/.config/nvim/snippets/md.vim
+
 set termguicolors          "enable true colors support
 set ignorecase             "不区分大小写
-set smartcase              "小写包含大写
+set smartcase              "搜大写时不显示小写
 set hidden                 "不需保存切换文件
 set number                 "显示行号
 set relativenumber         "相对行
@@ -94,7 +97,15 @@ set path+=**               "find 子目录
 set showcmd                "显示命令
 set mouse=a                "开启鼠标
 set list                   "开启空格字符
-set listchars+=trail:·     "空格显示为·
+set listchars=tab:»·,trail:· "空格显示为·
+set lazyredraw             "不要在宏和脚本执行期间更新屏幕。
+set cursorline              "突出显示当前在光标下的行。
+set undofile               "保留撤销历史。
+set autochdir              "自动切换工作目录
+set autoread               "文件发生外部改变就会发出提示
+set encoding=UTF-8
+" set spell                  "拼写检查
+" set noswapfile             "Disable swap files.
 " set listchars=tab:>-,trail:~,extends:>,precedes:<,space:·
 
 set background=dark
@@ -103,7 +114,16 @@ set showtabline=2
 
 set makeprg=gcc\ -Wall\ -g\ %\ -o\ %
 
-cnoremap w! w! !sudo % tee > /dev/null <CR>
+imap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>c4i
+" Run the current line
+nnoremap <leader>e :exe getline(line('.'))<cr>
+
+if has("nvim")
+  command! W w! !sudo -n tee % > /dev/null || echo "Press <leader>w to authenticate and try again"
+else
+  command! W w! !sudo tee % > /dev/null
+end
+
 cnoremap  p!  PlugInstall <CR>
 noremap  S  :source % <CR>
 noremap  \  :%s//g<Left><Left>
@@ -113,11 +133,12 @@ nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 noremap Y y$
+noremap E v$
 noremap j gj
 noremap k gk
 " tags
 " noremap <F5> :!ctags -R .
-noremap <Leader>k g<C-]>
+noremap <Leader>k <C-i>
 noremap <Leader>j <C-o>
 
 " Write buffer (save)
@@ -143,19 +164,20 @@ noremap <Leader>sz :Goyo <cr>
 inoremap <C-w> <C-[>diwa
 inoremap <C-h> <BS>
 inoremap <C-d> <Del>
-inoremap <C-k> <ESC>d$a
+" inoremap <C-k> <ESC>d$a
 inoremap <C-u> <C-G>u<C-U>
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-a> <Home>
 inoremap <C-n> <Down>
 inoremap <C-p> <Up>
+inoremap <C-z> <ESC>ua
 
 inoremap <expr><C-e> pumvisible() ? "\<C-e>" : "\<End>"
 
-norema  <space> `
+noremap  <space> `
+noremap Q q
 noremap q :q <CR>
-
 
 noremap  <Leader>tt  :tabe<CR>
 "关闭高亮
@@ -186,13 +208,11 @@ set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{ge
 nmap <Leader>tr <Plug>(coc-translator-e)
 "coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)
-vmap <C-j> <Plug>(coc-snippets-select)
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
 let g:coc_snippet_next = '<c-j>'
 " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
 let g:coc_snippet_prev = '<c-k>'
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 "bookmarks
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
@@ -225,14 +245,15 @@ hi FloatermNF guibg=#282828
 hi FloatermBorderNF guibg=#282828 guifg=#504945
 command! Ranger FloatermNew ranger
 command! Lazygit FloatermNew lazygit
+command! Ipython3 FloatermNew ipython3
 let g:floaterm_height = 0.9
 let g:floaterm_width = 0.7
 " let g:floaterm_wintype = 'normal'
 " autocmd FileType floaterm wincmd H
-" let g:floaterm_position = 'center'
+let g:floaterm_position = 'center'
 map <Leader>fr :Ranger<CR>
 map <Leader>tg :Lazygit<CR>
-
+map <Leader>tp :Ipython3<CR>
 "edgemotion
 map <space>j <Plug>(edgemotion-j)
 map <space>k <Plug>(edgemotion-k)
@@ -258,6 +279,16 @@ function! OpenAnimatedbashtop() abort
   call animate#window_percent_height(0.86)
 endfunction
 command! Bashtop call OpenAnimatedbashtop()
+
+function! OpenAnimatedglances() abort
+  " Open a glances in terminal
+  new term://glances
+  " Send window to bottom and start with small height
+  wincmd J | resize 1
+  " Animate height to 66%
+  call animate#window_percent_height(0.86)
+endfunction
+command! Glances call OpenAnimatedglances()
 
 map <Leader>th :Htop<CR>
 map <Leader>tb :Bashtop<CR>

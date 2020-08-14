@@ -1,9 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =7
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/mnt/ubuntu/home/tz/.config/nvim/plugins/gruvbox'
+let g:netrw_dirhist_2='/mnt/ubuntu/home/tz/.config/nvim/coc'
+let g:netrw_dirhist_1='/home/tz'
+let g:netrw_dirhist_0='/home/tz/node_modules/chalk/source'
+let g:netrw_dirhist_9='/home/tz/.zinit'
+let g:netrw_dirhist_8='/'
 let g:netrw_dirhist_7='/etc/selinux'
 let g:netrw_dirhist_6='/home/tz/.bin'
 let g:netrw_dirhist_5='/etc/resolvconf'
 let g:netrw_dirhist_4='/home/tz/.vim/plugged/LeaderF'
-let g:netrw_dirhist_3='/home/tz'
-let g:netrw_dirhist_2='/home/tz/.config'
-let g:netrw_dirhist_1='/home/tz/.config/nvim'
