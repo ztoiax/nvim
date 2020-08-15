@@ -1,7 +1,6 @@
 call plug#begin('~/.config/nvim/plugins')
-Plug 'voldikss/vim-translate-me'  "翻译
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
+" Plug 'voldikss/vim-translate-me'  "翻译
+" Plug 'ryanoasis/vim-devicons'
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'          "启动界面
 Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
@@ -10,7 +9,7 @@ Plug 'ryanoasis/vim-devicons'      "图标
 Plug 'tpope/vim-surround'          "S("'
 Plug 'tpope/vim-abolish'           "替换
 Plug 'tpope/vim-repeat'            "可重复插件操作
-Plug 'itchyny/vim-cursorword'      "下划线
+" Plug 'itchyny/vim-cursorword'      "下划线
 Plug 'Yggdroot/indentLine'         "缩进线
 Plug 'tpope/vim-commentary'        "注释
 Plug 'junegunn/vim-easy-align'     "对齐
@@ -19,15 +18,12 @@ Plug 'junegunn/goyo.vim'           "沉浸阅读
 Plug 'easymotion/vim-easymotion'   "跳转
 Plug 'MattesGroeger/vim-bookmarks' "收藏跳转
 Plug 'camspiers/animate.vim'       "窗口动画
-Plug 'voldikss/vim-floaterm'       "浮动窗口
-" Plug 'frazrepo/vim-rainbow'        "彩虹括号
-Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'         "彩虹括号
 Plug 'puremourning/vimspector'     "debug
 Plug 'haya14busa/vim-edgemotion'   "函数快速移动
 Plug 'neomake/neomake'             "语法检查
 Plug 'sbdchd/neoformat'            "排版
 Plug 'jsfaint/gen_tags.vim'        "tags
-Plug 'guns/xterm-color-table.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mzlogin/vim-markdown-toc'    "自动生成目录
 Plug 'padde/jump.vim'              "autojump
@@ -37,20 +33,28 @@ Plug 'liuchengxu/vim-which-key'    "按键提示
 Plug 'bagrat/vim-buffet'           "标签
 Plug 'rhysd/accelerated-jk'        "快速移动
 Plug 'psliwka/vim-smoothie'        "移动动画
+Plug 'guns/xterm-color-table.vim'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'voldikss/vim-floaterm'       "浮动窗口
 Plug 'xolox/vim-session'           "打开时恢复分屏
 Plug 'xolox/vim-misc'
 
 "git
 Plug 'junegunn/gv.vim'             "git commit 浏览器
 Plug 'tpope/vim-fugitive'          "在 vim 里使用 git
+" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } "目录树
-Plug 'kristijanhusak/defx-icons'
+"coc
+" Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
+
+" Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' } "目录树
+" Plug 'kristijanhusak/defx-icons'
 
 call plug#end()
 
@@ -66,15 +70,14 @@ let g:python_host_prog  = "/usr/bin/python"
 let g:spaceline_seperate_style= 'slant-cons'
 let g:spaceline_colorscheme = 'space'
 "config
-source  ~/.config/nvim/defx/config.vim                 "defx
-source  ~/.config/nvim/coc/config.vim                 "coc
+" source  ~/.config/nvim/defx/config.vim                 "defx
 source  ~/.config/nvim/config/keysound.vim
-source  ~/.config/nvim/config/vim-translate-me.vim
+" source  ~/.config/nvim/config/vim-translate-me.vim
 source  ~/.config/nvim/config/indentLine.vim
 source  ~/.config/nvim/config/fzf.vim              "fzf & LeaderF
 source  ~/.config/nvim/config/vim-buffet.vim
 source  ~/.config/nvim/config/markdown-preview.vim
-" source  ~/.config/nvim/config/coc.vim
+source  ~/.config/nvim/config/coc.vim                 "coc
 
 "snippets
 source  ~/.config/nvim/snippets/md.vim
@@ -163,8 +166,7 @@ noremap <Leader>sz :Goyo <cr>
 inoremap <C-w> <C-[>diwa
 inoremap <C-h> <BS>
 inoremap <C-d> <Del>
-" inoremap <C-k> <ESC>d$a
-inoremap <C-u> <C-G>u<C-U>
+" inoremap <C-k> <ESC>d$a inoremap <C-u> <C-G>u<C-U>
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-a> <Home>
@@ -186,8 +188,10 @@ noremap  <Leader>a  :Ag <CR>
 "change theme
 noremap  <Leader>fc :Colors<CR>
 "目录
-nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+" nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+" nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
+nnoremap <Leader>e :CocCommand explorer<CR>
+
 "git浏览器
 nnoremap <Leader>tv  :GV <CR>
 "undo tree
@@ -204,7 +208,7 @@ nmap <Leader>fw  <Plug>(easymotion-overwin-w)
 "coc-git
 set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "coc-translate
-nmap <Leader>tr <Plug>(coc-translator-e)
+" nmap <Leader>tr <Plug>(coc-translator-e)
 "coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
@@ -322,3 +326,20 @@ let g:gen_tags#gtags_default_map = 1
 "vim-which-key
 nnoremap <silent> <leader> :WhichKey ','<CR>
 set timeoutlen=800
+
+"coc
+nmap <Leader>cc :CocCommand 
+"coc-spell-checker
+vmap <leader>cs <Plug>(coc-codeaction-selected)
+nmap <leader>cs <Plug>(coc-codeaction-selected)
+
+"coc-translator
+" popup
+nmap <Leader>tr <Plug>(coc-translator-p)
+vmap <Leader>tr <Plug>(coc-translator-pv)
+" echo
+nmap <Leader>er <Plug>(coc-translator-e)
+vmap <Leader>er <Plug>(coc-translator-ev)
+" replace
+nmap <Leader>rr <Plug>(coc-translator-r)
+vmap <Leader>rr <Plug>(coc-translator-rv)

@@ -7,7 +7,7 @@ let g:keysound_enable = 1
 let g:keysound_theme = 'typewriter'
 
 " 设置 python 版本：2 或者3 默认会自动检测
-let g:keysound_py_version = 2
+let g:keysound_py_version = 3
 
 " 设置音量：0-1000
 let g:keysound_volume = 500

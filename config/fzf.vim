@@ -35,4 +35,4 @@ noremap <Leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand
 noremap <Leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
 noremap <Leader>fn :<C-U><C-R>=printf("Leaderf  gtags --next %s", "")<CR><CR>
 noremap <Leader>fp :<C-U><C-R>=printf("Leaderf  gtags --previous %s", "")<CR><CR>
-unmap <Leader>f
+" unmap <Leader>f
