@@ -13,4 +13,4 @@ let g:keysound_py_version = 3
 let g:keysound_volume = 500
 
 "enable deoplete
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1

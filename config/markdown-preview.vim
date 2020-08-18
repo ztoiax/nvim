@@ -76,4 +76,4 @@ nmap <Leader>rr <Plug>MarkdownPreview
 
 " vim-markdown-toc
 " 自动生成目录
-nmap <Leader>rd :GenTocGFM
+nmap <Leader>rd :GenTocGFM<cr>
