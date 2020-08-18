@@ -118,7 +118,9 @@ set makeprg=gcc\ -Wall\ -g\ %\ -o\ %
 
 imap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>c4i
 " Run the current line
-nnoremap <leader>e :exe getline(line('.'))<cr>
+nnoremap <leader>ee :exe getline(line('.'))<cr>
+" Run the current line in sh
+nnoremap <leader>el :exec '!'.getline('.')<cr>
 
 if has("nvim")
   command! W w! !sudo -n tee % > /dev/null || echo "Press <leader>w to authenticate and try again"
@@ -190,7 +192,7 @@ noremap  <Leader>fc :Colors<CR>
 "目录
 " nnoremap <Leader>eh :Defx -show-ignored-files -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
 " nnoremap <Leader>ee :Defx  -resume -toggle -buffer-name=tab`tabpagenr()`<CR>
-nnoremap <Leader>e :CocCommand explorer<CR>
+nnoremap <Leader>fe :CocCommand explorer<CR>
 
 "git浏览器
 nnoremap <Leader>tv  :GV <CR>
@@ -341,5 +343,5 @@ vmap <Leader>tr <Plug>(coc-translator-pv)
 nmap <Leader>er <Plug>(coc-translator-e)
 vmap <Leader>er <Plug>(coc-translator-ev)
 " replace
-nmap <Leader>rr <Plug>(coc-translator-r)
-vmap <Leader>rr <Plug>(coc-translator-rv)
+" nmap <Leader>rr <Plug>(coc-translator-r)
+" vmap <Leader>rr <Plug>(coc-translator-rv)

@@ -72,4 +72,8 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} wilj be replace with the file name
 let g:mkdp_page_title = '「${name}」'
-nmap <Leader>r <Plug>MarkdownPreview
+nmap <Leader>rr <Plug>MarkdownPreview
+
+" vim-markdown-toc
+" 自动生成目录
+nmap <Leader>rd :GenTocGFM

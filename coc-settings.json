@@ -57,7 +57,7 @@
     //Snippet
     "coc.preferences.snippetStatusText": "Ⓢ ",
     //highlight
-     "coc.preferences.colorSupport" : true
+     "coc.preferences.colorSupport" : true,
     //CocList
     "list.source.files.defaultOptions": ["--auto-preview"],
     "list.source.outline.defaultOptions": ["--auto-preview"],
@@ -163,38 +163,6 @@
     // python
     "python.jediEnabled": false,
     //translator
-    "translator.toLang": {
-      "type": "string",
-      "default": "zh",
-      "description": "Target language"
-    },
-    "translator.engines": {
-      "type": "array",
-      "default": [
-        "bing",
-        "google",
-        "youdao",
-        "haici"
-      ]
-    },
-    "translator.enableHover": {
-      "type": "boolean",
-      "default": false,
-      "description": "Enable on hover translating"
-    },
-    "translator.maxsize": {
-      "type": "number",
-      "default": 5000,
-      "description": "Max history count"
-    },
-    "translator.window.maxWidth": {
-      "type": "number",
-      "default": 999
-    },
-    "translator.window.maxHeight": {
-      "type": "number",
-      "default": 999
-    },
     // add your languageServer into this list
     "languageserver": {},
     "cSpell.enabledLanguageIds": [
