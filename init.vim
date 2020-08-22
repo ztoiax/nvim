@@ -16,7 +16,7 @@ if has("nvim")
 end
 
 cmap p!  PlugInstall <CR>
-nmap S  :source % <CR>
+nmap S  :source ~/.config/nvim/init.vim <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
 nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
@@ -119,3 +119,6 @@ nmap <space>k <Plug>(edgemotion-k)
 nnoremap <silent> <leader> :WhichKey ','<CR>
 set timeoutlen=800
 
+" clever-f
+map ; <Plug>(clever-f-repeat-forward)
+map ' <Plug>(clever-f-repeat-back)
