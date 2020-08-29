@@ -32,6 +32,7 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'liuchengxu/vista.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
+Plug 'dhruvasagar/vim-table-mode'
 Plug 'padde/jump.vim'                "autojump
 Plug 'simnalamburt/vim-mundo'        "undo tree
 Plug 'liuchengxu/vim-which-key'      "按键提示
@@ -301,6 +302,21 @@ sign define vimspectorBP text=🛑 texthl=Normal
 sign define vimspectorBPDisabled text=🚫 texthl=Normal
 sign define vimspectorPC text=👉 texthl=SpellBad
 
+" markdown tab
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
 source ~/.config/nvim/config/function.vim
 source ~/.config/nvim/config/vim-buffet.vim
 source ~/.config/nvim/config/fzf.vim                 "fzf & LeaderF
@@ -311,3 +327,4 @@ source ~/.config/nvim/config/map.vim                 "map
 
 " snippets
 source  ~/.config/nvim/snippets/md.vim
+

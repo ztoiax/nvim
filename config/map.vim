@@ -68,6 +68,7 @@ imap <C-q> <esc>:wq<CR>
 imap <expr><C-e> pumvisible() ? "\<C-e>" : "\<End>"
 
 nmap <space> `
+nnoremap ' "
 nnoremap Q q
 nmap q :q <CR>
 
@@ -112,4 +113,5 @@ set timeoutlen=800
 
 " clever-f
 map ; <Plug>(clever-f-repeat-forward)
-map ' <Plug>(clever-f-repeat-back)
+" vista
+nmap T :Vista

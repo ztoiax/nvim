@@ -1,6 +1,6 @@
 " from thinkvim
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<S-TAB>'
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 let g:coc_status_error_sign = '•'
 let g:coc_status_warning_sign = '•'
 filetype
@@ -42,6 +42,13 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <C-j>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! s:check_back_space() abort
@@ -58,7 +65,7 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 
 nnoremap <Leader>cc :CocCommand 
 nnoremap <Leader>fe :CocCommand explorer<CR>
-inoremap <silent><expr> <tab> coc#refresh()
+inoremap <silent><expr> <leader>l coc#refresh()
 "coc-spell-checker
 vmap <leader>cs <Plug>(coc-codeaction-selected)
 nnoremap <leader>cs <Plug>(coc-codeaction-selected)
@@ -101,8 +108,3 @@ vmap <Leader>er <Plug>(coc-translator-ev)
 set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<C-j>'
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<C-k>'
-
