@@ -13,6 +13,7 @@ nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :noh
 
 nmap Y y$
 nmap E v$
+nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 nmap <Leader>k <C-i>
@@ -55,7 +56,9 @@ nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
 imap <C-w> <C-[>diwa
 imap <C-h> <BS>
 imap <C-d> <Del>
-" imap <C-k> <ESC>d$a imap <C-u> <C-G>u<C-U>
+imap <C-k> <ESC>d$a
+imap <C-u> <C-G>u<C-U>
+
 imap <C-b> <Left>
 imap <C-f> <Right>
 imap <C-a> <Home>
@@ -82,7 +85,7 @@ nnoremap <Leader>tp :Ipython<CR>
 "git浏览器
 nnoremap <Leader>tv :GV <CR>
 "undo tree
-nnoremap <Leader>tm :MundoToggle <CR>
+nnoremap <Leader>tu :MundoToggle <CR>
 "align
 xmap <Leader>ia <Plug>(EasyAlign)
 nmap <Leader>ia <Plug>(EasyAlign)
@@ -114,4 +117,4 @@ set timeoutlen=800
 " clever-f
 map ; <Plug>(clever-f-repeat-forward)
 " vista
-nmap T :Vista
+nnoremap T :Vista<cr>

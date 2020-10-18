@@ -303,6 +303,7 @@ sign define vimspectorBPDisabled text=🚫 texthl=Normal
 sign define vimspectorPC text=👉 texthl=SpellBad
 
 " markdown tab
+let g:table_mode_tableize_map = '<leader>T'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')
@@ -327,4 +328,3 @@ source ~/.config/nvim/config/map.vim                 "map
 
 " snippets
 source  ~/.config/nvim/snippets/md.vim
-
