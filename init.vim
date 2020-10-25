@@ -156,6 +156,7 @@ let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
 hi FloatermNF guibg=#282828
 hi FloatermBorderNF guibg=#282828 guifg=#504945
 command! Ranger FloatermNew ranger
+command! Broot FloatermNew broot -sdpw
 command! Lazygit FloatermNew lazygit
 command! Ipython FloatermNew ipython
 let g:floaterm_height = 0.9
@@ -328,3 +329,13 @@ source ~/.config/nvim/config/map.vim                 "map
 
 " snippets
 source  ~/.config/nvim/snippets/md.vim
+
+
+"Start up
+" function! StartUp()
+"     if 0 == argc()
+"         Vista
+"     end
+" endfunction
+
+" autocmd VimEnter * call StartUp()

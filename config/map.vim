@@ -12,6 +12,7 @@ nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 nmap Y y$
+nmap yu y0
 nmap E v$
 nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
@@ -43,21 +44,19 @@ nmap <Leader>sj :belo split <cr>
 nmap <Leader>sq <C-w>c
 nmap <Leader>sz :Goyo <cr>
 
-
-
-
 "animate
 nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
 nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
+nnoremap <silent> <Right> :call animate#window_delta_width(10)<CR>
+nnoremap <silent> <Left>  :call animate#window_delta_width(-10)<CR>
 
 " incert keymap like emacs
-imap <C-w> <C-[>diwa
 imap <C-h> <BS>
 imap <C-d> <Del>
-imap <C-k> <ESC>d$a
-imap <C-u> <C-G>u<C-U>
+imap <C-w> <C-[>diwa
+imap <C-k> <Esc>lDa
+imap <C-u> <Esc>d0xi
+imap <C-y> <Esc>Pa
 
 imap <C-b> <Left>
 imap <C-f> <Right>
@@ -65,10 +64,28 @@ imap <C-a> <Home>
 imap <C-n> <Down>
 imap <C-p> <Up>
 imap <C-z> <ESC>ua
+imap <C-o> <Esc>o
 imap <C-s> <esc>:w<CR>
 imap <C-q> <esc>:wq<CR>
-
 imap <expr><C-e> pumvisible() ? "\<C-e>" : "\<End>"
+
+imap <leader>j <Esc>wa
+imap <leader>k <Esc>bi
+
+" command keymap like emacs
+cmap <C-p> <Up>
+cmap <C-k> <Up>
+cmap <C-n> <Down>
+cmap <C-j> <Down>
+cmap <C-b> <Left>
+cmap <C-f> <Right>
+cmap <C-a> <Home>
+cmap <C-e> <End>
+cmap <C-d> <Del>
+cmap <C-h> <BS>
+cmap <C-t> <C-R>=expand("%:p:h") . "/" <CR>
+
+tnoremap <A-[> <C-\><C-n>
 
 nmap <space> `
 nnoremap ' "
@@ -93,7 +110,7 @@ nmap <Leader>ia <Plug>(EasyAlign)
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
-nmap <Leader>0  <Plug>(easymotion-overwin-line)
+nmap <Leader>ff  <Plug>(easymotion-overwin-line)
 nmap <Leader>fw  <Plug>(easymotion-overwin-w)
 " vim-bookmarks
 nmap mm <Plug>BookmarkToggle
@@ -117,4 +134,4 @@ set timeoutlen=800
 " clever-f
 map ; <Plug>(clever-f-repeat-forward)
 " vista
-nnoremap T :Vista<cr>
+nnoremap T :Vista!!<cr>
