@@ -32,7 +32,7 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'liuchengxu/vista.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
-Plug 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
 Plug 'padde/jump.vim'                "autojump
 Plug 'simnalamburt/vim-mundo'        "undo tree
 Plug 'liuchengxu/vim-which-key'      "按键提示
@@ -304,7 +304,7 @@ sign define vimspectorBPDisabled text=🚫 texthl=Normal
 sign define vimspectorPC text=👉 texthl=SpellBad
 
 " markdown tab
-let g:table_mode_tableize_map = '<leader>T'
+let g:table_mode_tableize_map = '<leader>it'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')
