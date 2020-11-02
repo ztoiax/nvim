@@ -13,15 +13,16 @@ nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :noh
 
 nmap Y y$
 nmap yu y0
-nmap E v$
+nmap E v$h
 nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
-nmap <Leader>k <C-i>
+nnoremap <Leader>k <C-i>
 nmap <Leader>j <C-o>
 nmap <Leader>w :w<CR>
 
-imap <Leader><Leader> <Esc>/<++><CR>:nohlsearch<CR>c4i
+nmap <Leader><Leader> <esc>ysiw
+imap <Leader><Leader> <esc>ysiw
 " Run the current line
 nnoremap <leader>ee :execute getline(line('.'))<cr>
 " Run the current line in sh
@@ -36,13 +37,13 @@ nnoremap <leader>el :execute '!'.getline('.')<cr>
 " noremap <C-k> <C-w>k
 " noremap <C-l> <C-w>l
 nmap <Tab> :wincmd w <cr>
-nmap <Leader>sm :only <cr>
+nmap <Leader>sw :only <cr>
 nmap <Leader>sh :vsplit <cr>
 nmap <Leader>sk :split <cr>
 nmap <Leader>sl :belowright vsplit <cr>
 nmap <Leader>sj :belo split <cr>
-nmap <Leader>sq <C-w>c
-nmap <Leader>sz :Goyo <cr>
+nmap <Leader>sx <C-w>c
+nmap <Leader>ss :Goyo <cr>
 
 "animate
 nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
@@ -110,22 +111,21 @@ nmap <Leader>ia <Plug>(EasyAlign)
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
-nmap <Leader>ff  <Plug>(easymotion-overwin-line)
-nmap <Leader>fw  <Plug>(easymotion-overwin-w)
-" vim-bookmarks
-nmap mm <Plug>BookmarkToggle
-nmap ma <Plug>BookmarkAnnotate
-nmap ml <Plug>BookmarkShowAll
-nmap mj <Plug>BookmarkNext
-nmap mk <Plug>BookmarkPrev
-nmap mc <Plug>BookmarkClear
-nmap mC <Plug>BookmarkClearAll
-nmap mu <Plug>BookmarkMoveUp
-nmap me <Plug>BookmarkMoveDown
+nmap <Leader>ff <Plug>(easymotion-overwin-line)
+nmap <Leader>fw <Plug>(easymotion-overwin-w)
 nmap <Leader>fr :Ranger<CR>
+" vim-bookmarks
+" nmap mm <Plug>BookmarkToggle
+" nmap ma <Plug>BookmarkAnnotate
+" nmap ml <Plug>BookmarkShowAll
+" nmap mj <Plug>BookmarkNext
+" nmap mk <Plug>BookmarkPrev
+" nmap mc <Plug>BookmarkClear
+" nmap mC <Plug>BookmarkClearAll
+
 " edgemotion
 nmap <space>j <Plug>(edgemotion-j)
-nmap <space>k <Plug>(edgemotion-k)
+nmap <
 
 " vim-which-key
 nnoremap <silent> <leader> :WhichKey ','<CR>
@@ -133,5 +133,6 @@ set timeoutlen=800
 
 " clever-f
 map ; <Plug>(clever-f-repeat-forward)
+map ' <Plug>(clever-f-repeat-back)
 " vista
 nnoremap T :Vista!!<cr>

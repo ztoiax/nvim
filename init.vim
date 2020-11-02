@@ -18,7 +18,7 @@ Plug 'terryma/vim-multiple-cursors'  "光标多选
 Plug 'skywind3000/vim-keysound'      "打字机声音
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'easymotion/vim-easymotion'     "跳转
-Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
+" Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
 Plug 'camspiers/animate.vim'         "窗口动画
 Plug 'luochen1990/rainbow'           "彩虹括号
 Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}
@@ -119,14 +119,15 @@ let g:spaceline_seperate_style= 'slant-cons'
 let g:spaceline_colorscheme = 'space'
 
 "bookmarks
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_auto_save = 1
-let g:bookmark_highlight_lines = 1
-let g:bookmark_manage_per_buffer = 1
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_center = 1
-let g:bookmark_auto_close = 1
-let g:bookmark_location_list = 1
+" let g:bookmark_save_per_working_dir = 1
+" let g:bookmark_auto_save = 1
+" let g:bookmark_highlight_lines = 1
+" let g:bookmark_manage_per_buffer = 1
+" let g:bookmark_save_per_working_dir = 1
+" let g:bookmark_center = 1
+" let g:bookmark_auto_close = 1
+" let g:bookmark_location_list = 1
+" let g:bookmark_no_default_key_mappings = 1
 
 "session
 let g:session_autosave = 'no'
@@ -319,6 +320,12 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
+" clever-f
+" Ignore case (忽略大小写)
+let g:clever_f_ignore_case = 1
+let g:clever_f_chars_match_any_signs = ';'
+
+" source
 source ~/.config/nvim/config/function.vim
 source ~/.config/nvim/config/vim-buffet.vim
 source ~/.config/nvim/config/fzf.vim                 "fzf & LeaderF
@@ -326,10 +333,8 @@ source ~/.config/nvim/config/markdown-preview.vim
 " source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/coc.vim                 "coc
 source ~/.config/nvim/config/map.vim                 "map
-
 " snippets
 source  ~/.config/nvim/snippets/md.vim
-
 
 "Start up
 " function! StartUp()

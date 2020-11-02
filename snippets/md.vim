@@ -12,8 +12,8 @@ autocmd Filetype markdown inoremap <buffer> ,s ~~~~<++><Esc>F~hi
 " 下划线
 autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
 " 代码片段
-autocmd Filetype markdown inoremap <buffer> ,d `` <++><Esc>F`i
-autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Enter><Esc>4kA
+autocmd Filetype markdown inoremap <buffer> ,d <Space>`` <++><Esc>F`i
+autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Esc>3kA
 autocmd Filetype markdown inoremap <buffer> ,m - [ ]
 autocmd Filetype markdown inoremap <buffer> ,p ![](<++>)<++><Esc>F[a
 autocmd Filetype markdown inoremap <buffer> ,a [](<++>)<++><Esc>F[a
@@ -26,6 +26,7 @@ autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 " vmap
 " autocmd Filetype markdown vnoremap <buffer> ,d "zdi`<c-r>z`<esc>
 autocmd Filetype markdown vnoremap ,d <esc>`>a`<esc>`<i`<esc>
-autocmd Filetype markdown vnoremap ,c <esc>`>a<enter>```<esc>`<i```sh<enter><esc>
+autocmd Filetype markdown vnoremap ,c <esc>`>a<enter>```<esc>`<i```<enter><esc>kA
 autocmd Filetype markdown vnoremap ,i <esc>`>a*<esc>`<i*<esc>
 autocmd Filetype markdown vnoremap ,b <esc>`>a**<esc>`<i**<esc>
+autocmd Filetype markdown vnoremap ,<space> <esc>`>a<space><esc>`<i<space><esc>
