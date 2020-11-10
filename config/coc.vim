@@ -17,10 +17,8 @@ let g:coc_global_extensions =[
     \ 'coc-lists',
     \ 'coc-gitignore',
     \ 'coc-yank',
-    \ 'coc-explorer',
     \ 'coc-actions',
     \ 'coc-spell-checker',
-    \ 'coc-translator',
     \ 'coc-python',
     \ 'coc-clangd',
     \]
@@ -64,8 +62,11 @@ nmap <leader>sn <Plug>(coc-codeaction-selected)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 nnoremap <Leader>cc :CocCommand 
-nnoremap <Leader>fe :CocCommand explorer<CR>
+" 文件浏览器
+" nnoremap <Leader>fe :CocCommand explorer<CR>
+
 inoremap <silent><expr> <leader>l coc#refresh()
+
 "coc-spell-checker
 vmap <leader>cs <Plug>(coc-codeaction-selected)
 nnoremap <leader>cs <Plug>(coc-codeaction-selected)
@@ -95,8 +96,8 @@ endfunction
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 "coc-translator
 " popup
-nnoremap <Leader>tr <Plug>(coc-translator-p)
-vmap <Leader>tr <Plug>(coc-translator-pv)
+" nnoremap <Leader>tr <Plug>(coc-translator-p)
+" vmap <Leader>tr <Plug>(coc-translator-pv)
 " echo
 nnoremap <Leader>er <Plug>(coc-translator-e)
 vmap <Leader>er <Plug>(coc-translator-ev)

@@ -10,10 +10,11 @@ nmap <leader>8 <Plug>BuffetSwitch(8)
 nmap <leader>9 <Plug>BuffetSwitch(9)
 nmap <leader>0 <Plug>BuffetSwitch(10)
 
+nnoremap <silent> L :bn<CR>
+nnoremap <silent> H :bp<CR>
 nnoremap <silent> <Leader>o :Bonly<CR>
 nnoremap <silent> <Leader>x :Bw<CR>
 nnoremap <silent> <Leader>n :bn<CR>
-nnoremap <silent> <Leader>N :bp<CR>
 nnoremap <silent> <Leader>p :bp<CR>
 nnoremap <silent> <Leader>tt :tabnew<CR>
 let g:buffet_use_devicons = 1

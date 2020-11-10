@@ -3,11 +3,13 @@ if has("nvim")
   command! W w! !sudo tee % > /dev/null
 end
 
-cmap p!  PlugInstall <CR>
+cmap pp  PlugInstall <CR>
 nmap S  :source ~/.config/nvim/init.vim <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
 nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
+nmap s  ys
+vmap s  S
 " remove unwanted space
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
@@ -125,7 +127,7 @@ nmap <Leader>fr :Ranger<CR>
 
 " edgemotion
 nmap <space>j <Plug>(edgemotion-j)
-nmap <
+nmap <space>k <Plug>(edgemotion-k)
 
 " vim-which-key
 nnoremap <silent> <leader> :WhichKey ','<CR>
@@ -135,4 +137,19 @@ set timeoutlen=800
 map ; <Plug>(clever-f-repeat-forward)
 map ' <Plug>(clever-f-repeat-back)
 " vista
-nnoremap T :Vista!!<cr>
+nnoremap tt :Vista!!<cr>
+"
+" Echo translation in the cmdline
+nmap <silent> <Leader>te <Plug>Translate
+vmap <silent> <Leader>te <Plug>TranslateV
+" Display translation in a window
+nmap <silent> <Leader>tw <Plug>TranslateW
+vmap <silent> <Leader>tw <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> <Leader>tr <Plug>TranslateR
+vmap <silent> <Leader>tr <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> <Leader>tx <Plug>TranslateX
+
+"wildfire
+nmap vv <enter>

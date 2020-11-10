@@ -23,6 +23,8 @@ autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 
+" autocmd vnoremap ,s <esc>`>a<enter>}<esc>`<iif (true)<enter>{<enter><esc>
+" vma{<esc>
 " vmap
 " autocmd Filetype markdown vnoremap <buffer> ,d "zdi`<c-r>z`<esc>
 autocmd Filetype markdown vnoremap ,d <esc>`>a`<esc>`<i`<esc>
@@ -30,3 +32,4 @@ autocmd Filetype markdown vnoremap ,c <esc>`>a<enter>```<esc>`<i```<enter><esc>k
 autocmd Filetype markdown vnoremap ,i <esc>`>a*<esc>`<i*<esc>
 autocmd Filetype markdown vnoremap ,b <esc>`>a**<esc>`<i**<esc>
 autocmd Filetype markdown vnoremap ,<space> <esc>`>a<space><esc>`<i<space><esc>
+autocmd Filetype markdown vnoremap ,a <esc>`>a]()<esc>`<i[<esc>f(a
