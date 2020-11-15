@@ -151,5 +151,20 @@ vmap <silent> <Leader>tr <Plug>TranslateRV
 " Translate the text in clipboard
 nmap <silent> <Leader>tx <Plug>TranslateX
 
-"wildfire
-nmap vv <enter>
+" vim-visual-multi
+let g:VM_maps = {}
+let g:VM_leader = ','
+let g:VM_maps['Motion ,'] = ',,'
+let g:VM_maps["Switch Mode"]                 = '<Tab>'
+let g:VM_maps["Find Next"]                   = ']'
+let g:VM_maps["Find Prev"]                   = '['
+let g:VM_maps["Goto Next"]                   = '}'
+let g:VM_maps["Goto Prev"]                   = '{'
+let g:VM_maps["Seek Next"]                   = '<C-f>'
+let g:VM_maps["Seek Prev"]                   = '<C-b>'
+let g:VM_maps["Skip Region"]                 = 'n'
+let g:VM_maps["Remove Region"]               = 'q'
+let g:VM_maps["Invert Direction"]            = 'o'
+let g:VM_maps["Find Operator"]               = "m"
+let g:VM_maps["Surround"]                    = 's'
+let g:VM_maps["Replace Pattern"]             = 'r'

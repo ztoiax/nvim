@@ -32,4 +32,4 @@ autocmd Filetype markdown vnoremap ,c <esc>`>a<enter>```<esc>`<i```<enter><esc>k
 autocmd Filetype markdown vnoremap ,i <esc>`>a*<esc>`<i*<esc>
 autocmd Filetype markdown vnoremap ,b <esc>`>a**<esc>`<i**<esc>
 autocmd Filetype markdown vnoremap ,<space> <esc>`>a<space><esc>`<i<space><esc>
-autocmd Filetype markdown vnoremap ,a <esc>`>a]()<esc>`<i[<esc>f(a
+autocmd Filetype markdown vnoremap ,a <esc>`>a]()<esc>`<i[<esc>$F(a

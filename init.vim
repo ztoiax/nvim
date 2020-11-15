@@ -15,7 +15,7 @@ Plug 'tpope/vim-repeat'              "可重复插件操作
 Plug 'Yggdroot/indentLine'           "缩进线
 Plug 'tpope/vim-commentary'          "注释
 Plug 'junegunn/vim-easy-align'       "多行对齐
-Plug 'terryma/vim-multiple-cursors'  "光标多选
+Plug 'mg979/vim-visual-multi'        "光标多选
 Plug 'skywind3000/vim-keysound'      "打字机声音
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'easymotion/vim-easymotion'     "跳转
@@ -44,6 +44,7 @@ Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'guns/xterm-color-table.vim'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'voldikss/vim-floaterm'         "浮动窗口
+Plug 'chrisbra/csv.vim'              "open csv file
 Plug 'xolox/vim-session'             "打开时恢复分屏
 Plug 'xolox/vim-misc'
 
