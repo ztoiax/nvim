@@ -15,8 +15,9 @@ autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
 autocmd Filetype markdown inoremap <buffer> ,d <Space>`` <++><Esc>F`i
 autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Esc>3kA
 autocmd Filetype markdown inoremap <buffer> ,m - [ ]
-autocmd Filetype markdown inoremap <buffer> ,p ![](<++>)<++><Esc>F[a
+autocmd Filetype markdown inoremap <buffer> ,p ![avatar]()<++><Esc>F)i
 autocmd Filetype markdown inoremap <buffer> ,a [](<++>)<++><Esc>F[a
+autocmd Filetype markdown inoremap <buffer> ,s <span id=""></span><Esc>F"i
 " 标题
 autocmd Filetype markdown inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA

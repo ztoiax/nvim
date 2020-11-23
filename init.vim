@@ -101,7 +101,8 @@ set makeprg=gcc\ -Wall\ -g\ %\ -o\ %
 "let
 filetype plugin on
 syntax on
-colorscheme gruvbox
+" colorscheme gruvbox
+colorscheme oceanic_material
 
 let g:mapleader = ","
 let g:python_host_skip_check=1
@@ -353,3 +354,16 @@ source  ~/.config/nvim/snippets/md.vim
 " endfunction
 
 " autocmd VimEnter * call StartUp()
+
+
+"clever_f
+let g:clever_f_not_overwrites_standard_mappings = 1
+nmap f <Plug>(clever-f-f)
+xmap f <Plug>(clever-f-f)
+omap f <Plug>(clever-f-f)
+nmap F <Plug>(clever-f-F)
+xmap F <Plug>(clever-f-F)
+omap F <Plug>(clever-f-F)
+nmap t <Plug>(clever-f-t)
+xmap t <Plug>(clever-f-t)
+omap t <Plug>(clever-f-t)

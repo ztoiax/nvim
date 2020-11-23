@@ -138,6 +138,7 @@ map ; <Plug>(clever-f-repeat-forward)
 map ' <Plug>(clever-f-repeat-back)
 " vista
 nnoremap tt :Vista!!<cr>
+nnoremap T :Vista!!<cr>
 "
 " Echo translation in the cmdline
 nmap <silent> <Leader>te <Plug>Translate
