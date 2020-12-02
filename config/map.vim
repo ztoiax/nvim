@@ -34,18 +34,29 @@ nnoremap <leader>el :execute '!'.getline('.')<cr>
 " noremap <F5> :!ctags -R .
 
 " window
-" noremap <C-h> <C-w>h
-" noremap <C-j> <C-w>j
-" noremap <C-k> <C-w>k
-" noremap <C-l> <C-w>l
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 nmap <Tab> :wincmd w <cr>
-nmap <Leader>sw :only <cr>
-nmap <Leader>sh :vsplit <cr>
-nmap <Leader>sk :split <cr>
-nmap <Leader>sl :belowright vsplit <cr>
-nmap <Leader>sj :belo split <cr>
-nmap <Leader>sx <C-w>c
-nmap <Leader>ss :Goyo <cr>
+
+nmap <C-w>o :only <cr>
+nmap <C-w>q <C-w>c
+nmap <C-w>x <C-w>c
+nmap <C-w>h :vsplit <cr>
+nmap <C-w>k :split <cr>
+nmap <C-w>l :belowright vsplit <cr>
+nmap <C-w>j :belo split <cr>
+nmap <C-w>s :Goyo <cr>
+
+" nmap <Leader>sw :only <cr>
+" nmap <Leader>so :only <cr>
+" nmap <Leader>sh :vsplit <cr>
+" nmap <Leader>sk :split <cr>
+" nmap <Leader>sl :belowright vsplit <cr>
+" nmap <Leader>sj :belo split <cr>
+" nmap <Leader>sx <C-w>c
+" nmap <Leader>ss :Goyo <cr>
 
 "animate
 nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
@@ -99,11 +110,13 @@ nmap q :q <CR>
 nmap <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 
 nnoremap <Leader>th :Htop<CR>
-nnoremap <Leader>tb :Bashtop<CR>
-nnoremap <Leader>tg :Lazygit<CR>
+nnoremap <Leader>tg :Glances<CR>
 nnoremap <Leader>tp :Ipython<CR>
-"git浏览器
-nnoremap <Leader>tv :GV <CR>
+
+" git
+nnoremap <Leader>gg :Lazygit<CR>
+nnoremap <Leader>gl :GV <CR>
+
 "undo tree
 nnoremap <Leader>tu :MundoToggle <CR>
 "align

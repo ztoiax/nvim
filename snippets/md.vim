@@ -1,5 +1,15 @@
-" imap
-autocmd Filetype markdown inoremap <buffer> ,f <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+"""""" all """"""
+" inoremap
+autocmd Filetype * inoremap <buffer> ,, <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+autocmd Filetype * inoremap <buffer> ,# #####  ######<enter><++><esc>kf<space>a
+
+"""""" sh """"""
+" vnoremap
+autocmd Filetype sh vnoremap ,f <esc>`>a<enter>}<esc>`<ifunction (){<enter><esc>kf(i
+
+
+"""""" markdown """"""
+" inoremap
 autocmd Filetype markdown inoremap <buffer> ,w <Esc>/ <++><CR>:nohlsearch<CR>"_c5l<CR>
 autocmd Filetype markdown inoremap <buffer> ,n ---<Enter><Enter>
 
@@ -24,9 +34,9 @@ autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
 
+" vnoremap
 " autocmd vnoremap ,s <esc>`>a<enter>}<esc>`<iif (true)<enter>{<enter><esc>
-" vma{<esc>
-" vmap
+"
 " autocmd Filetype markdown vnoremap <buffer> ,d "zdi`<c-r>z`<esc>
 autocmd Filetype markdown vnoremap ,d <esc>`>a`<esc>`<i`<esc>
 autocmd Filetype markdown vnoremap ,c <esc>`>a<enter>```<esc>`<i```<enter><esc>kA
