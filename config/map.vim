@@ -5,8 +5,9 @@ end
 
 cmap p!  PlugInstall <CR>
 nmap S  :source ~/.config/nvim/init.vim <CR>
-nmap \  :%s//g<Left><Left>
-vmap \  :s//g<Left><Left>
+nmap \  :%Subvert//g<Left><Left>
+vmap \  :Subvert//g<Left><Left>
+
 nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nmap s  ys
 vmap s  S
@@ -68,7 +69,8 @@ nnoremap <silent> <Left>  :call animate#window_delta_width(-10)<CR>
 imap <C-h> <BS>
 imap <C-d> <Del>
 imap <C-w> <C-[>diwa
-imap <C-k> <Esc>lDa
+" coc冲突
+" imap <C-k> <Esc>lDa
 imap <C-u> <Esc>d0xi
 imap <C-y> <Esc>Pa
 
@@ -171,6 +173,15 @@ nmap <Leader>io :AsyncRun! -mode=term
 " Run the current line in terminal
 nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr>
 
+"clever_f
+let g:clever_f_not_overwrites_standard_mappings = 1
+nmap f <Plug>(clever-f-f)
+xmap f <Plug>(clever-f-f)
+omap f <Plug>(clever-f-f)
+nmap F <Plug>(clever-f-F)
+xmap F <Plug>(clever-f-F)
+omap F <Plug>(clever-f-F)
+
 " vim-visual-multi
 let g:VM_maps = {}
 let g:VM_leader = ','
@@ -188,3 +199,12 @@ let g:VM_maps["Invert Direction"]            = 'o'
 let g:VM_maps["Find Operator"]               = "m"
 let g:VM_maps["Surround"]                    = 's'
 let g:VM_maps["Replace Pattern"]             = 'r'
+
+" vim-unimpaired
+" nmap < [
+" nmap > ]
+" omap < [
+" omap > ]
+" xmap < [
+" xmap > ]
+

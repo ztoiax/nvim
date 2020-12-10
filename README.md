@@ -52,6 +52,110 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 - 以上几个插件是比较直观，使用比较多的
 - 还有几十个插件,有机会我会一并整理出来
 
+## Plugin
+
+### [vim-abolish](https://github.com/tpope/vim-abolish) 更强大的替换
+
+示例文本:
+
+```
+test
+tesa
+TEST
+TESA
+
+替换后
+
+hello
+hello
+HELLO
+HELLO
+```
+
+`vim` 自带的替换，不区分大小写，**因此要 **4** 条命令:**
+
+```vim
+:%s/TEST/HELLO/g
+:%s/test/hello/g
+:%s/TESA/HELLO/g
+:%s/tesa/hello/g
+```
+
+而插件会自动识别大小写，**只需 1 条命令:**
+
+```vim
+:%Subvert/tes{t,a}/hello/g
+```
+
+设置快捷键为 `\`
+
+```vim
+nmap \ :%Subvert//g<Left><Left>
+vmap \ :Subvert//g<Left><Left>
+```
+
+### 插入模式文本增强插件
+
+| 命令                                                      | 操作内容                              |
+| --------------------------------------------------------- | ------------------------------------- |
+| [commentary.vim](https://github.com/tpope/vim-commentary) | **注释**                              |
+| gcc                                                       | 注释或取消注释行                      |
+| gap                                                       | 注释或取消注释段落                    |
+|                                                           |                                       |
+| [targets.vim](#targets)                                   | **增强 normal 模式下的 `di` 和 `da`** |
+| d2i(                                                      | (b(a)b) -> ()                         |
+| dI(                                                       | ( b ) -> ( )                          |
+
+<span id="targets"></span>
+
+#### [targets.vim](https://github.com/wellle/targets.vim#separator-text-objects) 增强 normal 模式下的 `di` 和 `da`
+
+**示例文本:**
+
+```vim
+(b(a)b)
+───┘
+```
+
+输入: `di(`
+
+```vim
+(b()b)
+```
+
+而输入: `d2i(` 会删除第二括号内的内容
+
+```vim
+()
+```
+
+**示例文本 2:**
+
+```vim
+' test '
+───┘
+```
+
+输入: `di'` 不保留空格
+
+```vim
+''
+```
+
+输入: `dI'` 会保留空格
+
+```vim
+'  '
+```
+
 # reference
 
 - [AT LEAST ONE VIM TRICK YOU MIGHT NOT KNOW](https://www.hillelwayne.com/post/intermediate-vim/)
+
+# other vim ui
+
+- [gonvim](https://github.com/dzhou121/gonvim)
+
+- [Spacevim](https://github.com/SpaceVim/SpaceVim)
+
+- [oni 用 typescript 开发的 Electron 增强版 nvim](https://github.com/onivim/oni)

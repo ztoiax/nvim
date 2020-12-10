@@ -1,70 +1,78 @@
 source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
-" Plug 'voldikss/vim-translate-me'  "翻译
-" Plug 'ryanoasis/vim-devicons'
-Plug 'honza/vim-snippets'            "代码片段
+
+""""" ui """""
 Plug 'mhinz/vim-startify'            "启动界面
 Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
 Plug 'morhetz/gruvbox'               "主题
 Plug 'ryanoasis/vim-devicons'        "图标
+Plug 'junegunn/goyo.vim'             "沉浸阅读
+Plug 'camspiers/animate.vim'         "窗口动画
+Plug 'luochen1990/rainbow'           "彩虹括号
+Plug 'rhysd/clever-f.vim'            "extends f
+Plug 'liuchengxu/vista.vim'          "侧边栏
+Plug 'simnalamburt/vim-mundo'        "undo tree
+Plug 'bagrat/vim-buffet'             "标签
+Plug 'liuchengxu/vim-which-key'      "按键提示
+Plug 'rhysd/accelerated-jk'          "快速移动
+Plug 'psliwka/vim-smoothie'          "移动动画
+Plug 'voldikss/vim-floaterm'         "浮动窗口
+Plug 'chrisbra/csv.vim'              "csv file format
+Plug 'voldikss/vim-translator'       "翻译
+Plug 'skywind3000/vim-keysound'      "打字机声音
+Plug 'xolox/vim-session'             "打开时恢复分屏
+Plug 'xolox/vim-misc'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
+
+""""" Enhace text """""
+Plug 'wellle/targets.vim'            "enhance di da
+Plug 'tpope/vim-unimpaired'          "行操作
+Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
 Plug 'tpope/vim-abolish'             "替换
 Plug 'tpope/vim-repeat'              "可重复插件操作
-" Plug 'itchyny/vim-cursorword'        "下划线
 Plug 'Yggdroot/indentLine'           "缩进线
 Plug 'tpope/vim-commentary'          "注释
 Plug 'junegunn/vim-easy-align'       "多行对齐
 Plug 'mg979/vim-visual-multi'        "光标多选
-Plug 'skywind3000/vim-keysound'      "打字机声音
-Plug 'junegunn/goyo.vim'             "沉浸阅读
-Plug 'easymotion/vim-easymotion'     "跳转
+" Plug 'itchyny/vim-cursorword'        "下划线
 " Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
-Plug 'camspiers/animate.vim'         "窗口动画
-Plug 'luochen1990/rainbow'           "彩虹括号
-Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
-Plug 'haya14busa/vim-edgemotion'     "函数快速移动
-Plug 'neomake/neomake'               "语法edgemotion检查
-Plug 'sbdchd/neoformat'              "代码排版
-Plug 'rhysd/clever-f.vim'            "extends f
-" Plug 'jsfaint/gen_tags.vim'          "tags
-" Plug 'ludovicchabant/vim-gutentags' "tags
-" Plug 'skywind3000/gutentags_plus'
-Plug 'liuchengxu/vista.vim'         "侧边栏
-Plug 'voldikss/vim-translator'      "翻译
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}                                "markdown预览
-Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
-Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
-" Plug 'padde/jump.vim'                "autojump
-Plug 'simnalamburt/vim-mundo'        "undo tree
-Plug 'liuchengxu/vim-which-key'      "按键提示
-Plug 'bagrat/vim-buffet'             "标签
-Plug 'rhysd/accelerated-jk'          "快速移动
-Plug 'psliwka/vim-smoothie'          "移动动画
-Plug 'guns/xterm-color-table.vim'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-Plug 'voldikss/vim-floaterm'         "浮动窗口
-Plug 'chrisbra/csv.vim'              "open csv file
-Plug 'xolox/vim-session'             "打开时恢复分屏
-Plug 'xolox/vim-misc'
 
-"git
-Plug 'junegunn/gv.vim'               "git commit 浏览器
-Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
-Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
-" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
+""""" Quick jump """""
+Plug 'easymotion/vim-easymotion'     "跳转
+Plug 'haya14busa/vim-edgemotion'     "函数快速移动
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
+" Plug 'jsfaint/gen_tags.vim'          "tags
+" Plug 'ludovicchabant/vim-gutentags' "tags
+" Plug 'skywind3000/gutentags_plus'
+
+""""" Other """""
+Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
+Plug 'neomake/neomake'               "语法edgemotion检查
+Plug 'sbdchd/neoformat'              "代码排版
+Plug 'skywind3000/asyncrun.vim'      "异步
+
+"markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}                                "markdown预览
+Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
+Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
+Plug 'guns/xterm-color-table.vim'
+
 "coc
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
-"异步
-Plug 'skywind3000/asyncrun.vim'
+"git
+Plug 'junegunn/gv.vim'               "git commit 浏览器
+Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
+Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
+" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 call plug#end()
 
