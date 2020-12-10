@@ -23,11 +23,14 @@ nmap <a-0> <Plug>BuffetSwitch(10)
 
 nnoremap <silent> L :bn<CR>
 nnoremap <silent> H :bp<CR>
-nnoremap <silent> <Leader>o :Bonly<CR>
-nnoremap <silent> <Leader>x :Bw<CR>
-nnoremap <silent> <Leader>n :bn<CR>
-nnoremap <silent> <Leader>p :bp<CR>
-nnoremap <silent> <Leader>tt :tabnew<CR>
+nnoremap <silent> <Leader>o  :Bonly<CR>
+nnoremap <silent> <Leader>x  :Bw<CR>
+nnoremap <silent> <Leader>n  :bn<CR>
+nnoremap <silent> <Leader>p  :bp<CR>
+nnoremap <silent> <Leader>tt :tabnew<CR>*
+nnoremap <silent> <C-w>      :Bw<CR>
+nnoremap <silent> <C-t>      :tabnew<CR>*
+
 let g:buffet_use_devicons = 1
 " let g:buffet_show_index   = 1
 let g:buffet_always_show_tabline = 0

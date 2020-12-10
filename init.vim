@@ -28,8 +28,8 @@ Plug 'neomake/neomake'               "语法edgemotion检查
 Plug 'sbdchd/neoformat'              "代码排版
 Plug 'rhysd/clever-f.vim'            "extends f
 " Plug 'jsfaint/gen_tags.vim'          "tags
-Plug 'ludovicchabant/vim-gutentags' "tags
-Plug 'skywind3000/gutentags_plus'
+" Plug 'ludovicchabant/vim-gutentags' "tags
+" Plug 'skywind3000/gutentags_plus'
 Plug 'liuchengxu/vista.vim'         "侧边栏
 Plug 'voldikss/vim-translator'      "翻译
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}                                "markdown预览
@@ -51,6 +51,7 @@ Plug 'xolox/vim-misc'
 "git
 Plug 'junegunn/gv.vim'               "git commit 浏览器
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
+Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
 " Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 "fzf
@@ -62,8 +63,12 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
+"异步
+Plug 'skywind3000/asyncrun.vim'
+
 call plug#end()
 
+set noswapfile               "关闭swap file
 set termguicolors            "enable true colors support
 set ignorecase               "不区分大小写
 set smartcase                "搜大写时不显示小写
@@ -185,6 +190,10 @@ let g:indentLine_showFirstIndentLevel =1
 " This could make the display more compact or more spacious.
 " e.g., more compact: ["▸ ", ""]
 " Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
+
+" change update
+let g:vista_update_on_text_changed = 1
+
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 
 " Executive used when opening vista sidebar without specifying it.
@@ -218,51 +227,26 @@ let g:vista#renderer#icons = {
 \   "function": "\uf794",
 \   "variable": "\uf71b",
 \  }
+
 "tags
-"from 韦易笑
-set tags=./.tags;,.tags
-let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
-" enable gtags module
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" " gutentags搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归 "
+" let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
 
-" config project root markers.
-let g:gutentags_project_root = ['.root']
-
-" generate datebases in my cache directory, prevent gtags files polluting my project
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
-" " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-" let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-
-" " 所生成的数据文件的名称
+" " 所生成的数据文件的名称 "
 " let g:gutentags_ctags_tagfile = '.tags'
 
-" " 同时开启 ctags 和 gtags 支持：
-" let g:gutentags_modules = []
-" if executable('ctags')
-" 	let g:gutentags_modules += ['ctags']
-" endif
-" if executable('gtags-cscope') && executable('gtags')
-" 	let g:gutentags_modules += ['gtags_cscope']
+" " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
+" let s:vim_tags = expand('~/.cache/tags')
+" let g:gutentags_cache_dir = s:vim_tags
+" " 检测 ~/.cache/tags 不存在就新建 "
+" if !isdirectory(s:vim_tags)
+"    silent! call mkdir(s:vim_tags, 'p')
 " endif
 
-" " 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-" let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" " 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
+" " 配置 ctags 的参数 "
 " let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-" let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+" let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
 " let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
-" " 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
-" let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-
-" " 禁用 gutentags 自动加载 gtags 数据库的行为
-" let g:gutentags_auto_add_gtags_cscope = 0
-
 
 " vim-fcitx
 "##### auto fcitx  ###########
@@ -364,6 +348,3 @@ omap f <Plug>(clever-f-f)
 nmap F <Plug>(clever-f-F)
 xmap F <Plug>(clever-f-F)
 omap F <Plug>(clever-f-F)
-nmap t <Plug>(clever-f-t)
-xmap t <Plug>(clever-f-t)
-omap t <Plug>(clever-f-t)

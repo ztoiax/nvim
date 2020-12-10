@@ -3,7 +3,7 @@ if has("nvim")
   command! W w! !sudo tee % > /dev/null
 end
 
-cmap pp  PlugInstall <CR>
+cmap p!  PlugInstall <CR>
 nmap S  :source ~/.config/nvim/init.vim <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
@@ -28,7 +28,7 @@ imap <Leader><Leader> <esc>ysiw
 " Run the current line
 nnoremap <leader>ee :execute getline(line('.'))<cr>
 " Run the current line in sh
-nnoremap <leader>el :execute '!'.getline('.')<cr>
+" nnoremap <leader>el :execute '!'.getline('.')<cr>
 
 " tags
 " noremap <F5> :!ctags -R .
@@ -40,23 +40,23 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 nmap <Tab> :wincmd w <cr>
 
-nmap <C-w>o :only <cr>
-nmap <C-w>q <C-w>c
-nmap <C-w>x <C-w>c
-nmap <C-w>h :vsplit <cr>
-nmap <C-w>k :split <cr>
-nmap <C-w>l :belowright vsplit <cr>
-nmap <C-w>j :belo split <cr>
-nmap <C-w>s :Goyo <cr>
+" nmap <C-w>o :only <cr>
+" nmap <C-w>q <C-w>c
+" nmap <C-w>x <C-w>c
+" nmap <C-w>h :vsplit <cr>
+" nmap <C-w>k :split <cr>
+" nmap <C-w>l :belowright vsplit <cr>
+" nmap <C-w>j :belo split <cr>
+" nmap <C-w>s :Goyo <cr>
 
-" nmap <Leader>sw :only <cr>
-" nmap <Leader>so :only <cr>
-" nmap <Leader>sh :vsplit <cr>
-" nmap <Leader>sk :split <cr>
-" nmap <Leader>sl :belowright vsplit <cr>
-" nmap <Leader>sj :belo split <cr>
-" nmap <Leader>sx <C-w>c
-" nmap <Leader>ss :Goyo <cr>
+nmap <Leader>sw :only <cr>
+nmap <Leader>so :only <cr>
+nmap <Leader>sh :vsplit <cr>
+nmap <Leader>sk :split <cr>
+nmap <Leader>sl :belowright vsplit <cr>
+nmap <Leader>sj :belo split <cr>
+nmap <Leader>sx <C-w>c
+nmap <Leader>ss :Goyo <cr>
 
 "animate
 nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
@@ -153,17 +153,23 @@ map ' <Plug>(clever-f-repeat-back)
 nnoremap tt :Vista!!<cr>
 nnoremap T :Vista!!<cr>
 "
-" Echo translation in the cmdline
-nmap <silent> <Leader>te <Plug>Translate
-vmap <silent> <Leader>te <Plug>TranslateV
-" Display translation in a window
-nmap <silent> <Leader>tw <Plug>TranslateW
-vmap <silent> <Leader>tw <Plug>TranslateWV
-" Replace the text with translation
-nmap <silent> <Leader>tr <Plug>TranslateR
+" echo translation in the cmdline
+nmap <silent> <leader>te <plug>translate
+vmap <silent> <leader>te <plug>translatev
+" display translation in a window
+nmap <silent> <leader>tw <plug>translatew
+vmap <silent> <leader>tw <plug>translatewv
+" replace the text with translation
+nmap <silent> <leader>tr <plug>translater
 vmap <silent> <Leader>tr <Plug>TranslateRV
 " Translate the text in clipboard
 nmap <silent> <Leader>tx <Plug>TranslateX
+
+"asyncrun
+nmap <Leader>ii :.!
+nmap <Leader>io :AsyncRun! -mode=term 
+" Run the current line in terminal
+nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr>
 
 " vim-visual-multi
 let g:VM_maps = {}
