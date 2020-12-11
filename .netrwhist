@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =2
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/tz/.zsh'
 let g:netrw_dirhist_2='/usr/share/nginx/html'
 let g:netrw_dirhist_1='/usr/share/nginx/html/phpRedisAdmin'
 let g:netrw_dirhist_0='/home/tz/.cache/tags'
@@ -9,4 +10,3 @@ let g:netrw_dirhist_7='/var/log/mysql'
 let g:netrw_dirhist_6='/var/log'
 let g:netrw_dirhist_5='/var/log/mysql'
 let g:netrw_dirhist_4='/etc/sysctl.d'
-let g:netrw_dirhist_3='/home/tz/md/.git'

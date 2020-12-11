@@ -117,6 +117,7 @@ nnoremap <Leader>tp :Ipython<CR>
 
 " git
 nnoremap <Leader>gg :Lazygit<CR>
+nnoremap <Leader>gm :Magit<CR>
 nnoremap <Leader>gl :GV <CR>
 
 "undo tree

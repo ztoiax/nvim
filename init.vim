@@ -4,28 +4,28 @@ call plug#begin('~/.config/nvim/plugins')
 """"" ui """""
 Plug 'mhinz/vim-startify'            "启动界面
 Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
+Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'morhetz/gruvbox'               "主题
 Plug 'ryanoasis/vim-devicons'        "图标
 Plug 'junegunn/goyo.vim'             "沉浸阅读
-Plug 'camspiers/animate.vim'         "窗口动画
 Plug 'luochen1990/rainbow'           "彩虹括号
-Plug 'rhysd/clever-f.vim'            "extends f
-Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'simnalamburt/vim-mundo'        "undo tree
 Plug 'bagrat/vim-buffet'             "标签
 Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
+Plug 'camspiers/animate.vim'         "窗口动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
 Plug 'xolox/vim-session'             "打开时恢复分屏
 Plug 'xolox/vim-misc'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
 
 """"" Enhace text """""
 Plug 'wellle/targets.vim'            "enhance di da
+Plug 'rhysd/clever-f.vim'            "extends f
 Plug 'tpope/vim-unimpaired'          "行操作
 Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
@@ -72,6 +72,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 Plug 'junegunn/gv.vim'               "git commit 浏览器
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
 Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
+Plug 'jreybert/vimagit'              "magit
 " Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
 call plug#end()
@@ -346,13 +347,3 @@ source  ~/.config/nvim/snippets/md.vim
 " endfunction
 
 " autocmd VimEnter * call StartUp()
-
-
-"clever_f
-let g:clever_f_not_overwrites_standard_mappings = 1
-nmap f <Plug>(clever-f-f)
-xmap f <Plug>(clever-f-f)
-omap f <Plug>(clever-f-f)
-nmap F <Plug>(clever-f-F)
-xmap F <Plug>(clever-f-F)
-omap F <Plug>(clever-f-F)
