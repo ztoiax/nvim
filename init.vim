@@ -2,15 +2,18 @@ source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
+Plug 'kyazdani42/nvim-web-devicons'  "标签图标
+Plug 'romgrk/barbar.nvim'            "标签
 Plug 'mhinz/vim-startify'            "启动界面
 Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
 Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'morhetz/gruvbox'               "主题
+Plug 'rafi/awesome-vim-colorschemes' "awesome主题
 Plug 'ryanoasis/vim-devicons'        "图标
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'luochen1990/rainbow'           "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
-Plug 'bagrat/vim-buffet'             "标签
+" Plug 'bagrat/vim-buffet'             "标签
 Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
@@ -48,6 +51,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
+
+Plug 'voldikss/vim-skylight'         "jump tags
 " Plug 'jsfaint/gen_tags.vim'          "tags
 " Plug 'ludovicchabant/vim-gutentags' "tags
 " Plug 'skywind3000/gutentags_plus'
@@ -151,13 +156,6 @@ let g:spaceline_colorscheme = 'space'
 let g:session_autosave = 'no'
 "rainbow
 let g:rainbow_active = 1
-"neomake
-let g:neomake_open_list = 2
-" call neomake#configure#automake('rw', 1000)
-call neomake#configure#automake('w')
-" 选择pylint作py检查
-let g:neomake_python_enabled_makers = ['pylint']
-
 " neoformat
 let g:neoformat_python_autopep8 = {
             \ 'exe': 'autopep8',
@@ -258,7 +256,6 @@ let g:vista#renderer#icons = {
 " let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " vim-fcitx
-"##### auto fcitx  ###########
 let g:input_toggle = 1
 function! Fcitx2en()
    let s:input_status = system("fcitx5-remote")
@@ -270,8 +267,10 @@ endfunction
 
 function! Fcitx2zh()
    let s:input_status = system("fcitx5-remote")
-   if s:input_status != 2 && g:input_toggle == 1
-      let l:a = system("fcitx5-remote -o")
+   " if s:input_status != 2 && g:input_toggle == 1
+   if s:input_status == 2
+      " let l:a = system("fcitx5-remote -o")
+      let l:a = system("fcitx5-remote -c")
       let g:input_toggle = 0
    endif
 endfunction
@@ -280,8 +279,7 @@ set ttimeoutlen=150
 "退出插入模式
 autocmd InsertLeave * call Fcitx2en()
 "进入插入模式
-" autocmd InsertEnter * call Fcitx2zh()
-"##### auto fcitx end ######
+autocmd InsertEnter * call Fcitx2zh()
 
 " ===
 " === vimspector
@@ -330,12 +328,13 @@ let g:translator_window_type = 'preview'
 
 " source
 source ~/.config/nvim/config/function.vim
-source ~/.config/nvim/config/vim-buffet.vim
+" source ~/.config/nvim/config/vim-buffet.vim
 source ~/.config/nvim/config/fzf.vim                 "fzf & LeaderF
 source ~/.config/nvim/config/markdown-preview.vim
 " source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/coc.vim                 "coc
 source ~/.config/nvim/config/map.vim                 "map
+source ~/.config/nvim/config/barbar.vim
 " snippets
 source  ~/.config/nvim/snippets/md.vim
 
@@ -347,3 +346,4 @@ source  ~/.config/nvim/snippets/md.vim
 " endfunction
 
 " autocmd VimEnter * call StartUp()
+"

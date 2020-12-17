@@ -56,7 +56,6 @@ nmap <Leader>sh :vsplit <cr>
 nmap <Leader>sk :split <cr>
 nmap <Leader>sl :belowright vsplit <cr>
 nmap <Leader>sj :belo split <cr>
-nmap <Leader>sx <C-w>c
 nmap <Leader>ss :Goyo <cr>
 
 "animate
