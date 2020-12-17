@@ -62,10 +62,11 @@ nnoremap <silent>    <A-8> :BufferGoto 8<CR>
 nnoremap <silent>    <A-9> :BufferLast<CR>
 " Close buffer
 nnoremap <silent>    <C-w> :BufferClose<CR>
+nnoremap <silent>    <leader>x :BufferClose<CR>
 " Wipeout buffer
 "                          :BufferWipeout<CR>
 " Close commands
-"                          :BufferCloseAllButCurrent<CR>
+nnoremap <silent>    <leader>o :BufferCloseAllButCurrent<CR>
 "                          :BufferCloseBuffersRight<CR>
 
 " Other:

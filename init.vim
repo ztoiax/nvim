@@ -2,10 +2,12 @@ source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
+Plug 'wellle/context.vim'            "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
 Plug 'mhinz/vim-startify'            "启动界面
-Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
+Plug 'vim-airline/vim-airline'
+" Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
 Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'morhetz/gruvbox'               "主题
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
@@ -45,20 +47,15 @@ Plug 'mg979/vim-visual-multi'        "光标多选
 """"" Quick jump """""
 Plug 'easymotion/vim-easymotion'     "跳转
 Plug 'haya14busa/vim-edgemotion'     "函数快速移动
+Plug 'pechorin/any-jump.vim'         "lsp-jump
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-
-Plug 'voldikss/vim-skylight'         "jump tags
-" Plug 'jsfaint/gen_tags.vim'          "tags
-" Plug 'ludovicchabant/vim-gutentags' "tags
-" Plug 'skywind3000/gutentags_plus'
-
 """"" Other """""
-Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
+" Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
 Plug 'neomake/neomake'               "语法edgemotion检查
 Plug 'sbdchd/neoformat'              "代码排版
 Plug 'skywind3000/asyncrun.vim'      "异步
@@ -235,26 +232,6 @@ let g:vista#renderer#icons = {
 \   "variable": "\uf71b",
 \  }
 
-"tags
-" " gutentags搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归 "
-" let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
-
-" " 所生成的数据文件的名称 "
-" let g:gutentags_ctags_tagfile = '.tags'
-
-" " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
-" let s:vim_tags = expand('~/.cache/tags')
-" let g:gutentags_cache_dir = s:vim_tags
-" " 检测 ~/.cache/tags 不存在就新建 "
-" if !isdirectory(s:vim_tags)
-"    silent! call mkdir(s:vim_tags, 'p')
-" endif
-
-" " 配置 ctags 的参数 "
-" let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-" let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
-" let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
 " vim-fcitx
 let g:input_toggle = 1
 function! Fcitx2en()
@@ -284,20 +261,20 @@ autocmd InsertEnter * call Fcitx2zh()
 " ===
 " === vimspector
 " ===
-let g:vimspector_enable_mappings = 'HUMAN'
-function! s:read_template_into_buffer(template)
-    " has to be a function to avoid the extra space fzf#run insers otherwise
-    execute '0r ~/.config/nvim/vimspector_json/'.a:template
-endfunction
-command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-            \   'source': 'ls -1 ~/.config/nvim/vimspector_json',
-            \   'down': 20,
-            \   'sink': function('<sid>read_template_into_buffer')
-            \ })
-noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-sign define vimspectorBP text=🛑 texthl=Normal
-sign define vimspectorBPDisabled text=🚫 texthl=Normal
-sign define vimspectorPC text=👉 texthl=SpellBad
+" let g:vimspector_enable_mappings = 'HUMAN'
+" function! s:read_template_into_buffer(template)
+"     " has to be a function to avoid the extra space fzf#run insers otherwise
+"     execute '0r ~/.config/nvim/vimspector_json/'.a:template
+" endfunction
+" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+"             \   'source': 'ls -1 ~/.config/nvim/vimspector_json',
+"             \   'down': 20,
+"             \   'sink': function('<sid>read_template_into_buffer')
+"             \ })
+" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+" sign define vimspectorBP text=🛑 texthl=Normal
+" sign define vimspectorBPDisabled text=🚫 texthl=Normal
+" sign define vimspectorPC text=👉 texthl=SpellBad
 
 " markdown tab
 let g:table_mode_tableize_map = '<leader>it'

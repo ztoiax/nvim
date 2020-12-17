@@ -20,8 +20,9 @@ nmap E v$h
 nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
-nnoremap <Leader>k <C-i>
-nmap <Leader>j <C-o>
+" nmap <Leader>k <C-i>
+nnoremap <C-i> <C-i>
+" nmap <Leader>j <C-o>
 nmap <Leader>w :w<CR>
 
 nmap <Leader><Leader> <esc>ysiw
@@ -151,6 +152,7 @@ set timeoutlen=800
 " clever-f
 map ; <Plug>(clever-f-repeat-forward)
 map ' <Plug>(clever-f-repeat-back)
+
 " vista
 nnoremap tt :Vista!!<cr>
 nnoremap T :Vista!!<cr>

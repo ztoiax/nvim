@@ -35,17 +35,18 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 一共有`46` 个插件
 ![avatar](/Pictures/init.png)
 
-- 可以在 `vim` 打开 `htop` 等终端命令,进行监控
-  ![avatar](/Pictures/htop.png)
+- 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
+  ![avatar](/Pictures/floaterm.gif)
 
 - 快速打开**最近**使用过的文件
-  ![avatar](/Pictures/leader.png)
+  ![avatar](/Pictures/leaderf.gif)
+  ![avatar](/Pictures/ranger.gif)
 
 - `ag插件(类似 grep)`预览包含`linux`(我这里输入的是`linux`)的文件,选择文件后在 `vim` 里打开
-  ![avatar](/Pictures/ag.png)
+  ![avatar](/Pictures/ag.gif)
 
 使用`lazygit`,对`git`进行快速管理
-![avatar](/Pictures/lazygit.png)
+![avatar](/Pictures/lazygit.gif)
 
 ---
 
@@ -54,7 +55,31 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 
 ## Plugin
 
-### [vim-abolish](https://github.com/tpope/vim-abolish) 更强大的替换
+- [查看每个 plugin 的启动时间](https://github.com/hyiltiz/vim-plugins-profile)
+  ![avatar](/Pictures/startuptime.png)
+
+### UI 相关
+
+#### [floaterm(浮动终端)](https://github.com/voldikss/vim-floaterm)
+
+> 通过浮动终端打开 `htop` `glance`
+
+![avatar](/Pictures/floaterm.gif)
+
+### file manager(文件管理器)
+
+#### [LeaderF](https://github.com/Yggdroot/LeaderF)
+
+![avatar](/Pictures/leaderf.gif)
+
+通过 floaterm (浮动终端)打开 `ranger` 文件管理器:
+![avatar](/Pictures/ranger.gif)
+ohter iterm:
+
+- [chadtree](https://github.com/ms-jpq/chadtree)
+- [coc plugin coc-explorer](https://github.com/weirongxu/coc-explorer)
+
+### [更强大的替换 vim-abolish](https://github.com/tpope/vim-abolish)
 
 示例文本:
 
@@ -149,6 +174,8 @@ vmap \ :Subvert//g<Left><Left>
 ```
 
 # reference
+
+- [Vim 从入门到精通](https://github.com/wsdjeg/vim-galore-zh_cn)
 
 - [AT LEAST ONE VIM TRICK YOU MIGHT NOT KNOW](https://www.hillelwayne.com/post/intermediate-vim/)
 
