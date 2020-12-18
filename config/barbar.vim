@@ -60,11 +60,12 @@ nnoremap <silent>    <A-6> :BufferGoto 6<CR>
 nnoremap <silent>    <A-7> :BufferGoto 7<CR>
 nnoremap <silent>    <A-8> :BufferGoto 8<CR>
 nnoremap <silent>    <A-9> :BufferLast<CR>
+nnoremap <silent>    <leader>tt :tabnew<CR>
 " Close buffer
 nnoremap <silent>    <C-w> :BufferClose<CR>
 nnoremap <silent>    <leader>x :BufferClose<CR>
 " Wipeout buffer
-"                          :BufferWipeout<CR>
+":BufferWipeout<CR>
 " Close commands
 nnoremap <silent>    <leader>o :BufferCloseAllButCurrent<CR>
 "                          :BufferCloseBuffersRight<CR>

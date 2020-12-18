@@ -129,7 +129,7 @@ nmap <Leader>ia <Plug>(EasyAlign)
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
-nmap <Leader>ff <Plug>(easymotion-overwin-line)
+nmap <Leader>f0 <Plug>(easymotion-overwin-line)
 nmap <Leader>fw <Plug>(easymotion-overwin-w)
 nmap <Leader>fr :Ranger<CR>
 " vim-bookmarks
@@ -201,12 +201,3 @@ let g:VM_maps["Invert Direction"]            = 'o'
 let g:VM_maps["Find Operator"]               = "m"
 let g:VM_maps["Surround"]                    = 's'
 let g:VM_maps["Replace Pattern"]             = 'r'
-
-" vim-unimpaired
-" nmap < [
-" nmap > ]
-" omap < [
-" omap > ]
-" xmap < [
-" xmap > ]
-

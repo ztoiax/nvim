@@ -106,6 +106,6 @@ vmap <Leader>er <Plug>(coc-translator-ev)
 " vmap <Leader>rr <Plug>(coc-translator-rv)
 
 "coc-git
-set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
+" set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)

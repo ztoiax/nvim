@@ -74,10 +74,19 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 
 通过 floaterm (浮动终端)打开 `ranger` 文件管理器:
 ![avatar](/Pictures/ranger.gif)
-ohter iterm:
+
+**ohter iterm:**
 
 - [chadtree](https://github.com/ms-jpq/chadtree)
 - [coc plugin coc-explorer](https://github.com/weirongxu/coc-explorer)
+- [vim-fzf](https://github.com/junegunn/fzf.vim)
+- [vim-clap](https://github.com/liuchengxu/vim-clap)
+
+### git
+
+####
+
+<++>
 
 ### [更强大的替换 vim-abolish](https://github.com/tpope/vim-abolish)
 

@@ -2,6 +2,8 @@ source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+" Plug 'glepnir/dashboard-nvim'
 Plug 'wellle/context.vim'            "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
@@ -24,14 +26,13 @@ Plug 'camspiers/animate.vim'         "窗口动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
-Plug 'xolox/vim-session'             "打开时恢复分屏
+Plug 'xolox/vim-session'             "启动时恢复会话
 Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
 
 """"" Enhace text """""
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
-Plug 'tpope/vim-unimpaired'          "行操作
 Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
@@ -150,7 +151,8 @@ let g:spaceline_colorscheme = 'space'
 " let g:bookmark_no_default_key_mappings = 1
 
 "session
-let g:session_autosave = 'no'
+let g:session_autoload = 'yes'
+let g:session_autosave = 'yes'
 "rainbow
 let g:rainbow_active = 1
 " neoformat
