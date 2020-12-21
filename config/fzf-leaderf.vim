@@ -32,7 +32,7 @@ let g:Lf_GtagsAutoGenerate = 1
 let g:Lf_Gtagslabel = 'native-pygments'
 " let $GTAGSCONF = '/path/to/share/gtags/gtags.conf'
 
-nmap <Leader>fe :<C-U><C-R>=printf("Leaderf  gtags -r %s --auto-jump", expand("<cword>"))<CR>
+nmap <Leader>fe :<C-U><C-R>=printf("Leaderf  gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 nmap <Leader>fo :<C-U><C-R>=printf("Leaderf  gtags --recall %s", "")<CR><CR>
 nmap <Leader>fj :<C-U><C-R>=printf("Leaderf  gtags --next %s", "")<CR><CR>

@@ -10,14 +10,14 @@
 
 先打开 nvim 和 vim , 然后通过 `strace` 查看它们的系统调用
 
-```sh
-sudo strace -p $(pgrep nvim) 2>&1 | tee /tmp/nvim.log
-sudo strace -p $(pgrep vim) 2>&1 | tee /tmp/vim.log
+```bash
+sudo strace -p $(pgrep -of nvim) 2>&1 | tee /tmp/nvim.log
+sudo strace -p $(pgrep -of vim) 2>&1 | tee /tmp/vim.log
 ```
 
 分别在 vim 和 nvim 简单的操作后关闭，通过 `awk` 进行统计
 
-```sh
+```bash
 awk -F '(' '{print $1}'  /tmp/nvim.log | sort | uniq -c | sort -n
 awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 ```
@@ -64,15 +64,35 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 
 > 通过浮动终端打开 `htop` `glance`
 
+```vim
+function! OpenAnimatedHtop() abort
+  " Open a htop in terminal
+  new term://htop
+  " Send window to bottom and start with small height
+  wincmd J | resize 1
+  " Animate height to 66%
+  call animate#window_percent_height(0.66)
+endfunction
+command! Htop call OpenAnimatedHtop()
+
+"绑定快捷键为<leader>th
+nnoremap <leader>th :Htop<CR>
+```
+
 ![avatar](/Pictures/floaterm.gif)
 
-### file manager(文件管理器)
+### File manager(文件管理器)
 
-#### [LeaderF](https://github.com/Yggdroot/LeaderF)
+[LeaderF](https://github.com/Yggdroot/LeaderF)打开 MRU(最近打开过的文件):
 
-![avatar](/Pictures/leaderf.gif)
+![avatar](/Pictures/leaderf-mru.gif)
 
-通过 floaterm (浮动终端)打开 `ranger` 文件管理器:
+```vim
+"快捷键为<leader>fm
+nmap <Leader>fm :<C-U><C-R>=printf("Leaderf --regexMode mru %s", "")<CR><CR>
+```
+
+通过 `floaterm` 插件打开 [ranger](https://github.com/ranger/ranger) 文件管理器:
 ![avatar](/Pictures/ranger.gif)
 
 **ohter iterm:**
@@ -82,11 +102,74 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 - [vim-fzf](https://github.com/junegunn/fzf.vim)
 - [vim-clap](https://github.com/liuchengxu/vim-clap)
 
+### Search 搜索
+
+leaderf 正则表达式搜索当前文件:
+
+```vim
+nmap <Leader>f/ :<C-U><C-R>=printf("Leaderf --regexMode line %s", "")<CR><CR>
+```
+
+![avatar](/Pictures/leaderf-buffer.gif)
+
+leaderf 在当前文件搜索光标所在的单词:
+
+```vim
+nmap <Leader>f. :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+```
+
+![avatar](/Pictures/leaderf-word.gif)
+
+leaderf 在当前文件搜索光标所在的单词:
+
+```vim
+nmap <Leader>fa :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
+```
+
+![avatar](/Pictures/leaderf-word1.gif)
+
+[ag(类似 grep)](https://github.com/ggreer/the_silver_searcher)插件配合[fzf](https://github.com/junegunn/fzf.vim)插件对当前目录下的所有文件`search` and `open`:
+![avatar](/Pictures/ag.gif)
+
+### tags 跳转
+
+`leaderf` 跳转 tags
+
+```vim
+"自动生成tags
+let g:Lf_GtagsAutoGenerate = 1
+let g:Lf_Gtagslabel = 'native-pygments'
+
+" 跳转函数声明和调用
+nmap <Leader>fe :<C-U><C-R>=printf("Leaderf  gtags -r %s --auto-jump"word, expand("<cword>"))<CR><CR>
+
+" 跳转至函数定义
+nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+```
+
+![avatar](/Pictures/leaderf-tags.gif)
+
+[any-jump](https://github.com/pechorin/any-jump.vim)跳转 tags
+![avatar](/Pictures/any-jump.gif)
+
 ### git
 
-####
+#### 通过 `floaterm` 插件打开 [lazygit](https://github.com/jesseduffield/lazygit) 一个 git tui:
 
-<++>
+![avatar](/Pictures/lazygit.gif)
+
+#### [GV](https://github.com/junegunn/gv.vim) show commit:
+
+![avatar](/Pictures/gv.png)
+
+#### [fugitive](https://github.com/tpope/vim-fugitive)
+
+> git 命令
+> 如果`Gbrowse` 命令无法运行,则安装这个插件[vim-rhubarb](https://github.com/tpope/vim-rhubarb)
+
+#### [magit](https://github.com/jreybert/vimagit)
+
+![avatar](/Pictures/magit.gif)
 
 ### [更强大的替换 vim-abolish](https://github.com/tpope/vim-abolish)
 
@@ -121,7 +204,7 @@ HELLO
 :%Subvert/tes{t,a}/hello/g
 ```
 
-设置快捷键为 `\`
+绑定快捷键为 `\`:
 
 ```vim
 nmap \ :%Subvert//g<Left><Left>

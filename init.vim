@@ -308,7 +308,7 @@ let g:translator_window_type = 'preview'
 " source
 source ~/.config/nvim/config/function.vim
 " source ~/.config/nvim/config/vim-buffet.vim
-source ~/.config/nvim/config/fzf.vim                 "fzf & LeaderF
+source ~/.config/nvim/config/fzf-leaderf.vim         "fzf & LeaderF
 source ~/.config/nvim/config/markdown-preview.vim
 " source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/coc.vim                 "coc

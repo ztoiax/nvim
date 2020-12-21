@@ -5,7 +5,7 @@ end
 
 cmap p!  PlugInstall <CR>
 nmap S  :source ~/.config/nvim/init.vim <CR>
-nmap \  :%Subvert//g<Left><Left>
+nmap \  :Subvert//g<Left><Left>
 vmap \  :Subvert//g<Left><Left>
 
 nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
