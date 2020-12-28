@@ -53,6 +53,11 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 - 以上几个插件是比较直观，使用比较多的
 - 还有几十个插件,有机会我会一并整理出来
 
+## tips(技巧)
+
+查找中文:
+按下 `/` 输入 `[^\x00-\xffk]`
+
 ## Plugin
 
 - [查看每个 plugin 的启动时间](https://github.com/hyiltiz/vim-plugins-profile)
@@ -65,6 +70,11 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 > 通过浮动终端打开 `htop` `glance`
 
 ```vim
+" floaterm variable
+let g:floaterm_height = 0.9
+let g:floaterm_width = 0.9
+let g:floaterm_position = 'center'
+
 function! OpenAnimatedHtop() abort
   " Open a htop in terminal
   new term://htop
@@ -93,6 +103,12 @@ nmap <Leader>fm :<C-U><C-R>=printf("Leaderf --regexMode mru %s", "")<CR><CR>
 ```
 
 通过 `floaterm` 插件打开 [ranger](https://github.com/ranger/ranger) 文件管理器:
+
+```vim
+command! Ranger FloatermNew ranger
+nmap <Leader>fr :Ranger<CR>
+```
+
 ![avatar](/Pictures/ranger.gif)
 
 **ohter iterm:**
@@ -165,7 +181,8 @@ nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<
 #### [fugitive](https://github.com/tpope/vim-fugitive)
 
 > git 命令
-> 如果`Gbrowse` 命令无法运行,则安装这个插件[vim-rhubarb](https://github.com/tpope/vim-rhubarb)
+
+如果`Gbrowse` 命令无法运行,则安装这个插件[vim-rhubarb](https://github.com/tpope/vim-rhubarb)
 
 #### [magit](https://github.com/jreybert/vimagit)
 
@@ -204,11 +221,12 @@ HELLO
 :%Subvert/tes{t,a}/hello/g
 ```
 
+缺点不支持特殊字符:
 绑定快捷键为 `\`:
 
 ```vim
 nmap \ :%Subvert//g<Left><Left>
-vmap \ :Subvert//g<Left><Left>
+vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 ```
 
 ### 插入模式文本增强插件
@@ -278,3 +296,6 @@ vmap \ :Subvert//g<Left><Left>
 - [Spacevim](https://github.com/SpaceVim/SpaceVim)
 
 - [oni 用 typescript 开发的 Electron 增强版 nvim](https://github.com/onivim/oni)
+
+- [kakoune](https://github.com/mawww/kakoune)
+  > 一个类似 vim 操作模式的编辑器

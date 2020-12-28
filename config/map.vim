@@ -5,8 +5,8 @@ end
 
 cmap p!  PlugInstall <CR>
 nmap S  :source ~/.config/nvim/init.vim <CR>
-nmap \  :Subvert//g<Left><Left>
-vmap \  :Subvert//g<Left><Left>
+nmap \  :%s//g<Left><Left>
+vmap \  :s//g<Left><Left>
 
 nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nmap s  ys
@@ -87,6 +87,8 @@ imap <expr><C-e> pumvisible() ? "\<C-e>" : "\<End>"
 
 imap <leader>j <Esc>wa
 imap <leader>k <Esc>bi
+imap <A-f> <Esc>wa
+imap <A-b> <Esc>bi
 
 " command keymap like emacs
 cmap <C-p> <Up>

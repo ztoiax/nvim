@@ -9,7 +9,6 @@ Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
 Plug 'mhinz/vim-startify'            "启动界面
 Plug 'vim-airline/vim-airline'
-" Plug 'hardcoreplayers/spaceline.vim' "spacemcas状态栏
 Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'morhetz/gruvbox'               "主题
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
@@ -17,7 +16,6 @@ Plug 'ryanoasis/vim-devicons'        "图标
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'luochen1990/rainbow'           "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
-" Plug 'bagrat/vim-buffet'             "标签
 Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
@@ -176,7 +174,7 @@ command! Broot FloatermNew broot -sdpw
 command! Lazygit FloatermNew lazygit
 command! Ipython FloatermNew ipython
 let g:floaterm_height = 0.9
-let g:floaterm_width = 0.7
+let g:floaterm_width = 0.9
 " let g:floaterm_wintype = 'normal'
 " autocmd FileType floaterm wincmd H
 let g:floaterm_position = 'center'
