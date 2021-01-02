@@ -92,7 +92,7 @@
   "eslint.autoFix": true,
   "eslint.autoFixOnSave": true,
   // python
-  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": true,
   //translator
   "translator.toLang": {
     "type": "string",

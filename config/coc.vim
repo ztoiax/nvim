@@ -19,7 +19,7 @@ let g:coc_global_extensions =[
     \ 'coc-yank',
     \ 'coc-actions',
     \ 'coc-spell-checker',
-    \ 'coc-python',
+    \ 'coc-pyright',
     \ 'coc-clangd',
     \]
 augroup MyAutoCmd
@@ -109,3 +109,5 @@ vmap <Leader>er <Plug>(coc-translator-ev)
 " set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "coc-snippets
 imap <C-l> <Plug>(coc-snippets-expand)
+
+nnoremap <silent> <leader>y  :<C-u>CocList -A yank<cr>

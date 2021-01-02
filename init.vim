@@ -4,6 +4,7 @@ call plug#begin('~/.config/nvim/plugins')
 """"" ui """""
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 " Plug 'glepnir/dashboard-nvim'
+Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'wellle/context.vim'            "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
@@ -277,7 +278,7 @@ autocmd InsertEnter * call Fcitx2zh()
 " sign define vimspectorPC text=👉 texthl=SpellBad
 
 " markdown tab
-let g:table_mode_tableize_map = '<leader>it'
+let g:table_mode_tableize_map = '<leader>m'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')

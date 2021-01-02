@@ -116,6 +116,7 @@ nmap <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 nnoremap <Leader>th :Htop<CR>
 nnoremap <Leader>tg :Glances<CR>
 nnoremap <Leader>tp :Ipython<CR>
+nnoremap <Leader>tb :terminal bpytop<CR>
 
 " git
 nnoremap <Leader>gg :Lazygit<CR>
