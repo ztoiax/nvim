@@ -99,8 +99,8 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 " nnoremap <Leader>tr <Plug>(coc-translator-p)
 " vmap <Leader>tr <Plug>(coc-translator-pv)
 " echo
-nnoremap <Leader>er <Plug>(coc-translator-e)
-vmap <Leader>er <Plug>(coc-translator-ev)
+" nnoremap <Leader>ee <Plug>(coc-translator-e)
+" vmap <Leader>ee <Plug>(coc-translator-ev)
 " replace
 " nnoremap <Leader>rr <Plug>(coc-translator-r)
 " vmap <Leader>rr <Plug>(coc-translator-rv)

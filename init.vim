@@ -30,6 +30,7 @@ Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
 
 """"" Enhace text """""
+Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
 Plug 'honza/vim-snippets'            "代码片段
@@ -52,6 +53,7 @@ Plug 'pechorin/any-jump.vim'         "lsp-jump
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'neovim/nvim-lspconfig'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 """"" Other """""
@@ -69,6 +71,10 @@ Plug 'guns/xterm-color-table.vim'
 "coc
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 "git
 Plug 'junegunn/gv.vim'               "git commit 浏览器
@@ -176,8 +182,9 @@ command! Lazygit FloatermNew lazygit
 command! Ipython FloatermNew ipython
 let g:floaterm_height = 0.9
 let g:floaterm_width = 0.9
-" let g:floaterm_wintype = 'normal'
+let g:floaterm_wintype = 'normal'
 " autocmd FileType floaterm wincmd H
+let g:floaterm_autoclose = 1
 let g:floaterm_position = 'center'
 
 "indentLine
@@ -300,9 +307,15 @@ let g:clever_f_chars_match_any_signs = ';'
 
 " translator
 " let g:translator_history_enable = 1
- let g:translator_default_engines = get(g:, 'translator_default_engines', ['youdao'])
-" let g:translator_proxy_url = 'http://127.0.0.1:80'
-let g:translator_window_type = 'preview'
+let g:translator_default_engines = get(g:, 'translator_default_engines', ['google'])
+" let g:translator_proxy_url = ''
+let g:translator_window_type = 'popup'
+
+" context.vim
+let g:context_add_mappings = 0
+
+" Far
+let g:far#enable_undo=1
 
 " source
 source ~/.config/nvim/config/function.vim
@@ -324,4 +337,3 @@ source  ~/.config/nvim/snippets/md.vim
 " endfunction
 
 " autocmd VimEnter * call StartUp()
-"

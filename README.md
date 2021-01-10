@@ -4,7 +4,7 @@
 
 即使是最新的 vim8.2 也还在用 `select` 系统调用 ，而 nvim 已经用 `epoll` 了
 
-![avatar](/Pictures/epoll.png)
+![avatar](./Pictures/epoll.png)
 
 以下统计是 nvim 和 vim 的系统调用测试：
 
@@ -22,9 +22,11 @@ awk -F '(' '{print $1}'  /tmp/nvim.log | sort | uniq -c | sort -n
 awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 ```
 
-- 左为 nvim
-- 右为 vim
-  ![avatar](/Pictures/strace.png)
+- 左为 `nvim`
+- 右为 `vim`
+  ![avatar](./Pictures/strace.png)
+
+可以用 `nvim -d` 代替 `vimdiff`
 
 ## 配置
 
@@ -33,20 +35,20 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 - 其中参考最多是 [Thinkvim](https://github.com/hardcoreplayers/ThinkVim)
 
 一共有`46` 个插件
-![avatar](/Pictures/init.png)
+![avatar](./Pictures/init.png)
 
 - 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
-  ![avatar](/Pictures/floaterm.gif)
+  ![avatar](./Pictures/floaterm.gif)
 
 - 快速打开**最近**使用过的文件
-  ![avatar](/Pictures/leaderf.gif)
-  ![avatar](/Pictures/ranger.gif)
+  ![avatar](./Pictures/leaderf.gif)
+  ![avatar](./Pictures/ranger.gif)
 
 - `ag插件(类似 grep)`预览包含`linux`(我这里输入的是`linux`)的文件,选择文件后在 `vim` 里打开
-  ![avatar](/Pictures/ag.gif)
+  ![avatar](./Pictures/ag.gif)
 
 使用`lazygit`,对`git`进行快速管理
-![avatar](/Pictures/lazygit.gif)
+![avatar](./Pictures/lazygit.gif)
 
 ---
 
@@ -56,12 +58,12 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 ## tips(技巧)
 
 查找中文:
-按下 `/` 输入 `[^\x00-\xffk]`
+按下 <kbd>/</kbd> 输入 `[^\x00-\xffk]`
 
 ## Plugin
 
 - [查看每个 plugin 的启动时间](https://github.com/hyiltiz/vim-plugins-profile)
-  ![avatar](/Pictures/startuptime.png)
+  ![avatar](./Pictures/startuptime.png)
 
 ### UI 相关
 
@@ -89,13 +91,13 @@ command! Htop call OpenAnimatedHtop()
 nnoremap <leader>th :Htop<CR>
 ```
 
-![avatar](/Pictures/floaterm.gif)
+![avatar](./Pictures/floaterm.gif)
 
 ### File manager(文件管理器)
 
 [LeaderF](https://github.com/Yggdroot/LeaderF)打开 MRU(最近打开过的文件):
 
-![avatar](/Pictures/leaderf-mru.gif)
+![avatar](./Pictures/leaderf-mru.gif)
 
 ```vim
 "快捷键为<leader>fm
@@ -109,7 +111,7 @@ command! Ranger FloatermNew ranger
 nmap <Leader>fr :Ranger<CR>
 ```
 
-![avatar](/Pictures/ranger.gif)
+![avatar](./Pictures/ranger.gif)
 
 **ohter iterm:**
 
@@ -126,7 +128,7 @@ leaderf 正则表达式搜索当前文件:
 nmap <Leader>f/ :<C-U><C-R>=printf("Leaderf --regexMode line %s", "")<CR><CR>
 ```
 
-![avatar](/Pictures/leaderf-buffer.gif)
+![avatar](./Pictures/leaderf-buffer.gif)
 
 leaderf 在当前文件搜索光标所在的单词:
 
@@ -134,7 +136,7 @@ leaderf 在当前文件搜索光标所在的单词:
 nmap <Leader>f. :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 ```
 
-![avatar](/Pictures/leaderf-word.gif)
+![avatar](./Pictures/leaderf-word.gif)
 
 leaderf 在当前文件搜索光标所在的单词:
 
@@ -142,10 +144,10 @@ leaderf 在当前文件搜索光标所在的单词:
 nmap <Leader>fa :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 ```
 
-![avatar](/Pictures/leaderf-word1.gif)
+![avatar](./Pictures/leaderf-word1.gif)
 
 [ag(类似 grep)](https://github.com/ggreer/the_silver_searcher)插件配合[fzf](https://github.com/junegunn/fzf.vim)插件对当前目录下的所有文件`search` and `open`:
-![avatar](/Pictures/ag.gif)
+![avatar](./Pictures/ag.gif)
 
 ### tags 跳转
 
@@ -163,20 +165,20 @@ nmap <Leader>fe :<C-U><C-R>=printf("Leaderf  gtags -r %s --auto-jump"word, expan
 nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 ```
 
-![avatar](/Pictures/leaderf-tags.gif)
+![avatar](./Pictures/leaderf-tags.gif)
 
 [any-jump](https://github.com/pechorin/any-jump.vim)跳转 tags
-![avatar](/Pictures/any-jump.gif)
+![avatar](./Pictures/any-jump.gif)
 
 ### git
 
 #### 通过 `floaterm` 插件打开 [lazygit](https://github.com/jesseduffield/lazygit) 一个 git tui:
 
-![avatar](/Pictures/lazygit.gif)
+![avatar](./Pictures/lazygit.gif)
 
 #### [GV](https://github.com/junegunn/gv.vim) show commit:
 
-![avatar](/Pictures/gv.png)
+![avatar](./Pictures/gv.png)
 
 #### [fugitive](https://github.com/tpope/vim-fugitive)
 
@@ -186,7 +188,7 @@ nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<
 
 #### [magit](https://github.com/jreybert/vimagit)
 
-![avatar](/Pictures/magit.gif)
+![avatar](./Pictures/magit.gif)
 
 ### [更强大的替换 vim-abolish](https://github.com/tpope/vim-abolish)
 
@@ -222,7 +224,7 @@ HELLO
 ```
 
 缺点不支持特殊字符:
-绑定快捷键为 `\`:
+绑定快捷键为 <kbd> \ </kbd>:
 
 ```vim
 nmap \ :%Subvert//g<Left><Left>
@@ -243,7 +245,7 @@ vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 
 <span id="targets"></span>
 
-#### [targets.vim](https://github.com/wellle/targets.vim#separator-text-objects) 增强 normal 模式下的 `di` 和 `da`
+#### [targets.vim](https://github.com/wellle/targets.vim#separator-text-objects) 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`
 
 **示例文本:**
 
@@ -252,13 +254,13 @@ vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 ───┘
 ```
 
-输入: `di(`
+输入: <kbd>di(`
 
 ```vim
 (b()b)
 ```
 
-而输入: `d2i(` 会删除第二括号内的内容
+而输入: <kbd>d2i(</kbd>会删除第二括号内的内容
 
 ```vim
 ()
@@ -271,13 +273,13 @@ vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 ───┘
 ```
 
-输入: `di'` 不保留空格
+输入: <kbd>di'</kbd>不保留空格
 
 ```vim
 ''
 ```
 
-输入: `dI'` 会保留空格
+输入: <kbd>dI'</kbd>会保留空格
 
 ```vim
 '  '

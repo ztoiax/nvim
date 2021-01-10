@@ -4,11 +4,11 @@ if has("nvim")
 end
 
 cmap p!  PlugInstall <CR>
-nmap S  :source ~/.config/nvim/init.vim <CR>
+nmap S  :source % <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
 
-nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
+" nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nmap s  ys
 vmap s  S
 " remove unwanted space
@@ -36,11 +36,11 @@ nnoremap <leader>ee :execute getline(line('.'))<cr>
 " noremap <F5> :!ctags -R .
 
 " window
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-nmap <Tab> :wincmd w <cr>
+nmap <C-h> :wincmd h <cr>
+nmap <C-j> :wincmd j <cr>
+nmap <C-k> :wincmd k <cr>
+nmap <C-l> :wincmd l <cr>
+" nmap <Tab> :wincmd w <cr>
 
 " nmap <C-w>o :only <cr>
 " nmap <C-w>q <C-w>c
@@ -113,10 +113,9 @@ nmap q :q <CR>
 "关闭高亮
 nmap <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 
-nnoremap <Leader>th :Htop<CR>
-nnoremap <Leader>tg :Glances<CR>
 nnoremap <Leader>tp :Ipython<CR>
 nnoremap <Leader>tb :terminal bpytop<CR>
+nnoremap <Leader>tg :Mytop<CR>
 
 " git
 nnoremap <Leader>gg :Lazygit<CR>
@@ -204,3 +203,15 @@ let g:VM_maps["Invert Direction"]            = 'o'
 let g:VM_maps["Find Operator"]               = "m"
 let g:VM_maps["Surround"]                    = 's'
 let g:VM_maps["Replace Pattern"]             = 'r'
+
+" translator
+nmap <silent> <Leader>ee <Plug>Translate
+vmap <silent> <Leader>ee <Plug>TranslateV
+" Display translation in a window
+nmap <silent> <Leader>ew <Plug>TranslateW
+vmap <silent> <Leader>ew <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> <Leader>er <Plug>TranslateR
+vmap <silent> <Leader>er <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> <Leader>ex <Plug>TranslateX
