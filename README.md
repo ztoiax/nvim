@@ -1,3 +1,28 @@
+<!-- vim-markdown-toc GFM -->
+
+* [nvim](#nvim)
+    * [why nvim](#why-nvim)
+    * [配置](#配置)
+    * [tips(技巧)](#tips技巧)
+    * [Plugin](#plugin)
+        * [UI 相关](#ui-相关)
+            * [floaterm(浮动终端)](#floaterm浮动终端)
+        * [File manager(文件管理器)](#file-manager文件管理器)
+        * [Search 搜索](#search-搜索)
+        * [tags 跳转](#tags-跳转)
+        * [git](#git)
+            * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
+            * [GV show commit:](#gv-show-commit)
+            * [fugitive](#fugitive)
+            * [magit](#magit)
+        * [更强大的替换 vim-abolish](#更强大的替换-vim-abolish)
+        * [插入模式文本增强插件](#插入模式文本增强插件)
+            * [targets.vim 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`](#targetsvim-增强-normal-模式下的-kbddikbd和-kbdda)
+* [reference](#reference)
+* [other vim ui](#other-vim-ui)
+
+<!-- vim-markdown-toc -->
+
 # nvim
 
 ## why nvim
@@ -27,6 +52,19 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
   ![avatar](./Pictures/strace.png)
 
 可以用 `nvim -d` 代替 `vimdiff`
+
+- 编辑远程文件
+
+```bash
+nvim scp://user@host//etc/fstab
+```
+
+在 vim 配置文件加入
+
+```vim
+command! Ecentos :e scp://root@192.168.100.208//
+command! Esuse :e scp://root@192.168.100.71//
+```
 
 ## 配置
 

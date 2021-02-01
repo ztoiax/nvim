@@ -111,3 +111,16 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 imap <C-l> <Plug>(coc-snippets-expand)
 
 nnoremap <silent> <leader>y  :<C-u>CocList -A yank<cr>
+
+" neoformat
+let g:neoformat_python_autopep8 = {
+            \ 'exe': 'autopep8',
+            \ 'args': ['-s 4', '-E'],
+            \ 'replace': 1,
+            \ 'stdin': 1,
+            \ 'env': ["DEBUG=1"],
+            \ 'valid_exit_codes': [0, 23],
+            \ 'no_append': 1,
+            \ }
+
+let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']

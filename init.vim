@@ -3,21 +3,20 @@ call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
-" Plug 'glepnir/dashboard-nvim'
+" Plug 'glepnir/dashboard-nvim'        "启动界面
+Plug 'mhinz/vim-startify'            "启动界面
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'wellle/context.vim'            "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
-Plug 'mhinz/vim-startify'            "启动界面
 Plug 'vim-airline/vim-airline'
 Plug 'liuchengxu/vista.vim'          "侧边栏
-Plug 'morhetz/gruvbox'               "主题
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
 Plug 'ryanoasis/vim-devicons'        "图标
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'luochen1990/rainbow'           "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
-Plug 'liuchengxu/vim-which-key'      "按键提示
+" Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
@@ -53,7 +52,7 @@ Plug 'pechorin/any-jump.vim'         "lsp-jump
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'neovim/nvim-lspconfig'
+Plug 'ojroques/nvim-lspfuzzy'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 """"" Other """""
@@ -72,7 +71,6 @@ Plug 'guns/xterm-color-table.vim'
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
-Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -83,8 +81,14 @@ Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
 Plug 'jreybert/vimagit'              "magit
 " Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
 
+"playground
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
+
 call plug#end()
 
+" set scrollbind               "多文件下窗口同步移动
+set shell=/usr/bin/dash      "dash的速度比bash,zsh快
 set noswapfile               "关闭swap file
 set termguicolors            "enable true colors support
 set ignorecase               "不区分大小写
@@ -110,6 +114,7 @@ set cursorline               "突出显示当前在光标下的行。
 set autochdir                "自动切换工作目录
 set autoread                 "文件发生外部改变就会发出提示
 set encoding=UTF-8
+set ttimeoutlen=150
 " set spell                  "拼写检查
 " set noswapfile             "Disable swap files.
 " set listchars=tab:>-,trail:~,extends:>,precedes:<,space:·
@@ -135,205 +140,43 @@ let g:python3_host_prog = '/usr/bin/python3'
 "highlight
 highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
-" transparent
-" highlight Normal     ctermbg=NONE guibg=NONE
-" highlight LineNr     ctermbg=NONE guibg=NONE
-" highlight SignColumn ctermbg=NONE guibg=NONE
-
-" spaceline
-let g:spaceline_seperate_style= 'slant-cons'
-let g:spaceline_colorscheme = 'space'
-
-"bookmarks
-" let g:bookmark_save_per_working_dir = 1
-" let g:bookmark_auto_save = 1
-" let g:bookmark_highlight_lines = 1
-" let g:bookmark_manage_per_buffer = 1
-" let g:bookmark_save_per_working_dir = 1
-" let g:bookmark_center = 1
-" let g:bookmark_auto_close = 1
-" let g:bookmark_location_list = 1
-" let g:bookmark_no_default_key_mappings = 1
-
-"session
-let g:session_autoload = 'yes'
-let g:session_autosave = 'yes'
-"rainbow
-let g:rainbow_active = 1
-" neoformat
-let g:neoformat_python_autopep8 = {
-            \ 'exe': 'autopep8',
-            \ 'args': ['-s 4', '-E'],
-            \ 'replace': 1,
-            \ 'stdin': 1,
-            \ 'env': ["DEBUG=1"],
-            \ 'valid_exit_codes': [0, 23],
-            \ 'no_append': 1,
-            \ }
-
-let g:neoformat_enabled_python = ['autopep8', 'yapf', 'docformatter']
-
-"floaterm
-hi FloatermNF guibg=#282828
-hi FloatermBorderNF guibg=#282828 guifg=#504945
-command! Ranger FloatermNew ranger
-command! Broot FloatermNew broot -sdpw
-command! Lazygit FloatermNew lazygit
-command! Ipython FloatermNew ipython
-let g:floaterm_height = 0.9
-let g:floaterm_width = 0.9
-let g:floaterm_wintype = 'normal'
-" autocmd FileType floaterm wincmd H
-let g:floaterm_autoclose = 1
-let g:floaterm_position = 'center'
-
-"indentLine
-"竖线
-let g:indentLine_enabled = 1
-let g:indentLine_char='┆'
-let g:indentLine_fileTypeExclude = ['denite','startify','tagbar','vista_kind','vista']
-let g:indentLine_concealcursor = 'niv'
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui= '#504945'
-let g:indentLine_showFirstIndentLevel =1
-
-"vista
-" How each level is indented and what to prepend.
-" This could make the display more compact or more spacious.
-" e.g., more compact: ["▸ ", ""]
-" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
-
-" change update
-let g:vista_update_on_text_changed = 1
-
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-
-" Executive used when opening vista sidebar without specifying it.
-" See all the avaliable executives via `:echo g:vista#executives`.
-let g:vista_default_executive = 'ctags'
-
-" Set the executive for some filetypes explicitly. Use the explicit executive
-" instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive.
-let g:vista_executive_for = {
-  \ 'cpp': 'vim_lsp',
-  \ 'php': 'vim_lsp',
-  \ }
-
-" Declare the command including the executable and options used to generate ctags output
-" for some certain filetypes.The file path will be appened to your custom command.
-" For example:
-let g:vista_ctags_cmd = {
-      \ 'haskell': 'hasktags -x -o - -c',
-      \ }
-
-" To enable fzf's preview window set g:vista_fzf_preview.
-" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
-" For example:
-let g:vista_fzf_preview = ['right:50%']
-" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-let g:vista#renderer#enable_icon = 1
-
-" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
-
-" vim-fcitx
-let g:input_toggle = 1
-function! Fcitx2en()
-   let s:input_status = system("fcitx5-remote")
-   if s:input_status == 2
-      let g:input_toggle = 1
-      let l:a = system("fcitx5-remote -c")
-   endif
-endfunction
-
-function! Fcitx2zh()
-   let s:input_status = system("fcitx5-remote")
-   " if s:input_status != 2 && g:input_toggle == 1
-   if s:input_status == 2
-      " let l:a = system("fcitx5-remote -o")
-      let l:a = system("fcitx5-remote -c")
-      let g:input_toggle = 0
-   endif
-endfunction
-
-set ttimeoutlen=150
-"退出插入模式
-autocmd InsertLeave * call Fcitx2en()
-"进入插入模式
-autocmd InsertEnter * call Fcitx2zh()
-
-" ===
-" === vimspector
-" ===
-" let g:vimspector_enable_mappings = 'HUMAN'
-" function! s:read_template_into_buffer(template)
-"     " has to be a function to avoid the extra space fzf#run insers otherwise
-"     execute '0r ~/.config/nvim/vimspector_json/'.a:template
-" endfunction
-" command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
-"             \   'source': 'ls -1 ~/.config/nvim/vimspector_json',
-"             \   'down': 20,
-"             \   'sink': function('<sid>read_template_into_buffer')
-"             \ })
-" noremap <leader>vs :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
-" sign define vimspectorBP text=🛑 texthl=Normal
-" sign define vimspectorBPDisabled text=🚫 texthl=Normal
-" sign define vimspectorPC text=👉 texthl=SpellBad
-
-" markdown tab
-let g:table_mode_tableize_map = '<leader>m'
-function! s:isAtStartOfLine(mapping)
-  let text_before_cursor = getline('.')[0 : col('.')-1]
-  let mapping_pattern = '\V' . escape(a:mapping, '\')
-  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-endfunction
-
-inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-" clever-f
-" Ignore case (忽略大小写)
-let g:clever_f_ignore_case = 1
-let g:clever_f_chars_match_any_signs = ';'
-
-" translator
-" let g:translator_history_enable = 1
-let g:translator_default_engines = get(g:, 'translator_default_engines', ['google'])
-" let g:translator_proxy_url = ''
-let g:translator_window_type = 'popup'
-
-" context.vim
-let g:context_add_mappings = 0
 
 " Far
 let g:far#enable_undo=1
 
 " source
-source ~/.config/nvim/config/function.vim
-" source ~/.config/nvim/config/vim-buffet.vim
-source ~/.config/nvim/config/fzf-leaderf.vim         "fzf & LeaderF
-source ~/.config/nvim/config/markdown-preview.vim
 " source ~/.config/nvim/config/keysound.vim
-source ~/.config/nvim/config/coc.vim                 "coc
-source ~/.config/nvim/config/map.vim                 "map
+source ~/.config/nvim/config/function.vim
+source ~/.config/nvim/config/fzf-leaderf.vim
+source ~/.config/nvim/config/markdown.vim
+source ~/.config/nvim/config/code.vim
 source ~/.config/nvim/config/barbar.vim
+source ~/.config/nvim/config/move.vim
+source ~/.config/nvim/config/tui.vim
+source ~/.config/nvim/config/ui.vim
+
+" map
+source ~/.config/nvim/config/map.vim
+source ~/.config/nvim/config/emacs-map.vim
+source ~/.config/nvim/config/window-map.vim
+
 " snippets
 source  ~/.config/nvim/snippets/md.vim
 
-"Start up
-" function! StartUp()
-"     if 0 == argc()
-"         Vista
-"     end
-" endfunction
+" Start up
+function! StartUp()
+    if 0 == argc()
+        :Vista
+    end
+endfunction
 
-" autocmd VimEnter * call StartUp()
+" autocmd
+au VimEnter * call StartUp()
+
+" 打开终端自动进入插入模式
+au TermOpen * startinsert
+" au TermClose * :q
+
+" command
+command! Ecentos :e scp://root@192.168.100.208//
+command! Esuse :e scp://root@192.168.100.71//

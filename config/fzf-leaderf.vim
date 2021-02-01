@@ -1,7 +1,7 @@
 "fzf
 nmap <Leader>fh :History <CR>
 nmap <Leader>ff :Files  <CR>
-nmap <Leader>a  :Ag! <CR>
+nmap <Leader>a  :Rg! <CR>
 nmap <Leader>fc :Colors<CR>
 nmap <Leader>f<Space> :Marks  <CR>
 
