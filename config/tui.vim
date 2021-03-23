@@ -2,8 +2,7 @@
 nnoremap <Leader>tu :MundoToggle <CR>
 
 " vim-which-key 按键提示
-" nnoremap <silent> <leader> :WhichKey ','<CR>
-" set timeoutlen=800
+nnoremap <silent> <leader> :WhichKey ','<CR>
 
 " translator 翻译
 " let g:translator_history_enable = 1
@@ -11,6 +10,7 @@ let g:translator_default_engines = get(g:, 'translator_default_engines', ['googl
 " let g:translator_proxy_url = ''
 let g:translator_window_type = 'popup'
 
+nmap <C-q> :Translate 
 nmap <silent> <Leader>te <Plug>Translate
 vmap <silent> <Leader>te <Plug>TranslateV
 " Display translation in a window

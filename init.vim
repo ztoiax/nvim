@@ -4,7 +4,8 @@ call plug#begin('~/.config/nvim/plugins')
 """"" ui """""
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 " Plug 'glepnir/dashboard-nvim'        "启动界面
-Plug 'mhinz/vim-startify'            "启动界面
+" Plug 'mhinz/vim-startify'            "启动界面
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'wellle/context.vim'            "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
@@ -12,11 +13,10 @@ Plug 'romgrk/barbar.nvim'            "标签
 Plug 'vim-airline/vim-airline'
 Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
-Plug 'ryanoasis/vim-devicons'        "图标
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'luochen1990/rainbow'           "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
-" Plug 'liuchengxu/vim-which-key'      "按键提示
+Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
@@ -52,8 +52,13 @@ Plug 'pechorin/any-jump.vim'         "lsp-jump
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'ojroques/nvim-lspfuzzy'
+" Plug 'ojroques/nvim-lspfuzzy'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+" telescope
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 
 """"" Other """""
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
@@ -71,9 +76,6 @@ Plug 'guns/xterm-color-table.vim'
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
 "git
 Plug 'junegunn/gv.vim'               "git commit 浏览器
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
@@ -88,7 +90,8 @@ Plug 'nvim-treesitter/playground'
 call plug#end()
 
 " set scrollbind               "多文件下窗口同步移动
-set shell=/usr/bin/dash      "dash的速度比bash,zsh快
+" set shell=/usr/bin/dash      "dash的速度比bash,zsh快
+set shell=/usr/bin/zsh
 set noswapfile               "关闭swap file
 set termguicolors            "enable true colors support
 set ignorecase               "不区分大小写
@@ -164,14 +167,14 @@ source ~/.config/nvim/config/window-map.vim
 source  ~/.config/nvim/snippets/md.vim
 
 " Start up
-function! StartUp()
-    if 0 == argc()
-        :Vista
-    end
-endfunction
+" function! StartUp()
+"     if 0 == argc()
+"         :Vista
+"     end
+" endfunction
 
 " autocmd
-au VimEnter * call StartUp()
+" au VimEnter * call StartUp()
 
 " 打开终端自动进入插入模式
 au TermOpen * startinsert

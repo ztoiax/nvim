@@ -14,8 +14,9 @@ vmap s  S
 " remove unwanted space
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
-nmap <space>p "0p
-vmap <space>p "0p
+nmap <C-e> <C-u>
+nmap <C-y> "0p
+vmap <C-y> "0p
 nmap Y y$
 nmap yu y0
 nmap du d0

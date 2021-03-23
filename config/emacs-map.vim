@@ -3,16 +3,16 @@ imap <C-h> <BS>
 imap <C-d> <Del>
 imap <C-w> <C-[>diwa
 " coc冲突
-" imap <C-k> <Esc>lDa
+imap <C-k> <Esc>lDa
 imap <C-u> <Esc>d0xi
-imap <C-y> <Esc>Pa
 
 imap <C-b> <Left>
 imap <C-f> <Right>
 imap <C-a> <Home>
 imap <C-n> <Down>
 imap <C-p> <Up>
-imap <C-z> <ESC>ua
+imap <C-y> <Esc>ui
+imap <C-_> <Esc>xi
 imap <C-o> <Esc>o
 imap <C-s> <esc>:w<CR>
 imap <C-q> <esc>:wq<CR>
