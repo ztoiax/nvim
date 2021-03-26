@@ -104,3 +104,6 @@ let g:highlightedyank_highlight_duration = 300
 
 " gitsigns
 lua require('gitsigns').setup()
+
+"hipairs
+let g:hiPairs_stopline_more = 150

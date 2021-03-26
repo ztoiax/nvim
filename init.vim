@@ -4,6 +4,7 @@ call plug#begin('~/.config/nvim/plugins')
 """"" ui """""
 " Plug 'glepnir/dashboard-nvim'        "启动界面
 " Plug 'mhinz/vim-startify'            "启动界面
+Plug 'Yggdroot/hiPairs'              "highlight cursor pairs
 Plug 'glepnir/indent-guides.nvim'    "highlight identline
 Plug 'machakann/vim-highlightedyank' "highlight yank
 Plug 'RRethy/vim-illuminate'         "highlight cursor word

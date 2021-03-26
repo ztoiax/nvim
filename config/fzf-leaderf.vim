@@ -4,10 +4,25 @@ nmap <Leader>ff :Files  <CR>
 nmap <Leader>a  :Rg! <CR>
 nmap <Leader>fc :Colors<CR>
 nmap <Leader>f<Space> :Marks  <CR>
+nmap <Leader>fg :GF  <CR>
+" nmap <Leader>ft :BTags  <CR>
+" nmap <Leader>f/ :BLines  <CR>
 
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
  " let g:fzf_layout = {
  "  \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.5)'
  "  \ }
+ 
+ " rga instead rg
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rga --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
 "LeaderF
 let g:Lf_PreviewInPopup = 1
@@ -111,4 +126,4 @@ lua require'fzf_lsp'.setup()
 nmap <leader>j :References<cr>
 nmap <leader>k :Definitions<cr>
 
-" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
