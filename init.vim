@@ -2,9 +2,12 @@ source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
-" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 " Plug 'glepnir/dashboard-nvim'        "启动界面
 " Plug 'mhinz/vim-startify'            "启动界面
+Plug 'glepnir/indent-guides.nvim'    "highlight identline
+Plug 'machakann/vim-highlightedyank' "highlight yank
+Plug 'RRethy/vim-illuminate'         "highlight cursor word
+Plug 'norcalli/nvim-colorizer.lua'   "highlight color
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'wellle/context.vim'            "移动时显示函数上下文
@@ -14,7 +17,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
 Plug 'junegunn/goyo.vim'             "沉浸阅读
-Plug 'luochen1990/rainbow'           "彩虹括号
+Plug 'p00f/nvim-ts-rainbow'          "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
 Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'rhysd/accelerated-jk'          "快速移动
@@ -37,34 +40,32 @@ Plug 'gcmt/wildfire.vim'             "快速块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
 Plug 'tpope/vim-abolish'             "替换
 Plug 'tpope/vim-repeat'              "可重复插件操作
-Plug 'Yggdroot/indentLine'           "缩进线
+Plug 'FloatingLion/LocalIndentLie.vim'
 Plug 'tpope/vim-commentary'          "注释
 Plug 'junegunn/vim-easy-align'       "多行对齐
 Plug 'mg979/vim-visual-multi'        "光标多选
+Plug 'windwp/nvim-autopairs'         "autopairs
 " Plug 'itchyny/vim-cursorword'        "下划线
 " Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
 
 """"" Quick jump """""
 Plug 'easymotion/vim-easymotion'     "跳转
 Plug 'haya14busa/vim-edgemotion'     "函数快速移动
-Plug 'pechorin/any-jump.vim'         "lsp-jump
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'ojroques/nvim-lspfuzzy'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " telescope
-" Plug 'nvim-lua/popup.nvim'
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 """"" Other """""
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
-Plug 'neomake/neomake'               "语法edgemotion检查
-Plug 'sbdchd/neoformat'              "代码排版
 Plug 'skywind3000/asyncrun.vim'      "异步
+Plug 'bfredl/nvim-miniyank'          "yank历史
 
 "markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}                                "markdown预览
@@ -72,21 +73,25 @@ Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
 Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
 Plug 'guns/xterm-color-table.vim'
 
-"coc
+" code
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
+" Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'onsails/lspkind-nvim'
+Plug 'nvim-treesitter/playground'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'gfanto/fzf-lsp.nvim'           "fzf search lsp
 
 "git
-Plug 'junegunn/gv.vim'               "git commit 浏览器
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
 Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
 Plug 'jreybert/vimagit'              "magit
-" Plug 'airblade/vim-gitgutter'      "vim 里显示文件变动
+Plug 'f-person/git-blame.nvim'       "当前行显示commit信息
 
-"playground
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/playground'
-
+Plug 'nvim-lua/plenary.nvim'         "lua库函数
+Plug 'lewis6991/gitsigns.nvim'       "vim 里显示文件变动
 call plug#end()
 
 " set scrollbind               "多文件下窗口同步移动
@@ -105,7 +110,7 @@ set tabstop=4                "The number of spaces a tab is
 set cmdheight=2              "Height of the command line
 set hlsearch                 "高亮搜索
 set clipboard+=unnamedplus   "直接复制剪切板
-set updatetime=100           "刷新时间
+set updatetime=150           "刷新时间
 set path+=**                 "find 子目录
 set showcmd                  "显示命令
 set mouse=a                  "开启鼠标
@@ -153,6 +158,7 @@ source ~/.config/nvim/config/function.vim
 source ~/.config/nvim/config/fzf-leaderf.vim
 source ~/.config/nvim/config/markdown.vim
 source ~/.config/nvim/config/code.vim
+" source ~/.config/nvim/config/coc.vim
 source ~/.config/nvim/config/barbar.vim
 source ~/.config/nvim/config/move.vim
 source ~/.config/nvim/config/tui.vim

@@ -42,7 +42,7 @@ nnoremap <leader>ee :execute getline(line('.'))<cr>
 tnoremap <A-[> <C-\><C-n>
 
 nmap <space> `
-nnoremap ' "
+" nnoremap ' "
 nnoremap Q q
 nmap q :q <CR>
 

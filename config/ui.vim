@@ -5,17 +5,14 @@ let g:context_add_mappings = 0
 let g:session_autoload = 'yes'
 let g:session_autosave = 'yes'
 
-" rainbow 彩虹括号
-let g:rainbow_active = 1
-
-" indentLine 竖线
-let g:indentLine_enabled = 1
-let g:indentLine_char='┆'
-let g:indentLine_fileTypeExclude = ['denite','startify','tagbar','vista_kind','vista']
-let g:indentLine_concealcursor = 'niv'
-let g:indentLine_color_term = 239
-let g:indentLine_color_gui= '#504945'
-let g:indentLine_showFirstIndentLevel =1
+" rainbow
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  rainbow = {
+    enable = true
+  }
+}
+EOF
 
 " vista 侧边栏
 " How each level is indented and what to prepend.
@@ -92,3 +89,18 @@ require'nvim-web-devicons'.setup {
 }
 EOF
 
+" LocalIndentLie
+let g:localIndentLie_insertDisable = 1
+let g:localIndentLie_termColor = 240
+let g:localIndentLie_guiColor  = '#af005f' " or '#RRGGBB'
+let g:localIndentLie_char = '|' " '¦', '┊', '┆',...
+autocmd FileType * LocalIndentLieOn
+
+" colorizer
+lua require'colorizer'.setup()
+
+" highlightedyank
+let g:highlightedyank_highlight_duration = 300
+
+" gitsigns
+lua require('gitsigns').setup()

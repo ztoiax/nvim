@@ -5,7 +5,7 @@ nmap <space>k <Plug>(edgemotion-k)
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
 nmap <Leader>f2 <Plug>(easymotion-overwin-f2)
-nmap <Leader>f0 <Plug>(easymotion-overwin-line)
+nmap <Leader>0 <Plug>(easymotion-overwin-line)
 nmap <Leader>fw <Plug>(easymotion-overwin-w)
 
 " clever-f
