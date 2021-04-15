@@ -40,7 +40,7 @@ let bufferline.letters =
 let bufferline.maximum_padding = 4
 
 " Magic buffer-picking mode
-nnoremap <silent> <C-s> :BufferPick<CR>
+" nnoremap <silent> <C-s> :BufferPick<CR>
 " Sort automatically by...
 nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
 nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
@@ -65,6 +65,7 @@ nnoremap <silent>    <C-t> :tabnew<CR>
 " Close buffer
 nnoremap <silent>    <C-w> :BufferClose!<CR>
 nnoremap <silent>    <leader>x :BufferClose!<CR>
+nnoremap <silent>    X <C-^>
 " Wipeout buffer
 ":BufferWipeout<CR>
 " Close commands

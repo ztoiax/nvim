@@ -28,6 +28,7 @@ autocmd Filetype markdown inoremap <buffer> ,m - [ ]
 autocmd Filetype markdown inoremap <buffer> ,p ![image]()<++><Esc>F)i
 autocmd Filetype markdown inoremap <buffer> ,a [](<++>)<Esc>F[a
 autocmd Filetype markdown inoremap <buffer> ,s <span id=""></span><Esc>F"i
+autocmd Filetype markdown inoremap <buffer> ,k <kbd></kbd><++><Esc>F>F>
 " 标题
 autocmd Filetype markdown inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA

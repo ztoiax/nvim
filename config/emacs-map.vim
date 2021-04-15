@@ -3,7 +3,7 @@ imap <C-h> <BS>
 imap <C-d> <Del>
 imap <C-w> <C-[>diwi
 " coc冲突
-imap <C-k> <Esc>lDa
+" imap <C-k> <Esc>lDa
 imap <C-u> <Esc>d0xi
 
 imap <C-b> <Left>

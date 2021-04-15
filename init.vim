@@ -4,11 +4,13 @@ call plug#begin('~/.config/nvim/plugins')
 """"" ui """""
 " Plug 'glepnir/dashboard-nvim'        "启动界面
 " Plug 'mhinz/vim-startify'            "启动界面
-Plug 'Yggdroot/hiPairs'              "highlight cursor pairs
-Plug 'glepnir/indent-guides.nvim'    "highlight identline
-Plug 'machakann/vim-highlightedyank' "highlight yank
-Plug 'RRethy/vim-illuminate'         "highlight cursor word
-Plug 'norcalli/nvim-colorizer.lua'   "highlight color
+Plug 'kevinhwang91/nvim-hlslens'       "highlight /
+Plug 'Yggdroot/hiPairs'                "highlight cursor pairs
+Plug 'glepnir/indent-guides.nvim'      "highlight identline
+Plug 'FloatingLion/LocalIndentLie.vim' "highlight current identline
+Plug 'machakann/vim-highlightedyank'   "highlight yank
+Plug 'RRethy/vim-illuminate'           "highlight cursor word
+Plug 'norcalli/nvim-colorizer.lua'     "highlight color
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'wellle/context.vim'            "移动时显示函数上下文
@@ -33,19 +35,21 @@ Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
 
 """"" Enhace text """""
+Plug 'bkad/CamelCaseMotion'
 Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
+Plug 'SirVer/ultisnips'              "片段engine
 Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
-Plug 'tpope/vim-abolish'             "替换
+Plug 'tpope/vim-abolish'             "替换和驼峰命名
 Plug 'tpope/vim-repeat'              "可重复插件操作
-Plug 'FloatingLion/LocalIndentLie.vim'
 Plug 'tpope/vim-commentary'          "注释
 Plug 'junegunn/vim-easy-align'       "多行对齐
 Plug 'mg979/vim-visual-multi'        "光标多选
 Plug 'windwp/nvim-autopairs'         "autopairs
+Plug 'tversteeg/registers.nvim'      "registers menu
 " Plug 'itchyny/vim-cursorword'        "下划线
 " Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
 
@@ -65,6 +69,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 """"" Other """""
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-python --enable-go --enable-bash'}  "调试器
+Plug 'lambdalisue/suda.vim'
 Plug 'skywind3000/asyncrun.vim'      "异步
 Plug 'bfredl/nvim-miniyank'          "yank历史
 
@@ -78,12 +83,15 @@ Plug 'guns/xterm-color-table.vim'
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'onsails/lspkind-nvim'
-Plug 'nvim-treesitter/playground'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'gfanto/fzf-lsp.nvim'           "fzf search lsp
+Plug 'nanotee/sqls.nvim'             " lsp sql
+Plug 'mfussenegger/nvim-dap'         " dap
+Plug 'mfussenegger/nvim-dap-python'
+Plug 'neovim/nvim-lspconfig'         " lsp
+Plug 'nvim-lua/completion-nvim'      " completion framsework
+Plug 'onsails/lspkind-nvim'          " completion icon
+Plug 'nvim-treesitter/playground'    " treesitter(语法树)
+Plug 'glepnir/lspsaga.nvim'          " completion menu
+Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp
 
 "git
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
@@ -150,9 +158,6 @@ let g:python3_host_prog = '/usr/bin/python3'
 highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
 
-" Far
-let g:far#enable_undo=1
-
 " source
 " source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/function.vim
@@ -186,6 +191,14 @@ source  ~/.config/nvim/snippets/md.vim
 " 打开终端自动进入插入模式
 au TermOpen * startinsert
 " au TermClose * :q
+
+" auto execute
+au FileType c set makeprg=gcc\ %
+au FileType cpp set makeprg=g++\ %
+au FileType python set makeprg=python\ %
+nmap <F5> :!%:p<CR>
+imap <F5> <ESC>:!%:p<CR>a
+" map <F5>:make && ./a.out<CR>
 
 " command
 command! Ecentos :e scp://root@192.168.100.208//

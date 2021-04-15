@@ -2,7 +2,7 @@
 nnoremap <Leader>tu :MundoToggle <CR>
 
 " vim-which-key 按键提示
-nnoremap <silent> <leader> :WhichKey ','<CR>
+" nnoremap <silent> <leader> :WhichKey ','<CR>
 
 " translator 翻译
 " let g:translator_history_enable = 1
@@ -29,14 +29,17 @@ command! Ranger FloatermNew ranger
 command! Broot FloatermNew broot -sdpw
 command! Lazygit FloatermNew lazygit
 command! Lazydocker FloatermNew lazydocker
-command! Ipython FloatermNew ipython
+command! Ptpython FloatermNew ptpython
 let g:floaterm_height = 0.9
 let g:floaterm_width = 0.9
 let g:floaterm_wintype = 'normal'
 " autocmd FileType floaterm wincmd H
-let g:floaterm_autoclose = 1
+let g:floaterm_autoclose = 2
 let g:floaterm_position = 'center'
+" 取消边框
+let g:floaterm_borderchars = '        '
+let g:floaterm_title = ''
 
-nmap <Leader>tp :Ipython<CR>
+nmap <Leader>tp :Ptpython<CR>
 nmap <Leader>tg :terminal mytop.sh<CR>
 nmap <Leader>fr :Ranger<CR>

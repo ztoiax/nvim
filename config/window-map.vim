@@ -1,4 +1,5 @@
 " window
+nnoremap <C-p> <Tab>
 nmap <C-h> :wincmd h <cr>
 nmap <C-j> :wincmd j <cr>
 nmap <C-k> :wincmd k <cr>

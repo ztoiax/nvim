@@ -24,17 +24,10 @@ nmap E v$h
 nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
-" nmap <Leader>k <C-i>
-" nmap <Leader>j <C-o>
 nmap <Leader>w :w<CR>
 
 nmap <Leader><Leader> <esc>ysiw
 imap <Leader><Leader> <esc>ysiw
-
-" Run the current line
-nnoremap <leader>ee :execute getline(line('.'))<cr>
-" Run the current line in sh
-" nnoremap <leader>el :execute '!'.getline('.')<cr>
 
 " tags
 " noremap <F5> :!ctags -R .
@@ -60,7 +53,19 @@ xmap <Leader>ia <Plug>(EasyAlign)
 nmap <Leader>ia <Plug>(EasyAlign)
 
 "asyncrun
-nmap <Leader>ii :.!
+" Run the current line
+nmap <leader>ie :execute getline(line('.'))<cr>
+" Run the current line in sh
+" nmap <leader>el :execute '!'.getline('.')<cr>
+" nmap <Leader>ii :.!
 nmap <Leader>io :AsyncRun! -mode=term 
 " Run the current line in terminal
 nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr>
+
+"CamelCaseMotion
+
+" let g:camelcasemotion_key = '<leader>'
+map <leader> ew <Plug>CamelCaseMotion_w
+map <leader> eb <Plug>CamelCaseMotion_b
+map <leader> ee <Plug>CamelCaseMotion_e
+map <leader> eg <Plug>CamelCaseMotion_ge

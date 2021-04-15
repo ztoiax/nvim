@@ -2,6 +2,8 @@
 
 * [nvim](#nvim)
     * [why nvim](#why-nvim)
+    * [常用命令](#常用命令)
+        * [nvr](#nvr)
     * [配置](#配置)
     * [tips(技巧)](#tips技巧)
     * [Plugin](#plugin)
@@ -15,9 +17,14 @@
             * [GV show commit:](#gv-show-commit)
             * [fugitive](#fugitive)
             * [magit](#magit)
-        * [更强大的替换 vim-abolish](#更强大的替换-vim-abolish)
+        * [更强大的替换和驼峰命名 vim-abolish](#更强大的替换和驼峰命名-vim-abolish)
+            * [替换](#替换)
+            * [驼峰命名](#驼峰命名)
         * [插入模式文本增强插件](#插入模式文本增强插件)
             * [targets.vim 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`](#targetsvim-增强-normal-模式下的-kbddikbd和-kbdda)
+        * [LSP](#lsp)
+        * [DAP](#dap)
+    * [nvim with python](#nvim-with-python)
 * [reference](#reference)
 * [other vim ui](#other-vim-ui)
 
@@ -64,6 +71,47 @@ nvim scp://user@host//etc/fstab
 ```vim
 command! Ecentos :e scp://root@192.168.100.208//
 command! Esuse :e scp://root@192.168.100.71//
+```
+
+## 常用命令
+
+```vim
+# 查看mapped key
+:verbose nmap j
+```
+
+### [nvr](https://github.com/mhinz/neovim-remote)
+
+- 查看server的path
+
+```vim
+echo v:servername
+```
+
+- export环境变量,指定server的path
+
+```sh
+export NVIM_LISTEN_ADDRESS="/tmp/nvimsocket"
+
+# 或者:nvr指定path
+nvr --servername /tmp/nvimsocket
+```
+
+- 基本操作
+
+```vim
+# 打开文件
+nvr file file1
+
+# 查看变量bufname
+nvr --remote-expr 'bufname("")'
+
+# 输入指定字符
+nvr --remote-send 'iabc<esc>'
+
+# 执行命令
+nvr -cc terminal
+nvr -c terminal
 ```
 
 ## 配置
@@ -228,7 +276,9 @@ nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<
 
 ![avatar](./Pictures/magit.gif)
 
-### [更强大的替换 vim-abolish](https://github.com/tpope/vim-abolish)
+### [更强大的替换和驼峰命名 vim-abolish](https://github.com/tpope/vim-abolish)
+
+#### 替换
 
 示例文本:
 
@@ -268,6 +318,20 @@ HELLO
 nmap \ :%Subvert//g<Left><Left>
 vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 ```
+
+#### 驼峰命名
+
+<kbd>crm</kbd>     `word_test` -> `WordTest`
+
+<kbd>cru</kbd>     `word_test` -> `WORD_TEST`
+
+<kbd>cr-</kbd>     `word_test` -> `word-test`
+
+<kbd>cr空格</kbd>  `word_test` -> `word test`
+
+<kbd>crt</kbd>     `word_test` -> `Word Test`
+
+<kbd>crs</kbd>     `WordTest` -> `word_test`
 
 ### 插入模式文本增强插件
 
@@ -321,6 +385,51 @@ vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 
 ```vim
 '  '
+```
+
+### [LSP](https://github.com/neovim/nvim-lspconfig)
+
+- [Configurations](https://github.com/neovim/nvim-lspconfig/blob/8924812e0d114b67dca376533bef2ac5bb054f8b/CONFIG.md)
+
+安装lsp:
+
+```sh
+sudo npm i -g pyright
+sudo npm i -g typescript typescript-language-server
+sudo npm i -g vscode-html-languageserver-bin
+sudo npm i -g vscode-css-languageserver-bin
+sudo npm i -g vscode-json-languageserver
+sudo npm i -g yaml-language-server
+sudo npm i -g bash-language-server
+sudo npm i -g vim-language-server
+sudo npm i -g dockerfile-language-server-nodejs
+sudo npm i -g markdown-language-server
+
+sudo pacman -S gopls
+go get github.com/lighttiger2505/sqls
+```
+
+### [DAP](https://github.com/mfussenegger/nvim-dap)
+
+```sh
+pip install debugpy
+```
+
+## nvim with python
+
+```py
+from pynvim import attach
+# 连接socket
+nvim = attach('socket', path='/tmp/nvimsocket')
+
+# 打开文件
+nvim.vars['file_to_edit1'] = '/home/tz/.zshrc'
+
+# 执行命令
+nvim.command('exe "edit " . g:file_to_edit1')
+
+# 输入
+nvim.input('')
 ```
 
 # reference

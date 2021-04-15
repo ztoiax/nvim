@@ -15,7 +15,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
  
  " rga instead rg
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rga --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let command_fmt = 'rga --column --line-number --no-heading --color=always --smart-case -- %s * || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}

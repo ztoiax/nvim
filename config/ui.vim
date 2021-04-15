@@ -5,15 +5,6 @@ let g:context_add_mappings = 0
 let g:session_autoload = 'yes'
 let g:session_autosave = 'yes'
 
-" rainbow
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  rainbow = {
-    enable = true
-  }
-}
-EOF
-
 " vista 侧边栏
 " How each level is indented and what to prepend.
 " This could make the display more compact or more spacious.
@@ -61,6 +52,9 @@ nnoremap tt :Vista!!<cr>
 nnoremap T :Vista!!<cr>
 
 " treesitter
+" 折叠
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -68,6 +62,9 @@ require'nvim-treesitter.configs'.setup {
     enable = true,              -- false will disable the whole extension
     disable = { "rust" },  -- list of language that will be disabled
   },
+  rainbow = {
+    enable = true
+  }
 }
 EOF
 
@@ -103,7 +100,7 @@ lua require'colorizer'.setup()
 let g:highlightedyank_highlight_duration = 300
 
 " gitsigns
-lua require('gitsigns').setup()
+" lua require('gitsigns').setup()
 
 "hipairs
 let g:hiPairs_stopline_more = 150

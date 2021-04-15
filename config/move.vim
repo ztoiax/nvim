@@ -1,6 +1,8 @@
 " edgemotion
-nmap <space>j <Plug>(edgemotion-j)
-nmap <space>k <Plug>(edgemotion-k)
+" nmap <space>j <Plug>(edgemotion-j)
+" nmap <space>k <Plug>(edgemotion-k)
+nmap <space>j ]m
+nmap <space>k [m
 
 " vim-easymotion
 nmap <Leader>f1 <Plug>(easymotion-overwin-f)
@@ -60,3 +62,6 @@ let g:VM_maps["Replace Pattern"]             = 'r'
 " nmap mk <Plug>BookmarkPrev
 " nmap mc <Plug>BookmarkClear
 " nmap mC <Plug>BookmarkClearAll
+
+" Far
+nmap <leader>/ :Far 

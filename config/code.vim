@@ -2,13 +2,14 @@
 lua require('nvim-autopairs').setup()
 
 " complete
+let g:completion_enable_auto_popup = 1
+let g:completion_enable_snippet = 'UltiSnips'
 autocmd BufEnter * lua require'completion'.on_attach()
-imap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-imap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <silent> <tab> <Plug>(completion_trigger)
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
 imap <expr> <C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
 imap <expr> <C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
-
-" imap <tab> <Plug>(completion_smart_tab)
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
@@ -39,7 +40,8 @@ lua <<EOF
     end,
   }
 require'lspconfig'.clangd.setup{}
-require'lspconfig'.pyls.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.pyright.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssls.setup{}
@@ -48,6 +50,13 @@ require'lspconfig'.yamlls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.vimls.setup{}
 require'lspconfig'.dockerls.setup{}
+require'lspconfig'.sqls.setup{
+    on_attach = function(client)
+        client.resolved_capabilities.execute_command = true
+
+        require'sqls'.setup{}
+    end
+}
 EOF
 
 " lspkind
@@ -84,3 +93,30 @@ map p <Plug>(miniyank-autoput)
 map <leader>p <Plug>(miniyank-startput)
 map <leader>n <Plug>(miniyank-cycle)
 map <leader>N <Plug>(miniyank-cycleback)
+
+" dap
+lua <<EOF
+require('dap-python').setup('/usr/bin.python')
+EOF
+
+lua <<EOF
+local dap = require('dap')
+dap.adapters.python = {
+  type = 'executable';
+  command = '/usr/bin/python';
+  args = { '-m', 'debugpy.adapter' };
+}
+EOF
+
+nnoremap <silent> <F6> :lua require'dap'.continue()<CR>
+nnoremap <silent> <leader>dd :lua require('dap').continue()<CR>
+nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>`
+nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
+vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
