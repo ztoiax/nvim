@@ -7,6 +7,10 @@ autocmd Filetype * inoremap <buffer> ,# #####  ######<enter><++><esc>kf<space>a
 " vnoremap
 autocmd Filetype sh vnoremap ,f <esc>`>a<enter>}<esc>`<ifunction (){<enter><esc>kf(i
 
+"""""" py """"""
+autocmd Filetype python noremap ,xb ofrom ipdb import set_trace<enter>set_trace()<esc>
+autocmd Filetype python noremap ,xl osetup_logging(debug=True, logfile='/tmp/debug')<esc>
+autocmd Filetype python noremap ,xp oLOG.debug(f"variable: '{}'")<esc>blp
 
 """""" markdown """"""
 " inoremap
@@ -46,3 +50,4 @@ autocmd Filetype markdown vnoremap ,b <esc>`>a**<esc>`<i**<esc>
 autocmd Filetype markdown vnoremap ,<space> <esc>`>a<space><esc>`<i<space><esc>
 autocmd Filetype markdown vnoremap ,a <esc>`>a]()<esc>`<i[<esc>$F(a
 autocmd Filetype markdown vnoremap ,k <esc>`>a</kbd><esc>`<i<kbd><esc>
+

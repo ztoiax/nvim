@@ -64,7 +64,6 @@ nnoremap <silent>    <leader>tt :tabnew<CR>
 nnoremap <silent>    <C-t> :tabnew<CR>
 " Close buffer
 nnoremap <silent>    <C-w> :BufferClose!<CR>
-nnoremap <silent>    <leader>x :BufferClose!<CR>
 nnoremap <silent>    X <C-^>
 " Wipeout buffer
 ":BufferWipeout<CR>

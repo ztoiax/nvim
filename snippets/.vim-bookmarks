@@ -1,3 +1,0 @@
-let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'/home/tz/md/mysql.md': [{'sign_idx': 9505, 'line_nr': 487, 'content': '### SQL FUNCTION'},],}}
-let l:bm_current_session = 'default'

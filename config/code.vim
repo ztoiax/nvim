@@ -1,9 +1,20 @@
+" auto execute
+au FileType c set makeprg=gcc\ %
+au FileType cpp set makeprg=g++\ %
+au FileType python set makeprg=python\ %
+nmap <F6> :!%:p<CR>
+imap <F6> <ESC>:!%:p<CR>a
+" map <F5>:make && ./a.out<CR>
+
 " autopairs
 lua require('nvim-autopairs').setup()
 
 " complete
+let g:completion_matching_ignore_case = 1
+let g:completion_matching_smart_case = 1
 let g:completion_enable_auto_popup = 1
 let g:completion_enable_snippet = 'UltiSnips'
+let g:UltiSnipsExpandTrigger=""
 autocmd BufEnter * lua require'completion'.on_attach()
 imap <silent> <tab> <Plug>(completion_trigger)
 imap <tab> <Plug>(completion_smart_tab)
@@ -108,7 +119,7 @@ dap.adapters.python = {
 }
 EOF
 
-nnoremap <silent> <F6> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
 nnoremap <silent> <leader>dd :lua require('dap').continue()<CR>
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
 nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
@@ -120,3 +131,7 @@ nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>`
 nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
 vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+
+" kite
+" let g:kite_tab_complete=1
+" let g:kite_supported_languages = ['*']

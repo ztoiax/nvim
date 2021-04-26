@@ -10,7 +10,6 @@ let g:translator_default_engines = get(g:, 'translator_default_engines', ['googl
 " let g:translator_proxy_url = ''
 let g:translator_window_type = 'popup'
 
-nmap <C-q> :Translate 
 nmap <silent> <Leader>te <Plug>Translate
 vmap <silent> <Leader>te <Plug>TranslateV
 " Display translation in a window
@@ -20,7 +19,7 @@ vmap <silent> <Leader>tw <Plug>TranslateWV
 nmap <silent> <Leader>tr <Plug>TranslateR
 vmap <silent> <Leader>tr <Plug>TranslateRV
 " Translate the text in clipboard
-nmap <silent> <Leader>tx <Plug>TranslateX
+nmap <silent> <C-q> <Plug>TranslateX
 
 "floaterm
 hi FloatermNF guibg=#282828
@@ -36,6 +35,8 @@ let g:floaterm_wintype = 'normal'
 " autocmd FileType floaterm wincmd H
 let g:floaterm_autoclose = 2
 let g:floaterm_position = 'center'
+let g:floaterm_opener = 'edit'
+
 " 取消边框
 let g:floaterm_borderchars = '        '
 let g:floaterm_title = ''

@@ -23,6 +23,8 @@
         * [插入模式文本增强插件](#插入模式文本增强插件)
             * [targets.vim 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`](#targetsvim-增强-normal-模式下的-kbddikbd和-kbdda)
         * [LSP](#lsp)
+        * [kite](#kite)
+        * [tabnine](#tabnine)
         * [DAP](#dap)
     * [nvim with python](#nvim-with-python)
 * [reference](#reference)
@@ -408,6 +410,23 @@ sudo npm i -g markdown-language-server
 sudo pacman -S gopls
 go get github.com/lighttiger2505/sqls
 ```
+### [kite](https://github.com/kiteco/vim-plugin)
+
+    > AI 补全
+
+- install kite(大小500M)
+
+- 默认路径为 `~/.local/share/kite`
+
+```sh
+wget -O kite-installer.sh https://linux.kite.com/dls/linux/current
+bash kite-installer.sh --download
+bash kite-installer.sh --install
+```
+
+### [tabnine](https://github.com/codota/tabnine-vim)
+
+    > AI 补全. 训练了GitHub 200万源代码, 插件大小500M
 
 ### [DAP](https://github.com/mfussenegger/nvim-dap)
 

@@ -35,23 +35,13 @@ let g:Lf_IgnoreCurrentBufferName = 1
 nmap <Leader>fb :<C-U><C-R>=printf("Leaderf --regexMode buffer %s", "")<CR><CR>
 nmap <Leader>fm :<C-U><C-R>=printf("Leaderf --regexMode mru %s", "")<CR><CR>
 nmap <Leader>ft :<C-U><C-R>=printf("Leaderf --regexMode bufTag %s", "")<CR><CR>
-nmap <Leader>f/ :<C-U><C-R>=printf("Leaderf --regexMode line %s", "")<CR><CR>
+nmap <Leader>/ :<C-U><C-R>=printf("Leaderf --regexMode line %s", "")<CR><CR>
 nmap <Leader>f. :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 nmap <Leader>fa :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
-
-" search visually selected text literally
-xnoremap gf :<C-U><C-R>=printf("Leaderf rg -F -e %s ", Leaderf#Rg#visual())<CR><CR>
-nmap  fo :<C-U>Leaderf rg --recall<CR><CR>
 
 let g:Lf_GtagsAutoGenerate = 1
 let g:Lf_Gtagslabel = 'native-pygments'
 " let $GTAGSCONF = '/path/to/share/gtags/gtags.conf'
-
-nmap <Leader>fe :<C-U><C-R>=printf("Leaderf  gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-nmap <Leader>fo :<C-U><C-R>=printf("Leaderf  gtags --recall %s", "")<CR><CR>
-nmap <Leader>fj :<C-U><C-R>=printf("Leaderf  gtags --next %s", "")<CR><CR>
-nmap <Leader>fk :<C-U><C-R>=printf("Leaderf  gtags --previous %s", "")<CR><CR>
 
 " telescope
 lua <<EOF

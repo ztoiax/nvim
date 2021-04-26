@@ -2,6 +2,7 @@ source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
 
 """"" ui """""
+if !exists('g:vscode')
 " Plug 'glepnir/dashboard-nvim'        "启动界面
 " Plug 'mhinz/vim-startify'            "启动界面
 Plug 'kevinhwang91/nvim-hlslens'       "highlight /
@@ -13,7 +14,7 @@ Plug 'RRethy/vim-illuminate'           "highlight cursor word
 Plug 'norcalli/nvim-colorizer.lua'     "highlight color
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
-Plug 'wellle/context.vim'            "移动时显示函数上下文
+Plug 'romgrk/nvim-treesitter-context' "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
 Plug 'vim-airline/vim-airline'
@@ -23,7 +24,6 @@ Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'p00f/nvim-ts-rainbow'          "彩虹括号
 Plug 'simnalamburt/vim-mundo'        "undo tree
 Plug 'liuchengxu/vim-which-key'      "按键提示
-Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
 Plug 'camspiers/animate.vim'         "窗口动画
@@ -33,9 +33,10 @@ Plug 'skywind3000/vim-keysound'      "打字机声音
 Plug 'xolox/vim-session'             "启动时恢复会话
 Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
+endif
 
 """"" Enhace text """""
-Plug 'bkad/CamelCaseMotion'
+Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
@@ -89,9 +90,13 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'neovim/nvim-lspconfig'         " lsp
 Plug 'nvim-lua/completion-nvim'      " completion framsework
 Plug 'onsails/lspkind-nvim'          " completion icon
-Plug 'nvim-treesitter/playground'    " treesitter(语法树)
 Plug 'glepnir/lspsaga.nvim'          " completion menu
 Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp
+" Plug 'kiteco/vim-plugin'             " kite ai completion
+" Plug 'codota/tabnine-vim'            " tabnine ai completion
+if !exists('g:vscode')
+Plug 'nvim-treesitter/playground'    " treesitter(语法树)
+endif
 
 "git
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
@@ -105,6 +110,7 @@ call plug#end()
 
 " set scrollbind               "多文件下窗口同步移动
 " set shell=/usr/bin/dash      "dash的速度比bash,zsh快
+set guifont=DroidSansMono\ Nerd\ Font:h20
 set shell=/usr/bin/zsh
 set noswapfile               "关闭swap file
 set termguicolors            "enable true colors support
@@ -159,16 +165,20 @@ highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
 
 " source
-" source ~/.config/nvim/config/keysound.vim
+source ~/.config/nvim/config/move.vim
 source ~/.config/nvim/config/function.vim
+if !exists('g:vscode')
+" source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/fzf-leaderf.vim
-source ~/.config/nvim/config/markdown.vim
 source ~/.config/nvim/config/code.vim
 " source ~/.config/nvim/config/coc.vim
+
+" ui
+source ~/.config/nvim/config/markdown.vim
 source ~/.config/nvim/config/barbar.vim
-source ~/.config/nvim/config/move.vim
 source ~/.config/nvim/config/tui.vim
 source ~/.config/nvim/config/ui.vim
+endif
 
 " map
 source ~/.config/nvim/config/map.vim
@@ -191,14 +201,6 @@ source  ~/.config/nvim/snippets/md.vim
 " 打开终端自动进入插入模式
 au TermOpen * startinsert
 " au TermClose * :q
-
-" auto execute
-au FileType c set makeprg=gcc\ %
-au FileType cpp set makeprg=g++\ %
-au FileType python set makeprg=python\ %
-nmap <F5> :!%:p<CR>
-imap <F5> <ESC>:!%:p<CR>a
-" map <F5>:make && ./a.out<CR>
 
 " command
 command! Ecentos :e scp://root@192.168.100.208//

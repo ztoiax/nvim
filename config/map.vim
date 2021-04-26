@@ -11,6 +11,7 @@ vmap \  :s//g<Left><Left>
 " nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
 nmap s  ys
 vmap s  S
+nmap <leader>' %
 " remove unwanted space
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
@@ -29,9 +30,6 @@ nmap <Leader>w :w<CR>
 nmap <Leader><Leader> <esc>ysiw
 imap <Leader><Leader> <esc>ysiw
 
-" tags
-" noremap <F5> :!ctags -R .
-
 tnoremap <A-[> <C-\><C-n>
 
 nmap <space> `
@@ -45,8 +43,6 @@ nmap <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 " git
 nnoremap <Leader>gg :Lazygit<CR>
 nnoremap <Leader>gd :Lazydocker<CR>
-nnoremap <Leader>gm :Magit<CR>
-nnoremap <Leader>gl :GV <CR>
 
 "align
 xmap <Leader>ia <Plug>(EasyAlign)
@@ -61,11 +57,3 @@ nmap <leader>ie :execute getline(line('.'))<cr>
 nmap <Leader>io :AsyncRun! -mode=term 
 " Run the current line in terminal
 nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr>
-
-"CamelCaseMotion
-
-" let g:camelcasemotion_key = '<leader>'
-map <leader> ew <Plug>CamelCaseMotion_w
-map <leader> eb <Plug>CamelCaseMotion_b
-map <leader> ee <Plug>CamelCaseMotion_e
-map <leader> eg <Plug>CamelCaseMotion_ge

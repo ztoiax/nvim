@@ -62,6 +62,3 @@ let g:VM_maps["Replace Pattern"]             = 'r'
 " nmap mk <Plug>BookmarkPrev
 " nmap mc <Plug>BookmarkClear
 " nmap mC <Plug>BookmarkClearAll
-
-" Far
-nmap <leader>/ :Far 

@@ -6,6 +6,8 @@ imap <C-w> <C-[>diwi
 " imap <C-k> <Esc>lDa
 imap <C-u> <Esc>d0xi
 
+" imap <C-j> <Down>
+" imap <C-k> <Up>
 imap <C-b> <Left>
 imap <C-f> <Right>
 imap <C-a> <Home>
