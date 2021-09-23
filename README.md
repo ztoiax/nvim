@@ -27,6 +27,7 @@
         * [tabnine](#tabnine)
         * [DAP](#dap)
     * [nvim with python](#nvim-with-python)
+    * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
 * [other vim ui](#other-vim-ui)
 
@@ -450,6 +451,8 @@ nvim.command('exe "edit " . g:file_to_edit1')
 # 输入
 nvim.input('')
 ```
+
+## [goneovim: go语言写的qt前端](https://github.com/akiyosi/goneovim)
 
 # reference
 

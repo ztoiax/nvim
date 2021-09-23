@@ -15,6 +15,8 @@ nmap <leader>' %
 " remove unwanted space
 nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
+imap <C-n> <Esc>ui
+imap <C-p> <Esc><C-r>i
 nmap <C-e> <C-u>
 nmap <C-y> "0p
 vmap <C-y> "0p
@@ -26,6 +28,7 @@ nmap B vb
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 nmap <Leader>w :w<CR>
+nmap <Leader>p "0p
 
 nmap <Leader><Leader> <esc>ysiw
 imap <Leader><Leader> <esc>ysiw

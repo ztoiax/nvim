@@ -12,6 +12,8 @@ autocmd Filetype python noremap ,xb ofrom ipdb import set_trace<enter>set_trace(
 autocmd Filetype python noremap ,xl osetup_logging(debug=True, logfile='/tmp/debug')<esc>
 autocmd Filetype python noremap ,xp oLOG.debug(f"variable: '{}'")<esc>blp
 
+autocmd Filetype python vnoremap ,xt <esc>`>a<enter>end = time()<enter>print('%.12f秒' % (end - start))<esc>`<ifrom time import time<enter>start = time()<enter><esc>
+
 """""" markdown """"""
 " inoremap
 autocmd Filetype markdown inoremap <buffer> ,w <Esc>/ <++><CR>:nohlsearch<CR>"_c5l<CR>
@@ -26,7 +28,7 @@ autocmd Filetype markdown inoremap <buffer> ,s ~~~~<++><Esc>F~hi
 " 下划线
 autocmd Filetype markdown inoremap <buffer> ,l --------<Enter>
 " 代码片段
-autocmd Filetype markdown inoremap <buffer> ,d <Space>`` <++><Esc>F`i
+autocmd Filetype markdown inoremap <buffer> ,d `` <++><Esc>F`i
 autocmd Filetype markdown inoremap <buffer> ,c ```<Enter><++><Enter>```<Enter><Esc>3kA
 autocmd Filetype markdown inoremap <buffer> ,m - [ ]
 autocmd Filetype markdown inoremap <buffer> ,p ![image]()<++><Esc>F)i
@@ -38,6 +40,8 @@ autocmd Filetype markdown inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
 autocmd Filetype markdown inoremap <buffer> ,4 ####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <buffer> ,5 #####<Space><Enter><++><Esc>kA
+autocmd Filetype markdown inoremap <buffer> ,6 ######<Space><Enter><++><Esc>kA
 
 " vnoremap
 " autocmd vnoremap ,s <esc>`>a<enter>}<esc>`<iif (true)<enter>{<enter><esc>

@@ -75,6 +75,7 @@ Plug 'skywind3000/asyncrun.vim'      "异步
 Plug 'bfredl/nvim-miniyank'          "yank历史
 
 "markdown
+" Plug 'masukomi/vim-markdown-folding' "fold
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}                                "markdown预览
 Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
 Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
