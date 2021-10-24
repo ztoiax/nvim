@@ -65,7 +65,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " telescope
 Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 """"" Other """""
@@ -89,7 +89,8 @@ Plug 'nanotee/sqls.nvim'             " lsp sql
 Plug 'mfussenegger/nvim-dap'         " dap
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'neovim/nvim-lspconfig'         " lsp
-Plug 'nvim-lua/completion-nvim'      " completion framsework
+" Plug 'nvim-lua/completion-nvim'      " completion framsework
+Plug 'hrsh7th/nvim-compe'      " completion framsework
 Plug 'onsails/lspkind-nvim'          " completion icon
 Plug 'glepnir/lspsaga.nvim'          " completion menu
 Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp

@@ -398,18 +398,41 @@ vnmap \  mnmap \  anmap \  pnmap \   \ :Subvert//g<Left><Left>
 
 ```sh
 sudo npm i -g pyright
+# or pylsp
+pip install python-lsp-server
+
+# html,css,json,js,ts
+sudo npm i -g vscode-langservers-extracted
+
 sudo npm i -g typescript typescript-language-server
-sudo npm i -g vscode-html-languageserver-bin
-sudo npm i -g vscode-css-languageserver-bin
-sudo npm i -g vscode-json-languageserver
 sudo npm i -g yaml-language-server
 sudo npm i -g bash-language-server
 sudo npm i -g vim-language-server
 sudo npm i -g dockerfile-language-server-nodejs
 sudo npm i -g markdown-language-server
+sudo npm i -g diagnostic-languageserver
+sudo npm install -g ansible-language-server
+pip3 install cmake-language-server
 
+# go
 sudo pacman -S gopls
 go get github.com/lighttiger2505/sqls
+
+# java
+
+yay -S jdtls
+
+# lua-language-server
+# install ninja
+sudo pacman -S ninja
+git clone https://github.com/sumneko/lua-language-server
+cd lua-language-server
+git submodule update --init --recursive
+
+cd 3rd/luamake
+./compile/install.sh
+cd ../..
+./3rd/luamake/luamake rebuild
 ```
 ### [kite](https://github.com/kiteco/vim-plugin)
 

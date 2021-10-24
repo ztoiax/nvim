@@ -29,6 +29,7 @@ nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 nmap <Leader>w :w<CR>
 nmap <Leader>p "0p
+vmap <Leader>p "0p
 
 nmap <Leader><Leader> <esc>ysiw
 imap <Leader><Leader> <esc>ysiw
