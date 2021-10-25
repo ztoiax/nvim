@@ -23,6 +23,7 @@
         * [插入模式文本增强插件](#插入模式文本增强插件)
             * [targets.vim 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`](#targetsvim-增强-normal-模式下的-kbddikbd和-kbdda)
         * [LSP](#lsp)
+        * [lspkind](#lspkind)
         * [kite](#kite)
         * [tabnine](#tabnine)
         * [DAP](#dap)
@@ -434,6 +435,11 @@ cd 3rd/luamake
 cd ../..
 ./3rd/luamake/luamake rebuild
 ```
+
+### [lspkind](https://github.com/onsails/lspkind-nvim)
+
+- lsp图标
+
 ### [kite](https://github.com/kiteco/vim-plugin)
 
     > AI 补全

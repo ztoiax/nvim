@@ -9,127 +9,72 @@ imap <F6> <ESC>:!%:p<CR>a
 " autopairs
 lua require('nvim-autopairs').setup()
 
-" complete
-" let g:completion_matching_ignore_case = 1
-" let g:completion_matching_smart_case = 1
-" let g:completion_enable_auto_popup = 1
-" let g:completion_enable_snippet = 'UltiSnips'
-" let g:UltiSnipsExpandTrigger=""
-" autocmd BufEnter * lua require'completion'.on_attach()
-" imap <silent> <tab> <Plug>(completion_trigger)
-" imap <tab> <Plug>(completion_smart_tab)
-" imap <s-tab> <Plug>(completion_smart_s_tab)
-" imap <expr> <C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
-" imap <expr> <C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
+" hrsh7th/nvim-cmp
+set completeopt=menu,menuone,noselect
 
-" " 自动悬停
-" let g:completion_enable_auto_hover = 1
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+  local lspkind = require('lspkind')
 
-" " Set completeopt to have a better completion experience
-" set completeopt=menuone,noinsert,noselect
+  cmp.setup({
+    formatting = {
+      format = require("lspkind").cmp_format({with_text = true, menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[Latex]",
+        })}),
+    },
+    snippet = {
+      expand = function(args)
+         --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+         vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      end,
+    },
+    mapping = {
+      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-u>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      })
+    },
+    experimental = {
+        native_menu = false,
+        ghost_text = true,
+    },
 
-" " Avoid showing message extra message when using completion
-" set shortmess+=c
-
-" " completion-nvim will loop through the list and assign priority from high to low
-" let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-
-" " possible value: "length", "alphabet", "none"
-" let g:completion_sorting = "alphabet"
-" " ignore case
-" let g:completion_matching_ignore_case = 1
-" " smart case matching
-" let g:completion_matching_smart_case = 1
-
-" " trigger on delete
-" let g:completion_trigger_on_delete = 0
-
-
-" hrsh7th/nvim-compe
-set completeopt=menuone,noselect
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
-
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
-let g:compe.source.luasnip = v:true
-let g:compe.source.emoji = v:true
-
-lua << EOF
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif vim.fn['vsnip#available'](1) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
-end
-
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-vim.api.nvim_set_keymap("i", "<CR>", "compe#confirm({ 'keys': '<CR>', 'select': v:true })", { expr = true })
+    -- snip
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lua' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = "path"},
+      { name = 'buffer' },
+      { name = 'treesitter' },
+    })
+  })
 EOF
 
-inoremap <silent> <tab> <C-n>
-inoremap <silent> <C-j> <C-n>
-inoremap <silent> <C-k> <C-p>
 
 " lsp
 lua <<EOF
-  require'lspconfig'.gopls.setup {
-    on_attach = function(client)
-      -- [[ other on_attach code ]]
-      -- illuminate highlight cursor word
-      require 'illuminate'.on_attach(client)
-    end,
-  }
-
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.gopls.setup{}
 require'lspconfig'.pyright.setup{}
@@ -147,6 +92,14 @@ require'lspconfig'.sumneko_lua.setup{}
 require'lspconfig'.jdtls.setup{}
 -- js and ts
 require'lspconfig'.eslint.setup{}
+-- go
+require'lspconfig'.gopls.setup {
+on_attach = function(client)
+  -- [[ other on_attach code ]]
+  -- illuminate highlight cursor word
+  require 'illuminate'.on_attach(client)
+end,
+}
 
 require'lspconfig'.cmake.setup{}
 require'lspconfig'.diagnosticls.setup{}
@@ -163,29 +116,29 @@ EOF
 " lspkind
 lua <<EOF
 require('lspkind').init({
-    -- with_text = true,
-    -- symbol_map = {
-    --   Text = '',
-    --   Method = 'ƒ',
-    --   Function = '',
-    --   Constructor = '',
-    --   Variable = '',
-    --   Class = '',
-    --   Interface = 'ﰮ',
-    --   Module = '',
-    --   Property = '',
-    --   Unit = '',
-    --   Value = '',
-    --   Enum = '了',
-    --   Keyword = '',
-    --   Snippet = '﬌',
-    --   Color = '',
-    --   File = '',
-    --   Folder = '',
-    --   EnumMember = '',
-    --   Constant = '',
-    --   Struct = ''
-    -- },
+    with_text = true,
+    symbol_map = {
+      Text = '',
+      Method = 'ƒ',
+      Function = '',
+      Constructor = '',
+      Variable = '',
+      Class = '',
+      Interface = 'ﰮ',
+      Module = '',
+      Property = '',
+      Unit = '',
+      Value = '',
+      Enum = '了',
+      Keyword = '',
+      Snippet = '﬌',
+      Color = '',
+      File = '',
+      Folder = '',
+      EnumMember = '',
+      Constant = '',
+      Struct = ''
+    },
 })
 EOF
 

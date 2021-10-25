@@ -85,13 +85,19 @@ Plug 'guns/xterm-color-table.vim'
 " Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
 
+" completion
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-path'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'onsails/lspkind-nvim'          " completion icon
+
 Plug 'nanotee/sqls.nvim'             " lsp sql
 Plug 'mfussenegger/nvim-dap'         " dap
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'neovim/nvim-lspconfig'         " lsp
-" Plug 'nvim-lua/completion-nvim'      " completion framsework
-Plug 'hrsh7th/nvim-compe'      " completion framsework
-Plug 'onsails/lspkind-nvim'          " completion icon
 Plug 'glepnir/lspsaga.nvim'          " completion menu
 Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp
 " Plug 'kiteco/vim-plugin'             " kite ai completion
