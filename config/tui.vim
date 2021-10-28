@@ -6,7 +6,7 @@ nnoremap <Leader>tu :MundoToggle <CR>
 
 " translator 翻译
 " let g:translator_history_enable = 1
-let g:translator_default_engines = get(g:, 'translator_default_engines', ['google'])
+let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
 " let g:translator_proxy_url = ''
 let g:translator_window_type = 'popup'
 
@@ -42,5 +42,7 @@ let g:floaterm_borderchars = '        '
 let g:floaterm_title = ''
 
 nmap <Leader>tp :Ptpython<CR>
-nmap <Leader>tg :terminal mytop.sh<CR>
+nmap <Leader>tt :terminal mytop.sh<CR>
 nmap <Leader>fr :Ranger<CR>
+nmap <Leader>gg :Lazygit<CR>
+nmap <Leader>td :Lazydocker<CR>

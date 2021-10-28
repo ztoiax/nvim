@@ -1,9 +1,8 @@
 " incert keymap like emacs
 imap <C-h> <BS>
 imap <C-d> <Del>
-imap <C-w> <C-[>diwi
-" coc冲突
-" imap <C-k> <Esc>lDa
+imap <C-w> <Esc>diwi
+imap <C-k> <Esc>lDa
 imap <C-u> <Esc>d0xi
 
 " imap <C-j> <Down>
@@ -11,6 +10,7 @@ imap <C-u> <Esc>d0xi
 imap <C-b> <Left>
 imap <C-f> <Right>
 imap <C-a> <Home>
+imap <C-e> <End>
 imap <C-n> <Down>
 imap <C-p> <Up>
 imap <C-y> <Esc>ui
@@ -18,7 +18,6 @@ imap <C-_> <Esc>xi
 imap <C-o> <Esc>o
 imap <C-s> <esc>:w<CR>
 imap <C-q> <esc>:wq<CR>
-imap <expr><C-e> pumvisible() ? "\<C-e>" : "\<End>"
 
 imap <A-f> <Esc>wa
 imap <A-b> <Esc>bi

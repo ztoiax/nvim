@@ -493,6 +493,10 @@ nvim.input('')
 
 - [gonvim](https://github.com/dzhou121/gonvim)
 
+- [nvui](https://github.com/rohit-px2/nvui)
+
+- [LunarVim](https://github.com/LunarVim/LunarVim)
+
 - [Spacevim](https://github.com/SpaceVim/SpaceVim)
 
 - [oni 用 typescript 开发的 Electron 增强版 nvim](https://github.com/onivim/oni)

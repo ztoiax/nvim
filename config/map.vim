@@ -4,6 +4,7 @@ if has("nvim")
 end
 
 cmap p!  PlugInstall <CR>
+cmap pc  PlugClean <CR>
 nmap S  :source % <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
@@ -45,8 +46,8 @@ nmap q :q <CR>
 nmap <Leader>u  :<C-U><C-R>=printf("nohlsearch %s", "")<CR><CR>
 
 " git
-nnoremap <Leader>gg :Lazygit<CR>
-nnoremap <Leader>gd :Lazydocker<CR>
+nnoremap <Leader>gd :Gvdiffsplit<CR>
+nnoremap <Leader>gb :GBrowse<CR>
 
 "align
 xmap <Leader>ia <Plug>(EasyAlign)

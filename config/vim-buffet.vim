@@ -27,7 +27,6 @@ nnoremap <silent> <Leader>o  :Bonly<CR>
 nnoremap <silent> <Leader>x  :Bw<CR>
 nnoremap <silent> <Leader>n  :bn<CR>
 nnoremap <silent> <Leader>p  :bp<CR>
-nnoremap <silent> <Leader>tt :tabnew<CR>*
 nnoremap <silent> <C-w>      :Bw<CR>
 nnoremap <silent> <C-t>      :tabnew<CR>*
 
