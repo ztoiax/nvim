@@ -86,12 +86,19 @@ require'nvim-web-devicons'.setup {
 }
 EOF
 
-" LocalIndentLie
-let g:localIndentLie_insertDisable = 1
-let g:localIndentLie_termColor = 240
-let g:localIndentLie_guiColor  = '#af005f' " or '#RRGGBB'
-let g:localIndentLie_char = '|' " '¦', '┊', '┆',...
-autocmd FileType * LocalIndentLieOn
+" indent-blankline
+
+lua << EOF
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+EOF
 
 " colorizer
 lua require'colorizer'.setup()

@@ -7,8 +7,7 @@ if !exists('g:vscode')
 " Plug 'mhinz/vim-startify'            "启动界面
 Plug 'kevinhwang91/nvim-hlslens'       "highlight /
 Plug 'Yggdroot/hiPairs'                "highlight cursor pairs
-Plug 'glepnir/indent-guides.nvim'      "highlight identline
-Plug 'FloatingLion/LocalIndentLie.vim' "highlight current identline
+Plug 'lukas-reineke/indent-blankline.nvim' "highlight identline
 Plug 'machakann/vim-highlightedyank'   "highlight yank
 Plug 'RRethy/vim-illuminate'           "highlight cursor word
 Plug 'norcalli/nvim-colorizer.lua'     "highlight color
@@ -27,6 +26,7 @@ Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
 Plug 'camspiers/animate.vim'         "窗口动画
+Plug 'karb94/neoscroll.nvim'         "移动动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
@@ -37,6 +37,7 @@ Plug 'xolox/vim-misc'
 endif
 
 """"" Enhace text """""
+Plug 'jaawerth/fennel-nvim'          "lisp
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
@@ -45,6 +46,7 @@ Plug 'rhysd/clever-f.vim'            "extends f
 Plug 'SirVer/ultisnips'              "片段engine
 Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
+Plug 'mfussenegger/nvim-treehopper'  "语法树块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
 Plug 'tpope/vim-abolish'             "替换和驼峰命名
 Plug 'tpope/vim-repeat'              "可重复插件操作
@@ -54,10 +56,10 @@ Plug 'mg979/vim-visual-multi'        "光标多选
 Plug 'windwp/nvim-autopairs'         "autopairs
 Plug 'tversteeg/registers.nvim'      "registers menu
 " Plug 'itchyny/vim-cursorword'        "下划线
-" Plug 'MattesGroeger/vim-bookmarks'   "收藏跳转
+" Plug 'chentau/marks.nvim'
 
 """"" Quick jump """""
-Plug 'easymotion/vim-easymotion'     "跳转
+Plug 'phaazon/hop.nvim'
 Plug 'haya14busa/vim-edgemotion'     "函数快速移动
 
 "fzf
@@ -75,6 +77,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'lambdalisue/suda.vim'
 Plug 'skywind3000/asyncrun.vim'      "异步
 Plug 'bfredl/nvim-miniyank'          "yank历史
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'} " 部分代码运行
 
 "markdown
 " Plug 'masukomi/vim-markdown-folding' "fold
@@ -98,6 +101,7 @@ Plug 'onsails/lspkind-nvim'          " completion icon
 
 Plug 'nanotee/sqls.nvim'             " lsp sql
 Plug 'mfussenegger/nvim-dap'         " dap
+Plug 'rcarriga/nvim-dap-ui'
 Plug 'mfussenegger/nvim-dap-python'
 Plug 'neovim/nvim-lspconfig'         " lsp
 Plug 'glepnir/lspsaga.nvim'          " completion menu

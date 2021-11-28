@@ -28,6 +28,7 @@
         * [tabnine](#tabnine)
         * [DAP](#dap)
     * [编程语言相关的配置](#编程语言相关的配置)
+        * [部分代码运行SnipRun](#部分代码运行sniprun)
         * [调试](#调试)
     * [nvim with python](#nvim-with-python)
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
@@ -128,7 +129,7 @@ nvr -c terminal
 
 - 现在已经根据自己的需求, 自定义化了
 
-一共有`76` 个插件
+一共有`80` 个插件
 ![avatar](./Pictures/init.png)
 
 - 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
@@ -473,6 +474,13 @@ pip install debugpy
 
 ## 编程语言相关的配置
 
+### 部分代码运行[SnipRun](https://github.com/michaelb/sniprun)
+
+```py
+vmap <F6> :SnipRun<CR>
+```
+![avatar](./Pictures/sniprun.gif)
+
 ### 调试
 ```vim
 # 使用插件floaterm, 定义终端打开后要执行的命令
@@ -515,6 +523,8 @@ nvim.input('')
 - [Vim 从入门到精通](https://github.com/wsdjeg/vim-galore-zh_cn)
 
 - [AT LEAST ONE VIM TRICK YOU MIGHT NOT KNOW](https://www.hillelwayne.com/post/intermediate-vim/)
+
+- [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
 
 # other vim ui
 
