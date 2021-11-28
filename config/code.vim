@@ -2,9 +2,23 @@
 au FileType c set makeprg=gcc\ %
 au FileType cpp set makeprg=g++\ %
 au FileType python set makeprg=python\ %
-nmap <F6> :!%:p<CR>
-imap <F6> <ESC>:!%:p<CR>a
+
+" 编译
 " map <F5>:make && ./a.out<CR>
+
+" 运行
+nmap <F6> :!%:p<CR>
+imap <F6> <ESC>:!%:p<CR>
+nmap <leader><F6> :read!%:p<CR>
+imap <leader><F6> <ESC>:read!%:p<CR>
+
+" 调试
+au FileType python nmap  <F5> :Pudb<CR>
+au FileType python imap  <F5> <ESC>:Pudb<CR>
+
+" 静态检查
+au FileType python nmap <F7> :!mypy %:p<CR>
+au FileType python imap <F7> <ESC>:!mypy %:p<CR>
 
 " autopairs
 lua require('nvim-autopairs').setup()
@@ -35,21 +49,27 @@ lua <<EOF
       end,
     },
     mapping = {
+      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
       ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
       ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
       ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
       ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      -- ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<S-tab>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
       ['<tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      -- ['<tab>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      -- ['<Tab>'] = function(fallback)
+      --   if cmp.visible() then
+      --     cmp.select_next_item()
+      --   else
+      --     cmp.mapping.complete()
+      --   end
+      -- end,
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-u>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      })
+      ['<leader><esc>'] = cmp.mapping.close(),
+      -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
     },
     experimental = {
         native_menu = false,
@@ -72,13 +92,17 @@ lua <<EOF
   })
 EOF
 
+let g:LanguageClient_serverCommands = {
+\ 'text': ['unified-language-server', '--parser=retext-english', '--stdio'],
+\ 'markdown': ['unified-language-server', '--parser=remark-parse', '--stdio'],
+\ }
 
 " lsp
 lua <<EOF
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.gopls.setup{}
-require'lspconfig'.pyright.setup{}
---require'lspconfig'.pylsp.setup{}
+-- require'lspconfig'.pyright.setup{}
+require'lspconfig'.pylsp.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssls.setup{}
@@ -113,6 +137,11 @@ require'lspconfig'.sqls.setup{
 }
 EOF
 
+let g:LanguageClient_serverCommands = {
+\ 'text': ['unified-language-server', '--parser=retext-english', '--stdio'],
+\ 'markdown': ['unified-language-server', '--parser=remark-parse', '--stdio'],
+\ }
+
 " lspkind
 lua <<EOF
 require('lspkind').init({
@@ -142,6 +171,7 @@ require('lspkind').init({
 })
 EOF
 
+
 " miniyank
 map p <Plug>(miniyank-autoput)
 map <leader>p <Plug>(miniyank-startput)
@@ -151,6 +181,7 @@ map <leader>N <Plug>(miniyank-cycleback)
 " dap
 lua <<EOF
 require('dap-python').setup('/usr/bin.python')
+require('dap-python').test_runner = 'pytest'
 EOF
 
 lua <<EOF
@@ -162,18 +193,18 @@ dap.adapters.python = {
 }
 EOF
 
-nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
 nnoremap <silent> <leader>dd :lua require('dap').continue()<CR>
-nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
-nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
-nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>dn :lua require'dap'.step_over()<CR>
+
 nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader>dB :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.repl.run_last()<CR>`
-nnoremap <silent> <leader>dn :lua require('dap-python').test_method()<CR>
-vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+nnoremap <silent> <leader>dR :lua require'dap'.repl.run_last()<CR>`
+
+" nnoremap <silent> <leader>dt :lua require('dap-python').test_method()<CR>
+" nnoremap <silent> <leader>df :lua require('dap-python').test_class()<CR>
+" vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
 
 " kite
 " let g:kite_tab_complete=1

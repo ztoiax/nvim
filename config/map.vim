@@ -60,5 +60,6 @@ nmap <leader>ie :execute getline(line('.'))<cr>
 " nmap <leader>el :execute '!'.getline('.')<cr>
 " nmap <Leader>ii :.!
 nmap <Leader>io :AsyncRun! -mode=term 
+nmap <Leader>ii :AsyncRun! 
 " Run the current line in terminal
 nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr>

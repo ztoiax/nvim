@@ -107,3 +107,8 @@ let g:hiPairs_stopline_more = 150
 
 " registers
 nmap <silent> <leader>" :Registers<cr>
+
+" notify
+lua <<EOF
+vim.notify = require("notify")
+EOF

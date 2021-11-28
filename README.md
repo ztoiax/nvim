@@ -27,6 +27,8 @@
         * [kite](#kite)
         * [tabnine](#tabnine)
         * [DAP](#dap)
+    * [编程语言相关的配置](#编程语言相关的配置)
+        * [调试](#调试)
     * [nvim with python](#nvim-with-python)
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
@@ -122,9 +124,11 @@ nvr -c terminal
 
 - 在学 `linux` 等开源软件的过程中，了解 `vim` 的操作到安装各种高效率**插件**.花费了大量的时间,打造成现在的**配置**.
 
-- 其中参考最多是 [Thinkvim](https://github.com/hardcoreplayers/ThinkVim)
+- 早期参考最多是 [Thinkvim](https://github.com/hardcoreplayers/ThinkVim)
 
-一共有`46` 个插件
+- 现在已经根据自己的需求, 自定义化了
+
+一共有`76` 个插件
 ![avatar](./Pictures/init.png)
 
 - 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
@@ -405,12 +409,15 @@ pip install python-lsp-server
 # html,css,json,js,ts
 sudo npm i -g vscode-langservers-extracted
 
+# markdown
+sudo npm i -g unified-language-server
+sudo npm i -g markdown-language-server
+
 sudo npm i -g typescript typescript-language-server
 sudo npm i -g yaml-language-server
 sudo npm i -g bash-language-server
 sudo npm i -g vim-language-server
 sudo npm i -g dockerfile-language-server-nodejs
-sudo npm i -g markdown-language-server
 sudo npm i -g diagnostic-languageserver
 sudo npm install -g ansible-language-server
 pip3 install cmake-language-server
@@ -462,6 +469,26 @@ bash kite-installer.sh --install
 
 ```sh
 pip install debugpy
+```
+
+## 编程语言相关的配置
+
+### 调试
+```vim
+# 使用插件floaterm, 定义终端打开后要执行的命令
+command! Pudb FloatermNew python -m pudb %
+
+# 按F5调试当前文件
+au FileType python nmap  <F5> :Pudb<CR>
+au FileType python imap  <F5> <ESC>:Pudb<CR>
+```
+
+![avatar](./Pictures/pudb.gif)
+
+- 按F7使用mypy, 对当前文件, 进行静态类型检查
+```vim
+au FileType python nmap <F7> :!mypy %:p<CR>
+au FileType python imap <F7> <ESC>:!mypy %:p<CR>
 ```
 
 ## nvim with python

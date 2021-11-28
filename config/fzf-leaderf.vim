@@ -115,5 +115,6 @@ let g:Lf_Gtagslabel = 'native-pygments'
 lua require'fzf_lsp'.setup()
 nmap <leader>j :References<cr>
 nmap <leader>k :Definitions<cr>
+nmap <leader>fv :DocumentSymbols<cr>
 
 nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>

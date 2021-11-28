@@ -29,6 +29,7 @@ command! Broot FloatermNew broot -sdpw
 command! Lazygit FloatermNew lazygit
 command! Lazydocker FloatermNew lazydocker
 command! Ptpython FloatermNew ptpython
+command! Pudb FloatermNew python -m pudb %
 let g:floaterm_height = 0.9
 let g:floaterm_width = 0.9
 let g:floaterm_wintype = 'normal'

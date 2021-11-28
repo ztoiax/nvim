@@ -30,6 +30,7 @@ Plug 'camspiers/animate.vim'         "窗口动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
+Plug 'rcarriga/nvim-notify'
 Plug 'xolox/vim-session'             "启动时恢复会话
 Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
@@ -40,6 +41,7 @@ Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
+
 Plug 'SirVer/ultisnips'              "片段engine
 Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选

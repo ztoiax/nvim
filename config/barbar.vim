@@ -48,8 +48,8 @@ nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
 nnoremap <silent>    H :BufferPrevious<CR>
 nnoremap <silent>    L :BufferNext<CR>
 " Re-order to previous/next
-nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
-nnoremap <silent>    <A->> :BufferMoveNext<CR>
+nnoremap <silent>    <leader><< :BufferMovePrevious<CR>
+nnoremap <silent>    <leader>>> :BufferMoveNext<CR>
 " Goto buffer in position...
 nnoremap <silent>    <A-1> :BufferGoto 1<CR>
 nnoremap <silent>    <A-2> :BufferGoto 2<CR>
