@@ -2,54 +2,8 @@
 let g:context_add_mappings = 0
 
 " session 开启vim时恢复会话
-let g:session_autoload = 'yes'
-let g:session_autosave = 'yes'
-
-" vista 侧边栏
-" How each level is indented and what to prepend.
-" This could make the display more compact or more spacious.
-" e.g., more compact: ["▸ ", ""]
-" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
-
-" change update
-let g:vista_update_on_text_changed = 1
-
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-
-" Executive used when opening vista sidebar without specifying it.
-" See all the avaliable executives via `:echo g:vista#executives`.
-let g:vista_default_executive = 'ctags'
-
-" Set the executive for some filetypes explicitly. Use the explicit executive
-" instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive.
-let g:vista_executive_for = {
-  \ 'cpp': 'vim_lsp',
-  \ 'php': 'vim_lsp',
-  \ }
-
-" Declare the command including the executable and options used to generate ctags output
-" for some certain filetypes.The file path will be appened to your custom command.
-" For example:
-let g:vista_ctags_cmd = {
-      \ 'haskell': 'hasktags -x -o - -c',
-      \ }
-
-" To enable fzf's preview window set g:vista_fzf_preview.
-" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
-" For example:
-let g:vista_fzf_preview = ['right:50%']
-" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-let g:vista#renderer#enable_icon = 1
-
-" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
-
-nnoremap tt :Vista!!<cr>
-nnoremap T :Vista!!<cr>
+" let g:session_autoload = 'yes'
+" let g:session_autosave = 'yes'
 
 " treesitter
 " 折叠
@@ -118,4 +72,90 @@ nmap <silent> <leader>" :Registers<cr>
 " notify
 lua <<EOF
 vim.notify = require("notify")
+EOF
+
+" symbols-outline
+lua << EOF
+vim.g.symbols_outline = {
+    highlight_hovered_item = true,
+    show_guides = true,
+    auto_preview = false,
+    position = 'right',
+    relative_width = true,
+    width = 40,
+    show_numbers = false,
+    show_relative_numbers = false,
+    show_symbol_details = true,
+    preview_bg_highlight = 'Pmenu',
+    keymaps = { -- These keymaps can be a string or a table for multiple keys
+        close = {"<Esc>", "q"},
+        goto_location = "<Cr>",
+        focus_location = "i",
+        hover_symbol = "o",
+        toggle_preview = "K",
+        rename_symbol = "r",
+        code_actions = "a",
+    },
+    lsp_blacklist = {},
+    symbol_blacklist = {},
+    symbols = {
+        File = {icon = "", hl = "TSURI"},
+        Module = {icon = "", hl = "TSNamespace"},
+        Namespace = {icon = "", hl = "TSNamespace"},
+        Package = {icon = "", hl = "TSNamespace"},
+        Class = {icon = "𝓒", hl = "TSType"},
+        Method = {icon = "ƒ", hl = "TSMethod"},
+        Property = {icon = "", hl = "TSMethod"},
+        Field = {icon = "", hl = "TSField"},
+        Constructor = {icon = "", hl = "TSConstructor"},
+        Enum = {icon = "ℰ", hl = "TSType"},
+        Interface = {icon = "ﰮ", hl = "TSType"},
+        Function = {icon = "", hl = "TSFunction"},
+        Variable = {icon = "", hl = "TSConstant"},
+        Constant = {icon = "", hl = "TSConstant"},
+        String = {icon = "𝓐", hl = "TSString"},
+        Number = {icon = "#", hl = "TSNumber"},
+        Boolean = {icon = "⊨", hl = "TSBoolean"},
+        Array = {icon = "", hl = "TSConstant"},
+        Object = {icon = "⦿", hl = "TSType"},
+        Key = {icon = "🔐", hl = "TSType"},
+        Null = {icon = "NULL", hl = "TSType"},
+        EnumMember = {icon = "", hl = "TSField"},
+        Struct = {icon = "𝓢", hl = "TSType"},
+        Event = {icon = "🗲", hl = "TSType"},
+        Operator = {icon = "+", hl = "TSOperator"},
+        TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+    }
+}
+EOF
+
+nnoremap T :SymbolsOutline<cr>
+
+" iswap
+lua << EOF
+require('iswap').setup{
+  -- The keys that will be used as a selection, in order
+  -- ('asdfghjklqwertyuiopzxcvbnm' by default)
+  keys = 'qwertyuiop',
+
+  -- Grey out the rest of the text when making a selection
+  -- (enabled by default)
+  grey = 'disable',
+
+  -- Highlight group for the sniping value (asdf etc.)
+  -- default 'Search'
+  hl_snipe = 'ErrorMsg',
+
+  -- Highlight group for the visual selection of terms
+  -- default 'Visual'
+  hl_selection = 'WarningMsg',
+
+  -- Highlight group for the greyed background
+  -- default 'Comment'
+  hl_grey = 'LineNr',
+
+  -- Automatically swap with only two arguments
+  -- default nil
+  autoswap = true
+}
 EOF

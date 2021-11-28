@@ -17,7 +17,6 @@ Plug 'romgrk/nvim-treesitter-context' "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
 Plug 'vim-airline/vim-airline'
-Plug 'liuchengxu/vista.vim'          "侧边栏
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'p00f/nvim-ts-rainbow'          "彩虹括号
@@ -30,9 +29,11 @@ Plug 'karb94/neoscroll.nvim'         "移动动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
-Plug 'rcarriga/nvim-notify'
-Plug 'xolox/vim-session'             "启动时恢复会话
-Plug 'xolox/vim-misc'
+Plug 'rcarriga/nvim-notify'          " 通知menu
+Plug 'simrat39/symbols-outline.nvim' " 侧边栏
+Plug 'gelguy/wilder.nvim'            " command补全
+" Plug 'xolox/vim-session'             "启动时恢复会话
+" Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
 endif
 
@@ -55,6 +56,7 @@ Plug 'junegunn/vim-easy-align'       "多行对齐
 Plug 'mg979/vim-visual-multi'        "光标多选
 Plug 'windwp/nvim-autopairs'         "autopairs
 Plug 'tversteeg/registers.nvim'      "registers menu
+Plug 'mizlan/iswap.nvim'             "参数位置交换
 " Plug 'itchyny/vim-cursorword'        "下划线
 " Plug 'chentau/marks.nvim'
 
@@ -86,10 +88,6 @@ Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
 Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
 Plug 'guns/xterm-color-table.vim'
 
-" code
-" Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc.nvim', {'branch': 'release'} "代码补全
-
 " completion
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
@@ -98,16 +96,20 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-path'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'onsails/lspkind-nvim'          " completion icon
+Plug 'ray-x/lsp_signature.nvim'      " 参数提示
 
+" lsp
 Plug 'nanotee/sqls.nvim'             " lsp sql
-Plug 'mfussenegger/nvim-dap'         " dap
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'mfussenegger/nvim-dap-python'
 Plug 'neovim/nvim-lspconfig'         " lsp
 Plug 'glepnir/lspsaga.nvim'          " completion menu
 Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp
 " Plug 'kiteco/vim-plugin'             " kite ai completion
 " Plug 'codota/tabnine-vim'            " tabnine ai completion
+
+" debug
+Plug 'mfussenegger/nvim-dap'         " dap
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'mfussenegger/nvim-dap-python'
 if !exists('g:vscode')
 Plug 'nvim-treesitter/playground'    " treesitter(语法树)
 endif
@@ -203,14 +205,14 @@ source ~/.config/nvim/config/window-map.vim
 source  ~/.config/nvim/snippets/md.vim
 
 " Start up
-" function! StartUp()
-"     if 0 == argc()
-"         :Vista
-"     end
-" endfunction
+function! StartUp()
+    if 0 == argc()
+        :SymbolsOutlineOpen
+    end
+endfunction
 
 " autocmd
-" au VimEnter * call StartUp()
+au VimEnter * call StartUp()
 
 " 打开终端自动进入插入模式
 au TermOpen * startinsert
