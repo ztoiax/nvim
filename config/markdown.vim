@@ -94,3 +94,8 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
+
+"
+lua << EOF
+vim.g.markdown_fenced_languages = {'python'}
+EOF

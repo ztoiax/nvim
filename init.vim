@@ -1,22 +1,28 @@
+"if exists('g:vscode')
+
+"else
 source ~/.config/nvim/config/plug.vim
 call plug#begin('~/.config/nvim/plugins')
+""""" lib """""
+Plug 'nvim-treesitter/playground'    "语法树库函数
+Plug 'nvim-lua/plenary.nvim'         "lua库函数
+Plug 'jaawerth/fennel-nvim'          "lisp
 
 """"" ui """""
-if !exists('g:vscode')
-" Plug 'glepnir/dashboard-nvim'        "启动界面
-" Plug 'mhinz/vim-startify'            "启动界面
 Plug 'kevinhwang91/nvim-hlslens'       "highlight /
 Plug 'Yggdroot/hiPairs'                "highlight cursor pairs
 Plug 'lukas-reineke/indent-blankline.nvim' "highlight identline
 Plug 'machakann/vim-highlightedyank'   "highlight yank
 Plug 'RRethy/vim-illuminate'           "highlight cursor word
 Plug 'norcalli/nvim-colorizer.lua'     "highlight color
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " 语法数
 Plug 'romainl/vim-cool'              "搜索后自动取消高亮
 Plug 'romgrk/nvim-treesitter-context' "移动时显示函数上下文
 Plug 'kyazdani42/nvim-web-devicons'  "标签图标
 Plug 'romgrk/barbar.nvim'            "标签
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'     "状态栏
+Plug 'nvim-lua/lsp-status.nvim'      "状态栏lsp
+
 Plug 'rafi/awesome-vim-colorschemes' "awesome主题
 Plug 'junegunn/goyo.vim'             "沉浸阅读
 Plug 'p00f/nvim-ts-rainbow'          "彩虹括号
@@ -25,52 +31,56 @@ Plug 'liuchengxu/vim-which-key'      "按键提示
 Plug 'psliwka/vim-smoothie'          "移动动画
 Plug 'voldikss/vim-floaterm'         "浮动窗口
 Plug 'camspiers/animate.vim'         "窗口动画
-Plug 'karb94/neoscroll.nvim'         "移动动画
 Plug 'chrisbra/csv.vim'              "csv file format
 Plug 'voldikss/vim-translator'       "翻译
 Plug 'skywind3000/vim-keysound'      "打字机声音
 Plug 'rcarriga/nvim-notify'          " 通知menu
 Plug 'simrat39/symbols-outline.nvim' " 侧边栏
+Plug 'liuchengxu/vista.vim'
 Plug 'gelguy/wilder.nvim'            " command补全
-" Plug 'xolox/vim-session'             "启动时恢复会话
-" Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'             "启动时恢复会话
+Plug 'xolox/vim-misc'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } "在浏览器嵌入nvim
-endif
 
 """"" Enhace text """""
-Plug 'jaawerth/fennel-nvim'          "lisp
+Plug 'filipdutescu/renamer.nvim'     "rename
 Plug 'rhysd/accelerated-jk'          "快速移动
 Plug 'brooth/far.vim'                "instead and replace
 Plug 'wellle/targets.vim'            "enhance di da
 Plug 'rhysd/clever-f.vim'            "extends f
 
+Plug 'sbdchd/neoformat'              "formatting
+Plug 'mhartington/formatter.nvim'
+
 Plug 'SirVer/ultisnips'              "片段engine
-Plug 'honza/vim-snippets'            "代码片段
 Plug 'gcmt/wildfire.vim'             "快速块选
 Plug 'mfussenegger/nvim-treehopper'  "语法树块选
 Plug 'tpope/vim-surround'            "快速添加特殊符号"(<[]>)"'
 Plug 'tpope/vim-abolish'             "替换和驼峰命名
 Plug 'tpope/vim-repeat'              "可重复插件操作
-Plug 'tpope/vim-commentary'          "注释
+Plug 'numToStr/Comment.nvim'         "注释
 Plug 'junegunn/vim-easy-align'       "多行对齐
 Plug 'mg979/vim-visual-multi'        "光标多选
 Plug 'windwp/nvim-autopairs'         "autopairs
 Plug 'tversteeg/registers.nvim'      "registers menu
 Plug 'mizlan/iswap.nvim'             "参数位置交换
-" Plug 'itchyny/vim-cursorword'        "下划线
 " Plug 'chentau/marks.nvim'
 
 """"" Quick jump """""
-Plug 'phaazon/hop.nvim'
+Plug 'phaazon/hop.nvim'              "单词跳转
 Plug 'haya14busa/vim-edgemotion'     "函数快速移动
 
 "fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+" Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'akiyosi/gonvim-fuzzy'       " Vim plug
+Plug 'yuki-uthman/vim-fzf-dictionary'
 
+Plug 'ibhagwan/fzf-lua'
 " telescope
-Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/popup.nvim'
 " Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
@@ -86,9 +96,13 @@ Plug 'michaelb/sniprun', {'do': 'bash install.sh'} " 部分代码运行
 Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown' }
 Plug 'mzlogin/vim-markdown-toc'      "自动生成目录
 Plug 'dhruvasagar/vim-table-mode'    "快速插入markdown表格
-Plug 'guns/xterm-color-table.vim'
+Plug 'jubnzv/mdeval.nvim'
 
 " completion
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'hrsh7th/cmp-buffer'
@@ -102,25 +116,26 @@ Plug 'ray-x/lsp_signature.nvim'      " 参数提示
 Plug 'nanotee/sqls.nvim'             " lsp sql
 Plug 'neovim/nvim-lspconfig'         " lsp
 Plug 'glepnir/lspsaga.nvim'          " completion menu
-Plug 'gfanto/fzf-lsp.nvim'           " fzf search lsp
 " Plug 'kiteco/vim-plugin'             " kite ai completion
 " Plug 'codota/tabnine-vim'            " tabnine ai completion
+
+" test
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+
+Plug 'vim-test/vim-test'
+Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
 
 " debug
 Plug 'mfussenegger/nvim-dap'         " dap
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'mfussenegger/nvim-dap-python'
-if !exists('g:vscode')
-Plug 'nvim-treesitter/playground'    " treesitter(语法树)
-endif
 
 "git
 Plug 'tpope/vim-fugitive'            "在 vim 里使用 git
 Plug 'tpope/vim-rhubarb'             "Gbrowse 配合vim-fugitive
 Plug 'jreybert/vimagit'              "magit
 Plug 'f-person/git-blame.nvim'       "当前行显示commit信息
-
-Plug 'nvim-lua/plenary.nvim'         "lua库函数
 Plug 'lewis6991/gitsigns.nvim'       "vim 里显示文件变动
 call plug#end()
 
@@ -180,10 +195,14 @@ let g:python3_host_prog = '/usr/bin/python3'
 highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
 
+"lsp
+hi LspReferenceRead cterm=bold ctermbg=237 guibg=LightYellow
+hi LspReferenceText cterm=bold ctermbg=237 guibg=LightYellow
+hi LspReferenceWrite cterm=bold ctermbg=237 guibg=LightYellow
+
 " source
 source ~/.config/nvim/config/move.vim
 source ~/.config/nvim/config/function.vim
-if !exists('g:vscode')
 " source ~/.config/nvim/config/keysound.vim
 source ~/.config/nvim/config/fzf-leaderf.vim
 source ~/.config/nvim/config/code.vim
@@ -194,7 +213,6 @@ source ~/.config/nvim/config/markdown.vim
 source ~/.config/nvim/config/barbar.vim
 source ~/.config/nvim/config/tui.vim
 source ~/.config/nvim/config/ui.vim
-endif
 
 " map
 source ~/.config/nvim/config/map.vim
@@ -221,3 +239,5 @@ au TermOpen * startinsert
 " command
 command! Ecentos :e scp://root@192.168.100.208//
 command! Esuse :e scp://root@192.168.100.71//
+
+"endif

@@ -4,7 +4,6 @@ if has("nvim")
 end
 
 cmap p!  PlugInstall <CR>
-cmap pc  PlugClean <CR>
 nmap S  :source % <CR>
 nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>

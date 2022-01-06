@@ -1,10 +1,10 @@
 "fzf
-nmap <Leader>fh :History <CR>
-nmap <Leader>ff :Files  <CR>
+" nmap <Leader>fh :History <CR>
+" nmap <Leader>ff :Files  <CR>
 nmap <Leader>a  :Rg! <CR>
-nmap <Leader>fc :Colors<CR>
-nmap <Leader>f<Space> :Marks  <CR>
-nmap <Leader>fg :GF  <CR>
+" nmap <Leader>fc :Colors<CR>
+" nmap <Leader>f<Space> :Marks  <CR>
+" nmap <Leader>fg :GF  <CR>
 " nmap <Leader>ft :BTags  <CR>
 " nmap <Leader>f/ :BLines  <CR>
 
@@ -12,7 +12,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
  " let g:fzf_layout = {
  "  \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.5)'
  "  \ }
- 
+
  " rga instead rg
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rga --column --line-number --no-heading --color=always --smart-case -- %s * || true'
@@ -32,12 +32,8 @@ let g:Lf_UseCache = 0
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 
-nmap <Leader>fb :<C-U><C-R>=printf("Leaderf --regexMode buffer %s", "")<CR><CR>
 nmap <Leader>fm :<C-U><C-R>=printf("Leaderf --regexMode mru %s", "")<CR><CR>
 nmap <Leader>ft :<C-U><C-R>=printf("Leaderf --regexMode bufTag %s", "")<CR><CR>
-nmap <Leader>f/ :<C-U><C-R>=printf("Leaderf --regexMode line %s", "")<CR><CR>
-nmap <Leader>f. :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
-nmap <Leader>fa :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 
 let g:Lf_GtagsAutoGenerate = 1
 let g:Lf_Gtagslabel = 'native-pygments'
@@ -111,10 +107,111 @@ let g:Lf_Gtagslabel = 'native-pygments'
 " nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 " nnoremap <leader>fr <cmd>lua require'telescope.builtin'.lsp_references{}<CR>
 
-" fzf-lsp
-lua require'fzf_lsp'.setup()
-nmap <leader>j :References<cr>
-nmap <leader>k :Definitions<cr>
-nmap <leader>fv :DocumentSymbols<cr>
+" vim-fzf-dictionary
+imap <leader><tab> <Plug>(fzf-dictionary-open)
+let g:fzf_dictionary_options = #{
+    \height :  15,
+    \width  :  80,
+    \down   :   0,
+    \right  :   0,
+    \}
 
-nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+" fzf-lua
+lua << EOF
+local actions = require "fzf-lua.actions"
+require'fzf-lua'.setup {
+    fullscreen       = false,           -- start fullscreen?
+    winopts = {
+        height           = 0.85,            -- window height
+        width            = 0.90,            -- window width
+        row              = 0.35,            -- window row position (0=top, 1=bottom)
+        col              = 0.50,            -- window col position (0=left, 1=right)
+        preview = {
+          layout         = 'horizontal',          -- horizontal|vertical|flex
+          horizontal     = 'right:55%',     -- right|left:size
+        },
+    },
+    keymap = {
+        builtin = {
+          -- neovim `:tmap` mappings for the fzf win
+          ["<F2>"]        = "toggle-fullscreen",
+          -- Only valid with the 'builtin' previewer
+          ["<F3>"]        = "toggle-preview-wrap",
+          ["<F4>"]        = "toggle-preview",
+          -- Rotate preview clockwise/counter-clockwise
+          ["<F5>"]        = "toggle-preview-ccw",
+          ["<F6>"]        = "toggle-preview-cw",
+          ["<S-down>"]    = "preview-page-down",
+          ["<S-up>"]      = "preview-page-up",
+          ["<S-left>"]    = "preview-page-reset",
+        },
+        fzf = {
+          -- fzf '--bind=' options
+          ["ctrl-z"]      = "abort",
+          ["ctrl-u"]      = "unix-line-discard",
+          ["ctrl-f"]      = "half-page-down",
+          ["ctrl-b"]      = "half-page-up",
+          ["ctrl-a"]      = "beginning-of-line",
+          ["ctrl-e"]      = "end-of-line",
+          ["alt-a"]       = "toggle-all",
+          -- Only valid with fzf previewers (bat/cat/git/etc)
+          ["f3"]          = "toggle-preview-wrap",
+          ["f4"]          = "toggle-preview",
+          ["shift-down"]  = "preview-page-down",
+          ["shift-up"]    = "preview-page-up",
+        },
+        fzf_opts = {
+            -- options are sent as `<left>=<right>`
+            -- set to `false` to remove a flag
+            -- set to '' for a non-value flag
+            -- for raw args use `fzf_args` instead
+            ['--ansi']        = '',
+            ['--prompt']      = '> ',
+            ['--info']        = 'inline',
+            ['--height']      = '100%',
+            ['--layout']      = 'reverse',
+        },
+    },
+    previewers = {
+        grep = {
+            prompt            = 'Rg❯ ',
+            input_prompt      = 'Grep For❯ ',
+            multiprocess      = true,           -- run command in a separate process
+            git_icons         = true,           -- show git icons?
+            file_icons        = true,           -- show file icons?
+            color_icons       = true,           -- colorize file|git icons
+            -- executed command priority is 'cmd' (if exists)
+            -- otherwise auto-detect prioritizes `rg` over `grep`
+            -- default options are controlled by 'rg|grep_opts'
+            -- cmd            = "rg --vimgrep",
+            rg_opts           = "--column --line-number --no-heading --color=always --smart-case --max-columns=512",
+            grep_opts         = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp",
+            -- 'live_grep_glob' options:
+            glob_flag         = "--iglob",  -- for case sensitive globs use '--glob'
+            glob_separator    = "%s%-%-"    -- query separator pattern (lua): ' --'
+        },
+    }
+}
+EOF
+
+
+
+nmap <leader>ff :FzfLua files<cr>
+nmap <leader>fh :FzfLua oldfiles<cr>
+nmap <leader>fc :FzfLua buffers<cr>
+nmap <leader>f/ :FzfLua lines<cr>
+" nmap <leader>f/ :FzfLua blines<cr> " 所有buffers
+nmap <leader>f. :FzfLua grep_cword<cr>
+nmap <leader>a :FzfLua grep<cr>
+nmap <leader>fc :FzfLua colorschemes<cr>
+
+nmap <leader>ft  :FzfLua lsp_document_symbols<cr>
+nmap <leader>k :FzfLua lsp_definitions<cr>
+nmap <leader>j :FzfLua lsp_references<cr>
+
+nmap <leader><space>  :FzfLua marks<cr>
+
+nmap <leader>/ :FzfLua search_history<cr>
+nmap <leader>: :FzfLua commands<cr>
+nmap <leader>v  :FzfLua keymaps<cr>
+cmap ,h :FzfLua command_history<cr>

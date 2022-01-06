@@ -2,8 +2,8 @@
 let g:context_add_mappings = 0
 
 " session 开启vim时恢复会话
-" let g:session_autoload = 'yes'
-" let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+let g:session_autosave = 'yes'
 
 " treesitter
 " 折叠
@@ -14,13 +14,29 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
     enable = true,              -- false will disable the whole extension
-    disable = { "rust" },  -- list of language that will be disabled
   },
   rainbow = {
     enable = true
-  }
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "gnr",
+      scope_incremental = "gnc",
+      node_decremental = "gnm",
+    },
+  },
+  additional_vim_regex_highlighting = true,
 }
 EOF
+
+" 树折叠
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+
+" highlight markdown code block
+let g:markdown_fenced_languages = ['bash=sh', 'sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'python', 'py=python']
 
 " devicons
 lua <<EOF
@@ -43,14 +59,15 @@ EOF
 " indent-blankline
 
 lua << EOF
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-vim.opt.listchars:append("eol:↴")
+-- vim.opt.list = true
+-- vim.opt.listchars:append("space:⋅")
+-- vim.opt.listchars:append("eol:↴")
 
 require("indent_blankline").setup {
     space_char_blankline = " ",
     show_current_context = true,
-    show_current_context_start = true,
+    -- 下划线
+    -- show_current_context_start = true,
 }
 EOF
 
@@ -61,7 +78,7 @@ lua require'colorizer'.setup()
 let g:highlightedyank_highlight_duration = 300
 
 " gitsigns
-" lua require('gitsigns').setup()
+lua require('gitsigns').setup ()
 
 " hipairs
 let g:hiPairs_stopline_more = 150
@@ -129,7 +146,11 @@ vim.g.symbols_outline = {
 }
 EOF
 
-nnoremap T :SymbolsOutline<cr>
+" Vista
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista#renderer#enable_icon = 1
+" nnoremap T :SymbolsOutline<cr>
+nnoremap T :Vista!!<cr>
 
 " iswap
 lua << EOF
@@ -159,3 +180,63 @@ require('iswap').setup{
   autoswap = true
 }
 EOF
+nmap <leader>is :ISwap<CR>
+
+" Comment
+lua require('Comment').setup()
+
+" renamer
+lua << EOF
+local mappings_utils = require('renamer.mappings.utils')
+require('renamer').setup {
+    -- The popup title, shown if `border` is true
+    title = 'Rename',
+    -- The padding around the popup content
+    padding = {
+        top = 0,
+        left = 0,
+        bottom = 0,
+        right = 0,
+    },
+    -- Whether or not to shown a border around the popup
+    border = true,
+    -- The characters which make up the border
+    border_chars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    -- Whether or not to highlight the current word references through LSP
+    show_refs = true,
+    -- Whether or not to add resulting changes to the quickfix list
+    with_qf_list = true,
+    -- Whether or not to enter the new name through the UI or Neovim's `input`
+    -- prompt
+    with_popup = true,
+    -- The keymaps available while in the `renamer` buffer. The example below
+    -- overrides the default values, but you can add others as well.
+    mappings = {
+        ['<c-i>'] = mappings_utils.set_cursor_to_start,
+        ['<c-a>'] = mappings_utils.set_cursor_to_end,
+        ['<c-e>'] = mappings_utils.set_cursor_to_word_end,
+        ['<c-b>'] = mappings_utils.set_cursor_to_word_start,
+        ['<c-c>'] = mappings_utils.clear_line,
+        ['<c-u>'] = mappings_utils.undo,
+        ['<c-r>'] = mappings_utils.redo,
+    },
+    -- Custom handler to be run after successfully renaming the word. Receives
+    -- the LSP 'textDocument/rename' raw response as its parameter.
+    handler = nil,
+}
+EOF
+nnoremap <silent> <leader>r <cmd>lua require('renamer').rename()<cr>
+vnoremap <silent> <leader>r <cmd>lua require('renamer').rename()<cr>
+
+" lualine
+lua << END
+
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+require('lualine').setup{
+    options = {
+        theme = 'OceanicNext'
+    },
+    sections = { lualine_c = { "require'lsp-status'.status()" } }
+}
+END

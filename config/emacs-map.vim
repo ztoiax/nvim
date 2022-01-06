@@ -34,4 +34,3 @@ cmap <C-e> <End>
 cmap <C-d> <Del>
 cmap <C-h> <BS>
 cmap <C-t> <C-R>=expand("%:p:h") . "/" <CR>
-

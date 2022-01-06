@@ -55,3 +55,13 @@ autocmd Filetype markdown vnoremap ,<space> <esc>`>a<space><esc>`<i<space><esc>
 autocmd Filetype markdown vnoremap ,a <esc>`>a]()<esc>`<i[<esc>$F(a
 autocmd Filetype markdown vnoremap ,k <esc>`>a</kbd><esc>`<i<kbd><esc>
 
+
+" <details><summary> <++> </summary><p>
+"
+" ---
+" ```py
+" <++>
+" ```
+" ---
+"
+" </p></details>

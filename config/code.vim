@@ -14,13 +14,17 @@ imap <leader><F6> <ESC>:read!%:p<CR>
 
 vmap <F6> :SnipRun<CR>
 
+" 测试
+nmap <F8> :Ultest<CR>
+nmap <leader><F8> :UltestSummary<CR>
+
 " 调试
 au FileType python nmap  <F5> :Pudb<CR>
 au FileType python imap  <F5> <ESC>:Pudb<CR>
 
 " 静态检查
-au FileType python nmap <F7> :!mypy %:p<CR>
-au FileType python imap <F7> <ESC>:!mypy %:p<CR>
+" au FileType python nmap <F7> :!mypy %:p<CR>
+" au FileType python imap <F7> <ESC>:!mypy %:p<CR>
 
 " autopairs
 lua require('nvim-autopairs').setup()
@@ -68,10 +72,10 @@ lua <<EOF
       --     cmp.mapping.complete()
       --   end
       -- end,
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-u>'] = cmp.mapping.scroll_docs(4),
+      ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-d>'] = cmp.mapping.scroll_docs(4),
       ['<leader><esc>'] = cmp.mapping.close(),
-      -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     },
     experimental = {
         native_menu = false,
@@ -156,25 +160,48 @@ let g:LanguageClient_serverCommands = {
 
 " lsp
 lua <<EOF
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.gopls.setup{}
--- require'lspconfig'.pyright.setup{}
-require'lspconfig'.pylsp.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.html.setup{}
-require'lspconfig'.cssls.setup{}
-require'lspconfig'.jsonls.setup{}
-require'lspconfig'.yamlls.setup{}
-require'lspconfig'.bashls.setup{}
-require'lspconfig'.vimls.setup{}
-require'lspconfig'.dockerls.setup{}
-require'lspconfig'.sumneko_lua.setup{}
+-- lsp-status
+local lsp_status = require('lsp-status')
+lsp_status.register_progress()
+local lspconfig = require('lspconfig')
+
+lspconfig.clangd.setup({
+  handlers = lsp_status.extensions.clangd.setup(),
+  init_options = {
+    clangdFileStatus = true
+  },
+  on_attach = lsp_status.on_attach,
+  capabilities = lsp_status.capabilities
+})
+
+lspconfig.gopls.setup({})
+-- lspconfig.pyright.setup({})
+lspconfig.pylsp.setup({
+    settings = { python = { workspaceSymbols = { enabled = true }}},
+    on_attach = lsp_status.on_attach,
+    capabilities = lsp_status.capabilities
+})
+lspconfig.tsserver.setup({})
+lspconfig.html.setup({})
+lspconfig.cssls.setup({})
+lspconfig.jsonls.setup({})
+lspconfig.yamlls.setup({})
+lspconfig.bashls.setup({})
+lspconfig.vimls.setup({})
+lspconfig.dockerls.setup({})
+lspconfig.sumneko_lua.setup({})
+
+-- lspconfig.rust_analyzer.setup({
+--   on_attach = lsp_status.on_attach,
+--   capabilities = lsp_status.capabilities
+-- })
+
 -- java
-require'lspconfig'.jdtls.setup{}
+lspconfig.jdtls.setup({})
 -- js and ts
-require'lspconfig'.eslint.setup{}
+lspconfig.eslint.setup({})
 -- go
-require'lspconfig'.gopls.setup {
+lspconfig.gopls.setup {
 on_attach = function(client)
   -- [[ other on_attach code ]]
   -- illuminate highlight cursor word
@@ -182,14 +209,14 @@ on_attach = function(client)
 end,
 }
 
-require'lspconfig'.cmake.setup{}
-require'lspconfig'.diagnosticls.setup{}
-require'lspconfig'.ansiblels.setup{}
-require'lspconfig'.sqls.setup{
+lspconfig.cmake.setup({})
+lspconfig.diagnosticls.setup({})
+lspconfig.ansiblels.setup({})
+lspconfig.sqls.setup{
     on_attach = function(client)
         client.resolved_capabilities.execute_command = true
 
-        require'sqls'.setup{}
+        require'sqls'.setup({})
     end
 }
 EOF
@@ -199,6 +226,15 @@ let g:LanguageClient_serverCommands = {
 \ 'markdown': ['unified-language-server', '--parser=remark-parse', '--stdio'],
 \ }
 
+
+" lsp-status
+function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+  endif
+
+  return ''
+endfunction
 " lspkind
 lua <<EOF
 require('lspkind').init({
@@ -309,3 +345,40 @@ nnoremap <silent> <leader>dR :lua require'dap'.repl.run_last()<CR>`
 " kite
 " let g:kite_tab_complete=1
 " let g:kite_supported_languages = ['*']
+"
+
+" coq complete
+" lua <<EOF
+" local lsp = require "lspconfig"
+" local coq = require "coq" -- add this
+" EOF
+
+" lspsaga
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+
+" formatter
+" https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md
+lua << EOF
+require("formatter").setup({
+  filetype = {
+    python = {
+      function()
+        return {
+          exe = "python3 -m autopep8",
+          args = {
+            "--in-place --aggressive --aggressive",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+          },
+          stdin = false
+        }
+      end
+    }
+  }
+})
+EOF
+
+" vim-ultest
+let test#python#pytest#options = "--color=yes"
+let test#javascript#jest#options = "--color=always"
+let test#javascript#reactscripts#options = "--watchAll=false"
+let g:ultest_use_pty = 1
