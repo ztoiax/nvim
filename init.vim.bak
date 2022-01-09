@@ -112,6 +112,9 @@ Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'onsails/lspkind-nvim'          " completion icon
 Plug 'ray-x/lsp_signature.nvim'      " 参数提示
 
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip'
+
 " lsp
 Plug 'nanotee/sqls.nvim'             " lsp sql
 Plug 'neovim/nvim-lspconfig'         " lsp

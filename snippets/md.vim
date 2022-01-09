@@ -1,6 +1,6 @@
 """""" all """"""
 " inoremap
-autocmd Filetype * inoremap <buffer> ,, <Esc>/<++><CR>:nohlsearch<CR>"_c4l
+" autocmd Filetype * inoremap <buffer> ,, <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 autocmd Filetype * inoremap <buffer> ,# #####  ######<enter><++><esc>kf<space>a
 
 """""" sh """"""

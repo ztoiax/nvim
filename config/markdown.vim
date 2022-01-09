@@ -72,14 +72,8 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} wilj be replace with the file name
 let g:mkdp_page_title = '「${name}」'
-nmap <Leader>rr <Plug>MarkdownPreview
-
-" vim-markdown-toc
-" 自动生成目录
-nmap <Leader>rd :GenTocGFM<cr>
 
 " markdown tab
-let g:table_mode_tableize_map = '<leader>m'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')
@@ -93,9 +87,3 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-
-"
-lua << EOF
-vim.g.markdown_fenced_languages = {'python'}
-EOF

@@ -26,6 +26,7 @@
         * [lspkind](#lspkind)
         * [kite](#kite)
         * [tabnine](#tabnine)
+        * [formatter](#formatter)
         * [DAP](#dap)
     * [编程语言相关的配置](#编程语言相关的配置)
         * [部分代码运行SnipRun](#部分代码运行sniprun)
@@ -428,10 +429,12 @@ sudo pacman -S gopls
 go get github.com/lighttiger2505/sqls
 
 # java
-
 yay -S jdtls
 
 # lua-language-server
+pacmain -S lua-language-server
+
+# 手动编译(失败)
 # install ninja
 sudo pacman -S ninja
 git clone https://github.com/sumneko/lua-language-server
@@ -465,6 +468,18 @@ bash kite-installer.sh --install
 ### [tabnine](https://github.com/codota/tabnine-vim)
 
     > AI 补全. 训练了GitHub 200万源代码, 插件大小500M
+
+### [formatter]()
+
+- [Configurations](https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md)
+
+```sh
+# python
+autopep8
+
+# lua
+stylua
+```
 
 ### [DAP](https://github.com/mfussenegger/nvim-dap)
 

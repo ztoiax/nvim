@@ -1,7 +1,7 @@
 "fzf
 " nmap <Leader>fh :History <CR>
 " nmap <Leader>ff :Files  <CR>
-nmap <Leader>a  :Rg! <CR>
+nmap <Leader>A  :Rg! <CR>
 " nmap <Leader>fc :Colors<CR>
 " nmap <Leader>f<Space> :Marks  <CR>
 " nmap <Leader>fg :GF  <CR>
@@ -198,7 +198,8 @@ EOF
 
 nmap <leader>ff :FzfLua files<cr>
 nmap <leader>fh :FzfLua oldfiles<cr>
-nmap <leader>fc :FzfLua buffers<cr>
+nmap <leader>fm :FzfLua oldfiles<cr>
+nmap <leader>fb :FzfLua buffers<cr>
 nmap <leader>f/ :FzfLua lines<cr>
 " nmap <leader>f/ :FzfLua blines<cr> " 所有buffers
 nmap <leader>f. :FzfLua grep_cword<cr>
