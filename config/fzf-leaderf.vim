@@ -207,8 +207,8 @@ nmap <leader>a :FzfLua grep<cr>
 nmap <leader>fc :FzfLua colorschemes<cr>
 
 nmap <leader>ft  :FzfLua lsp_document_symbols<cr>
-nmap <leader>k :FzfLua lsp_definitions<cr>
-nmap <leader>j :FzfLua lsp_references<cr>
+nmap <leader>K :FzfLua lsp_definitions<cr>
+nmap <leader>J :FzfLua lsp_references<cr>
 
 nmap <leader><space>  :FzfLua marks<cr>
 

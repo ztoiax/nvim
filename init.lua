@@ -2,7 +2,6 @@ require("plugins")
 require("lsp")
 vim.cmd([[
     source ~/.config/nvim/config/set.vim
-    source ~/.config/nvim/config/function.vim
     " source ~/.config/nvim/config/keysound.vim
     source ~/.config/nvim/config/fzf-leaderf.vim
 
@@ -19,3 +18,4 @@ vim.cmd([[
     source  ~/.config/nvim/snippets/md.vim
 ]])
 require("init-dap")
+require("function")
