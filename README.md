@@ -558,6 +558,10 @@ nvim.input('')
 
 - [AT LEAST ONE VIM TRICK YOU MIGHT NOT KNOW](https://www.hillelwayne.com/post/intermediate-vim/)
 
+- [nvim-lua-guide](https://github.com/nanotee/nvim-lua-guide)
+
+- [neovim插件排行](http://neovimcraft.com/)
+
 - [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
 
 # other vim ui

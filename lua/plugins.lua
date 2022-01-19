@@ -186,7 +186,8 @@ return require('packer').startup(function(use)
     use 'junegunn/goyo.vim'             -- 沉浸阅读
     use 'simnalamburt/vim-mundo'        -- undo tree
     use 'psliwka/vim-smoothie'          -- 移动动画
-         --浮动窗口
+    --浮动窗口
+    use "numToStr/FTerm.nvim"
     use {
         'voldikss/vim-floaterm',
         vim.cmd([[
@@ -292,13 +293,7 @@ return require('packer').startup(function(use)
         run = 'cd ~/.fzf && ./install --all'
     }
 
-    use 'junegunn/fzf.vim'
-    use {
-        'Yggdroot/LeaderF', --[[ , { 'do': ':LeaderfInstallCExtension' } ]]
-        run = ':LeaderfInstallCExtension',
-    }
-    use 'akiyosi/gonvim-fuzzy'       -- Vim plug
-    use 'yuki-uthman/vim-fzf-dictionary'
+    use 'vijaymarupudi/nvim-fzf'
     use 'ibhagwan/fzf-lua'
 
     -- -- telescope
@@ -324,14 +319,6 @@ return require('packer').startup(function(use)
     }
     use 'mzlogin/vim-markdown-toc'      -- 自动生成目录
     use 'dhruvasagar/vim-table-mode'    -- 快速插入markdown表格
-    -- highlight代码块
-    use {
-        'jubnzv/mdeval.nvim',
-        config = function ()
-            require 'mdeval'.setup()
-        end
-    }
-
 
     -- completion
     -- -- use 'ms-jpq/coq_nvim', {'branch': 'coq'}
@@ -386,7 +373,10 @@ return require('packer').startup(function(use)
     use 'tpope/vim-fugitive'            -- 在 vim 里使用 git
     use 'tpope/vim-rhubarb'             -- Gbrowse 配合vim-fugitive
     use 'jreybert/vimagit'              -- magit
-    use 'f-person/git-blame.nvim'       -- 当前行显示commit信息
+    use {
+        'f-person/git-blame.nvim',       -- 当前行显示commit信息
+        vim.cmd([[ let g:gitblame_date_format = '%x, %X']])
+    }
     -- 显示文件变动
     use {
         'lewis6991/gitsigns.nvim',

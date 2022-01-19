@@ -3,7 +3,7 @@ require("lsp")
 vim.cmd([[
     source ~/.config/nvim/config/set.vim
     " source ~/.config/nvim/config/keysound.vim
-    source ~/.config/nvim/config/fzf-leaderf.vim
+    source ~/.config/nvim/config/fzf.vim
 
     " ui
     source ~/.config/nvim/config/markdown.vim

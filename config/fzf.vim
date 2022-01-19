@@ -1,44 +1,3 @@
-"fzf
-" nmap <Leader>fh :History <CR>
-" nmap <Leader>ff :Files  <CR>
-nmap <Leader>A  :Rg! <CR>
-" nmap <Leader>fc :Colors<CR>
-" nmap <Leader>f<Space> :Marks  <CR>
-" nmap <Leader>fg :GF  <CR>
-" nmap <Leader>ft :BTags  <CR>
-" nmap <Leader>f/ :BLines  <CR>
-
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
- " let g:fzf_layout = {
- "  \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.5)'
- "  \ }
-
- " rga instead rg
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rga --column --line-number --no-heading --color=always --smart-case -- %s * || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
-
-"LeaderF
-let g:Lf_PreviewInPopup = 1
-" don't show the help in normal mode
-let g:Lf_HideHelp = 1
-let g:Lf_UseCache = 0
-let g:Lf_UseVersionControlTool = 0
-let g:Lf_IgnoreCurrentBufferName = 1
-
-nmap <Leader>fm :<C-U><C-R>=printf("Leaderf --regexMode mru %s", "")<CR><CR>
-nmap <Leader>ft :<C-U><C-R>=printf("Leaderf --regexMode bufTag %s", "")<CR><CR>
-
-let g:Lf_GtagsAutoGenerate = 1
-let g:Lf_Gtagslabel = 'native-pygments'
-" let $GTAGSCONF = '/path/to/share/gtags/gtags.conf'
-
 " telescope
 "lua <<EOF
 "require("telescope").setup {
@@ -107,15 +66,6 @@ let g:Lf_Gtagslabel = 'native-pygments'
 " nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 " nnoremap <leader>fr <cmd>lua require'telescope.builtin'.lsp_references{}<CR>
 
-" vim-fzf-dictionary
-imap <leader><tab> <Plug>(fzf-dictionary-open)
-let g:fzf_dictionary_options = #{
-    \height :  15,
-    \width  :  80,
-    \down   :   0,
-    \right  :   0,
-    \}
-
 " fzf-lua
 lua << EOF
 local actions = require "fzf-lua.actions"
@@ -127,6 +77,7 @@ require'fzf-lua'.setup {
         row              = 0.35,            -- window row position (0=top, 1=bottom)
         col              = 0.50,            -- window col position (0=left, 1=right)
         preview = {
+          default        = 'bat',           -- override the default previewer?
           layout         = 'horizontal',          -- horizontal|vertical|flex
           horizontal     = 'right:55%',     -- right|left:size
         },
@@ -190,20 +141,26 @@ require'fzf-lua'.setup {
             glob_flag         = "--iglob",  -- for case sensitive globs use '--glob'
             glob_separator    = "%s%-%-"    -- query separator pattern (lua): ' --'
         },
+    },
+    files = {
+        prompt            = 'Files❯ ',
+        multiprocess      = true,           -- run command in a separate process
+        -- find_opts         = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+        rg_opts           = "--color=never --files --hidden --follow -g '!.git' *",
+        -- fd_opts           = "--color=never --type f --hidden --follow --exclude .git",
     }
 }
 EOF
 
-
-
-nmap <leader>ff :FzfLua files<cr>
+nmap <leader>ff :lua require'fzf-lua'.files({ cmd = 'rg --color=never --files --hidden --no-ignore', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
 nmap <leader>fh :FzfLua oldfiles<cr>
 nmap <leader>fm :FzfLua oldfiles<cr>
 nmap <leader>fb :FzfLua buffers<cr>
-nmap <leader>f/ :FzfLua lines<cr>
-" nmap <leader>f/ :FzfLua blines<cr> " 所有buffers
+" nmap <leader>f/ :FzfLua lines<cr>
+nmap <leader>f/ :FzfLua blines<cr>
 nmap <leader>f. :FzfLua grep_cword<cr>
-nmap <leader>a :FzfLua grep<cr>
+" nmap <leader>a :lua require'fzf-lua'.grep({ cmd = 'grep --binary-files=without-match --line-number --recursive --color=auto --perl-regexp', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
+nmap <leader>a :lua require'fzf-lua'.grep({ cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-depth 3 --no-ignore ", cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
 nmap <leader>fc :FzfLua colorschemes<cr>
 
 nmap <leader>ft  :FzfLua lsp_document_symbols<cr>

@@ -54,13 +54,21 @@ let g:python3_host_skip_check=1
 let g:python3_host_prog = '/usr/bin/python3'
 
 " highlight markdown code block
-let g:markdown_fenced_languages = ['bash=sh', 'sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'python', 'py=python']
+let g:markdown_fenced_languages = ['bash=sh', 'sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'python', 'py=python', 'lua']
 
 "highlight
-highlight ExtraWhitespace ctermbg=lightblue guibg=lightblue
+hi ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
 
 "lsp
 hi LspReferenceRead cterm=bold ctermbg=237 guibg=LightYellow
 hi LspReferenceText cterm=bold ctermbg=237 guibg=LightYellow
 hi LspReferenceWrite cterm=bold ctermbg=237 guibg=LightYellow
+
+" cmp
+hi! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+hi! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
+hi! CmpItemKindFunction guibg=NONE guifg=#C586C0
+hi! CmpItemKindMethod guibg=NONE guifg=#C586C0
+hi! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+hi! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
