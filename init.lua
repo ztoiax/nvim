@@ -1,9 +1,7 @@
 require("plugins")
-require("lsp")
 vim.cmd([[
     source ~/.config/nvim/config/set.vim
     " source ~/.config/nvim/config/keysound.vim
-    source ~/.config/nvim/config/fzf.vim
 
     " ui
     source ~/.config/nvim/config/markdown.vim
@@ -17,5 +15,7 @@ vim.cmd([[
     " snippets
     source  ~/.config/nvim/snippets/md.vim
 ]])
-require("init-dap")
+require("debug/init-dap")
 require("function")
+require("edit/init-fzf")
+-- require("edit/init-telescope")

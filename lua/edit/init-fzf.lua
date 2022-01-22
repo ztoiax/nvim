@@ -1,73 +1,3 @@
-" telescope
-"lua <<EOF
-"require("telescope").setup {
-"    defaults = {
-"        vimgrep_arguments = {
-"            "rga",
-"            "--color=never",
-"            "--no-heading",
-"            "--with-filename",
-"            "--line-number",
-"            "--column",
-"            "--smart-case"
-"        },
-"        prompt_position = "bottom",
-"        prompt_prefix = " ",
-"        selection_caret = " ",
-"        entry_prefix = "  ",
-"        initial_mode = "insert",
-"        selection_strategy = "reset",
-"        sorting_strategy = "descending",
-"        layout_strategy = "horizontal",
-"        layout_defaults = {
-"            horizontal = {
-"                preview_width = 0.5
-"            },
-"            vertical = {
-"                mirror = false
-"            }
-"        },
-"        file_sorter = require "telescope.sorters".get_fuzzy_file,
-"        file_ignore_patterns = {},
-"        generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,
-"        shorten_path = true,
-"        winblend = 0,
-"        width = 0.75,
-"        preview_cutoff = 120,
-"        results_height = 1,
-"        results_width = 0.8,
-"        border = {},
-"        borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
-"        color_devicons = true,
-"        use_less = true,
-"        set_env = {["COLORTERM"] = "truecolor"}, -- default = nil,
-"        file_previewer = require "telescope.previewers".vim_buffer_cat.new,
-"        grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
-"        qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
-"        -- Developer configurations: Not meant for general override
-"        buffer_previewer_maker = require "telescope.previewers".buffer_previewer_maker
-"    },
-"    extensions = {
-"        media_files = {
-"            filetypes = {"png", "webp", "jpg", "jpeg"},
-"            find_cmd = "rga" -- find command (defaults to `fd`)
-"        }
-"--        fzy_native = {
-"--                  override_generic_sorter = false,
-"--                  override_file_sorter = true,
-"--        }
-"    }
-"}
-" EOF
-
-" nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-" nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-" nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-" nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-" nnoremap <leader>fr <cmd>lua require'telescope.builtin'.lsp_references{}<CR>
-
-" fzf-lua
-lua << EOF
 local actions = require "fzf-lua.actions"
 require'fzf-lua'.setup {
     fullscreen       = false,           -- start fullscreen?
@@ -148,28 +78,49 @@ require'fzf-lua'.setup {
         -- find_opts         = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
         rg_opts           = "--color=never --files --hidden --follow -g '!.git' *",
         -- fd_opts           = "--color=never --type f --hidden --follow --exclude .git",
-    }
+    },
+    lsp = {
+      prompt_postfix    = '❯ ',       -- will be appended to the LSP label
+                                      -- to override use 'prompt' instead
+      cwd_only          = false,      -- LSP/diagnostics for cwd only?
+      async_or_timeout  = 5000,       -- timeout(ms) or 'true' for async calls
+      file_icons        = false,
+      git_icons         = false,
+      lsp_icons         = true,
+      severity          = "hint",
+      icons = {
+        ["Error"]       = { icon = "", color = "red" },       -- error
+        ["Warning"]     = { icon = "", color = "yellow" },    -- warning
+        ["Information"] = { icon = "", color = "blue" },      -- info
+        ["Hint"]        = { icon = "", color = "magenta" },   -- hint
+      },
+    },
 }
-EOF
 
-nmap <leader>ff :lua require'fzf-lua'.files({ cmd = 'rg --color=never --files --hidden --no-ignore', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
-nmap <leader>fh :FzfLua oldfiles<cr>
-nmap <leader>fm :FzfLua oldfiles<cr>
-nmap <leader>fb :FzfLua buffers<cr>
-" nmap <leader>f/ :FzfLua lines<cr>
-nmap <leader>f/ :FzfLua blines<cr>
-nmap <leader>f. :FzfLua grep_cword<cr>
-" nmap <leader>a :lua require'fzf-lua'.grep({ cmd = 'grep --binary-files=without-match --line-number --recursive --color=auto --perl-regexp', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
-nmap <leader>a :lua require'fzf-lua'.grep({ cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-depth 3 --no-ignore ", cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
-nmap <leader>fc :FzfLua colorschemes<cr>
+-- vim.api.nvim_set_keymap('n', '<Leader>ff', ':FzfLua files<CR>', { noremap = true, silent = true })
 
-nmap <leader>ft  :FzfLua lsp_document_symbols<cr>
-nmap <leader>K :FzfLua lsp_definitions<cr>
-nmap <leader>J :FzfLua lsp_references<cr>
+vim.cmd([[
+    nmap <leader>ff :lua require'fzf-lua'.files({ cmd = 'rg --color=never --files --hidden --no-ignore', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
+    nmap <leader>fh :FzfLua oldfiles<cr>
+    nmap <leader>fm :FzfLua oldfiles<cr>
+    nmap <leader>fb :FzfLua buffers<cr>
+    nmap <leader>ft :lua require'fzf-lua'.lsp_document_symbols({ fzf_cli_args = '--with-nth 2..' })<cr>
+    autocmd FileType markdown nmap <buffer> <leader>ft :lua require'fzf-lua'.btags({ ctags_file = '~/.cache/ctags/tags', cwd='' })<cr>
 
-nmap <leader><space>  :FzfLua marks<cr>
+    " nmap <leader>f/ :FzfLua lines<cr>
+    nmap <leader>f/ :FzfLua blines<cr>
+    nmap <leader>f. :lua require'fzf-lua'.grep_cword({ cwd=vim.loop.cwd(), fzf_cli_args = '--with-nth 2..' })<cr>
+    " nmap <leader>a :lua require'fzf-lua'.grep({ cmd = 'grep --binary-files=without-match --line-number --recursive --color=auto --perl-regexp', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
+    nmap <leader>a :lua require'fzf-lua'.grep({ cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-depth 3 --no-ignore ", cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
+    nmap <leader>fc :FzfLua colorschemes<cr>
 
-nmap <leader>/ :FzfLua search_history<cr>
-nmap <leader>: :FzfLua commands<cr>
-nmap <leader>v  :FzfLua keymaps<cr>
-cmap ,h :FzfLua command_history<cr>
+    nmap <leader>K :FzfLua lsp_definitions<cr>
+    nmap <leader>J :FzfLua lsp_references<cr>
+
+    nmap <leader><space>  :FzfLua marks<cr>
+
+    nmap <leader>/ :FzfLua search_history<cr>
+    nmap <leader>: :FzfLua commands<cr>
+    nmap <leader>fk  :FzfLua keymaps<cr>
+    cmap <C-r> FzfLua command_history<cr>
+]])

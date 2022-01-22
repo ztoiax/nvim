@@ -8,7 +8,7 @@ autocmd Filetype * inoremap <buffer> ,# #####  ######<enter><++><esc>kf<space>a
 autocmd Filetype sh vnoremap ,f <esc>`>a<enter>}<esc>`<ifunction (){<enter><esc>kf(i
 
 """""" py """"""
-autocmd Filetype python noremap ,xb ofrom ipdb import set_trace<enter>set_trace()<esc>
+" autocmd Filetype python noremap ,xb ofrom ipdb import set_trace<enter>set_trace()<esc>
 autocmd Filetype python noremap ,xl osetup_logging(debug=True, logfile='/tmp/debug')<esc>
 autocmd Filetype python noremap ,xp oLOG.debug(f"variable: '{}'")<esc>blp
 
