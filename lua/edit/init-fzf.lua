@@ -79,6 +79,9 @@ require'fzf-lua'.setup {
         rg_opts           = "--color=never --files --hidden --follow -g '!.git' *",
         -- fd_opts           = "--color=never --type f --hidden --follow --exclude .git",
     },
+    tags = {
+        preview = 'bat'
+    },
     lsp = {
       prompt_postfix    = '❯ ',       -- will be appended to the LSP label
                                       -- to override use 'prompt' instead

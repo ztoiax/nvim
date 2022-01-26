@@ -152,6 +152,9 @@ return {
     --registers menu
     'tversteeg/registers.nvim',
 
+    -- focusing current part
+    {"folke/twilight.nvim", config = require("twilight").setup {} },
+
     -- 打字机声音
     "skywind3000/vim-keysound",
 

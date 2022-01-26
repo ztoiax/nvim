@@ -77,7 +77,8 @@ return {
     {
         "romgrk/nvim-treesitter-context",
         cmd = "TSContextToggle",
-        -- config = require'treesitter-context'.setup{}
+        vim.cmd([[packadd nvim-treesitter-context]]),
+        config = require'treesitter-context'.setup{}
     },
 
     -- highlight if, else语法块

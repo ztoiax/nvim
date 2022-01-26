@@ -59,6 +59,7 @@ require("telescope").setup {
 
 vim.cmd([[
     nnoremap <leader>ff :lua require('telescope.builtin').find_files({theme='dropdown'})<cr>
+    nnoremap <leader>fm :lua require('telescope.builtin').oldfiles({theme='dropdown'})<cr>
     nnoremap <leader>a :lua require('telescope.builtin').live_grep()<cr>
     nnoremap <leader>fb :lua require('telescope.builtin').buffers()<cr>
     nnoremap <leader>fh :lua require('telescope.builtin').help_tags()<cr>

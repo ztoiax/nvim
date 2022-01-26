@@ -556,11 +556,9 @@ nvim.input('')
 
 - [Vim 从入门到精通](https://github.com/wsdjeg/vim-galore-zh_cn)
 
-- [AT LEAST ONE VIM TRICK YOU MIGHT NOT KNOW](https://www.hillelwayne.com/post/intermediate-vim/)
+- [cheatsheet](https://github.com/skywind3000/awesome-cheatsheets/blob/master/editors/vim.txt)
 
 - [nvim-lua-guide](https://github.com/nanotee/nvim-lua-guide)
-
-- [neovim插件排行](http://neovimcraft.com/)
 
 - [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
 

@@ -80,4 +80,5 @@ return {
     -- 数据库
     "tpope/vim-dadbod",
     "kristijanhusak/vim-dadbod-ui",
+    "tami5/sqlite.lua",
 }
