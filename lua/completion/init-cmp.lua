@@ -1,6 +1,6 @@
 -- lspkind
 require("lspkind").init({
-    with_text = true,
+    -- with_text = true,
     symbol_map = {
         Text = "",
         Method = "ƒ",

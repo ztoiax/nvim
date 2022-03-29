@@ -11,6 +11,8 @@ vim.cmd [[packadd packer.nvim]]
 -- 加载插件
 return require('packer').startup(function(use)
 
+    use "onsails/lspkind-nvim"
+
     use(require("plugins-lib"))
     use(require("plugins-treesitter"))
     use(require("plugins-ui"))

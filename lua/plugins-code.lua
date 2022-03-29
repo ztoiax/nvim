@@ -3,12 +3,12 @@ return {
 
     -- coq
     {
-        { "ms-jpq/coq_nvim", branch = "coq" },
+        "ms-jpq/coq_nvim", branch = "coq",
         requires = {
-            { "ms-jpq/coq.artifacts", branch = "artifacts" },
-            { "ms-jpq/coq.thirdparty", branch = "3p" },
+             "ms-jpq/coq.artifacts", branch = "artifacts" ,
+             "ms-jpq/coq.thirdparty", branch = "3p" ,
         },
-        config = require("completion/init-coq"),
+        config = function() require("completion/init-coq") end,
     },
 
     -- cmp
@@ -28,29 +28,29 @@ return {
             "L3MON4D3/LuaSnip",
             "rafamadriz/friendly-snippets",
         },
-        config = require("completion/init-cmp"),
+        config = function() require("completion/init-cmp") end,
     },
 
     ------ lsp ------
     {
         "neovim/nvim-lspconfig",
         requires = { "nanotee/sqls.nvim" },
-        config = require("code/init-lsp"),
+        config = function() require("code/init-lsp") end,
     },
 
     -- 参数提示
     {
         "ray-x/lsp_signature.nvim",
-        config = require("lsp_signature").setup({
+        config = function() require("lsp_signature").setup({
             bind = true, -- This is mandatory, otherwise border config won't get registered.
             handler_opts = {
                 border = "rounded",
             },
-        }),
+        })end
     },
 
     -- lsp侧边栏
-    { "simrat39/symbols-outline.nvim", config = require("code/symbols-outline") },
+    { "simrat39/symbols-outline.nvim", config = function() require("code/symbols-outline") end},
 
     -- diagnosis
     {

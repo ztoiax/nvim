@@ -1,33 +1,33 @@
 return {
     -- 图标(icons)
-    { "kyazdani42/nvim-web-devicons", require("nvim-web-devicons").setup({}) },
+    { "kyazdani42/nvim-web-devicons", config = function() require("nvim-web-devicons").setup({}) end},
 
     -- tabs(标签)
     "romgrk/barbar.nvim",
 
     -- 状态栏lsp
-    { "SmiteshP/nvim-gps", require("nvim-gps").setup() },
+    { "SmiteshP/nvim-gps", config = function() require("nvim-gps").setup() end},
 
     -- 状态栏
     {
         "nvim-lualine/lualine.nvim",
-        config = require("lualine").setup({
+        config = function() require("lualine").setup({
             options = {
                 theme = "OceanicNext",
             },
             sections = {
                 lualine_c = {
                     -- "require'lsp-status'.status()"
-                    { require("nvim-gps").get_location, cond = require("nvim-gps").is_available },
+                    {  require("nvim-gps").get_location , cond = require("nvim-gps").is_available},
                 },
             },
-        }),
+        })end
     },
 
     -- 通知menu
     {
         "rcarriga/nvim-notify",
-        config = 'vim.notify = require("notify")',
+        config = 'vim.notify = require("notify")' ,
     },
 
     -- highlight /
@@ -42,12 +42,12 @@ return {
         -- vim.opt.list = true
         -- vim.opt.listchars:append("space:⋅")
         -- vim.opt.listchars:append("eol:↴")
-        require("indent_blankline").setup({
+        config = function() require("indent_blankline").setup({
             space_char_blankline = " ",
             show_current_context = true,
             -- 下划线
             -- show_current_context_start = true,
-        }),
+        })end
     },
 
     -- highlight yank
@@ -59,7 +59,7 @@ return {
     "RRethy/vim-illuminate",
 
     -- highlight color
-    { "norcalli/nvim-colorizer.lua", require("colorizer").setup() },
+    { "norcalli/nvim-colorizer.lua", config = function() require("colorizer").setup() end},
 
     -- 搜索后自动取消highlight
     "romainl/vim-cool",
@@ -153,7 +153,7 @@ return {
     'tversteeg/registers.nvim',
 
     -- focusing current part
-    {"folke/twilight.nvim", config = require("twilight").setup {} },
+    {"folke/twilight.nvim", config = function() require("twilight").setup {} end},
 
     -- 打字机声音
     "skywind3000/vim-keysound",

@@ -18,7 +18,7 @@ return {
     ------ dap ------
     {
         "rcarriga/nvim-dap-ui",
-        requires = { { "mfussenegger/nvim-dap" }, { "thehamsta/nvim-dap-virtual-text" } },
+        requires = { "mfussenegger/nvim-dap", "thehamsta/nvim-dap-virtual-text" },
     },
 
     -- nvim lua dap
@@ -28,5 +28,5 @@ return {
 
     ------- formatting ------
     "sbdchd/neoformat",
-    { "mhartington/formatter.nvim", config = require("debug/init-formatter") },
+    { "mhartington/formatter.nvim", config = function() require("debug/init-formatter") end},
 }

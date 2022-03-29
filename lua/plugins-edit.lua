@@ -6,7 +6,7 @@ return {
     "mfussenegger/nvim-treehopper",
 
     -- 注释
-    { "numToStr/Comment.nvim", require("Comment").setup() },
+    { "numToStr/Comment.nvim", config = function() require("Comment").setup() end},
 
     -- instead and replace
     "brooth/far.vim",
@@ -15,7 +15,7 @@ return {
     "wellle/targets.vim",
 
     -- 单词跳转
-    { "phaazon/hop.nvim", require("hop").setup() },
+    { "phaazon/hop.nvim", config = function() require("hop").setup() end},
 
     -- extends f
     {
@@ -43,10 +43,10 @@ return {
     "mg979/vim-visual-multi",
 
     -- autopairs
-    { "windwp/nvim-autopairs", require("nvim-autopairs").setup() },
+    { "windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup() end},
 
     -- 参数位置交换
-    { "mizlan/iswap.nvim", require("iswap").setup({}) },
+    { "mizlan/iswap.nvim", config = function() require("iswap").setup({}) end},
 
     -- marks
     -- "chentau/marks.nvim",

@@ -451,7 +451,7 @@ go get github.com/lighttiger2505/sqls
 yay -S jdtls
 
 # lua-language-server
-pacmain -S lua-language-server
+pacman -S lua-language-server
 
 # 手动编译(失败)
 # install ninja

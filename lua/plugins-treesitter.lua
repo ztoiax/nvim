@@ -3,7 +3,7 @@ return {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
         cmd = { "TSModuleInfo", "TSUpdate", "TSInstall" },
-        config = require("nvim-treesitter.configs").setup({
+        config = function() require("nvim-treesitter.configs").setup({
             ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
             highlight = {
                 enable = true, -- false will disable the whole extension
@@ -18,13 +18,13 @@ return {
                 },
             },
             additional_vim_regex_highlighting = true,
-        }),
+        })end,
         vim.cmd([[
         " 折叠
         " set foldmethod=expr
         " set foldexpr=nvim_treesitter#foldexpr()
         ]]),
-    },
+     },
 
     -- 语法树库函数
     {
@@ -36,7 +36,7 @@ return {
     -- rename, 函数跳转
     {
         "nvim-treesitter/nvim-treesitter-refactor",
-        config = require("nvim-treesitter.configs").setup({
+        config = function() require("nvim-treesitter.configs").setup({
             refactor = {
                 highlight_definitions = { enable = true },
                 -- highlight_current_scope = { enable = true },
@@ -58,36 +58,35 @@ return {
                     },
                 },
             },
-        }),
+        })end,
     },
 
     --彩虹括号
     {
         "p00f/nvim-ts-rainbow",
-        config = require("nvim-treesitter.configs").setup({
+        config = function() require("nvim-treesitter.configs").setup({
             -- 彩虹括号
             rainbow = {
                 enable = true,
                 extended_mode = true,
             },
-        }),
+        })end
     },
 
     -- 移动时显示函数上下文
     {
         "romgrk/nvim-treesitter-context",
         cmd = "TSContextToggle",
-        vim.cmd([[packadd nvim-treesitter-context]]),
-        config = require'treesitter-context'.setup{}
+        config = function() require'treesitter-context'.setup({}) end
     },
 
     -- highlight if, else语法块
     {
         "andymass/vim-matchup",
-        config = require("nvim-treesitter.configs").setup({
+        config = function() require("nvim-treesitter.configs").setup({
             matchup = {
                 enable = true,
             },
-        }),
+        })end
     },
 }

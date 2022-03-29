@@ -21,5 +21,5 @@ return {
     "Olical/conjure",
 
     -- 优化启动速度. ~/.cache/nvim/luacache
-    -- {"lewis6991/impatient.nvim", config =  require('impatient')},
+    -- {"lewis6991/impatient.nvim", config = function() require('impatient') end},
 }
