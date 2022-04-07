@@ -443,6 +443,9 @@ sudo npm i -g diagnostic-languageserver
 sudo npm install -g ansible-language-server
 pip3 install cmake-language-server
 
+# rust
+pacman -S rust-analyzer
+
 # go
 sudo pacman -S gopls
 go get github.com/lighttiger2505/sqls
@@ -494,10 +497,28 @@ bash kite-installer.sh --install
 
 ```sh
 # python
-autopep8
+pip install autopep8
 
 # lua
-stylua
+pacman -S stylua
+
+# json
+pacman -S prettier
+
+# shell
+pacman -S shfmt
+
+# c/cpp
+paru -S clang-format-static-bin
+
+# go
+paru -S gofumpt
+
+# docker
+go install github.com/jessfraz/dockfmt@latest
+
+# markdwon
+go install github.com/shurcooL/markdownfmt@latest
 ```
 
 ### [DAP](https://github.com/mfussenegger/nvim-dap)

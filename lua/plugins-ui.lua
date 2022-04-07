@@ -142,6 +142,7 @@ return {
         config = function()
             require("auto-session").setup({
                 log_level = "info",
+                auto_session_enable_last_session = false,
                 -- /home/tz/.local/share/nvim/sessions
                 auto_session_root_dir = "~/.config/nvim/sessions",
                 -- auto_session_suppress_dirs = {'~/.config/nvim/sessions'}
@@ -166,4 +167,12 @@ return {
     --     requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
     --     config = require'navigator'.setup()
     -- },
+
+    -- startuptime
+    {
+        -- useage: nvim --startuptime /tmp/nvim-startuptime
+        "henriquehbr/nvim-startup.lua",
+        config = function () require 'nvim-startup'.setup() end
+    },
+
 }

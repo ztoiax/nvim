@@ -64,7 +64,7 @@ return {
     -- lsp menu
     -- 'glepnir/lspsaga.nvim'
 
-    'github/copilot.vim',
+    -- 'github/copilot.vim',
     -- 'kiteco/vim-plugin'             -- kite ai completion
     -- 'codota/tabnine-vim'            -- tabnine ai completion
 }
