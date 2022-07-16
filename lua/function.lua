@@ -1,5 +1,5 @@
 -- vim-fcitx
-INPUT_TOGGLE = 1
+local INPUT_TOGGLE = 1
 function Fcitx2en()
     local input_status = vim.fn.systemlist("fcitx5-remote")
     if input_status[1] == "2" then -- 1表示当前为英文, 2表示当前为中文
@@ -19,10 +19,12 @@ function Fcitx2zh()
 end
 
 -- 进入插入模式
-vim.cmd("autocmd InsertEnter * :lua Fcitx2zh()")
+-- vim.cmd("autocmd InsertEnter * :lua Fcitx2zh()")
+vim.api.nvim_create_autocmd("InsertEnter", {command = "lua Fcitx2zh()"})
 
 -- 退出插入模式
-vim.cmd("autocmd InsertLeave * :lua Fcitx2en()")
+-- vim.cmd("autocmd InsertLeave * :lua Fcitx2en()")
+vim.api.nvim_create_autocmd("InsertLeave", {command = "lua Fcitx2en()"})
 
 
 local buf, win

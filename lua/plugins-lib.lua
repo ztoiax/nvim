@@ -11,6 +11,9 @@ return {
     -- lua库函数
     "nvim-lua/plenary.nvim",
 
+    -- popup弹窗库函数
+    "nvim-lua/popup.nvim",
+
     -- Moonscript(lua的语法糖), 实现 +=, ..=, python的列表推导式
     { "svermeulen/nvim-moonmaker", cmd = { "Moon", "MoonCompile" } },
 

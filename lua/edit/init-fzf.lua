@@ -106,7 +106,8 @@ require'fzf-lua'.setup {
 
 vim.cmd([[
     nmap <leader>ff :lua require'fzf-lua'.files({ cmd = 'rg --color=never --files --hidden --no-ignore', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
-    nmap <leader>fh :FzfLua oldfiles<cr>
+    " nmap <leader>fh :FzfLua oldfiles<cr>
+    nmap <leader>fh :FzfLua help_tags<cr>
     nmap <leader>fm :FzfLua oldfiles<cr>
     nmap <leader>fb :FzfLua buffers<cr>
     nmap <leader>ft :lua require'fzf-lua'.lsp_document_symbols({ fzf_cli_args = '--with-nth 2..' })<cr>
@@ -115,6 +116,7 @@ vim.cmd([[
     " nmap <leader>f/ :FzfLua lines<cr>
     nmap <leader>f/ :FzfLua blines<cr>
     nmap <leader>f. :lua require'fzf-lua'.grep_cword({ cwd=vim.loop.cwd(), fzf_cli_args = '--with-nth 2..' })<cr>
+    vmap <leader>f. :lua require'fzf-lua'.grep_cword({ cwd=vim.loop.cwd(), fzf_cli_args = '--with-nth 2..' })<cr>
     " nmap <leader>a :lua require'fzf-lua'.grep({ cmd = 'grep --binary-files=without-match --line-number --recursive --color=auto --perl-regexp', cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
     nmap <leader>a :lua require'fzf-lua'.grep({ cmd = "rg --column --line-number --no-heading --color=always --smart-case --max-depth 3 --no-ignore ", cwd=vim.loop.cwd(), show_cwd_header=true })<cr>
     nmap <leader>fc :FzfLua colorschemes<cr>

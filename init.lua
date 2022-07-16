@@ -17,5 +17,6 @@ vim.cmd([[
 ]])
 require("debug/init-dap")
 require("function")
+require("edit/map-syntax-tree-surfer")
 require("edit/init-fzf")
 -- require("edit/init-telescope")

@@ -156,6 +156,9 @@ return {
     -- focusing current part
     {"folke/twilight.nvim", config = function() require("twilight").setup {} end},
 
+    -- 折叠代码
+    {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'},
+
     -- 打字机声音
     "skywind3000/vim-keysound",
 
@@ -167,12 +170,4 @@ return {
     --     requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
     --     config = require'navigator'.setup()
     -- },
-
-    -- startuptime
-    {
-        -- useage: nvim --startuptime /tmp/nvim-startuptime
-        "henriquehbr/nvim-startup.lua",
-        config = function () require 'nvim-startup'.setup() end
-    },
-
 }

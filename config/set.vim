@@ -31,6 +31,7 @@ set autoread                 "文件发生外部改变就会发出提示
 set encoding=UTF-8
 set ttimeoutlen=150
 set nofoldenable             "关闭markdown折叠
+set cmdheight=1              "搜索栏高度
 " set spell                  "拼写检查
 " set noswapfile             "Disable swap files.
 " set listchars=tab:>-,trail:~,extends:>,precedes:<,space:·

@@ -4,15 +4,26 @@ return {
     "roxma/vim-hug-neovim-rpc",
 
     {
-        "rcarriga/vim-ultest",
-        requires = { "vim-test/vim-test" },
-        run = ":UpdateRemoteins",
-        vim.cmd([[
-            let test#python#pytest#options = "--color=yes"
-            let test#javascript#jest#options = "--color=always"
-            let test#javascript#reactscripts#options = "--watchAll=false"
-            let g:ultest__pty = 1
-        ]]),
+        "nvim-neotest/neotest",
+        requires = {
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-neotest/neotest-python",
+            "nvim-neotest/neotest-plenary",
+            "nvim-neotest/neotest-vim-test"
+        },
+        config = function ()
+            require("neotest").setup({
+              adapters = {
+                require("neotest-python")({
+                  dap = { justMyCode = false },
+                }),
+                require("neotest-plenary"),
+                require("neotest-vim-test")({
+                  ignore_file_types = { "python", "vim", "lua" },
+                }),
+              },
+            })
+        end
     },
 
     ------ dap ------
@@ -28,5 +39,10 @@ return {
 
     ------- formatting ------
     "sbdchd/neoformat",
-    { "mhartington/formatter.nvim", config = function() require("debug/init-formatter") end},
+    {
+        "mhartington/formatter.nvim",
+        config = function()
+            require("debug/init-formatter")
+        end,
+    },
 }

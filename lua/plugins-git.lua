@@ -18,4 +18,7 @@ return {
         "lewis6991/gitsigns.nvim",
         config = function() require("gitsigns").setup() end
     },
+
+    -- diff 当前项目
+    { "sindrets/diffview.nvim", config = function() require("diffview").setup({}) end},
 }

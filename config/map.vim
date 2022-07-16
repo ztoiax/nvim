@@ -84,8 +84,7 @@ imap <leader><F6> <ESC>:read!%:p<CR>
 vmap <F6> :SnipRun<CR>
 
 " 测试
-nmap <F8> :Ultest<CR>
-nmap <leader><F8> :UltestSummary<CR>
+nmap <F8> :lua require("neotest").run.run()
 
 " 调试
 " au FileType python nmap  <F5> :Pudb<CR>

@@ -23,10 +23,10 @@ imap <A-f> <Esc>wa
 imap <A-b> <Esc>bi
 
 " command keymap like emacs
-cmap <C-p> <Up>
-cmap <C-k> <Up>
-cmap <C-n> <Down>
-cmap <C-j> <Down>
+cmap <C-p> <S-Tab>
+cmap <C-k> <S-Tab>
+cmap <C-n> <Tab>
+cmap <C-j> <Tab>
 cmap <C-b> <Left>
 cmap <C-f> <Right>
 cmap <C-a> <Home>

@@ -48,6 +48,8 @@ return {
     -- 参数位置交换
     { "mizlan/iswap.nvim", config = function() require("iswap").setup({}) end},
 
+    { "ziontee113/syntax-tree-surfer" },
+
     -- marks
     -- "chentau/marks.nvim",
 

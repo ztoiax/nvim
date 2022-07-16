@@ -2,14 +2,14 @@ return {
     ------ completion ------
 
     -- coq
-    {
-        "ms-jpq/coq_nvim", branch = "coq",
-        requires = {
-             "ms-jpq/coq.artifacts", branch = "artifacts" ,
-             "ms-jpq/coq.thirdparty", branch = "3p" ,
-        },
-        config = function() require("completion/init-coq") end,
-    },
+    -- {
+    --     "ms-jpq/coq_nvim", branch = "coq",
+    --     requires = {
+    --          "ms-jpq/coq.artifacts", branch = "artifacts" ,
+    --          "ms-jpq/coq.thirdparty", branch = "3p" ,
+    --     },
+    --     config = function() require("completion/init-coq") end,
+    -- },
 
     -- cmp
     {
@@ -51,6 +51,9 @@ return {
 
     -- lsp侧边栏
     { "simrat39/symbols-outline.nvim", config = function() require("code/symbols-outline") end},
+
+    -- lsp 右下角进度ui
+    { "j-hui/fidget.nvim", config = function() require("fidget").setup({}) end},
 
     -- diagnosis
     {

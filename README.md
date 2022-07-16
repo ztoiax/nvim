@@ -3,6 +3,7 @@
 * [nvim](#nvim)
     * [why nvim](#why-nvim)
     * [常用命令](#常用命令)
+        * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
         * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
     * [配置](#配置)
     * [tips(技巧)](#tips技巧)
@@ -88,7 +89,28 @@ command! Esuse :e scp://root@192.168.100.71//
 :verbose nmap j
 ```
 
+### socket通信(需要neovim 0.7)
+
+- server
+```sh
+nvim --listen /tmp/nvim.pipe
+```
+
+- client
+```sh
+# 打开文件
+nvim --server /tmp/nvim.pipe --remote file
+
+# 执行命令
+nvim --server /tmp/nvim.pipe --remote-send ':echo "hello world"<cr>'
+```
+
 ### [nvr: shell命令控制nvim](https://github.com/mhinz/neovim-remote)
+
+- 安装
+```sh
+pip3 install neovim-remote
+```
 
 - 查看server的path
 
