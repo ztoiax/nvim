@@ -21,4 +21,12 @@ return {
 
     -- diff 当前项目
     { "sindrets/diffview.nvim", config = function() require("diffview").setup({}) end},
+
+    -- github
+    {
+        'ldelossa/gh.nvim',
+        requires = { 'ldelossa/litee.nvim' },
+        config = function() require("litee.lib").setup() end,
+        config = function() require("litee.gh").setup() end
+    },
 }

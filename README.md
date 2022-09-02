@@ -453,8 +453,7 @@ pip install python-lsp-server
 sudo npm i -g vscode-langservers-extracted
 
 # markdown
-sudo npm i -g unified-language-server
-sudo npm i -g markdown-language-server
+paru -S marksman-bin
 
 sudo npm i -g typescript typescript-language-server
 sudo npm i -g yaml-language-server

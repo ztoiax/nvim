@@ -81,6 +81,14 @@ return {
 
     -- 数据库
     "tpope/vim-dadbod",
-    "kristijanhusak/vim-dadbod-ui",
+    {
+        "kristijanhusak/vim-dadbod-ui",
+        -- 数据库路径
+        vim.cmd([[
+            let g:dbs = [
+            \ { 'name': 'sqlite-search.db', 'url': 'sqlite:/home/tz/.mybin/search.db' },
+            \ ]
+        ]]),
+    },
     "tami5/sqlite.lua",
 }

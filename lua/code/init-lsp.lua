@@ -25,6 +25,9 @@ lspconfig.dockerls.setup({})
 lspconfig.sumneko_lua.setup({})
 lspconfig.rust_analyzer.setup({})
 
+-- markdown
+lspconfig.marksman.setup({})
+
 -- java
 lspconfig.jdtls.setup({})
 -- js and ts

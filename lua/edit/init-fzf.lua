@@ -111,7 +111,7 @@ vim.cmd([[
     nmap <leader>fm :FzfLua oldfiles<cr>
     nmap <leader>fb :FzfLua buffers<cr>
     nmap <leader>ft :lua require'fzf-lua'.lsp_document_symbols({ fzf_cli_args = '--with-nth 2..' })<cr>
-    autocmd FileType markdown nmap <buffer> <leader>ft :lua require'fzf-lua'.btags({ ctags_file = '~/.cache/ctags/tags', cwd='' })<cr>
+    " autocmd FileType markdown nmap <buffer> <leader>ft :lua require'fzf-lua'.btags({ ctags_file = '~/.cache/ctags/tags', cwd='' })<cr>
 
     " nmap <leader>f/ :FzfLua lines<cr>
     nmap <leader>f/ :FzfLua blines<cr>
