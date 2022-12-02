@@ -162,6 +162,9 @@ return {
     -- 打字机声音
     "skywind3000/vim-keysound",
 
+    -- 主题
+    "rebelot/kanagawa.nvim",
+
     --在浏览器嵌入nvim
     --  'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } },
 

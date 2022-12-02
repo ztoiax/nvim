@@ -2,9 +2,9 @@
 local INPUT_TOGGLE = 1
 function Fcitx2en()
     local input_status = vim.fn.systemlist("fcitx5-remote")
-    if input_status[1] == "2" then -- 1表示当前为英文, 2表示当前为中文
+    if input_status[1] == "1" then -- 2表示当前为英文, 1表示当前为中文
         INPUT_TOGGLE = 1
-        vim.fn.systemlist("fcitx5-remote -c") -- 中文转英文
+        vim.fn.systemlist("fcitx5-remote -o") -- 中文转英文
     end
 end
 
@@ -12,15 +12,14 @@ function Fcitx2zh()
     local input_status = vim.fn.systemlist("fcitx5-remote")
     -- if input_status[1] == "1" and INPUT_TOGGLE == 1 then
     if input_status[1] == "2" then
-        -- vim.fn.systemlist("fcitx5-remote -o")  -- 英文转中文
-        vim.fn.systemlist("fcitx5-remote -c")
+        vim.fn.systemlist("fcitx5-remote -c")  -- 英文转中文
         INPUT_TOGGLE = 0
     end
 end
 
 -- 进入插入模式
 -- vim.cmd("autocmd InsertEnter * :lua Fcitx2zh()")
-vim.api.nvim_create_autocmd("InsertEnter", {command = "lua Fcitx2zh()"})
+-- vim.api.nvim_create_autocmd("InsertEnter", {command = "lua Fcitx2zh()"})
 
 -- 退出插入模式
 -- vim.cmd("autocmd InsertLeave * :lua Fcitx2en()")

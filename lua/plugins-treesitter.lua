@@ -99,9 +99,15 @@ return {
     {
         "andymass/vim-matchup",
         config = function() require("nvim-treesitter.configs").setup({
-            matchup = {
-                enable = true,
-            },
+            matchup = { enable = true, },
+        })end
+    },
+
+    -- highlight 同一单词
+    {
+        "David-Kunz/markid",
+        config = function() require("nvim-treesitter.configs").setup({
+            markid = { enable = true }
         })end
     },
 

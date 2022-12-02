@@ -1,9 +1,9 @@
 -- 变量,函数,if,for语句跳转
 local sts = require("syntax-tree-surfer")
-vim.keymap.set("n", "gv", function() -- only jump to variable_declarations
+vim.keymap.set("n", "gl", function() -- only jump to variable_declarations
     sts.targeted_jump({ "variable_declaration" })
 end, opts)
-vim.keymap.set("n", "gfu", function() -- only jump to functions
+vim.keymap.set("n", "gff", function() -- only jump to functions
     sts.targeted_jump({ "function", "arrrow_function", "function_definition" })
 end, opts)
 vim.keymap.set("n", "gif", function() -- only jump to if_statements

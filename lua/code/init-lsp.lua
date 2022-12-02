@@ -9,11 +9,13 @@ lspconfig.clangd.setup({
 })
 
 lspconfig.gopls.setup({})
--- lspconfig.pyright.setup({})
-lspconfig.pylsp.setup({
+lspconfig.pyright.setup({
     settings = { python = { workspaceSymbols = { enabled = true } } },
-    -- coq.lsp_ensure_capabilities()
 })
+-- lspconfig.pylsp.setup({
+--     settings = { python = { workspaceSymbols = { enabled = true } } },
+--     -- coq.lsp_ensure_capabilities()
+-- })
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
 lspconfig.cssls.setup({})
@@ -42,7 +44,6 @@ lspconfig.gopls.setup({
 })
 
 lspconfig.cmake.setup({})
-lspconfig.diagnosticls.setup({})
 lspconfig.ansiblels.setup({})
 lspconfig.sqls.setup({
     on_attach = function(client)
@@ -54,6 +55,7 @@ lspconfig.sqls.setup({
 
 -- formatter
 -- https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md
+-- nvim0.8自带format()命令-- lua vim.lsp.buf.format()
 require("formatter").setup({
     filetype = {
         python = {

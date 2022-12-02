@@ -46,6 +46,7 @@ set makeprg=gcc\ -Wall\ -g\ %\ -o\ %
 filetype plugin on
 syntax on
 " colorscheme gruvbox
+" colorscheme kanagawa
 colorscheme oceanic_material
 
 let g:mapleader = ","
@@ -60,6 +61,9 @@ let g:markdown_fenced_languages = ['bash=sh', 'sh', 'javascript', 'js=javascript
 "highlight
 hi ExtraWhitespace ctermbg=lightblue guibg=lightblue
 match ExtraWhitespace /\s\+$/
+
+" 去除分屏后的边框
+hi WinSeparator guibg=None
 
 "lsp
 hi LspReferenceRead cterm=bold ctermbg=237 guibg=LightYellow

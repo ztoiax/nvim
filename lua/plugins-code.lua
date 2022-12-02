@@ -56,11 +56,16 @@ return {
     { "j-hui/fidget.nvim", config = function() require("fidget").setup({}) end},
 
     -- diagnosis
-    {
-        "folke/trouble.nvim",
-        cmd = "TroubleToggle",
+    { "Maan2003/lsp_lines.nvim",
         config = function()
-            require("trouble").setup({})
+            require("lsp_lines").setup()
+            -- 启动lsp_lines
+            vim.keymap.set(
+              "",
+              "<Leader>l",
+              require("lsp_lines").toggle,
+              { desc = "Toggle lsp_lines" }
+            )
         end,
     },
 

@@ -28,7 +28,8 @@ return {
     },
 
     -- 快速添加特殊符号--(<[]>)--'
-    "tpope/vim-surround",
+    -- "tpope/vim-surround",
+    "kylechui/nvim-surround",
 
     -- 替换和驼峰命名
     "tpope/vim-abolish",

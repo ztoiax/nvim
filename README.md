@@ -85,7 +85,16 @@ command! Esuse :e scp://root@192.168.100.71//
 ## 常用命令
 
 ```vim
-# 查看mapped key
+" 查看map
+:map
+
+" 查看command
+:command
+
+" 查看autocmd
+:autocmd
+
+" 查看mapped key
 :verbose nmap j
 ```
 

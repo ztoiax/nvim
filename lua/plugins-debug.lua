@@ -38,6 +38,7 @@ return {
     -- "mfussenegger/nvim-dap-python",
 
     ------- formatting ------
+    -- nvim0.8自带format()命令-- lua vim.lsp.buf.format()
     "sbdchd/neoformat",
     {
         "mhartington/formatter.nvim",

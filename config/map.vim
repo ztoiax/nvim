@@ -12,7 +12,7 @@ nmap s  ys
 vmap s  S
 nmap <leader><leader> %
 " remove unwanted space
-nnoremap <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+nnoremap <silent> <leader><F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 imap <C-n> <Esc>ui
 imap <C-p> <Esc><C-r>i
@@ -148,7 +148,6 @@ omap F <Plug>(clever-f-F)
 
 " vim-visual-multi
 let g:VM_maps = {}
-let g:VM_leader = ','
 let g:VM_maps['Motion ,'] = ',,'
 let g:VM_maps["Switch Mode"]                 = '<Tab>'
 let g:VM_maps["Find Next"]                   = ']'
@@ -163,6 +162,7 @@ let g:VM_maps["Invert Direction"]            = 'o'
 let g:VM_maps["Find Operator"]               = "m"
 let g:VM_maps["Surround"]                    = 's'
 let g:VM_maps["Replace Pattern"]             = 'r'
+nmap <Leader>i <Plug>(VM-Select-All)
 
 " markdown-preview.nvim
 nmap <Leader>rr <Plug>MarkdownPreview
