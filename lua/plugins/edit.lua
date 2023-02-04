@@ -34,12 +34,7 @@ return {
     },
 
     -- 注释
-    {
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end,
-    },
+    { "numToStr/Comment.nvim", config = true },
 
     -- instead and replace
     "brooth/far.vim",
@@ -48,12 +43,7 @@ return {
     "wellle/targets.vim",
 
     -- 单词跳转
-    {
-        "phaazon/hop.nvim",
-        config = function()
-            require("hop").setup()
-        end,
-    },
+    { "phaazon/hop.nvim", config = true },
 
     -- extends f
     {
@@ -71,9 +61,7 @@ return {
     {
         "kylechui/nvim-surround",
         tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-        config = function()
-            require("nvim-surround").setup({})
-        end,
+        config = true,
         vim.cmd([["
             nmap s  ys
             vmap s  S
@@ -93,19 +81,16 @@ return {
     "mg979/vim-visual-multi",
 
     -- autopairs
-    {
-        "windwp/nvim-autopairs",
-        config = function()
-            require("nvim-autopairs").setup()
-        end,
-    },
+    { "windwp/nvim-autopairs", config = true },
 
     -- 参数位置交换
-    {
+    { 
         "mizlan/iswap.nvim",
-        config = function()
-            require("iswap").setup({})
-        end,
+        config = true,
+        vim.cmd([[
+            nmap <leader>rl :ISwapNodeWithRight<cr>
+            nmap <leader>rh :ISwapNodeWithLeft<cr>
+        ]]),
     },
 
     { "ziontee113/syntax-tree-surfer" },
@@ -117,11 +102,16 @@ return {
     "vijaymarupudi/nvim-fzf",
 
     -- fzf
-    "ibhagwan/fzf-lua",
+    {
+        "ibhagwan/fzf-lua",
+        config = function() require("edit/init-fzf") end,
+    },
+
 
     -- telescope
     --  {
     --     "nvim-telescope/telescope.nvim",
+    --     config = function() require("edit/init-telescope") end,
     -- },
 
     -- yank历史
@@ -134,7 +124,7 @@ return {
     "skywind3000/asyncrun.vim",
 
     -- 部分代码运行
-    { "michaelb/sniprun", run = "bash ./install.sh" },
+    { "michaelb/sniprun", build = "bash ./install.sh" },
 
     -- csv file format
     "chrisbra/csv.vim",

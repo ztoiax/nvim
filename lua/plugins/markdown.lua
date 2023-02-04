@@ -1,11 +1,8 @@
 return {
-    -- 折叠
-    "masukomi/vim-markdown-folding",
-
     -- preview
     {
         "iamcco/markdown-preview.nvim",
-        run = function()
+        build = function()
             -- call mkdp#util#install()
             vim.fn["mkdp#util#install"]()
         end,
@@ -13,8 +10,8 @@ return {
     },
 
     -- 自动生成目录
-    "mzlogin/vim-markdown-toc",
+    {"mzlogin/vim-markdown-toc", ft = { "markdown" }},
 
     -- 快速插入markdown表格
-    "dhruvasagar/vim-table-mode",
+    {"dhruvasagar/vim-table-mode", ft = { "markdown" }},
 }

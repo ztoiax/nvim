@@ -1,22 +1,66 @@
 return {
-    -- 图标(icons)
+    -- 主题
     {
-        "kyazdani42/nvim-web-devicons",
+        "glepnir/oceanic-material",
+        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            require("nvim-web-devicons").setup({})
+            -- load the colorscheme here
+            vim.cmd([[colorscheme oceanic_material]])
         end,
     },
+
+    -- 主题
+    -- {
+    --     "rebelot/kanagawa.nvim",
+    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --     priority = 1000, -- make sure to load this before all the other start plugins
+    --     config = function()
+    --         -- load the colorscheme here
+    --         -- vim.cmd([[colorscheme kanagawa]])
+    --     end,
+    -- },
+
+    -- 图标(icons)
+    { "kyazdani42/nvim-web-devicons", config = true },
 
     -- tabs(标签)
-    "romgrk/barbar.nvim",
-
-    -- 状态栏lsp
     {
-        "SmiteshP/nvim-gps",
+        "romgrk/barbar.nvim",
         config = function()
-            require("nvim-gps").setup()
+            local map = vim.api.nvim_set_keymap
+            local opts = { noremap = true, silent = true }
+
+            -- Re-order to previous/next
+            map('n', '<leader><<', '<Cmd>BufferMovePrevious<CR>', opts)
+            map('n', '<leader>>>', '<Cmd>BufferMoveNext<CR>', opts)
+
+            -- Goto buffer in position...
+            map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
+            map('n', '<A-2>', '<Cmd>BufferGoto 2<CR>', opts)
+            map('n', '<A-3>', '<Cmd>BufferGoto 3<CR>', opts)
+            map('n', '<A-4>', '<Cmd>BufferGoto 4<CR>', opts)
+            map('n', '<A-5>', '<Cmd>BufferGoto 5<CR>', opts)
+            map('n', '<A-6>', '<Cmd>BufferGoto 6<CR>', opts)
+            map('n', '<A-7>', '<Cmd>BufferGoto 7<CR>', opts)
+            map('n', '<A-8>', '<Cmd>BufferGoto 8<CR>', opts)
+            map('n', '<A-9>', '<Cmd>BufferLast<CR>', opts)
+
+            -- Magic buffer-picking mode
+            map('n', '<A-0>', '<Cmd>BufferPick<CR>', opts)
+            -- Pin/unpin buffer
+            map('n', '<C-p>', '<Cmd>BufferPin<CR>', opts)
+            -- Close buffer
+            map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
+            -- 恢复最后一个关闭的buffer
+            map('n', 'X', '<C-^>', opts)
+            -- 只保留当前buffer
+            map('n', '<C-o>', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
         end,
     },
+
+    -- 状态栏lsp
+    { "SmiteshP/nvim-gps", config = true },
 
     -- 状态栏
     {
@@ -41,6 +85,14 @@ return {
 
     {
         "folke/noice.nvim",
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        },
         config = function()
             require("noice").setup({
                 lsp = {
@@ -61,14 +113,6 @@ return {
                 },
             })
         end,
-        requires = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
-            "rcarriga/nvim-notify",
-        }
     },
 
     -- highlight /
@@ -222,25 +266,49 @@ return {
         end,
     },
 
-    --registers menu
-    "tversteeg/registers.nvim",
+    -- registers menu
+    { "tversteeg/registers.nvim", config = true },
 
     -- focusing current part
-    {
-        "folke/twilight.nvim",
-        config = function()
-            require("twilight").setup({})
-        end,
-    },
+    { "folke/twilight.nvim", config = true },
 
     -- 折叠代码
-    { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" },
+    { 
+        "kevinhwang91/nvim-ufo",
+        lazy = true,
+        dependencies = "kevinhwang91/promise-async",
+
+        config = function ()
+            -- Option 3: treesitter as a main provider instead
+            require('ufo').setup({
+                provider_selector = function(bufnr, filetype, buftype)
+                    return {'treesitter', 'indent'}
+                end
+            })
+
+            vim.o.foldcolumn = '1' -- '0' is not bad
+            vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
+
+            -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+            vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
+            vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+            vim.keymap.set('n', 'K', function()
+                local winid = require('ufo').peekFoldedLinesUnderCursor()
+                if not winid then
+                    -- choose one of coc.nvim and nvim lsp
+                    vim.fn.CocActionAsync('definitionHover') -- coc.nvim
+                    vim.lsp.buf.hover()
+                end
+            end)
+        end
+    },
 
     -- 打字机声音
     "skywind3000/vim-keysound",
-
-    -- 主题
-    "rebelot/kanagawa.nvim",
 
     -- visual模式下使用Norm命令，可以实时显示
     {
@@ -255,27 +323,4 @@ return {
             })
         end,
     },
-
-    -- 显示快捷键
-    -- {
-    --     "folke/which-key.nvim",
-    --       config = function()
-    --         vim.o.timeout = true
-    --         vim.o.timeoutlen = 300
-    --         require("which-key").setup {
-    --           -- your configuration comes here
-    --           -- or leave it empty to use the default settings
-    --           -- refer to the configuration section below
-    --         }
-    --       end
-    -- },
-
-    --在浏览器嵌入nvim
-    --  'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } },
-
-    --  {
-    --     'ray-x/navigator.lua',
-    --     requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
-    --     config = require'navigator'.setup()
-    -- },
 }

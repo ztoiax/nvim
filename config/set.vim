@@ -48,7 +48,7 @@ filetype plugin on
 syntax on
 " colorscheme gruvbox
 " colorscheme kanagawa
-colorscheme oceanic_material
+" colorscheme oceanic_material
 
 let g:mapleader = ","
 let g:python_host_skip_check=1

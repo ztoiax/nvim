@@ -129,8 +129,10 @@ cmp.setup({
         { name = "path" },
         { name = "buffer" },
         { name = "treesitter" },
+        { name = "rg" },
     },
 })
+
 
 -- luasnip
 require("luasnip/loaders/from_vscode").load({ include = { "python" } }) -- Load only python snippets

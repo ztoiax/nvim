@@ -22,7 +22,4 @@ return {
 
     -- fennel的repl
     "Olical/conjure",
-
-    -- 优化启动速度. ~/.cache/nvim/luacache
-    -- {"lewis6991/impatient.nvim", config = function() require('impatient') end},
 }

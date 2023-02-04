@@ -4,7 +4,7 @@ return {
     -- coq
     -- {
     --     "ms-jpq/coq_nvim", branch = "coq",
-    --     requires = {
+    --     dependencies = {
     --          "ms-jpq/coq.artifacts", branch = "artifacts" ,
     --          "ms-jpq/coq.thirdparty", branch = "3p" ,
     --     },
@@ -14,11 +14,12 @@ return {
     -- cmp
     {
         "hrsh7th/nvim-cmp",
-        requires = {
+        dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "lukas-reineke/cmp-rg",
 
             -- icon
             "onsails/lspkind-nvim",
@@ -29,12 +30,13 @@ return {
             "rafamadriz/friendly-snippets",
         },
         config = function() require("completion/init-cmp") end,
+
     },
 
     ------ lsp ------
     {
         "neovim/nvim-lspconfig",
-        requires = { "nanotee/sqls.nvim" },
+        dependencies = { "nanotee/sqls.nvim" },
         config = function() require("code/init-lsp") end,
     },
 

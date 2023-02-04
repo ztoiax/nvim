@@ -5,7 +5,7 @@ return {
 
     {
         "nvim-neotest/neotest",
-        requires = {
+        dependencies = {
             "antoinemadec/FixCursorHold.nvim",
             "nvim-neotest/neotest-python",
             "nvim-neotest/neotest-plenary",
@@ -29,7 +29,7 @@ return {
     ------ dap ------
     {
         "rcarriga/nvim-dap-ui",
-        requires = { "mfussenegger/nvim-dap", "thehamsta/nvim-dap-virtual-text" },
+        dependencies = { "mfussenegger/nvim-dap", "thehamsta/nvim-dap-virtual-text" },
     },
 
     -- nvim lua dap
@@ -40,6 +40,7 @@ return {
     ------- formatting ------
     -- nvim0.8自带format()命令-- lua vim.lsp.buf.format()
     "sbdchd/neoformat",
+
     {
         "mhartington/formatter.nvim",
         config = function()

@@ -1,38 +1,33 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate",
+        build = ":TSUpdate",
         cmd = { "TSModuleInfo", "TSUpdate", "TSInstall" },
 
-        config = function() require("nvim-treesitter.configs").setup({
-            ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-            highlight = {
-                enable = true, -- false will disable the whole extension
-                disable = { "markdown" },
-                additional_vim_regex_highlighting = false, -- highlight 块选, 可能会变卡
-            },
-
-            -- 等于号(=)缩进
-            indent = {
-                enable = true
-            },
-
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "gnn",
-                    node_incremental = "gnr",
-                    scope_incremental = "gnc",
-                    node_decremental = "gnm",
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+                highlight = {
+                    enable = true, -- false will disable the whole extension
+                    disable = { "markdown" },
+                    additional_vim_regex_highlighting = false, -- highlight 块选, 可能会变卡
                 },
-            },
-        })
 
-        -- proxy
-        -- require("nvim-treesitter.install").command_extra_args = {
-        --     curl = { "--proxy", "socks5://127.0.0.1:10808" },
-        -- }
+                -- 等于号(=)缩进
+                indent = {
+                    enable = true
+                },
 
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "gnn",
+                        node_incremental = "gnr",
+                        scope_incremental = "gnc",
+                        node_decremental = "gnm",
+                    },
+                },
+            })
         end,
 
         vim.cmd([[
@@ -40,12 +35,12 @@ return {
         set foldmethod=expr
         set foldexpr=nvim_treesitter#foldexpr()
         ]]),
-     },
+    },
 
     -- 语法树库函数
     {
         "nvim-treesitter/playground",
-        run = ":TSInstall query",
+        build = ":TSInstall query",
         cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
 
@@ -112,8 +107,5 @@ return {
     },
 
     -- highlight 参数
-    {
-        "m-demare/hlargs.nvim",
-        config = function () require('hlargs').setup() end
-    },
+    { "m-demare/hlargs.nvim", config = true },
 }
