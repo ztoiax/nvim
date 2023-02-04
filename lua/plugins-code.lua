@@ -56,7 +56,8 @@ return {
     { "j-hui/fidget.nvim", config = function() require("fidget").setup({}) end},
 
     -- diagnosis
-    { "Maan2003/lsp_lines.nvim",
+    {
+        "Maan2003/lsp_lines.nvim",
         config = function()
             require("lsp_lines").setup()
             -- 启动lsp_lines
@@ -66,6 +67,9 @@ return {
               require("lsp_lines").toggle,
               { desc = "Toggle lsp_lines" }
             )
+
+            -- 关闭默认的lsp diagnosis
+            vim.diagnostic.config({virtual_text = false})
         end,
     },
 

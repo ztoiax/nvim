@@ -15,9 +15,6 @@ autocmd Filetype python noremap ,xp oLOG.debug(f"variable: '{}'")<esc>blp
 autocmd Filetype python vnoremap ,xt <esc>`>a<enter>end = time()<enter>print('%.12f秒' % (end - start))<esc>`<ifrom time import time<enter>start = time()<enter><esc>
 
 """""" markdown """"""
-"noremap
-autocmd Filetype markdown noremap <buffer> ,l i<Enter>--------<Enter><esc>
-
 " inoremap
 autocmd Filetype markdown inoremap <buffer> ,w <Esc>/ <++><CR>:nohlsearch<CR>"_c5l<CR>
 autocmd Filetype markdown inoremap <buffer> ,n ---<Enter><Enter>

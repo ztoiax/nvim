@@ -61,3 +61,14 @@ function open_float_window()
     win = vim.api.nvim_open_win(buf, true, opts)
     vim.api.nvim_command('terminal')
 end
+
+-- -- c, lua, vim文件开启vim.treesitter.start()
+-- -- 失败
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = {"*.c", "*.h", "*.lua", "*.vim"},
+--     callback = function(args)
+--         vim.treesitter.start()
+--         -- vim.bo[args.buf].syntax = "on" -- only if additional legacy syntax is needed
+--     desc = "c, lua, vim文件开启vim.treesitter.start()"
+--     end,
+-- })

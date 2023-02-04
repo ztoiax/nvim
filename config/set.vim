@@ -3,6 +3,7 @@
 
 set guifont=DroidSansMono\ Nerd\ Font:h20
 set shell=/usr/bin/zsh
+set signcolumn=auto:9         "左边数字栏可以同时显示多个状态（git、diagnostics……）
 set completeopt=menu,menuone,noselect " menu菜单
 set noswapfile               "关闭swap file
 set termguicolors            "enable true colors support
@@ -23,7 +24,7 @@ set showcmd                  "显示命令
 set mouse=a                  "开启鼠标
 set list                     "开启空格字符
 set listchars=tab:»·,trail:· "空格显示为·
-set lazyredraw               "不要在宏和脚本执行期间更新屏幕。
+" set lazyredraw               "不要在宏和脚本执行期间更新屏幕。
 set cursorline               "突出显示当前在光标下的行。
 " set undofile                 "保留撤销历史。
 set autochdir                "自动切换工作目录
@@ -59,7 +60,8 @@ let g:python3_host_prog = '/usr/bin/python3'
 let g:markdown_fenced_languages = ['bash=sh', 'sh', 'javascript', 'js=javascript', 'json=javascript', 'typescript', 'ts=typescript', 'php', 'html', 'css', 'rust', 'python', 'py=python', 'lua']
 
 "highlight
-hi ExtraWhitespace ctermbg=lightblue guibg=lightblue
+" 空格颜色
+hi ExtraWhitespace ctermbg=lightblue guibg=LightBlue
 match ExtraWhitespace /\s\+$/
 
 " 去除分屏后的边框

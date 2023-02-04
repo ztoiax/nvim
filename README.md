@@ -189,26 +189,9 @@ nvr -c terminal
 
 ## Plugin
 
-- [查看每个 plugin 的启动时间](https://github.com/hyiltiz/vim-plugins-profile)
 ```sh
-python ./vim-plugins-profile.py nvim
-Running nvim to generate startup logs... done.
-Loading and processing logs... done.
-Plugin directory: /home/tz/.local/share/nvim/site/pack/packer/start
-=====================================
-Top 10 plugins slowing nvim's startup
-=====================================
-1        13.375   nvim-moonmaker
-2         5.646   vim-test
-3         4.966   vim-matchup
-4         3.495   barbar.nvim
-5         3.089   vimpeccable
-6         2.970   vim-visual-multi
-7         2.955   conjure
-8         2.201   symbols-outline.nvim
-9         1.776   sniprun
-10        1.257   nvim-treesitter
-=====================================
+# 查看nvim每个require的启动时间
+nvim --startuptime /tmp/nvim-startuptime
 ```
 
 ### UI 相关

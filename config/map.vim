@@ -8,8 +8,6 @@ nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
 
 " nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
-nmap s  ys
-vmap s  S
 nmap <leader><leader> %
 " remove unwanted space
 nnoremap <silent> <leader><F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
