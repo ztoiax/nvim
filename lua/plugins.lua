@@ -10,18 +10,23 @@ end
 vim.cmd([[packadd packer.nvim]])
 
 -- 加载插件
-return require("packer").startup(function(use)
+return require("packer").startup({
 
-    use(require("plugins-lib"))
-    use(require("plugins-treesitter"))
-    use(require("plugins-ui"))
-    use(require("plugins-git"))
-    use(require("plugins-edit"))
-    use(require("plugins-markdown"))
-    use(require("plugins-code"))
-    use(require("plugins-debug"))
+    config = {
+        package_root = "~/.local/share/nvim/site/pack/"
+    },
+    function(use)
+        use(require("plugins-lib"))
+        use(require("plugins-treesitter"))
+        use(require("plugins-ui"))
+        use(require("plugins-git"))
+        use(require("plugins-edit"))
+        use(require("plugins-markdown"))
+        use(require("plugins-code"))
+        use(require("plugins-debug"))
 
-    if packer_bootstrap then
-        require("packer").sync()
-    end
-end)
+        if packer_bootstrap then
+            require("packer").sync()
+        end
+    end,
+})
