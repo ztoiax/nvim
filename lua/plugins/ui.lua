@@ -3,14 +3,14 @@ return {
     {
         "glepnir/oceanic-material",
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other start plugins
+        priority = 1000, -- 默认为50
         config = function()
             -- load the colorscheme here
             vim.cmd([[colorscheme oceanic_material]])
         end,
     },
 
-    -- 主题
+
     -- {
     --     "rebelot/kanagawa.nvim",
     --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -31,9 +31,15 @@ return {
             local map = vim.api.nvim_set_keymap
             local opts = { noremap = true, silent = true }
 
+            map('n', '<C-t>', '<Cmd>tabnew<CR>', opts)
+
             -- Re-order to previous/next
             map('n', '<leader><<', '<Cmd>BufferMovePrevious<CR>', opts)
             map('n', '<leader>>>', '<Cmd>BufferMoveNext<CR>', opts)
+
+            -- Move to previous/next
+            map('n', 'H', '<Cmd>BufferPrevious<CR>', opts)
+            map('n', 'L', '<Cmd>BufferNext<CR>', opts)
 
             -- Goto buffer in position...
             map('n', '<A-1>', '<Cmd>BufferGoto 1<CR>', opts)
@@ -253,18 +259,18 @@ return {
     "gelguy/wilder.nvim",
 
     -- 启动时恢复会话
-    {
-        "rmagatti/auto-session",
-        config = function()
-            require("auto-session").setup({
-                log_level = "info",
-                auto_session_enable_last_session = false,
-                -- /home/tz/.local/share/nvim/sessions
-                auto_session_root_dir = "~/.config/nvim/sessions",
-                -- auto_session_suppress_dirs = {'~/.config/nvim/sessions'}
-            })
-        end,
-    },
+    -- {
+    --     "rmagatti/auto-session",
+    --     config = function()
+    --         require("auto-session").setup({
+    --             log_level = "info",
+    --             auto_session_enable_last_session = false,
+    --             -- /home/tz/.local/share/nvim/sessions
+    --             auto_session_root_dir = "~/.config/nvim/sessions/",
+    --             -- auto_session_suppress_dirs = {'~/.config/nvim/sessions/s'}
+    --         })
+    --     end,
+    -- },
 
     -- registers menu
     { "tversteeg/registers.nvim", config = true },

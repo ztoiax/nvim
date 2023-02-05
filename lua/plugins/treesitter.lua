@@ -13,6 +13,21 @@ return {
                     additional_vim_regex_highlighting = false, -- highlight 块选, 可能会变卡
                 },
 
+                -- textobjects plugin
+                textobjects = {
+                  select = {
+                    enable = true,
+                    keymaps = {
+                      -- Your custom capture.
+                      ["aF"] = "@custom-capture",
+
+                      -- Built-in captures.
+                      ["af"] = "@function.outer",
+                      ["if"] = "@function.inner",
+                    },
+                  },
+                },
+
                 -- 等于号(=)缩进
                 indent = {
                     enable = true
@@ -26,6 +41,12 @@ return {
                         scope_incremental = "gnc",
                         node_decremental = "gnm",
                     },
+                },
+
+                -- matchup plugin
+                matchup = {
+                    enable = true,
+                    -- disable = { "c", "ruby" },
                 },
             })
         end,
@@ -43,6 +64,9 @@ return {
         build = ":TSInstall query",
         cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
     },
+
+    -- 
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
 
     -- rename, 函数跳转
     {
@@ -108,4 +132,13 @@ return {
 
     -- highlight 参数
     { "m-demare/hlargs.nvim", config = true },
+
+    -- highlight if、for语句
+    {
+        "andymass/vim-matchup",
+        config = function()
+            vim.g.matchup_matchparen_offscreen = { method = "popup" }
+        end,
+
+    },
 }

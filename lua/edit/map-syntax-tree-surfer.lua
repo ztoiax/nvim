@@ -65,7 +65,7 @@ end, { silent = true, expr = true })
 -- vim.keymap.set("n", "vU", '<cmd>STSSwapUpNormal<cr>', opts)
 
 -- Visual Selection from Normal Mode
-vim.keymap.set("n", "vx", '<cmd>STSSelectMasterNode<cr>', opts)
+vim.keymap.set("n", "vx", '<cmd>STSSelectMasterNode<cr>', opts, {desc = "复制当前语句或函数"})
 vim.keymap.set("n", "vn", '<cmd>STSSelectCurrentNode<cr>', opts)
 
 -- Select Nodes in Visual Mode

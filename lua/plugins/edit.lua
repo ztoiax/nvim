@@ -93,7 +93,11 @@ return {
         ]]),
     },
 
-    { "ziontee113/syntax-tree-surfer" },
+    -- 函数、语句跳转和块选
+    {
+        "ziontee113/syntax-tree-surfer",
+        config = function() require("edit/map-syntax-tree-surfer") end,
+    },
 
     -- marks
     -- "chentau/marks.nvim",
@@ -109,9 +113,17 @@ return {
 
 
     -- telescope
-    --  {
+    -- {
     --     "nvim-telescope/telescope.nvim",
-    --     config = function() require("edit/init-telescope") end,
+    --     dependencies = {
+    --       "nvim-lua/plenary.nvim",
+    --       "debugloop/telescope-undo.nvim",
+    --     },
+    --     config = function()
+    --         require("edit/init-telescope")
+    --         require("telescope").load_extension("undo")
+    --         -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+    --     end,
     -- },
 
     -- yank历史

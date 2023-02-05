@@ -49,7 +49,10 @@ require("telescope").setup {
         media_files = {
             filetypes = {"png", "webp", "jpg", "jpeg"},
             find_cmd = "rga" -- find command (defaults to `fd`)
-        }
+        },
+        undo = {
+          -- telescope-undo.nvim config, see below
+        },
 --        fzy_native = {
 --                  override_generic_sorter = false,
 --                  override_file_sorter = true,

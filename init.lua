@@ -1,4 +1,3 @@
-vim.g.mapleader = ","
 vim.cmd([[
     source ~/.config/nvim/config/set.vim
     " source ~/.config/nvim/config/keysound.vim
@@ -14,4 +13,3 @@ vim.cmd([[
 require("plugins-lazy")
 require("debug/init-dap")
 require("function")
-require("edit/map-syntax-tree-surfer")
