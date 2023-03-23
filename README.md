@@ -38,7 +38,6 @@
 * [other vim ui](#other-vim-ui)
 
 <!-- vim-markdown-toc -->
-
 # nvim
 
 ## why nvim
@@ -515,8 +514,11 @@ pip install autopep8
 # lua
 pacman -S stylua
 
-# json
-pacman -S prettier
+# js ts json html css yaml xml
+pacman -S prettierd
+
+# nginx
+paru -S nginxbeautifier
 
 # shell
 pacman -S shfmt
@@ -532,6 +534,9 @@ go install github.com/jessfraz/dockfmt@latest
 
 # markdwon
 go install github.com/shurcooL/markdownfmt@latest
+
+# sql
+go install github.com/jackc/sqlfmt@latest
 ```
 
 ### [DAP](https://github.com/mfussenegger/nvim-dap)
@@ -595,6 +600,9 @@ nvim.input('')
 - [nvim-lua-guide](https://github.com/nanotee/nvim-lua-guide)
 
 - [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
+
+
+- [vimcolorschemes：可以查看各种主题的配色](https://vimcolorschemes.com/)
 
 # other vim ui
 

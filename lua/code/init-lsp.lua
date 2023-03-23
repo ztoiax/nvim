@@ -24,7 +24,7 @@ lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
 lspconfig.vimls.setup({})
 lspconfig.dockerls.setup({})
-lspconfig.sumneko_lua.setup({})
+lspconfig.lua_ls.setup({})
 lspconfig.rust_analyzer.setup({})
 
 -- markdown
@@ -54,7 +54,7 @@ lspconfig.sqls.setup({
 })
 
 -- formatter
--- https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md
+-- https://github.com/sbdchd/neoformat#supported-filetypes
 -- nvim0.8自带format()命令-- lua vim.lsp.buf.format()
 require("formatter").setup({
     filetype = {
@@ -66,7 +66,7 @@ require("formatter").setup({
                         "--in-place --aggressive --aggressive",
                         vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
                     },
-                    stdin = false,
+                    stdin = true,
                 }
             end,
         },
@@ -81,10 +81,163 @@ require("formatter").setup({
                         --   .. "/stylua/stylua.toml",
                         -- "-",
                     },
+                    stdin = true,
+                }
+            end,
+        },
+        c = {
+            function()
+                return {
+                    exe = "clang-format -i",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
                     stdin = false,
                 }
             end,
         },
-    },
-})
-
+        cpp = {
+            function()
+                return {
+                    exe = "clang-format -i",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = false,
+                }
+            end,
+        },
+        zsh = {
+            function()
+                return {
+                    exe = "shfmt -w",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        rust = {
+            function()
+                return {
+                    exe = "rustfmt",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        go = {
+            function()
+                return {
+                    exe = "gofmt -w",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        java = {
+            function()
+                return {
+                    exe = "clang-format -i",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = false,
+                }
+            end,
+        },
+        js = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        ts = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        xml = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        json = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        yaml = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        html = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        css = {
+            function()
+                return {
+                    exe = "prettierd",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        -- markdown = {
+        --     function()
+        --         return {
+        --             exe = "markdownfmt -w",
+        --             args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+        --             stdin = true,
+        --         }
+        --     end,
+        -- },
+        sql = {
+            function()
+                return {
+                    exe = "sqlfmt",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        Dockerfile = {
+            function()
+                return {
+                    exe = "dockfmt fmt -w ",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+        nginx = {
+            function()
+                return {
+                    exe = "nginxbeautifier",
+                    args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
+                    stdin = true,
+                }
+            end,
+        },
+    }
+}
+)

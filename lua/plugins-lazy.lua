@@ -13,7 +13,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
--- 加载插件
+-- 加载lua/plugins目录下的插件
 require("lazy").setup("plugins", {
     -- 插件安装的目录~/.local/share/nvim/lazy/
     root = vim.fn.stdpath("data") .. "/lazy",

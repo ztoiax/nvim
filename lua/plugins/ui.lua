@@ -10,7 +10,6 @@ return {
         end,
     },
 
-
     -- {
     --     "rebelot/kanagawa.nvim",
     --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -55,13 +54,13 @@ return {
             -- Magic buffer-picking mode
             map('n', '<A-0>', '<Cmd>BufferPick<CR>', opts)
             -- Pin/unpin buffer
-            map('n', '<C-p>', '<Cmd>BufferPin<CR>', opts)
+            map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
             -- Close buffer
-            map('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
+            map('n', '<C-w>', '<Cmd>BufferClose!<CR>', opts)
             -- 恢复最后一个关闭的buffer
             map('n', 'X', '<C-^>', opts)
             -- 只保留当前buffer
-            map('n', '<C-o>', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
+            map('n', '<A-o>', '<Cmd>BufferCloseAllButCurrent<CR>', opts)
         end,
     },
 
@@ -89,37 +88,37 @@ return {
     -- 通知menu
     -- { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' },
 
-    {
-        "folke/noice.nvim",
-        dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
-            "rcarriga/nvim-notify",
-        },
-        config = function()
-            require("noice").setup({
-                lsp = {
-                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-                    override = {
-                      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                      ["vim.lsp.util.stylize_markdown"] = true,
-                      ["cmp.entry.get_documentation"] = true,
-                    },
-                },
-                -- you can enable a preset for easier configuration
-                presets = {
-                  bottom_search = true, -- use a classic bottom cmdline for search
-                  command_palette = true, -- position the cmdline and popupmenu together
-                  long_message_to_split = true, -- long messages will be sent to a split
-                  inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                  lsp_doc_border = false, -- add a border to hover docs and signature help
-                },
-            })
-        end,
-    },
+    -- {
+    --     "folke/noice.nvim",
+    --     dependencies = {
+    --         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    --         "MunifTanjim/nui.nvim",
+    --         -- OPTIONAL:
+    --         --   `nvim-notify` is only needed, if you want to use the notification view.
+    --         --   If not available, we use `mini` as the fallback
+    --         "rcarriga/nvim-notify",
+    --     },
+    --     config = function()
+    --         require("noice").setup({
+    --             lsp = {
+    --                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    --                 override = {
+    --                   ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+    --                   ["vim.lsp.util.stylize_markdown"] = true,
+    --                   ["cmp.entry.get_documentation"] = true,
+    --                 },
+    --             },
+    --             -- you can enable a preset for easier configuration
+    --             presets = {
+    --               bottom_search = true, -- use a classic bottom cmdline for search
+    --               command_palette = false, -- position the cmdline and popupmenu together
+    --               long_message_to_split = true, -- long messages will be sent to a split
+    --               inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    --               lsp_doc_border = false, -- add a border to hover docs and signature help
+    --             },
+    --         })
+    --     end,
+    -- },
 
     -- highlight /
     {
@@ -196,7 +195,13 @@ return {
     "simnalamburt/vim-mundo",
 
     -- 快速移动
-    "rhysd/accelerated-jk",
+    {
+        "rainbowhxch/accelerated-jk.nvim",
+        vim.cmd([[
+            nmap j <Plug>(accelerated_jk_gj)
+            nmap k <Plug>(accelerated_jk_gk)
+            ]])
+    },
 
     -- 移动动画
     "psliwka/vim-smoothie",
@@ -278,43 +283,37 @@ return {
     -- focusing current part
     { "folke/twilight.nvim", config = true },
 
-    -- 折叠代码
-    { 
-        "kevinhwang91/nvim-ufo",
-        lazy = true,
-        dependencies = "kevinhwang91/promise-async",
-
-        config = function ()
-            -- Option 3: treesitter as a main provider instead
-            require('ufo').setup({
-                provider_selector = function(bufnr, filetype, buftype)
-                    return {'treesitter', 'indent'}
-                end
-            })
-
-            vim.o.foldcolumn = '1' -- '0' is not bad
-            vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-            vim.o.foldlevelstart = 99
-            vim.o.foldenable = true
-
-            -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-            vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-            vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-            vim.keymap.set('n', 'K', function()
-                local winid = require('ufo').peekFoldedLinesUnderCursor()
-                if not winid then
-                    -- choose one of coc.nvim and nvim lsp
-                    vim.fn.CocActionAsync('definitionHover') -- coc.nvim
-                    vim.lsp.buf.hover()
-                end
-            end)
-        end
+    -- 多窗口下，根据当前窗口位置，自动调整窗口大小
+    {
+        "anuvyklack/windows.nvim",
+        dependencies = {
+            "anuvyklack/middleclass",
+            "anuvyklack/animation.nvim"
+        },
+        config = true
     },
 
-    -- 打字机声音
-    "skywind3000/vim-keysound",
+    -- 折叠代码
+    { "anuvyklack/pretty-fold.nvim", config = true },
+    {
+        "anuvyklack/fold-preview.nvim",
+        dependencies = 'anuvyklack/keymap-amend.nvim',
+        config = function ()
+            require("fold-preview").setup()
+            local keymap = vim.keymap
+            keymap.amend = require('keymap-amend')
+            local map = require('fold-preview').mapping
+
+            -- 悬浮显示
+            keymap.amend('n', 'h',  map.show_close_preview_open_fold)
+            keymap.amend('n', 'l',  map.close_preview_open_fold)
+            keymap.amend('n', 'zo', map.close_preview)
+            keymap.amend('n', 'zO', map.close_preview)
+            keymap.amend('n', 'zc', map.close_preview_without_defer)
+            keymap.amend('n', 'zR', map.close_preview)
+            keymap.amend('n', 'zM', map.close_preview_without_defer)
+        end
+    },
 
     -- visual模式下使用Norm命令，可以实时显示
     {

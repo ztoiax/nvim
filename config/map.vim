@@ -22,8 +22,6 @@ nmap yu y0
 nmap du d0
 nmap E v$h
 nmap B vb
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
 nmap <Leader>w :w<CR>
 nmap <Leader>p "0p
 vmap <Leader>p "0p

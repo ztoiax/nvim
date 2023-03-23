@@ -37,7 +37,33 @@ return {
     { "numToStr/Comment.nvim", config = true },
 
     -- instead and replace
-    "brooth/far.vim",
+    -- "brooth/far.vim",
+
+    {
+        "windwp/nvim-spectre",
+        config = function ()
+            require('spectre').setup({
+                mapping={
+                    -- 选择/取消
+                    ['toggle_line'] = {
+                        map = "dd",
+                        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+                        desc = "toggle current item"
+                    },
+                    -- 确认
+                    ['replace_cmd'] = {
+                        map = "<cr>",
+                        cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
+                        desc = "input replace vim command"
+                    },
+                }
+            })
+
+            vim.cmd([[
+                nnoremap <leader>\ viw:lua require('spectre').open_file_search()<cr>
+            ]])
+        end
+    },
 
     -- enhance di da
     "wellle/targets.vim",
@@ -60,7 +86,6 @@ return {
 
     {
         "kylechui/nvim-surround",
-        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
         config = true,
         vim.cmd([["
             nmap s  ys
