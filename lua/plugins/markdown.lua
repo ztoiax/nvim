@@ -2,10 +2,8 @@ return {
     -- preview
     {
         "iamcco/markdown-preview.nvim",
-        build = function()
-            -- call mkdp#util#install()
-            vim.fn["mkdp#util#install"]()
-        end,
+        -- call mkdp#util#install()
+        build = function() vim.fn["mkdp#util#install"]() end,
         ft = { "markdown" },
     },
 

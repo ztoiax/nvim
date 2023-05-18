@@ -45,11 +45,11 @@ lspconfig.gopls.setup({
 
 lspconfig.cmake.setup({})
 lspconfig.ansiblels.setup({})
-lspconfig.sqls.setup({
+lspconfig.sqlls.setup({
     on_attach = function(client)
         client.resolved_capabilities.execute_command = true
 
-        require("sqls").setup({})
+        require("sqlls").setup({})
     end,
 })
 

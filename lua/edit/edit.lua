@@ -161,6 +161,14 @@ return {
     --     end,
     -- },
 
+    {
+        "liuchengxu/vim-clap",
+        build = ":Clap install-binary",
+        vim.cmd([[
+            " let g:clap_layout = { 'width': '55%', 'height': '75%', 'row': '10%', 'col': '10%' }
+        ]]),
+    },
+
     -- sudo
     "lambdalisue/suda.vim",
 

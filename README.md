@@ -36,6 +36,7 @@
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
 * [other vim ui](#other-vim-ui)
+* [online tool](#online-tool)
 
 <!-- vim-markdown-toc -->
 # nvim
@@ -618,3 +619,9 @@ nvim.input('')
 
 - [kakoune](https://github.com/mawww/kakoune)
   > 一个类似 vim 操作模式的编辑器
+
+- [helix：内置了lsp、treesitter的类似vim的编辑器](https://github.com/helix-editor/helix)
+
+# online tool
+
+- [在线vim](https://www.vimonlineeditor.com/)

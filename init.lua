@@ -1,6 +1,5 @@
 vim.cmd([[
     source ~/.config/nvim/config/set.vim
-    " source ~/.config/nvim/config/keysound.vim
 
     " map
     source ~/.config/nvim/config/map.vim

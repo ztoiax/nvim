@@ -21,9 +21,35 @@ return {
     -- },
 
     -- 图标(icons)
-    { "kyazdani42/nvim-web-devicons", config = true },
+    { "kyazdani42/nvim-web-devicons", lazy = true },
 
     -- tabs(标签)
+    { "SmiteshP/nvim-gps", config = true },
+
+    --  底部栏
+    {
+        "nvim-lualine/lualine.nvim",
+        config = function()
+            require("lualine").setup({
+                options = {
+                   -- theme = "OceanicNext",
+                   theme = bubbles_theme,
+                   -- component_separators = '|',
+                   section_separators = { left = '', right = '' },
+                },
+                sections = {
+                    lualine_c = {
+                        -- "require'lsp-status'.status()"
+                        { require("nvim-gps").get_location, cond = require("nvim-gps").is_available },
+                    },
+                    -- 侧边栏 aerial
+                    lualine_y = {{ "aerial" }},
+                }
+            })
+        end,
+    },
+
+    -- 状态栏
     {
         "romgrk/barbar.nvim",
         config = function()
@@ -64,27 +90,6 @@ return {
         end,
     },
 
-    -- 状态栏lsp
-    { "SmiteshP/nvim-gps", config = true },
-
-    -- 状态栏
-    {
-        "nvim-lualine/lualine.nvim",
-        config = function()
-            require("lualine").setup({
-                options = {
-                    theme = "OceanicNext",
-                },
-                sections = {
-                    lualine_c = {
-                        -- "require'lsp-status'.status()"
-                        { require("nvim-gps").get_location, cond = require("nvim-gps").is_available },
-                    },
-                },
-            })
-        end,
-    },
-
     -- 通知menu
     -- { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' },
 
@@ -118,6 +123,22 @@ return {
     --             },
     --         })
     --     end,
+    -- },
+
+    -- mark
+    -- {
+    --     "chentoast/marks.nvim",
+    --     config = function ()
+    --         require("marks").setup {
+    --           mappings = {
+    --             set_next = "m,",
+    --             next = "m]",
+    --             preview = "m:",
+    --             set_bookmark0 = "m0",
+    --             prev = false -- pass false to disable only this default mapping
+    --           }
+    --         }
+    --     end
     -- },
 
     -- highlight /
@@ -168,19 +189,38 @@ return {
 
     -- highlight yank
     {
-        "machakann/vim-highlightedyank",
-        vim.cmd([[let g:highlightedyank_highlight_duration = 300]]),
+        "gbprod/yanky.nvim",
+        config = function()
+            require("yanky").setup({
+              ring = {
+                history_length = 100,
+                storage = "shada",
+                sync_with_numbered_registers = true,
+                cancel_event = "update",
+              },
+              system_clipboard = {
+                sync_with_ring = true,
+              },
+              highlight = {
+                on_put = true,
+                on_yank = true,
+                timer = 300,
+              },
+            })
+
+            vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+            vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+            vim.keymap.set({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+            vim.keymap.set({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+
+        end
     },
+
     -- highlight cursor word
     "RRethy/vim-illuminate",
 
     -- highlight color
-    {
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup()
-        end,
-    },
+    { "norcalli/nvim-colorizer.lua", config = true },
 
     -- 搜索后自动取消highlight
     "romainl/vim-cool",
@@ -249,15 +289,31 @@ return {
         ]]),
     },
 
-    -- markdown侧边栏
-    {
-        "liuchengxu/vista.vim",
-        vim.cmd([[
-            let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-            let g:vista#renderer#enable_icon = 1
-            " nnoremap T :SymbolsOutline<cr>
-            nnoremap T :Vista!!<cr>
-        ]]),
+    -- 侧边栏
+    -- {
+    --     "liuchengxu/vista.vim",
+    --     vim.cmd([[
+    --         let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+    --         let g:vista#renderer#enable_icon = 1
+    --         " nnoremap T :SymbolsOutline<cr>
+    --         nnoremap T :Vista!!<cr>
+    --     ]]),
+    -- },
+
+    -- 侧边栏
+    { 
+        "stevearc/aerial.nvim",
+        config = function ()
+         require('aerial').setup({
+          -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+          on_attach = function(bufnr)
+            -- Jump forwards/backwards with '{' and '}'
+            vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+            vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+            vim.keymap.set('n', 'T', '<cmd>AerialToggle!<CR>')
+          end
+        })
+        end
     },
 
     -- command补全
@@ -284,14 +340,14 @@ return {
     { "folke/twilight.nvim", config = true },
 
     -- 多窗口下，根据当前窗口位置，自动调整窗口大小
-    {
-        "anuvyklack/windows.nvim",
-        dependencies = {
-            "anuvyklack/middleclass",
-            "anuvyklack/animation.nvim"
-        },
-        config = true
-    },
+    -- {
+    --     "anuvyklack/windows.nvim",
+    --     dependencies = {
+    --         "anuvyklack/middleclass",
+    --         "anuvyklack/animation.nvim"
+    --     },
+    --     config = true
+    -- },
 
     -- 折叠代码
     { "anuvyklack/pretty-fold.nvim", config = true },

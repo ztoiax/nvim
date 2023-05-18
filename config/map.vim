@@ -8,7 +8,7 @@ nmap \  :%s//g<Left><Left>
 vmap \  :s//g<Left><Left>
 
 " nmap t<Enter> :bo sp term://zsh\|resize 10<CR>i
-nmap <leader><leader> %
+map <leader><leader> %
 " remove unwanted space
 nnoremap <silent> <leader><F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
@@ -23,8 +23,6 @@ nmap du d0
 nmap E v$h
 nmap B vb
 nmap <Leader>w :w<CR>
-nmap <Leader>p "0p
-vmap <Leader>p "0p
 
 nmap <Leader>. <esc>ysiw
 imap <Leader>. <esc>ysiw
@@ -130,17 +128,6 @@ nmap <Leader>f1 :HopChar1<CR>
 nmap <Leader>f2 :HopChar2<CR>
 nmap <Leader>fl :HopLine<CR>
 nmap <Leader>fw :HopWord<CR>
-
-" clever-f.vim
-nmap ; <Plug>(clever-f-repeat-forward)
-nmap ' <Plug>(clever-f-repeat-back)
-
-nmap f <Plug>(clever-f-f)
-xmap f <Plug>(clever-f-f)
-omap f <Plug>(clever-f-f)
-nmap F <Plug>(clever-f-F)
-xmap F <Plug>(clever-f-F)
-omap F <Plug>(clever-f-F)
 
 " vim-visual-multi
 let g:VM_maps = {}
