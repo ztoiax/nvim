@@ -1,9 +1,9 @@
 " incert keymap like emacs
 imap <C-h> <BS>
 imap <C-d> <Del>
-imap <C-w> <Esc>diwi
 imap <C-k> <Esc>lDa
-imap <C-u> <Esc>d0xi
+" imap <C-w> <Esc>diwi
+" imap <C-u> <Esc>d0xi
 
 " imap <C-j> <Down>
 " imap <C-k> <Up>

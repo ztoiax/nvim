@@ -18,7 +18,7 @@ nmap <C-e> <C-u>
 nmap <C-y> "0p
 vmap <C-y> "0p
 nmap Y y$
-nmap yu y0
+nmap yu v0y
 nmap du d0
 nmap E v$h
 nmap B vb

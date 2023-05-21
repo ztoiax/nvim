@@ -1,4 +1,6 @@
 -- 如果lazy插件不存在, 就下载
+
+-- 目录：/home/tz/.local/share/nvim/lazy/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -11,6 +13,7 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 
+-- runtimepath添加lazy.nvim的目录，让nvim每识别它
 vim.opt.rtp:prepend(lazypath)
 
 -- 加载lua/plugins目录下的插件
@@ -18,7 +21,7 @@ require("lazy").setup("plugins", {
     -- 插件安装的目录~/.local/share/nvim/lazy/
     root = vim.fn.stdpath("data") .. "/lazy",
     -- 插件版本的目录
-    lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json", 
+    lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
     defaults = {
         lazy = false, -- should plugins be lazy-loaded?
         version = nil,

@@ -1,5 +1,4 @@
 " set scrollbind               "多文件下窗口同步移动
-" set shell=/usr/bin/dash      "dash的速度比bash,zsh快
 
 set guifont=DroidSansMono\ Nerd\ Font:h20
 set shell=/usr/bin/zsh
@@ -31,7 +30,6 @@ set autochdir                "自动切换工作目录
 set autoread                 "文件发生外部改变就会发出提示
 set encoding=UTF-8
 set ttimeoutlen=150
-set nofoldenable             "关闭markdown折叠
 set cmdheight=1              "搜索栏高度
 " set spell                  "拼写检查
 " set noswapfile             "Disable swap files.
