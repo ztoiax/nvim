@@ -19,6 +19,7 @@ return {
 			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+      "hrsh7th/cmp-emoji",
 			"lukas-reineke/cmp-rg",
 
 			-- icon
@@ -37,75 +38,76 @@ return {
 	------ lsp ------
 
 	-- 安装界面
-	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate",
-		config = true,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					---- lsp ----
-					"awk_ls", -- awk
-					"bashls", -- bash
-					"clangd", -- c/cpp
-					-- "pylsp",         -- python
-					"pyright", -- python
-					"rust-analyzer", -- rust
-					"gopls", -- go
-					"jdtls", -- java
-					"lua_ls", -- lua
-					"tsserver", -- js, ts
-					"html", -- html
-					"cssls", -- css
-					"jsonls", -- json
-					"yamlls", -- yaml
-					"marksman", -- markdown
-					"sqlls", -- sql
-					"cmake", -- cmake
-					"dockerls", -- docker
-					"diagnosticls", -- diagnostic
-					"vimls", -- vimls
-					"ansiblels", -- ansible
+	-- {
+	-- 	"williamboman/mason.nvim",
+	-- 	build = ":MasonUpdate",
+	-- 	config = true,
+	-- },
 
-					---- formatter ----
-					"beautysh", -- bash, csh, ksh, sh, zsh
-					"clang-format", -- c/cpp
-					"autopep8", -- python
-					"rustfmt", -- rust
-					"gofumpt", -- go
-					"google-java-format", -- java
-					"stylua", -- lua
-					"prettierd", -- js ts json html css yaml xml
-					"markdownlint", -- markdown
-					"sqlfmt", -- sql
-					"gersemi", -- cmake
-					-- "dockfmt",            -- docker
-					-- "nginxbeautifier",    -- nginx
-
-					---- lint ----
-					"shellcheck", -- bash
-					"sonarlint-language-server", -- c, c++, css, go, html, java, javascript, typescript, python, php, terraform, text
-					"luacheck", -- lua
-					"cfn-lint", -- json, yaml
-					"cmakelint", -- cmake
-					"vale", -- text, markdown, latex
-					"sqlfluff", -- sql
-					"ansible-lint", -- ansible
-
-					---- dap ----
-					"bash-debug-adapter", -- bash
-					"cpptools", -- c/cpp, rust
-					"debugpy", -- python
-					"delve", -- go
-					"java-debug-adapter", -- java
-					"js-debug-adapter", -- js, ts
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"williamboman/mason-lspconfig.nvim",
+	-- 	config = function()
+	-- 		require("mason-lspconfig").setup({
+	-- 			ensure_installed = {
+	-- 				---- lsp ----
+	-- 				"awk_ls", -- awk
+	-- 				"bashls", -- bash
+	-- 				"clangd", -- c/cpp
+	-- 				-- "pylsp",         -- python
+	-- 				"pyright", -- python
+	-- 				"rust-analyzer", -- rust
+	-- 				"gopls", -- go
+	-- 				"jdtls", -- java
+	-- 				"lua_ls", -- lua
+	-- 				"tsserver", -- js, ts
+	-- 				"html", -- html
+	-- 				"cssls", -- css
+	-- 				"jsonls", -- json
+	-- 				"yamlls", -- yaml
+	-- 				"marksman", -- markdown
+	-- 				"sqlls", -- sql
+	-- 				"cmake", -- cmake
+	-- 				"dockerls", -- docker
+	-- 				"diagnosticls", -- diagnostic
+	-- 				"vimls", -- vimls
+	-- 				"ansiblels", -- ansible
+	--
+	-- 				---- formatter ----
+	-- 				"beautysh", -- bash, csh, ksh, sh, zsh
+	-- 				"clang-format", -- c/cpp
+	-- 				"autopep8", -- python
+	-- 				"rustfmt", -- rust
+	-- 				"gofumpt", -- go
+	-- 				"google-java-format", -- java
+	-- 				"stylua", -- lua
+	-- 				"prettierd", -- js ts json html css yaml xml
+	-- 				"markdownlint", -- markdown
+	-- 				"sqlfmt", -- sql
+	-- 				"gersemi", -- cmake
+	-- 				-- "dockfmt",            -- docker
+	-- 				-- "nginxbeautifier",    -- nginx
+	--
+	-- 				---- lint ----
+	-- 				"shellcheck", -- bash
+	-- 				"sonarlint-language-server", -- c, c++, css, go, html, java, javascript, typescript, python, php, terraform, text
+	-- 				"luacheck", -- lua
+	-- 				"cfn-lint", -- json, yaml
+	-- 				"cmakelint", -- cmake
+	-- 				"vale", -- text, markdown, latex
+	-- 				"sqlfluff", -- sql
+	-- 				"ansible-lint", -- ansible
+	--
+	-- 				---- dap ----
+	-- 				"bash-debug-adapter", -- bash
+	-- 				"cpptools", -- c/cpp, rust
+	-- 				"debugpy", -- python
+	-- 				"delve", -- go
+	-- 				"java-debug-adapter", -- java
+	-- 				"js-debug-adapter", -- js, ts
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	-- 配置
 	{
@@ -116,6 +118,28 @@ return {
 		end,
 	},
 
+  -- 显示函数的definition
+  {
+    "lewis6991/hover.nvim",
+    config = function()
+      require("hover").setup {
+        init = function()
+          -- Require providers
+          require("hover.providers.lsp")
+          -- require('hover.providers.gh')
+          -- require('hover.providers.gh_user')
+          -- require('hover.providers.jira')
+          -- require('hover.providers.man')
+          -- require('hover.providers.dictionary')
+        end,
+        title = false
+      }
+
+      vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
+    end
+  },
+
+  -- lint
 	{
 		"mfussenegger/nvim-lint",
 		config = function()

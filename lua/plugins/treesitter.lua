@@ -7,13 +7,13 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				-- parser_install_dir = "/some/path/to/store/parsers", -- 安装目录
-				ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-				auto_install = true, -- 进入缓冲区时自动安装缺少的解析器
 				highlight = {
 					enable = true, -- false will disable the whole extension
 					-- disable = { "markdown" },
-					additional_vim_regex_highlighting = true, -- highlight, 可能会变卡
+					additional_vim_regex_highlighting = false, -- highlight, 可能会变卡
 				},
+				ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+				auto_install = true, -- 进入缓冲区时自动安装缺少的解析器
 
 				-- 等于号=缩进
 				indent = { enable = true },
@@ -29,13 +29,13 @@ return {
 					},
 				},
 			})
-		end,
 
 		vim.cmd([[
-        " 折叠
-        set foldmethod=expr
-        set foldexpr=nvim_treesitter#foldexpr()
-        ]]),
+		      " 折叠
+		      set foldmethod=expr
+		      set foldexpr=nvim_treesitter#foldexpr()
+		      ]])
+		end,
 	},
 
 	-- 语法树库函数

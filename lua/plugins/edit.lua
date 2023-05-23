@@ -110,6 +110,21 @@ return {
     ]]),
 	},
 
+	-- toggler bool
+  {
+    "rmagatti/alternate-toggler",
+    event = { "BufReadPost" },
+    config = function()
+      require("alternate-toggler").setup {
+        alternates = {
+          ["=="] = "!="
+        }
+      }
+
+      vim.keymap.set( "n", "<leader><space>", "<cmd>lua require('alternate-toggler').toggleAlternate()<CR>")
+    end,
+  },
+
 	-- 光标多选
 	-- "mg979/vim-visual-multi",
 
@@ -122,7 +137,7 @@ return {
     config = function ()
 			require("mini.splitjoin").setup({
         mappings = {
-          toggle = 'S',
+          toggle = '<leader>s',
           split = '',
           join = '',
         },

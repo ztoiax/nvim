@@ -1,21 +1,21 @@
 return {
 	-- 主题
-	{
-		"glepnir/oceanic-material",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- 默认为50
-		config = function()
-			vim.cmd.colorscheme("oceanic_material")
-		end,
-	},
-
 	-- {
-	--     "AstroNvim/astrotheme",
-	--     config = function ()
-	--         require("astrotheme").setup({})
-	--              vim.cmd.colorscheme "astrotheme"
-	--     end
+	-- 	"glepnir/oceanic-material",
+	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	-- 	priority = 1000, -- 默认为50
+	-- 	config = function()
+	-- 		vim.cmd.colorscheme("oceanic_material")
+	-- 	end,
 	-- },
+
+	{
+	    "AstroNvim/astrotheme",
+	    config = function ()
+	        require("astrotheme").setup({})
+	             vim.cmd.colorscheme "astrotheme"
+	    end
+	},
 
 	-- {
 	--     "catppuccin/nvim",
@@ -299,39 +299,47 @@ return {
 				options = { try_as_border = true },
 				symbol = "│",
 			})
+
+			-- 颜色
+			vim.api.nvim_command("highlight MiniIndentscopeSymbol guifg=orange")
 		end,
 	},
 
 	-- highlight yank
-	{
-		"gbprod/yanky.nvim",
-		config = function()
-			require("yanky").setup({
-				ring = {
-					history_length = 100,
-					storage = "shada",
-					sync_with_numbered_registers = true,
-					cancel_event = "update",
-				},
-				system_clipboard = {
-					sync_with_ring = true,
-				},
-				highlight = {
-					on_put = true,
-					on_yank = true,
-					timer = 300,
-				},
-			})
-
-			vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-			vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-			vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-			vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-		end,
-	},
+	-- {
+	-- 	"gbprod/yanky.nvim",
+	-- 	config = function()
+	-- 		require("yanky").setup({
+	-- 			ring = {
+	-- 				history_length = 100,
+	-- 				storage = "shada",
+	-- 				sync_with_numbered_registers = true,
+	-- 				cancel_event = "update",
+	-- 			},
+	-- 			system_clipboard = {
+	-- 				sync_with_ring = true,
+	-- 			},
+	-- 			highlight = {
+	-- 				on_put = true,
+	-- 				on_yank = true,
+	-- 				timer = 300,
+	-- 			},
+	-- 		})
+	--
+	-- 		vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+	-- 		vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+	-- 		vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+	-- 		vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+	-- 	end,
+	-- },
 
 	-- highlight color
-	{ "norcalli/nvim-colorizer.lua", config = true },
+	{
+	  "norcalli/nvim-colorizer.lua",
+	  config = function ()
+	    require 'colorizer'.setup()
+	  end
+	},
 
 	-- 搜索后自动取消highlight
 	"romainl/vim-cool",
@@ -354,7 +362,7 @@ return {
 		config = function()
 			require("mini.bracketed").setup({})
 			vim.keymap.set("n", "X", "require('mini.bracketed').oldfile()", { noremap = true })
-      -- vim.cmd([[nnoremap <leader>o :lua require('minibracketed').oldfile()<CR>]])
+			-- vim.cmd([[nnoremap <leader>o :lua require('minibracketed').oldfile()<CR>]])
 		end,
 	},
 
@@ -440,26 +448,44 @@ return {
 	},
 
 	-- 翻译
-	{
-		"voldikss/vim-translator",
-		vim.cmd([[
-            " let g:translator_history_enable = 1
-            let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
-            " let g:translator_proxy_url = ''
-            let g:translator_window_type = 'popup'
+	-- {
+	-- 	"JuanZoran/Trans.nvim",
+	-- 	build = function()
+	-- 		require("Trans").install()
+	-- 	end,
+	-- 	keys = {
+	-- 		-- 可以换成其他你想映射的键
+	-- 		{ "mm", mode = { "n", "x" }, "<Cmd>Translate<CR>", desc = " Translate" },
+	-- 		{ "mk", mode = { "n", "x" }, "<Cmd>TransPlay<CR>", desc = " Auto Play" },
+	-- 		-- 目前这个功能的视窗还没有做好，可以在配置里将view.i改成hover
+	-- 		{ "mi", "<Cmd>TranslateInput<CR>", desc = " Translate From Input" },
+	-- 	},
+	-- 	dependencies = { "kkharji/sqlite.lua" },
+	-- 	opts = {
+	-- 		-- your configuration there
+	-- 	},
+	-- },
 
-            nmap <silent> <Leader>te <Plug>Translate
-            vmap <silent> <Leader>te <Plug>TranslateV
-            " Display translation in a window
-            nmap <silent> <Leader>tw <Plug>TranslateW
-            vmap <silent> <Leader>tw <Plug>TranslateWV
-            " Replace the text with translation
-            nmap <silent> <Leader>tr <Plug>TranslateR
-            vmap <silent> <Leader>tr <Plug>TranslateRV
-            " Translate the text in clipboard
-            nmap <silent> <C-q> <Plug>TranslateX
-        ]]),
-	},
+	-- {
+	-- 	"voldikss/vim-translator",
+	-- 	vim.cmd([[
+	--            " let g:translator_history_enable = 1
+	--            let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
+	--            " let g:translator_proxy_url = ''
+	--            let g:translator_window_type = 'popup'
+	--
+	--            nmap <silent> <Leader>te <Plug>Translate
+	--            vmap <silent> <Leader>te <Plug>TranslateV
+	--            " Display translation in a window
+	--            nmap <silent> <Leader>tw <Plug>TranslateW
+	--            vmap <silent> <Leader>tw <Plug>TranslateWV
+	--            " Replace the text with translation
+	--            nmap <silent> <Leader>tr <Plug>TranslateR
+	--            vmap <silent> <Leader>tr <Plug>TranslateRV
+	--            " Translate the text in clipboard
+	--            nmap <silent> <C-q> <Plug>TranslateX
+	--        ]]),
+	-- },
 
 	-- 侧边栏
 	{

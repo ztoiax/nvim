@@ -14,3 +14,4 @@ vim.cmd([[
 require("plugins-lazy")
 require("debug/init-dap")
 require("function")
+require("highlight")

@@ -69,3 +69,17 @@ map("c", "<C-a>", "<Home>")
 map("c", "<C-e>", "<End>")
 map("c", "<C-d>", "<Del>")
 map("c", "<C-h>", "<BS>")
+
+-- toggle ui
+local Util = require("function")
+map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
+map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>un", function() Util.toggle("relativenumber") Util.toggle("number") end, { desc = "Toggle Line Numbers" })
+map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
+map("n", "<leader>uf", Util.toggle_fold, { desc = "Toggle Fold" })
+map("n", "<leader>ul", Util.toggle_lsp, { desc = "Toggle Lsp" })
+
+local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
+
+map("n", "<leader>ut", ":TSToggle highlight<cr>", { desc = "Toggle Treesistter" })

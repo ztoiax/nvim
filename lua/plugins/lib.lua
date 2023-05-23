@@ -21,5 +21,5 @@ return {
 	"jaawerth/fennel-nvim",
 
 	-- fennel的repl
-	"Olical/conjure",
+	-- "Olical/conjure",
 }
