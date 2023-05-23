@@ -12,6 +12,6 @@ vim.cmd([[
     source  ~/.config/nvim/snippets/md.vim
 ]])
 require("plugins-lazy")
-require("debug/init-dap")
+-- require("debug/init-dap")
 require("function")
 require("highlight")

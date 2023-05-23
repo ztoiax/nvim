@@ -30,11 +30,11 @@ return {
 				},
 			})
 
-		vim.cmd([[
+		  vim.cmd([[
 		      " 折叠
 		      set foldmethod=expr
 		      set foldexpr=nvim_treesitter#foldexpr()
-		      ]])
+		    ]])
 		end,
 	},
 

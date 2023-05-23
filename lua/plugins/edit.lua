@@ -22,12 +22,15 @@ return {
 						cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
 						desc = "input replace vim command",
 					},
+					["open"] = {
+						map = "<cr>",
+						cmd = "<cmd>lua require('spectre').open_file_search()<cr>",
+						desc = "open",
+					},
 				},
 			})
 
-			vim.cmd([[
-                nnoremap <leader>\ viw:lua require('spectre').open_file_search()<cr>
-            ]])
+			vim.keymap.set("n", "<leader>\\", ":lua require('spectre').open_file_search()<cr>")
 		end,
 	},
 
@@ -40,12 +43,10 @@ return {
 		config = function()
 			-- you can configure Hop the way you like here; see :h hop-config
 			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-			vim.cmd([[
-              nmap <Leader>f1 :HopChar1<CR>
-              nmap <Leader>f2 :HopChar2<CR>
-              nmap <Leader>fl :HopLine<CR>
-              nmap <Leader>fw :HopWord<CR>
-          ]])
+			vim.keymap.set("n", "<leader>f1", ":HopChar1<cr>")
+			vim.keymap.set("n", "<leader>f2", ":HopChar2<cr>")
+			vim.keymap.set("n", "<leader>fl", ":HopLine<cr>")
+			vim.keymap.set("n", "<leader>fw", ":HopWord<cr>")
 		end,
 	},
 
@@ -54,41 +55,40 @@ return {
 		"mfussenegger/nvim-treehopper",
 		config = function()
 			require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
-			vim.cmd([[
-                omap     <silent> <leader>f :<C-U>lua require('tsht').nodes()<CR>
-                xnoremap <silent> <leader>f :lua require('tsht').nodes()<CR>
-            ]])
+			vim.keymap.set("o", "<leader>f", ":<C-U>lua require('tsht').nodes()<CR>")
+			vim.keymap.set("x", "<leader>f", ":lua require('tsht').nodes()<CR>")
 		end,
 	},
 
 	-- extends f
 	{
 		"rhysd/clever-f.vim",
-		vim.cmd([[
-	     let g:clever_f_ignore_case = 1 " Ignore case (忽略大小写)
-	     let g:clever_f_chars_match_any_signs = ';'
-	     let g:clever_f_not_overwrites_standard_mappings = 1
+		config = function ()
+		  vim.cmd([[
+	       let g:clever_f_ignore_case = 1 " Ignore case (忽略大小写)
+	       let g:clever_f_chars_match_any_signs = ';'
+	       let g:clever_f_not_overwrites_standard_mappings = 1
 
-	     nmap ; <Plug>(clever-f-repeat-forward)
-	     nmap ' <Plug>(clever-f-repeat-back)
+	       nmap ; <Plug>(clever-f-repeat-forward)
+	       nmap ' <Plug>(clever-f-repeat-back)
 
-	     nmap f <Plug>(clever-f-f)
-	     xmap f <Plug>(clever-f-f)
-	     omap f <Plug>(clever-f-f)
-	     nmap F <Plug>(clever-f-F)
-	     xmap F <Plug>(clever-f-F)
-	     omap F <Plug>(clever-f-F)
-	 ]]),
+	       nmap f <Plug>(clever-f-f)
+	       xmap f <Plug>(clever-f-f)
+	       omap f <Plug>(clever-f-f)
+	       nmap F <Plug>(clever-f-F)
+	       xmap F <Plug>(clever-f-F)
+	       omap F <Plug>(clever-f-F)
+	    ]])
+		end
 	},
 
 	-- 快速添加特殊符号--(<[]>)--'
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
+		opts = {},
 		config = function()
-			require("nvim-surround").setup({})
-
-			vim.cmd([["
+			vim.cmd([[
             nmap s  ys
             vmap s  S
             ]])
@@ -104,10 +104,9 @@ return {
 	-- 多行对齐
 	{
 		"junegunn/vim-easy-align",
-		vim.cmd([[
-        xmap <Leader>ia <Plug>(EasyAlign)
-        nmap <Leader>ia <Plug>(EasyAlign)
-    ]]),
+    config = function ()
+      vim.keymap.set( { "n", "x" }, "<leader>ia", "<Plug>(EasyAlign)")
+    end
 	},
 
 	-- toggler bool
@@ -148,12 +147,12 @@ return {
 	-- 参数位置交换
 	{
 		"mizlan/iswap.nvim",
-		config = true,
-		vim.cmd([[
-            nmap <leader>rl :ISwapNodeWithRight<cr>
-            nmap <leader>rh :ISwapNodeWithLeft<cr>
-            nmap <leader>is :ISwapWith<CR>
-        ]]),
+		opts = {},
+		config = function ()
+			vim.keymap.set("n", "<leader>rl", ":ISwapNodeWithRight<cr>")
+			vim.keymap.set("n", "<leader>rh", ":ISwapNodeWithLeft<cr>")
+			vim.keymap.set("n", "<leader>is", ":ISwapWith<cr>")
+		end
 	},
 
 	-- 函数、语句跳转和块选
@@ -198,14 +197,15 @@ return {
 	-- 异步执行shell命令
 	{
 		"skywind3000/asyncrun.vim",
-		vim.cmd([[
-        nmap <leader>ie :execute getline(line('.'))<cr> " Run the current line
-        " nmap <leader>el :execute '!'.getline('.')<cr> " Run the current line in sh
-        " nmap <Leader>ii :.!
-        nmap <Leader>io :AsyncRun! -mode=term 
-        nmap <Leader>ii :AsyncRun! 
-        nmap <leader>il :execute 'AsyncRun! -mode=term '.getline('.')<cr> " Run the current line in terminal
-    ]]),
+		config = function ()
+
+	    vim.keymap.set("n", "<leader>ie", ":execute getline(line('.'))<cr>", { desc = "Run the current line" })
+	    vim.keymap.set("n", "<leader>el", ":execute '!'.getline('.')<cr>", { desc = "Run the current line in sh" })
+	    vim.keymap.set("n", "<leader>io", ":AsyncRun! -mode=term ")
+	    vim.keymap.set("n", "<leader>ii", ":AsyncRun! ")
+	    vim.keymap.set("n", "<leader>il", ":AsyncRun! -mode=term ")
+	    vim.keymap.set("n", "<leader>il", ":execute 'AsyncRun! -mode=term '.getline('.')<cr>", { desc = "Run the current line in terminal" })
+		end
 	},
 
 	-- 部分代码运行
@@ -215,12 +215,14 @@ return {
 	"tpope/vim-dadbod",
 	{
 		"kristijanhusak/vim-dadbod-ui",
-		-- 数据库路径
-		vim.cmd([[
-        let g:dbs = [
-        \ { 'name': 'sqlite-search.db', 'url': 'sqlite:/home/tz/.mybin/search.db' },
-        \ ]
-    ]]),
+		config = function ()
+		  -- 数据库路径
+		  vim.cmd([[
+          let g:dbs = [
+          \ { 'name': 'sqlite-search.db', 'url': 'sqlite:/home/tz/.mybin/search.db' },
+          \ ]
+      ]])
+		end
 	},
 
 	"tami5/sqlite.lua",

@@ -13,18 +13,9 @@ return {
 	    "AstroNvim/astrotheme",
 	    config = function ()
 	        require("astrotheme").setup({})
-	             vim.cmd.colorscheme "astrotheme"
+	        vim.cmd.colorscheme "astrotheme"
 	    end
 	},
-
-	-- {
-	--     "catppuccin/nvim",
-	--     name = "catppuccin",
-	--     config = function()
-	--         require("catppuccin").setup {}
-	--         vim.cmd.colorscheme "catppuccin-frappe"
-	--     end,
-	-- },
 
 	-- {
 	--     "rebelot/kanagawa.nvim",
@@ -305,34 +296,6 @@ return {
 		end,
 	},
 
-	-- highlight yank
-	-- {
-	-- 	"gbprod/yanky.nvim",
-	-- 	config = function()
-	-- 		require("yanky").setup({
-	-- 			ring = {
-	-- 				history_length = 100,
-	-- 				storage = "shada",
-	-- 				sync_with_numbered_registers = true,
-	-- 				cancel_event = "update",
-	-- 			},
-	-- 			system_clipboard = {
-	-- 				sync_with_ring = true,
-	-- 			},
-	-- 			highlight = {
-	-- 				on_put = true,
-	-- 				on_yank = true,
-	-- 				timer = 300,
-	-- 			},
-	-- 		})
-	--
-	-- 		vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-	-- 		vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-	-- 		vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-	-- 		vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-	-- 	end,
-	-- },
-
 	-- highlight color
 	{
 	  "norcalli/nvim-colorizer.lua",
@@ -359,8 +322,8 @@ return {
 
 	{
 		"echasnovski/mini.bracketed",
+		opts = {},
 		config = function()
-			require("mini.bracketed").setup({})
 			vim.keymap.set("n", "X", "require('mini.bracketed').oldfile()", { noremap = true })
 			-- vim.cmd([[nnoremap <leader>o :lua require('minibracketed').oldfile()<CR>]])
 		end,
@@ -369,12 +332,13 @@ return {
 	-- 窗口动画
 	{
 		"camspiers/animate.vim",
-		vim.cmd([[
-          nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-          nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-          nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-          nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
-        ]]),
+		opts = {},
+		config = function ()
+			vim.keymap.set("n", "<Up>", ":call animate#window_delta_height(10)<CR>")
+			vim.keymap.set("n", "<Down>", ":call animate#window_delta_height(-10)<CR>")
+			vim.keymap.set("n", "<Left>", ":call animate#window_delta_width(10)<CR>")
+			vim.keymap.set("n", "<Right>", ":call animate#window_delta_width(-10)<CR>")
+		end
 	},
 
 	-- 浮动窗口
@@ -418,34 +382,37 @@ return {
 
 	{
 		"voldikss/vim-floaterm",
-		vim.cmd([[
-	        hi FloatermNF guibg=#282828
-	        hi FloatermBorderNF guibg=#282828 guifg=#504945
-	        command! Ranger FloatermNew ranger
-	        command! Broot FloatermNew broot -sdpw
-	        command! Lazygit FloatermNew lazygit
-	        command! Lazydocker FloatermNew lazydocker
-	        command! Ptpython FloatermNew ptpython
-	        command! Pudb FloatermNew python -m pudb %
-	        let g:floaterm_height = 0.9
-	        let g:floaterm_width = 0.9
-	        let g:floaterm_wintype = 'normal'
-	        " autocmd FileType floaterm wincmd H
-	        let g:floaterm_autoclose = 2
-	        let g:floaterm_position = 'center'
-	        let g:floaterm_opener = 'edit'
+			opts = {},
+		  config = function ()
+		    vim.cmd([[
+	            hi FloatermNF guibg=#282828
+	            hi FloatermBorderNF guibg=#282828 guifg=#504945
+	            command! Ranger FloatermNew ranger
+	            command! Broot FloatermNew broot -sdpw
+	            command! Lazygit FloatermNew lazygit
+	            command! Lazydocker FloatermNew lazydocker
+	            command! Ptpython FloatermNew ptpython
+	            command! Pudb FloatermNew python -m pudb %
+	            let g:floaterm_height = 0.9
+	            let g:floaterm_width = 0.9
+	            let g:floaterm_wintype = 'normal'
+	            " autocmd FileType floaterm wincmd H
+	            let g:floaterm_autoclose = 2
+	            let g:floaterm_position = 'center'
+	            let g:floaterm_opener = 'edit'
 
-	        " 取消边框
-	        let g:floaterm_borderchars = '        '
-	        let g:floaterm_title = ''
+	            " 取消边框
+	            let g:floaterm_borderchars = '        '
+	            let g:floaterm_title = ''
 
-	        nmap <Leader>tp :Ptpython<CR>
-	        nmap <Leader>tt :terminal mytop.sh<CR>
-	        nmap <Leader>fr :Ranger<CR>
-	        nmap <Leader>gg :Lazygit<CR>
-	        nmap <Leader>td :Lazydocker<CR>
-	    ]]),
-	},
+	            nmap <Leader>tp :Ptpython<CR>
+	            nmap <Leader>tt :terminal mytop.sh<CR>
+	            nmap <Leader>fr :Ranger<CR>
+	            nmap <Leader>gg :Lazygit<CR>
+	            nmap <Leader>td :Lazydocker<CR>
+	        ]])
+		  end
+	  },
 
 	-- 翻译
 	-- {
@@ -466,26 +433,29 @@ return {
 	-- 	},
 	-- },
 
-	-- {
-	-- 	"voldikss/vim-translator",
-	-- 	vim.cmd([[
-	--            " let g:translator_history_enable = 1
-	--            let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
-	--            " let g:translator_proxy_url = ''
-	--            let g:translator_window_type = 'popup'
-	--
-	--            nmap <silent> <Leader>te <Plug>Translate
-	--            vmap <silent> <Leader>te <Plug>TranslateV
-	--            " Display translation in a window
-	--            nmap <silent> <Leader>tw <Plug>TranslateW
-	--            vmap <silent> <Leader>tw <Plug>TranslateWV
-	--            " Replace the text with translation
-	--            nmap <silent> <Leader>tr <Plug>TranslateR
-	--            vmap <silent> <Leader>tr <Plug>TranslateRV
-	--            " Translate the text in clipboard
-	--            nmap <silent> <C-q> <Plug>TranslateX
-	--        ]]),
-	-- },
+	{
+		"voldikss/vim-translator",
+		opts = {},
+		config = function()
+	  	vim.cmd([[
+	       " let g:translator_history_enable = 1
+	       let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
+	       " let g:translator_proxy_url = ''
+	       let g:translator_window_type = 'popup'
+
+	       nmap <silent> <Leader>te <Plug>Translate
+	       vmap <silent> <Leader>te <Plug>TranslateV
+	       " Display translation in a window
+	       nmap <silent> <Leader>tw <Plug>TranslateW
+	       vmap <silent> <Leader>tw <Plug>TranslateWV
+	       " Replace the text with translation
+	       nmap <silent> <Leader>tr <Plug>TranslateR
+	       vmap <silent> <Leader>tr <Plug>TranslateRV
+	       " Translate the text in clipboard
+	       nmap <silent> <C-q> <Plug>TranslateX
+	     ]])
+	  end
+	},
 
 	-- 侧边栏
 	{
@@ -519,10 +489,10 @@ return {
 	-- registers menu
 	{
 		"tversteeg/registers.nvim",
-		config = true,
-		vim.cmd([[
-            nmap <silent> <leader>" :Registers<cr>
-        ]]),
+		config = function ()
+			require("registers").setup({})
+			vim.keymap.set("n", "<leader>\"", ":Registers<cr>")
+		end
 	},
 
 	-- 多窗口下，根据当前窗口位置，自动调整窗口大小

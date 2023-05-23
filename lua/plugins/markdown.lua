@@ -3,37 +3,38 @@ return {
 	{
 		"iamcco/markdown-preview.nvim",
 		-- call mkdp#util#install()
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
+		build = function() vim.fn["mkdp#util#install"]() end,
 		ft = { "markdown" },
-		vim.cmd([[
-            nmap <Leader>rr <Plug>MarkdownPreview
-        ]]),
+		opts = {},
+    config = function ()
+		  vim.cmd([[ nmap <Leader>rr <Plug>MarkdownPreview ]])
+		end
 	},
 
 	-- 自动生成目录
 	{
 		"mzlogin/vim-markdown-toc",
 		ft = { "markdown" },
-		vim.cmd([[
-          nmap <Leader>rd :GenTocGFM<cr>
-      ]]),
+		opts = {},
+    config = function ()
+		  vim.cmd([[ nmap <Leader>rd :GenTocGFM<cr> ]])
+		end
 	},
 
 	-- 快速插入markdown表格
 	{
 		"dhruvasagar/vim-table-mode",
 		ft = { "markdown" },
-
-		vim.cmd([[
-          let g:table_mode_tableize_map = '<leader>m'
-      ]]),
+		opts = {},
+    config = function ()
+      		vim.cmd([[ let g:table_mode_tableize_map = '<leader>m' ]])
+    end
 	},
 
 	-- 表格自动对齐
 	{
 		"masukomi/vim-markdown-folding",
+		opts = {},
 		config = function()
 			vim.cmd([[
         function! s:isAtStartOfLine(mapping)
