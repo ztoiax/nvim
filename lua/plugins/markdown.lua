@@ -7,7 +7,13 @@ return {
 		ft = { "markdown" },
 		opts = {},
     config = function ()
-		  vim.cmd([[ nmap <Leader>rr <Plug>MarkdownPreview ]])
+		  vim.cmd([[
+        let g:mkdp_auto_close = 0        " 切换buffer后不关闭预览
+        let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
+        let g:mkdp_markdown_css = ''     " 设置自定义css路径
+
+		    nmap <Leader>rr <Plug>MarkdownPreviewToggle
+		  ]])
 		end
 	},
 

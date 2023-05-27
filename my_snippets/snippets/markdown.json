@@ -1,0 +1,197 @@
+{
+	"Tittle(标题)": {
+		"prefix": "#",
+		"body": [
+			"#",
+			"$0"
+		]
+	},
+	"Tittle1(标题)": {
+		"prefix": "##",
+		"body": [
+			"##",
+			"$0"
+		]
+	},
+	"Tittle2(标题)": {
+		"prefix": "###",
+		"body": [
+			"###",
+			"$0"
+		]
+	},
+	"Tittle3(标题)": {
+		"prefix": "####",
+		"body": [
+			"####",
+			"$0"
+		]
+	},
+	"Tittle4(标题)": {
+		"prefix": "#####",
+		"body": [
+			"#####",
+			"$0"
+		]
+	},
+	"Tittle5(标题)": {
+		"prefix": "#",
+		"body": [
+			"#",
+			"$0"
+		]
+	},
+	"url(网页连接)": {
+		"prefix": ",u",
+    "body": ["<${1}> ${0}"]
+	},
+	"纯url(网页连接)": {
+		"prefix": ",a",
+		"body": ["[$1](${2:url})$0"]
+	},
+	"Image(图片)": {
+		"prefix": ",p",
+		"body": ["![image](${1:path})$0"]
+	},
+	"标签": {
+		"prefix": ",sp",
+		"body": [
+			"<span id='$1'>$2</span>$0"
+		]
+	},
+	"Task(打勾)": {
+		"prefix": ",m",
+		"body": ["- [ ]$0"]
+	},
+	"分段": {
+		"prefix": ",n",
+		"body": [
+			"---",
+			"$0"
+		]
+	},
+	"Italic(斜体)": {
+		"prefix": ",i",
+		"body": ["*$1*$0"]
+	},
+	"Bold(粗体)": {
+		"prefix": ",b",
+		"body": ["**$1**$0"]
+	},
+	"Strikethrough(删除线)": {
+		"prefix": ",s",
+		"body": ["~~$1~~$0"]
+	},
+	"underline(下划线)": {
+		"prefix": ",_",
+		"body": ["<u>$1</u>$0"]
+	},
+	"big(放大)": {
+		"prefix": "big",
+		"body": ["<big>$1</big>$0"]
+	},
+	"small(缩小)": {
+		"prefix": "small",
+		"body": ["<small>$1</small>$0"]
+	},
+	"color(青色文本)": {
+		"prefix": "color",
+		"body": ["<font color=teal>$1</font>$0"]
+	},
+	"Key(按键)": {
+		"prefix": ",k",
+		"body": ["<kbd>$1</kbd>$0"]
+	},
+	"Code(代码)": {
+		"prefix": ",d",
+		"body": ["`$1`$0"]
+	},
+	"Codeblock(代码块)": {
+		"prefix": ",c",
+		"body": [
+			"```$1",
+			"${2:code}",
+			"```",
+			"$0"
+		]
+	},
+	"emjoy(笑脸)": {
+		"prefix": "emjoy",
+		"body": [":smile:"]
+	},
+	"音频(audio)": {
+		"prefix": "audio",
+		"body": ["<audio controls='controls' preload='none' src='$1'></audio>"]
+	},
+	"视频(video)": {
+		"prefix": "video",
+		"body": [
+      "<video width='600' height='420' controls>",
+      "<source src='$1' type='video/mp4'>",
+      "</video>"
+		]
+	},
+	"嵌入网页": {
+		"prefix": "iframe",
+		"body": ["<iframe width=600 height=400 src='$1' scrolling='auto' border='0' frameborder='no' framespacing='0' allowfullscreen='true'> </iframe>"]
+	},
+	"嵌入bilibli网页": {
+		"prefix": "bilibili",
+		"body": ["<iframe width=600 height=400 src='http://player.bilibili.com/player.html?bvid=${1:BV1yW411s7og}' scrolling='auto' border='0' frameborder='no' framespacing='0' allowfullscreen='true'> </iframe>"]
+	},
+	"饼图(pie)": {
+		"prefix": "pie",
+		"body": [
+      "```mermaid",
+      "pie",
+      "title $1？",
+      "\"${2:选项1}\" : ${3:50}",
+      "\"${4:选项2}\" : ${5:50}",
+      "```"
+		]
+	},
+	"甘特图(gantt)": {
+		"prefix": "gantt",
+		"body": [
+      "```mermaid",
+      "gantt",
+      "title A Gantt Diagram",
+      "dateFormat  YYYY-MM-DD",
+      "section Section",
+      "A task           :a1, 2014-01-01, 30d",
+      "Another task     :after a1  , 20d",
+      "section Another",
+      "Task in sec      :2014-01-12  , 12d",
+      "another task      : 24d",
+      "```"
+		]
+	},
+	"类图(class)": {
+		"prefix": "class",
+		"body": [
+      "```mermaid",
+      "classDiagram",
+      "Animal <|-- Duck",
+      "Animal <|-- Fish",
+      "Animal <|-- Zebra",
+      "Animal : int age",
+      "Animal : String gender",
+      "Animal: isMammal()",
+      "Animal: mate()",
+      "class Duck{",
+      "String beakColor",
+      "swim()",
+      "quack()",
+      "}",
+      "class Fish{",
+      "int sizeInFeet",
+      "canEat()",
+      "}",
+      "class Zebra{",
+      "bool is_wild",
+      "run()",
+      "}",
+      "```"
+		]
+	}
+}

@@ -3,7 +3,10 @@ return {
 	{
 		"tpope/vim-fugitive",
     confing = function ()
-		  vim.cmd([[ let g:fugitive_no_maps = v:true ]])
+		  vim.cmd([[
+        let g:fugitive_no_maps = v:true
+      ]])
+			vim.keymap.set("n", "<leader>gd", "<Cmd>Gvdiffsplit<CR>")
     end
 	},
 
@@ -22,7 +25,13 @@ return {
 	{ "lewis6991/gitsigns.nvim", config = true },
 
 	-- diff 当前项目
-	{ "sindrets/diffview.nvim", config = true },
+	{
+	  "sindrets/diffview.nvim",
+	  ops = {},
+	  config = function ()
+			vim.keymap.set("n", "<leader>gD", "<Cmd>DiffviewOpen<CR>")
+	  end
+	},
 
 	-- github
 	{

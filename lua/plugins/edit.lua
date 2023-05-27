@@ -62,36 +62,49 @@ return {
 
 	-- extends f
 	{
-		"rhysd/clever-f.vim",
-		config = function ()
-		  vim.cmd([[
-	       let g:clever_f_ignore_case = 1 " Ignore case (忽略大小写)
-	       let g:clever_f_chars_match_any_signs = ';'
-	       let g:clever_f_not_overwrites_standard_mappings = 1
-
-	       nmap ; <Plug>(clever-f-repeat-forward)
-	       nmap ' <Plug>(clever-f-repeat-back)
-
-	       nmap f <Plug>(clever-f-f)
-	       xmap f <Plug>(clever-f-f)
-	       omap f <Plug>(clever-f-f)
-	       nmap F <Plug>(clever-f-F)
-	       xmap F <Plug>(clever-f-F)
-	       omap F <Plug>(clever-f-F)
-	    ]])
-		end
+	  'echasnovski/mini.jump',
+	  opts = {
+      -- Module mappings. Use `''` (empty string) to disable one.
+      mappings = {
+        forward = 'f',
+        backward = 'F',
+        forward_till = 't',
+        backward_till = '\'',
+        repeat_jump = ';',
+      },
+	  },
 	},
+
+	-- {
+	-- 	"rhysd/clever-f.vim",
+	-- 	config = function ()
+	-- 	  vim.cmd([[
+	--        let g:clever_f_ignore_case = 1 " Ignore case (忽略大小写)
+	--        let g:clever_f_chars_match_any_signs = ';'
+	--        let g:clever_f_not_overwrites_standard_mappings = 1
+	--
+	--        nmap ; <Plug>(clever-f-repeat-forward)
+	--        nmap ' <Plug>(clever-f-repeat-back)
+	--
+	--        nmap f <Plug>(clever-f-f)
+	--        xmap f <Plug>(clever-f-f)
+	--        omap f <Plug>(clever-f-f)
+	--        nmap F <Plug>(clever-f-F)
+	--        xmap F <Plug>(clever-f-F)
+	--        omap F <Plug>(clever-f-F)
+	--     ]])
+	-- 	end
+	-- },
 
 	-- 快速添加特殊符号--(<[]>)--'
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
-		opts = {},
 		config = function()
-			vim.cmd([[
-            nmap s  ys
-            vmap s  S
-            ]])
+      require("nvim-surround").setup()
+
+      vim.cmd("nmap s  ys")
+      vim.cmd("vmap s  S")
 		end,
 	},
 
@@ -116,7 +129,8 @@ return {
     config = function()
       require("alternate-toggler").setup {
         alternates = {
-          ["=="] = "!="
+          ["=="] = "!=",
+          [">="] = "<=",
         }
       }
 
@@ -125,7 +139,37 @@ return {
   },
 
 	-- 光标多选
-	-- "mg979/vim-visual-multi",
+	{
+	  "otavioschwanck/cool-substitute.nvim",
+	  config = function ()
+	   require'cool-substitute'.setup({
+        setup_keybindings = true,
+      })
+	  end
+	},
+	{
+	  "mg979/vim-visual-multi",
+	   config = function ()
+	     vim.cmd([[
+	       let g:VM_maps = {}
+	       let g:VM_maps['Motion ,'] = ',,'
+	       let g:VM_maps["Switch Mode"]                 = '<Tab>'
+	       let g:VM_maps["Find Next"]                   = ']'
+	       let g:VM_maps["Find Prev"]                   = '['
+	       let g:VM_maps["Goto Next"]                   = '}'
+	       let g:VM_maps["Goto Prev"]                   = '{'
+	       let g:VM_maps["Seek Next"]                   = '<C-f>'
+	       let g:VM_maps["Seek Prev"]                   = '<C-b>'
+	       let g:VM_maps["Skip Region"]                 = 'n'
+	       let g:VM_maps["Remove Region"]               = 'q'
+	       let g:VM_maps["Invert Direction"]            = 'o'
+	       let g:VM_maps["Find Operator"]               = "m"
+	       let g:VM_maps["Surround"]                    = 's'
+	       let g:VM_maps["Replace Pattern"]             = 'r'
+	       nmap <Leader>I <Plug>(VM-Select-All)
+	       ]])
+	   end
+	},
 
 	-- autopairs
 	{ "echasnovski/mini.pairs", event = "InsertEnter", config = true },
@@ -136,7 +180,7 @@ return {
     config = function ()
 			require("mini.splitjoin").setup({
         mappings = {
-          toggle = '<leader>s',
+          toggle = '<leader>S',
           split = '',
           join = '',
         },

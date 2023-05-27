@@ -22,18 +22,49 @@ return {
       "hrsh7th/cmp-emoji",
 			"lukas-reineke/cmp-rg",
 
+			-- enable tailwindcss lsp highlight
+      { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
+
 			-- icon
 			"onsails/lspkind-nvim",
 
 			-- luasnip
 			"saadparwaiz1/cmp_luasnip",
-			"L3MON4D3/LuaSnip",
-			"rafamadriz/friendly-snippets",
+			{
+			  "L3MON4D3/LuaSnip",
+	      -- follow latest release.
+	      version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	      -- install jsregexp (optional!).
+	      build = "make install_jsregexp",
+	      config = function ()
+			    require("lua-snip")
+	      end
+			},
+			{
+			  "rafamadriz/friendly-snippets",
+			  config = function ()
+          -- 加载friendly-snippets
+          local dir = vim.fn.stdpath("data") .. "/lazy" .. "/friendly-snippets"
+          require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
+
+			    -- 加载自定义的snippets
+          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+
+			  end
+			},
 		},
+		opts = function(_, opts)
+		  opts.formatting = {
+		    formant = require("tailwindcss-colorizer-cmp").formatter, -- enable tailwindcss lsp highlight
+		  }
+		end,
 		config = function()
 			require("completion/init-cmp")
 		end,
 	},
+
+  -- nvim api的文档补全
+  { "folke/neodev.nvim", opts = {} },
 
 	------ lsp ------
 
@@ -61,7 +92,7 @@ return {
 	-- 				"lua_ls", -- lua
 	-- 				"tsserver", -- js, ts
 	-- 				"html", -- html
-	-- 				"cssls", -- css
+	-- 				"tailwindcss-language-server", -- css
 	-- 				"jsonls", -- json
 	-- 				"yamlls", -- yaml
 	-- 				"marksman", -- markdown
@@ -137,6 +168,11 @@ return {
 
       vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
     end
+  },
+
+  {
+    'kevinhwang91/nvim-bqf',
+    opts = {},
   },
 
   -- lint

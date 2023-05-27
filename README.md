@@ -3,36 +3,39 @@
 * [nvim](#nvim)
     * [why nvim](#why-nvim)
     * [常用命令](#常用命令)
-        * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
-        * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
-    * [配置](#配置)
-    * [tips(技巧)](#tips技巧)
-    * [Plugin](#plugin)
-        * [UI 相关](#ui-相关)
-            * [floaterm(浮动终端)](#floaterm浮动终端)
-        * [File manager(文件管理器)](#file-manager文件管理器)
-        * [Search 搜索](#search-搜索)
-        * [tags 跳转](#tags-跳转)
-        * [git](#git)
-            * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
-            * [GV show commit:](#gv-show-commit)
-            * [fugitive](#fugitive)
-            * [magit](#magit)
-        * [更强大的替换和驼峰命名 vim-abolish](#更强大的替换和驼峰命名-vim-abolish)
-            * [替换](#替换)
-            * [驼峰命名](#驼峰命名)
-        * [插入模式文本增强插件](#插入模式文本增强插件)
-            * [targets.vim 增强 normal 模式下的 <kbd>di</kbd>和 <kbd>da`](#targetsvim-增强-normal-模式下的-kbddikbd和-kbdda)
-        * [LSP](#lsp)
-        * [lspkind](#lspkind)
-        * [kite](#kite)
-        * [tabnine](#tabnine)
-        * [formatter](#formatter)
-        * [DAP](#dap)
-    * [编程语言相关的配置](#编程语言相关的配置)
-        * [部分代码运行SnipRun](#部分代码运行sniprun)
-        * [调试](#调试)
-    * [nvim with python](#nvim-with-python)
+* [打开文件](#打开文件)
+* [执行命令](#执行命令)
+* [或者:nvr指定path](#或者nvr指定path)
+* [打开文件](#打开文件-1)
+* [查看变量bufname](#查看变量bufname)
+* [输入指定字符](#输入指定字符)
+* [执行命令](#执行命令-1)
+* [查看nvim每个require的启动时间](#查看nvim每个require的启动时间)
+* [or pylsp](#or-pylsp)
+* [html,css,json,js,ts](#htmlcssjsonjsts)
+* [markdown](#markdown)
+* [rust](#rust)
+* [go](#go)
+* [java](#java)
+* [lua-language-server](#lua-language-server)
+* [手动编译(失败)](#手动编译失败)
+* [install ninja](#install-ninja)
+* [python](#python)
+* [lua](#lua)
+* [js ts json html css yaml xml](#js-ts-json-html-css-yaml-xml)
+* [nginx](#nginx)
+* [shell](#shell)
+* [c/cpp](#ccpp)
+* [go](#go-1)
+* [docker](#docker)
+* [markdwon](#markdwon)
+* [sql](#sql)
+* [使用插件floaterm, 定义终端打开后要执行的命令](#使用插件floaterm-定义终端打开后要执行的命令)
+* [按F5调试当前文件](#按f5调试当前文件)
+* [连接socket](#连接socket)
+* [打开文件](#打开文件-2)
+* [执行命令](#执行命令-2)
+* [输入](#输入)
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
 * [other vim ui](#other-vim-ui)
@@ -94,8 +97,31 @@ command! Esuse :e scp://root@192.168.100.71//
 " 查看autocmd
 :autocmd
 
+### -V参数debug
+
+- 默认
+```
 " 查看mapped key
-:verbose nmap j
+:verbose map s
+v  s             S
+        Last set from Lua
+n  s             ys
+        Last set from Lua
+```
+
+- 'nvim -V1'，显示更详细的日志
+
+```
+:verbose map s
+v  s             S
+        Last set from ~/.config/nvim/vim/_editor.lua
+n  s             ys
+        Last set from ~/.config/nvim/vim/_editor.lua
+```
+
+- 设置调试信息为20，并保存为vimlog文件
+```sh
+nvim -V20vimlog
 ```
 
 ### socket通信(需要neovim 0.7)
@@ -186,6 +212,101 @@ nvr -c terminal
 
 查找中文:
 按下 <kbd>/</kbd> 输入 `[^\x00-\xffk]`
+
+## vim.loop异步消息循环(libuv)
+
+- [Using LibUV in Neovim](https://teukka.tech/posts/2020-01-07-vimloop/)
+
+- 通过pandoc将当前buf的mardown文件，转换为html
+```lua
+local M = {}
+
+function M.convertFile()
+	-- 当前buf的文件名不包含扩展名
+	local shortname = vim.fn.expand("%:t:r")
+	-- 当前buf的文件名
+	local fullname = vim.api.nvim_buf_get_name(0)
+
+	-- 通过loop.spawn使用pandoc将mardown文件转换为html
+	handle = vim.loop.spawn("pandoc", {
+		args = {
+			fullname,
+			"--to=html5",
+			"-o",
+			string.format("%s.html", shortname),
+			"-s",
+			"--highlight-style",
+			"tango",
+			"-c",
+			"--css=pandoc.css",
+		},
+	}, function()
+		print("DOCUMENT CONVERSION COMPLETE")
+		handle:close()
+	end)
+end
+
+return M
+```
+
+- Grep
+
+```lua
+local M = {}
+local results = {}
+
+-- 处理文本的函数。读取到数据时，把数据插入到results表中
+local function onread(err, data)
+	if err then
+		print("ERROR: ", err)
+		-- TODO handle err
+	end
+	if data then
+		table.insert(results, data)
+	end
+end
+
+function M.asyncGrep(term)
+	local stdout = vim.loop.new_pipe(false)
+	local stderr = vim.loop.new_pipe(false)
+	local function setQF()
+	    -- 以 Quickfix 列表的形式展示出来
+		vim.fn.setqflist({}, "r", { title = "Search Results", lines = results })
+		vim.api.nvim_command("cwindow")
+
+		-- 清空results
+		local count = #results
+		for i = 0, count do
+			results[i] = nil
+		end
+	end
+	handle = vim.loop.spawn(
+		"rg",
+		{
+			args = { term, "--vimgrep", "--smart-case" },
+			stdio = { nil, stdout, stderr },
+		},
+		-- 回调函数
+		vim.schedule_wrap(function()
+			stdout:read_stop()
+			stderr:read_stop()
+			stdout:close()
+			stderr:close()
+			handle:close()
+			setQF()
+		end)
+	)
+	vim.loop.read_start(stdout, onread)
+	vim.loop.read_start(stderr, onread)
+end
+
+return M
+```
+
+```vim
+" 设置Grep命令
+command! -nargs=+ -complete=dir -bar Grep lua require'tools'.asyncGrep(<q-args>)
+```
 
 ## Plugin
 

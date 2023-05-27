@@ -18,7 +18,7 @@ lspconfig.pyright.setup({
 -- })
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
-lspconfig.cssls.setup({})
+lspconfig.tailwindcss.setup({}) -- css
 lspconfig.jsonls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})

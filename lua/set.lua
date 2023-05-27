@@ -12,6 +12,7 @@ vim.opt.relativenumber = true                           -- 显示相对行
 vim.opt.autochdir = true                                -- 根据当前文件，自动切换目录
 vim.opt.autoread = true                                 -- 文件发生外部改变，会自动更新，并发出提示
 vim.opt.swapfile = false                                -- 关闭swap file
+vim.opt.conceallevel = 0                                -- 关闭隐藏keyword
 
 vim.opt.scrolloff = 8         -- Number of lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8     -- Number of columns to keep at the sides of the cursor

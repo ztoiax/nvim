@@ -1,21 +1,21 @@
 return {
 	-- 主题
+	{
+		"glepnir/oceanic-material",
+		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+		priority = 1000, -- 默认为50
+		config = function()
+			vim.cmd.colorscheme("oceanic_material")
+		end,
+	},
+
 	-- {
-	-- 	"glepnir/oceanic-material",
-	-- 	lazy = false, -- make sure we load this during startup if it is your main colorscheme
-	-- 	priority = 1000, -- 默认为50
+	-- 	"AstroNvim/astrotheme",
 	-- 	config = function()
-	-- 		vim.cmd.colorscheme("oceanic_material")
+	-- 		require("astrotheme").setup({})
+	-- 		vim.cmd.colorscheme("astrotheme")
 	-- 	end,
 	-- },
-
-	{
-	    "AstroNvim/astrotheme",
-	    config = function ()
-	        require("astrotheme").setup({})
-	        vim.cmd.colorscheme "astrotheme"
-	    end
-	},
 
 	-- {
 	--     "rebelot/kanagawa.nvim",
@@ -87,7 +87,7 @@ return {
 				},
 				sections = {
 					lualine_a = {
-						"mode",
+						-- "mode",
 					},
 					lualine_b = {
 						{ "fancy_branch" },
@@ -100,7 +100,9 @@ return {
 						{ "fancy_macro" },
 						{ "fancy_diagnostics" },
 						{ "fancy_searchcount" },
+						{ "progress" },
 						{ "fancy_location" },
+						-- { "filesize" },
 					},
 					lualine_y = {
 						{ "fancy_filetype", ts_icon = "" },
@@ -298,10 +300,14 @@ return {
 
 	-- highlight color
 	{
-	  "norcalli/nvim-colorizer.lua",
-	  config = function ()
-	    require 'colorizer'.setup()
-	  end
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({
+				user_defaulat_options = {
+					tailwind = true, -- enable tailwind lsp highlight
+				},
+			})
+		end,
 	},
 
 	-- 搜索后自动取消highlight
@@ -333,12 +339,12 @@ return {
 	{
 		"camspiers/animate.vim",
 		opts = {},
-		config = function ()
+		config = function()
 			vim.keymap.set("n", "<Up>", ":call animate#window_delta_height(10)<CR>")
 			vim.keymap.set("n", "<Down>", ":call animate#window_delta_height(-10)<CR>")
 			vim.keymap.set("n", "<Left>", ":call animate#window_delta_width(10)<CR>")
 			vim.keymap.set("n", "<Right>", ":call animate#window_delta_width(-10)<CR>")
-		end
+		end,
 	},
 
 	-- 浮动窗口
@@ -381,38 +387,38 @@ return {
 	-- },
 
 	{
-		"voldikss/vim-floaterm",
-			opts = {},
-		  config = function ()
-		    vim.cmd([[
-	            hi FloatermNF guibg=#282828
-	            hi FloatermBorderNF guibg=#282828 guifg=#504945
-	            command! Ranger FloatermNew ranger
-	            command! Broot FloatermNew broot -sdpw
-	            command! Lazygit FloatermNew lazygit
-	            command! Lazydocker FloatermNew lazydocker
-	            command! Ptpython FloatermNew ptpython
-	            command! Pudb FloatermNew python -m pudb %
-	            let g:floaterm_height = 0.9
-	            let g:floaterm_width = 0.9
-	            let g:floaterm_wintype = 'normal'
-	            " autocmd FileType floaterm wincmd H
-	            let g:floaterm_autoclose = 2
-	            let g:floaterm_position = 'center'
-	            let g:floaterm_opener = 'edit'
+		"is0n/fm-nvim",
+		opts = {
+			ui = {
+				-- Default UI (can be "split" or "float")
+				default = "float",
 
-	            " 取消边框
-	            let g:floaterm_borderchars = '        '
-	            let g:floaterm_title = ''
+				float = {
+					-- Floating window border (see ':h nvim_open_win')
+					border = "none",
 
-	            nmap <Leader>tp :Ptpython<CR>
-	            nmap <Leader>tt :terminal mytop.sh<CR>
-	            nmap <Leader>fr :Ranger<CR>
-	            nmap <Leader>gg :Lazygit<CR>
-	            nmap <Leader>td :Lazydocker<CR>
-	        ]])
-		  end
-	  },
+					-- Highlight group for floating window/border (see ':h winhl')
+					float_hl = "Normal",
+					border_hl = "FloatBorder",
+
+					-- Floating Window Transparency (see ':h winblend")
+					blend = 0,
+
+					-- Num from 0 - 1 for measurements
+					height = 0.9,
+					width = 0.9,
+
+					-- X and Y Axis of Window
+					x = 0.6,
+					y = 0.6,
+				},
+			},
+		},
+		config = function()
+			vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")
+			vim.keymap.set("n", "<Leader>gg", ":Lazygit<cr>")
+		end,
+	},
 
 	-- 翻译
 	-- {
@@ -437,7 +443,7 @@ return {
 		"voldikss/vim-translator",
 		opts = {},
 		config = function()
-	  	vim.cmd([[
+			vim.cmd([[
 	       " let g:translator_history_enable = 1
 	       let g:translator_default_engines = get(g:, 'translator_default_engines', ['bing'])
 	       " let g:translator_proxy_url = ''
@@ -454,45 +460,38 @@ return {
 	       " Translate the text in clipboard
 	       nmap <silent> <C-q> <Plug>TranslateX
 	     ]])
-	  end
+		end,
 	},
 
 	-- 侧边栏
 	{
 		"stevearc/aerial.nvim",
-		opts = {
-			attach_mode = "global",
-			backends = { "lsp", "treesitter", "markdown", "man" },
-			layout = { min_width = 28 },
-			show_guides = true,
-			filter_kind = false,
-			guides = {
-				mid_item = "├ ",
-				last_item = "└ ",
-				nested_top = "│ ",
-				whitespace = "  ",
-			},
-			keymaps = {
-				["[y"] = "actions.prev",
-				["]y"] = "actions.next",
-				["[Y"] = "actions.prev_up",
-				["]Y"] = "actions.next_up",
-				["{"] = false,
-				["}"] = false,
-				["[["] = false,
-				["]]"] = false,
-			},
-		},
-		vim.keymap.set("n", "T", ":AerialToggle<cr>"),
+		config = function()
+			require("aerial").setup({
+				attach_mode = "global",
+				backends = { "lsp", "treesitter", "markdown", "man" },
+				layout = { min_width = 28 },
+				show_guides = true,
+				filter_kind = false,
+				guides = {
+					mid_item = "├ ",
+					last_item = "└ ",
+					nested_top = "│ ",
+					whitespace = "  ",
+				},
+			})
+
+			vim.keymap.set("n", "T", ":AerialToggle<cr>")
+		end,
 	},
 
 	-- registers menu
 	{
 		"tversteeg/registers.nvim",
-		config = function ()
+		config = function()
 			require("registers").setup({})
-			vim.keymap.set("n", "<leader>\"", ":Registers<cr>")
-		end
+			vim.keymap.set("n", '<leader>"', ":Registers<cr>")
+		end,
 	},
 
 	-- 多窗口下，根据当前窗口位置，自动调整窗口大小
@@ -530,7 +529,8 @@ return {
 				autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
 				max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
 			})
-
+		end,
+		init = function()
 			-- 自动加载和保存
 			vim.api.nvim_create_autocmd("VimEnter", {
 				callback = function()
@@ -597,4 +597,49 @@ return {
 			})
 		end,
 	},
+
+	-- conceal隐藏keyword
+	-- {
+	-- 	"Jxstxs/conceal.nvim",
+	-- 	opt = {},
+	-- 	config = function()
+	-- 		local conceal = require("conceal")
+	--
+	-- 		-- should be run before .generate_conceals to use user Configuration
+	-- 		conceal.setup({
+	-- 			--[[ ["language"] = {
+	--        enabled = bool,
+	--        ["keyword"] = {
+	--            enabled     = bool,
+	--            conceal     = string,
+	--            highlight   = string
+	--        }
+	--    } ]]
+	-- 			["lua"] = {
+	-- 				["local"] = {
+	-- 					enabled = false, -- to disable concealing for "local"
+	-- 				},
+	-- 				["return"] = {
+	-- 					conceal = "R", -- to set the concealing to "R"
+	-- 				},
+	-- 				["for"] = {
+	-- 					highlight = "keyword", -- to set the Highlight group to "@keyword"
+	-- 				},
+	-- 				["if"] = {
+	-- 					highlight = "keyword", -- to set the Highlight group to "@keyword"
+	-- 				},
+	-- 			},
+	-- 			["language"] = {
+	-- 				enabled = false, -- to disable the whole language
+	-- 			},
+	-- 		})
+	--
+	-- 		-- generate the scm queries
+	-- 		-- only need to be run when the Configuration changes
+	-- 		conceal.generate_conceals()
+	--
+	-- 		-- bind a <leader>tc to toggle the concealing level
+	-- 		vim.keymap.set("n", "<leader>tc", function() require("conceal").toggle_conceal() end, { silent = true })
+	-- 	end,
+	-- },
 }
