@@ -37,7 +37,7 @@ map("n", "<C-l>", ":wincmd l<CR>", { noremap = true })
 -- virtual --
 map("n", "Y", "y$")
 map("n", "y0", "v0y")
-map("n", "E", "v$h")
+-- map("n", "E", "v$h")
 map("n", "B", "vb")
 
 -- emacs --

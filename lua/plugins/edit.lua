@@ -39,62 +39,31 @@ return {
 
 	-- 单词跳转
 	{
-		"phaazon/hop.nvim",
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-			vim.keymap.set("n", "<leader>f1", ":HopChar1<cr>")
-			vim.keymap.set("n", "<leader>f2", ":HopChar2<cr>")
-			vim.keymap.set("n", "<leader>fl", ":HopLine<cr>")
-			vim.keymap.set("n", "<leader>fw", ":HopWord<cr>")
-		end,
-	},
-
-	-- 块选单词跳转
-	{
-		"mfussenegger/nvim-treehopper",
-		config = function()
-			require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
-			vim.keymap.set("o", "<leader>f", ":<C-U>lua require('tsht').nodes()<CR>")
-			vim.keymap.set("x", "<leader>f", ":lua require('tsht').nodes()<CR>")
-		end,
-	},
-
-	-- extends f
-	{
-	  'echasnovski/mini.jump',
+	  "ggandor/leap.nvim",
 	  opts = {
-      -- Module mappings. Use `''` (empty string) to disable one.
-      mappings = {
-        forward = 'f',
-        backward = 'F',
-        forward_till = 't',
-        backward_till = '\'',
-        repeat_jump = ';',
-      },
+      safe_labels = {},
+      highlight_unlabeled_phase_one_targets = true
 	  },
+	  config = function ()
+	    -- require('leap').add_default_mappings()
+      vim.keymap.set({'n', 'x', 'o'}, '<leader>o', '<Plug>(leap-forward-to)')
+      vim.keymap.set({'n', 'x', 'o'}, '<leader>O', '<Plug>(leap-backward-to)')
+	  end
 	},
-
-	-- {
-	-- 	"rhysd/clever-f.vim",
-	-- 	config = function ()
-	-- 	  vim.cmd([[
-	--        let g:clever_f_ignore_case = 1 " Ignore case (忽略大小写)
-	--        let g:clever_f_chars_match_any_signs = ';'
-	--        let g:clever_f_not_overwrites_standard_mappings = 1
-	--
-	--        nmap ; <Plug>(clever-f-repeat-forward)
-	--        nmap ' <Plug>(clever-f-repeat-back)
-	--
-	--        nmap f <Plug>(clever-f-f)
-	--        xmap f <Plug>(clever-f-f)
-	--        omap f <Plug>(clever-f-f)
-	--        nmap F <Plug>(clever-f-F)
-	--        xmap F <Plug>(clever-f-F)
-	--        omap F <Plug>(clever-f-F)
-	--     ]])
-	-- 	end
-	-- },
+	{
+	  "ggandor/flit.nvim",
+	  config = function ()
+	    require('flit').setup {
+        keys = { f = 'f', F = 'F', t = 't', T = '\\' },
+        -- A string like "nv", "nvo", "o", etc.
+        labeled_modes = "nvo",
+        multiline = true,
+        -- Like `leap`s similar argument (call-specific overrides).
+        -- E.g.: opts = { equivalence_classes = {} }
+        opts = {}
+      }
+	  end
+	},
 
 	-- 快速添加特殊符号--(<[]>)--'
 	{
@@ -111,6 +80,16 @@ return {
 	-- 替换和驼峰命名
 	"tpope/vim-abolish",
 
+  -- split, false to true, 驼峰命名
+  {
+    'ckolkey/ts-node-action',
+    dependencies = { 'nvim-treesitter' },
+    opts = {},
+    config = function ()
+      vim.keymap.set({ "n" }, "<leader><space>", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+    end
+  },
+
 	-- 可重复插件操作
 	"tpope/vim-repeat",
 
@@ -121,22 +100,6 @@ return {
       vim.keymap.set( { "n", "x" }, "<leader>ia", "<Plug>(EasyAlign)")
     end
 	},
-
-	-- toggler bool
-  {
-    "rmagatti/alternate-toggler",
-    event = { "BufReadPost" },
-    config = function()
-      require("alternate-toggler").setup {
-        alternates = {
-          ["=="] = "!=",
-          [">="] = "<=",
-        }
-      }
-
-      vim.keymap.set( "n", "<leader><space>", "<cmd>lua require('alternate-toggler').toggleAlternate()<CR>")
-    end,
-  },
 
 	-- 光标多选
 	{
@@ -173,20 +136,6 @@ return {
 
 	-- autopairs
 	{ "echasnovski/mini.pairs", event = "InsertEnter", config = true },
-
-  -- splitjoin
-  {
-    "echasnovski/mini.splitjoin",
-    config = function ()
-			require("mini.splitjoin").setup({
-        mappings = {
-          toggle = '<leader>S',
-          split = '',
-          join = '',
-        },
-			})
-    end
-  },
 
 	-- 参数位置交换
 	{

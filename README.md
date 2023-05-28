@@ -213,6 +213,22 @@ nvr -c terminal
 查找中文:
 按下 <kbd>/</kbd> 输入 `[^\x00-\xffk]`
 
+### 共享远程服务器的剪切板
+
+- [本地与SSH远程同步NVIM剪切板](https://yaocc.cc/remoteclipboard/)
+
+    - [lemonade:剪切板服务](https://github.com/lemonade-command/lemonade)
+    - server:
+        ```sh
+        # 开启服务器端口为2489
+        lemonade server
+        ssh -R 2489:127.0.0.1:2489 user@host
+        ```
+    - client:
+        ```sh
+        lemonade paste
+        ```
+
 ## vim.loop异步消息循环(libuv)
 
 - [Using LibUV in Neovim](https://teukka.tech/posts/2020-01-07-vimloop/)

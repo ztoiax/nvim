@@ -22,9 +22,6 @@ return {
       "hrsh7th/cmp-emoji",
 			"lukas-reineke/cmp-rg",
 
-			-- enable tailwindcss lsp highlight
-      { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
-
 			-- icon
 			"onsails/lspkind-nvim",
 
@@ -53,11 +50,6 @@ return {
 			  end
 			},
 		},
-		opts = function(_, opts)
-		  opts.formatting = {
-		    formant = require("tailwindcss-colorizer-cmp").formatter, -- enable tailwindcss lsp highlight
-		  }
-		end,
 		config = function()
 			require("completion/init-cmp")
 		end,
@@ -127,6 +119,7 @@ return {
 	-- 				"vale", -- text, markdown, latex
 	-- 				"sqlfluff", -- sql
 	-- 				"ansible-lint", -- ansible
+	-- 				"ruff", -- python
 	--
 	-- 				---- dap ----
 	-- 				"bash-debug-adapter", -- bash
@@ -146,29 +139,10 @@ return {
 		dependencies = { "nanotee/sqls.nvim" },
 		config = function()
 			require("code/init-lsp")
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap=true, silent=true })
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap=true, silent=true, desc = "显示函数的definition"})
 		end,
 	},
-
-  -- 显示函数的definition
-  {
-    "lewis6991/hover.nvim",
-    config = function()
-      require("hover").setup {
-        init = function()
-          -- Require providers
-          require("hover.providers.lsp")
-          -- require('hover.providers.gh')
-          -- require('hover.providers.gh_user')
-          -- require('hover.providers.jira')
-          -- require('hover.providers.man')
-          -- require('hover.providers.dictionary')
-        end,
-        title = false
-      }
-
-      vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
-    end
-  },
 
   {
     'kevinhwang91/nvim-bqf',
@@ -181,7 +155,7 @@ return {
 		config = function()
 			require("lint").linters_by_ft = {
 				bash = { "shellcheck" },
-				python = { "sonarlint" },
+				python = { "ruff" },
 				c = { "sonarlint" },
 				cpp = { "sonarlint" },
 				go = { "sonarlint" },
