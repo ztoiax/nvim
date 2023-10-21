@@ -179,7 +179,7 @@ return {
 					},
 				},
 				inactive_winbar = {},
-				extensions = { "fzf" },
+				extensions = { "man", "fzf", "symbols-outline", "lazy", "mason", "nvim-dap-ui" },
 			})
 		end,
 	},
@@ -525,7 +525,6 @@ return {
 		config = function()
 			require("aerial").setup({
 				attach_mode = "global",
-				backends = { "lsp", "treesitter", "markdown", "man" },
 				layout = { min_width = 28 },
 				show_guides = true,
 				filter_kind = false,
@@ -588,16 +587,16 @@ return {
 		end,
 		init = function()
 			-- 自动加载和保存
-			vim.api.nvim_create_autocmd("VimEnter", {
-				callback = function()
-					vim.cmd("SessionManager load_last_session")
-					-- -- Only load the session if nvim was started with no args
-					-- if vim.fn.argc(-1) == 0 then
-					-- 	-- Save these to a different directory, so our manual sessions don't get polluted
-					-- 	vim.cmd("SessionManager load_last_session")
-					-- end
-				end,
-			})
+			-- vim.api.nvim_create_autocmd("VimEnter", {
+			-- 	callback = function()
+			-- 		vim.cmd("SessionManager load_last_session")
+			-- 		-- Only load the session if nvim was started with no args
+			-- 		-- if vim.fn.argc(-1) == 0 then
+			-- 		-- 	-- Save these to a different directory, so our manual sessions don't get polluted
+			-- 		-- 	vim.cmd("SessionManager load_last_session")
+			-- 		-- end
+			-- 	end,
+			-- })
 			vim.api.nvim_create_autocmd("VimLeavePre", {
 				callback = function()
 					vim.cmd("SessionManager save_current_session")

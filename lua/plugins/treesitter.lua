@@ -9,7 +9,7 @@ return {
 				-- parser_install_dir = "/some/path/to/store/parsers", -- 安装目录
 				highlight = {
 					enable = true, -- false will disable the whole extension
-					-- disable = { "markdown" },
+					disable = { "markdown" },
 					additional_vim_regex_highlighting = false, -- highlight, 可能会变卡
 				},
 				ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages

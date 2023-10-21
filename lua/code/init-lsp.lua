@@ -18,7 +18,7 @@ lspconfig.pyright.setup({
 -- })
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
-lspconfig.tailwindcss.setup({}) -- css
+lspconfig.tailwindcss.setup({}) -- css、markdown
 lspconfig.jsonls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
@@ -35,9 +35,6 @@ lspconfig.lua_ls.setup({
     }
 })
 lspconfig.rust_analyzer.setup({})
-
--- markdown
-lspconfig.marksman.setup({})
 
 -- java
 lspconfig.jdtls.setup({})

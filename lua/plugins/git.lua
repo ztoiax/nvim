@@ -27,7 +27,7 @@ return {
 	-- diff 当前项目
 	{
 	  "sindrets/diffview.nvim",
-	  ops = {},
+	  opts = {},
 	  config = function ()
 			vim.keymap.set("n", "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", { desc = "当前文件的历史git "})
 

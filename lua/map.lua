@@ -19,6 +19,7 @@ map('n', '<Leader>p', '"0p')
 map('v', '<Leader>p', '"0p')
 map("n", "\\", ":%s//g<Left><Left>")
 map("v", "\\", ":s//g<Left><Left>")
+map("v", "<c-e>", "<c-u>")
 
 -- window --
 map("n", "<Leader>sw", ":only<CR>", { desc = "only current window" })
@@ -37,7 +38,7 @@ map("n", "<C-l>", ":wincmd l<CR>", { noremap = true })
 -- virtual --
 map("n", "Y", "y$")
 map("n", "y0", "v0y")
--- map("n", "E", "v$h")
+map("n", "E", "v$h")
 map("n", "B", "vb")
 
 -- emacs --

@@ -39,6 +39,29 @@ return {
 
 	-- 单词跳转
 	{
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        char = {
+            -- 关闭f、F按键
+            enabled = false,
+            jump_labels = true,
+            keys = { f = 'f', F = 'F', t = 't', T = 'T', },
+        },
+      },
+    },
+    keys = {
+      { "<leader>fw", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      -- treesitter块选
+      { "<leader>v", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      -- { "+", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      -- { "=", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+
+  {
 	  "ggandor/leap.nvim",
 	  opts = {
       safe_labels = {},
@@ -65,7 +88,7 @@ return {
 	  end
 	},
 
-	-- 快速添加特殊符号--(<[]>)--'
+  	-- 快速添加特殊符号--(<[]>)--'
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
@@ -155,6 +178,29 @@ return {
 			require("edit/map-syntax-tree-surfer")
 		end,
 	},
+
+	-- 块选
+  {
+      "sustech-data/wildfire.nvim",
+      event = "VeryLazy",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+          require("wildfire").setup({
+              surrounds = {
+                  { "(", ")" },
+                  { "{", "}" },
+                  { "<", ">" },
+                  { "[", "]" },
+              },
+              keymaps = {
+                  init_selection = "<CR>",
+                  node_incremental = "<CR>",
+                  node_decremental = "<BS>",
+              },
+              filetype_exclude = { "qf" }, --keymaps will be unset in excluding filetypes
+          })
+      end,
+  },
 
 	-- marks
 	-- "chentau/marks.nvim",

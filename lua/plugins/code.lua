@@ -87,7 +87,6 @@ return {
 	-- 				"tailwindcss-language-server", -- css
 	-- 				"jsonls", -- json
 	-- 				"yamlls", -- yaml
-	-- 				"marksman", -- markdown
 	-- 				"sqlls", -- sql
 	-- 				"cmake", -- cmake
 	-- 				"dockerls", -- docker
@@ -187,7 +186,12 @@ return {
 	},
 
 	-- lsp 右下角进度ui
-	{ "j-hui/fidget.nvim", config = true },
+	{
+	  "j-hui/fidget.nvim",
+    tag = "legacy",
+    event = "LspAttach",
+    config = true
+	},
 
 	-- diagnosis诊断
 	{
