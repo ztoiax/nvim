@@ -317,8 +317,23 @@ return {
 		end,
 	},
 
+	-- 搜索后自动取消highlight
+  { 'nvimdev/hlsearch.nvim', config = true },
+
 	-- highlight cursor pairs
-	"Yggdroot/hiPairs",
+  {
+    "utilyre/sentiment.nvim",
+    version = "*",
+    event = "VeryLazy", -- keep for lazy loading
+    init = function()
+      -- `matchparen.vim` needs to be disabled manually in case of lazy loading
+      vim.g.loaded_matchparen = 1
+    end,
+    config = function ()
+      require("sentiment").setup({})
+      vim.cmd([[highlight MatchParen cterm=bold ctermbg=red ctermfg=yellow guibg=#878791 guifg=#ddcfbf]])
+    end
+  },
 
 	-- highlight identline导航线
 	{
@@ -362,12 +377,21 @@ return {
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
-      require'colorizer'.setup()
+	     require'colorizer'.setup()
 		end
 	},
 
-	-- 搜索后自动取消highlight
-	"romainl/vim-cool",
+  -- 块选后搜索功能
+  {
+    "Ajnasz/nvim-rfind",
+    opts = {},
+    config = function ()
+      -- require("rfind").setup()
+      local rfind = require("rfind")
+      vim.keymap.set("x", "/", rfind.visual)
+      vim.keymap.set("n", "<F7>", rfind.visual)
+    end
+  },
 
 	-- 快速移动
 	-- {
@@ -383,16 +407,16 @@ return {
 	"psliwka/vim-smoothie",
 
 	-- 窗口动画
-	{
-		"camspiers/animate.vim",
-		opts = {},
-		config = function()
-			vim.keymap.set("n", "<Up>", ":call animate#window_delta_height(10)<CR>")
-			vim.keymap.set("n", "<Down>", ":call animate#window_delta_height(-10)<CR>")
-			vim.keymap.set("n", "<Left>", ":call animate#window_delta_width(10)<CR>")
-			vim.keymap.set("n", "<Right>", ":call animate#window_delta_width(-10)<CR>")
-		end,
-	},
+	-- {
+	-- 	"camspiers/animate.vim",
+	-- 	opts = {},
+	-- 	config = function()
+	-- 		vim.keymap.set("n", "<Up>", ":call animate#window_delta_height(10)<CR>")
+	-- 		vim.keymap.set("n", "<Down>", ":call animate#window_delta_height(-10)<CR>")
+	-- 		vim.keymap.set("n", "<Left>", ":call animate#window_delta_width(10)<CR>")
+	-- 		vim.keymap.set("n", "<Right>", ":call animate#window_delta_width(-10)<CR>")
+	-- 	end,
+	-- },
 
   -- open old file
 	{
@@ -697,4 +721,5 @@ return {
 	-- 		vim.keymap.set("n", "<leader>tc", function() require("conceal").toggle_conceal() end, { silent = true })
 	-- 	end,
 	-- },
+
 }

@@ -213,6 +213,20 @@ return {
 		end,
 	},
 
+  -- 统计当前关键字的引用次数。
+	{
+	   "roobert/action-hints.nvim",
+	   config = function()
+	     require("action-hints").setup({
+	       template = {
+	         definition = { text = " ⊛", color = "#add8e6" },
+	         references = { text = " ↱ %s", color = "#ff6666" },
+	       },
+	       use_virtual_text = true,
+	     })
+	   end,
+	 },
+
 	-- lsp menu
 	-- 'glepnir/lspsaga.nvim'
 

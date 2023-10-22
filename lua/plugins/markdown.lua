@@ -36,6 +36,15 @@ return {
     end
 	},
 
+  -- 使用ui快速插入markdown表格
+	{
+    "Myzel394/easytables.nvim",
+		ft = { "markdown" },
+    config = function ()
+      require("easytables").setup({})
+    end,
+  },
+
 	-- 表格自动对齐
 	{
 		"masukomi/vim-markdown-folding",

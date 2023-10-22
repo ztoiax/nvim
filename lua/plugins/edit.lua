@@ -44,10 +44,10 @@ return {
     opts = {
       modes = {
         char = {
-            -- 关闭f、F按键
-            enabled = false,
+            -- 是否开启f、F按键
+            enabled = true,
             jump_labels = true,
-            keys = { f = 'f', F = 'F', t = 't', T = 'T', },
+            keys = { f = 'f', F = 'F', t = 't', T = '', },
         },
       },
     },
@@ -61,33 +61,6 @@ return {
     },
   },
 
-  {
-	  "ggandor/leap.nvim",
-	  opts = {
-      safe_labels = {},
-      highlight_unlabeled_phase_one_targets = true
-	  },
-	  config = function ()
-	    -- require('leap').add_default_mappings()
-      vim.keymap.set({'n', 'x', 'o'}, '<leader>o', '<Plug>(leap-forward-to)')
-      vim.keymap.set({'n', 'x', 'o'}, '<leader>O', '<Plug>(leap-backward-to)')
-	  end
-	},
-	{
-	  "ggandor/flit.nvim",
-	  config = function ()
-	    require('flit').setup {
-        keys = { f = 'f', F = 'F', t = 't', T = '\\' },
-        -- A string like "nv", "nvo", "o", etc.
-        labeled_modes = "nvo",
-        multiline = true,
-        -- Like `leap`s similar argument (call-specific overrides).
-        -- E.g.: opts = { equivalence_classes = {} }
-        opts = {}
-      }
-	  end
-	},
-
   	-- 快速添加特殊符号--(<[]>)--'
 	{
 		"kylechui/nvim-surround",
@@ -100,18 +73,21 @@ return {
 		end,
 	},
 
+  -- 增强vi和va等操作，可以实现vi)i)、viw(a(
+  { 'echasnovski/mini.ai', version = '*', config = true },
+
 	-- 替换和驼峰命名
 	"tpope/vim-abolish",
 
   -- split, false to true, 驼峰命名
-  {
-    'ckolkey/ts-node-action',
-    dependencies = { 'nvim-treesitter' },
-    opts = {},
-    config = function ()
-      vim.keymap.set({ "n" }, "<leader><space>", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
-    end
-  },
+	 {
+	   'ckolkey/ts-node-action',
+	   dependencies = { 'nvim-treesitter' },
+	   opts = {},
+	   config = function ()
+	     vim.keymap.set({ "n" }, "<leader>e", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
+	   end
+	 },
 
 	-- 可重复插件操作
 	"tpope/vim-repeat",
@@ -119,9 +95,9 @@ return {
 	-- 多行对齐
 	{
 		"junegunn/vim-easy-align",
-    config = function ()
-      vim.keymap.set( { "n", "x" }, "<leader>ia", "<Plug>(EasyAlign)")
-    end
+	   config = function ()
+	     vim.keymap.set( { "n", "x" }, "<leader>ia", "<Plug>(EasyAlign)")
+	   end
 	},
 
 	-- 光标多选
@@ -179,6 +155,16 @@ return {
 		end,
 	},
 
+  -- 改名。没有treesitter那个好用
+  -- {
+  --   'filipdutescu/renamer.nvim',
+  --   config = function ()
+  --     require('renamer').setup({})
+  --     vim.api.nvim_set_keymap('n', '<leader>rw', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+  --     vim.api.nvim_set_keymap('v', '<leader>rw', '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+  --   end
+  -- },
+
 	-- 块选
   {
       "sustech-data/wildfire.nvim",
@@ -200,6 +186,36 @@ return {
               filetype_exclude = { "qf" }, --keymaps will be unset in excluding filetypes
           })
       end,
+  },
+
+  -- 块选后移动
+  {
+    'echasnovski/mini.move',
+    version = '*',
+    config = function()
+      require("mini.move").setup({
+        -- Module mappings. Use `''` (empty string) to disable one.
+        mappings = {
+          -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
+          left = '<M-h>',
+          right = '<M-l>',
+          down = '<M-j>',
+          up = '<M-k>',
+
+          -- Move current line in Normal mode
+          line_left = '<M-h>',
+          line_right = '<M-l>',
+          line_down = '<M-j>',
+          line_up = '<M-k>',
+        },
+
+        -- Options which control moving behavior
+        options = {
+          -- Automatically reindent selection during linewise vertical move
+          reindent_linewise = true,
+        },
+      })
+    end
   },
 
 	-- marks
@@ -234,18 +250,18 @@ return {
 	"lambdalisue/suda.vim",
 
 	-- 异步执行shell命令
-	{
-		"skywind3000/asyncrun.vim",
-		config = function ()
-
-	    vim.keymap.set("n", "<leader>ie", ":execute getline(line('.'))<cr>", { desc = "Run the current line" })
-	    vim.keymap.set("n", "<leader>el", ":execute '!'.getline('.')<cr>", { desc = "Run the current line in sh" })
-	    vim.keymap.set("n", "<leader>io", ":AsyncRun! -mode=term ")
-	    vim.keymap.set("n", "<leader>ii", ":AsyncRun! ")
-	    vim.keymap.set("n", "<leader>il", ":AsyncRun! -mode=term ")
-	    vim.keymap.set("n", "<leader>il", ":execute 'AsyncRun! -mode=term '.getline('.')<cr>", { desc = "Run the current line in terminal" })
-		end
-	},
+	-- {
+	-- 	"skywind3000/asyncrun.vim",
+	-- 	config = function ()
+	--
+	--     vim.keymap.set("n", "<leader>ie", ":execute getline(line('.'))<cr>", { desc = "Run the current line" })
+	--     vim.keymap.set("n", "<leader>el", ":execute '!'.getline('.')<cr>", { desc = "Run the current line in sh" })
+	--     vim.keymap.set("n", "<leader>io", ":AsyncRun! -mode=term ")
+	--     vim.keymap.set("n", "<leader>ii", ":AsyncRun! ")
+	--     vim.keymap.set("n", "<leader>il", ":AsyncRun! -mode=term ")
+	--     vim.keymap.set("n", "<leader>il", ":execute 'AsyncRun! -mode=term '.getline('.')<cr>", { desc = "Run the current line in terminal" })
+	-- 	end
+	-- },
 
 	-- 部分代码运行
 	{ "michaelb/sniprun", build = "bash ./install.sh" },
@@ -266,6 +282,7 @@ return {
 
 	"tami5/sqlite.lua",
 
+  -- github命令
 	{
 		"chrishrb/gx.nvim",
 		event = { "BufEnter" },
