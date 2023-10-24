@@ -337,30 +337,6 @@ return {
 
 	-- highlight identline导航线
 	{
-		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("indent_blankline").setup({
-				char = "│",
-				filetype_exclude = {
-					"help",
-					"alpha",
-					"dashboard",
-					"nvimtree",
-					"neo-tree",
-					"Trouble",
-					"lazy",
-					"mason",
-					"aerial",
-				},
-				show_trailing_blankline_indent = false,
-
-				show_current_context = false, -- 启动导轨线
-				show_current_context_start = false, -- 启用导轨下划线
-			})
-		end,
-	},
-	-- 慢速identline导航线
-	{
 		"echasnovski/mini.indentscope",
 		config = function()
 			require("mini.indentscope").setup({
@@ -403,7 +379,6 @@ return {
 	-- },
 
 	-- 移动动画
-	-- { "echasnovski/mini.animate", config = true },
 	"psliwka/vim-smoothie",
 
 	-- 窗口动画
@@ -543,7 +518,7 @@ return {
 		end,
 	},
 
-	-- 侧边栏
+	-- lsp侧边栏
 	{
 		"stevearc/aerial.nvim",
 		config = function()
@@ -563,6 +538,25 @@ return {
 			vim.keymap.set("n", "T", ":AerialToggle<cr>")
 		end,
 	},
+
+  -- 类似vscode 的minimap侧边栏
+  {
+    'echasnovski/mini.map',
+    version = '*',
+    config = function ()
+      local map = require('mini.map')
+      require('mini.map').setup({
+        -- integration
+        integrations = {
+          -- map.gen_integration.builtin_search(),
+          map.gen_integration.diagnostic(),
+          map.gen_integration.gitsigns(),
+        }
+      })
+
+			vim.keymap.set("n", "<leader>T", ":lua MiniMap.toggle()<cr>")
+    end
+  },
 
 	-- registers menu
 	{

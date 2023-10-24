@@ -1,14 +1,14 @@
 return {
 	-- 在 vim 里使用 git
-	{
-		"tpope/vim-fugitive",
-    init = function ()
-		  vim.cmd([[
-        let g:fugitive_no_maps = v:true
-      ]])
-			vim.keymap.set("n", "<leader>gd", "<Cmd>Gvdiffsplit<CR>")
-    end
-	},
+	-- {
+	-- 	"tpope/vim-fugitive",
+	--    init = function ()
+	-- 	  vim.cmd([[
+	--        let g:fugitive_no_maps = v:true
+	--      ]])
+	-- 		vim.keymap.set("n", "<leader>gd", "<Cmd>Gvdiffsplit<CR>")
+	--    end
+	-- },
 
 	-- magit
 	"jreybert/vimagit",
@@ -42,9 +42,7 @@ return {
 		      diffview_TOGGLE = 0
 	      end
       end
-      vim.keymap.set("n", "<leader>gD", "<Cmd>lua diffview_key_TOGGLE()<CR>")
-			-- vim.keymap.set("n", "<leader>gD", "<Cmd>DiffviewOpen<CR>")
-			-- vim.keymap.set("n", "<leader>gD", "<Cmd>DiffviewClose<CR>")
+      -- vim.keymap.set("n", "<leader>gD", "<Cmd>lua diffview_key_TOGGLE()<CR>")
 	  end
 	},
 

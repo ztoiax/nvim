@@ -48,6 +48,7 @@ return {
 	-- 表格自动对齐
 	{
 		"masukomi/vim-markdown-folding",
+		ft = { "markdown" },
 		opts = {},
 		config = function()
 			vim.cmd([[
@@ -68,10 +69,18 @@ return {
       ]])
 		end,
 	},
+  -- 快速编辑表格中的其中一个选项
+  {
+      'kiran94/edit-markdown-table.nvim',
+		  ft = { "markdown" },
+      config = true,
+      cmd = "EditMarkdownTable",
+  },
 
   -- 集成markmap
   {
     "Zeioth/markmap.nvim",
+		ft = { "markdown" },
     build = "yarn global add markmap-cli",
     cmd = {"MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop"},
     opts = {

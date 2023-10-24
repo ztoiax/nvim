@@ -9,7 +9,7 @@ return {
 				-- parser_install_dir = "/some/path/to/store/parsers", -- 安装目录
 				highlight = {
 					enable = true, -- false will disable the whole extension
-					disable = { "markdown" },
+					-- disable = { "markdown" },
 					additional_vim_regex_highlighting = false, -- highlight, 可能会变卡
 				},
 				ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -141,6 +141,16 @@ return {
 			require("treesitter-context").setup({ enable = true })
 		end,
 	},
+
+  -- 自动结束某些结构（if、while等）加end。支持ruby、vimscript、lua等
+  {
+    "RRethy/nvim-treesitter-endwise",
+    require('nvim-treesitter.configs').setup {
+      endwise = {
+          enable = true,
+      },
+    }
+  },
 
 	-- highlight if, else语法块
 	{

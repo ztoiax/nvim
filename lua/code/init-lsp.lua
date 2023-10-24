@@ -9,13 +9,14 @@ lspconfig.clangd.setup({
 })
 
 lspconfig.gopls.setup({})
-lspconfig.pyright.setup({
-    settings = { python = { workspaceSymbols = { enabled = true } } },
-})
--- lspconfig.pylsp.setup({
+-- lspconfig.pyright.setup({
 --     settings = { python = { workspaceSymbols = { enabled = true } } },
---     -- coq.lsp_ensure_capabilities()
 -- })
+
+lspconfig.pylsp.setup({
+    settings = { python = { workspaceSymbols = { enabled = true } } },
+    -- coq.lsp_ensure_capabilities()
+})
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
 lspconfig.tailwindcss.setup({}) -- css、markdown

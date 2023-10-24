@@ -49,6 +49,18 @@ return {
 
 			  end
 			},
+			-- vim-dadbod补全
+      {
+        "kristijanhusak/vim-dadbod-completion",
+        init = function()
+          vim.api.nvim_create_autocmd("FileType", {
+            desc = "dadbod completion",
+            group = vim.api.nvim_create_augroup("dadbod_cmp", { clear = true }),
+            pattern = { "sql", "mysql", "plsql" },
+            callback = function() require("cmp").setup.buffer { sources = { { name = "vim-dadbod-completion" } } } end,
+          })
+        end,
+      },
 		},
 		config = function()
 			require("completion/init-cmp")
@@ -76,8 +88,8 @@ return {
 	-- 				"awk_ls", -- awk
 	-- 				"bashls", -- bash
 	-- 				"clangd", -- c/cpp
-	-- 				-- "pylsp",         -- python
-	-- 				"pyright", -- python
+	-- 				"pylsp",         -- python
+	-- 				-- "pyright", -- python
 	-- 				"rust-analyzer", -- rust
 	-- 				"gopls", -- go
 	-- 				"jdtls", -- java

@@ -11,6 +11,17 @@ return {
 	-- lua库函数 如vim.keymap.set
 	"nvim-lua/plenary.nvim",
 
+  -- 一些库函数
+  {
+    'echasnovski/mini.misc',
+    version = '*',
+		init = function()
+      local misc = require("mini.misc")
+      -- 设置自动目录
+      misc.setup_auto_root()
+		end,
+  },
+
 	-- popup弹窗库函数
 	"nvim-lua/popup.nvim",
 
