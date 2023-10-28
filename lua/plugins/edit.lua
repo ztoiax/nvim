@@ -281,7 +281,7 @@ return {
       -- luasnip片段
       {
         "benfowler/telescope-luasnip.nvim",
-        config = function ()
+        init = function ()
           require('telescope').load_extension('luasnip')
           vim.keymap.set('n', '<leader>fs', require"telescope".extensions.luasnip.luasnip, {})
         end
@@ -295,11 +295,35 @@ return {
           require('telescope').load_extension('git_diffs')
           vim.keymap.set('n', '<leader>gD', require"telescope".extensions.git_diffs.diff_commits, {})
         end
-      }
+      },
+      -- 使用frecency算法对oldfiles排序，会保存一个sqlite
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        config = function()
+          require("telescope").load_extension "frecency"
+          require("telescope").setup {
+            extensions = {
+              frecency = {
+                show_scores = true,
+                show_unindexed = true,
+                max_timestamps = 10, -- 10个条目
+                ignore_patterns = { "*.git/*", "*/tmp/*" },
+                workspaces = {
+                  ["conf"]    = "~/.config",
+                },
+                -- 需要sqlite.lua 插件
+                use_sqlite = false,
+                -- db_root = vim.fn.stdpath "data", -- ~/.local/share/nvim
+              }
+            },
+
+            vim.keymap.set("n", "<leader>fm", require"telescope".extensions.frecency.frecency, {})
+          }
+        end,
+      },
 		},
 		config = function()
 			require("edit/init-telescope")
-			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 		end,
 	},
 
@@ -344,6 +368,9 @@ return {
 		end,
 	},
 
+  -- sqlite
+  "kkharji/sqlite.lua",
+
 	-- ansible
 	{
 		"pearofducks/ansible-vim",
@@ -380,7 +407,7 @@ return {
 		ft = "yaml.ansible",
 	},
 
-	-- github命令
+	-- gx命令打开网页连接
 	{
 		"chrishrb/gx.nvim",
 		event = { "BufEnter" },

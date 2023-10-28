@@ -31,7 +31,10 @@ lspconfig.lua_ls.setup({
             -- 设置vim是globals的一部分，避免warning
             diagnostics = {
                 globals = { 'vim' }
-            }
+            },
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+            -- hints = { enable = true }
         }
     }
 })

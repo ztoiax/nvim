@@ -17,8 +17,8 @@ map("n", "<space>", "`")
 map("n", "S", ":source % <CR>")
 map('n', '<Leader>p', '"0p')
 map('v', '<Leader>p', '"0p')
-map("n", "\\", ":%s//g<Left><Left>")
-map("v", "\\", ":s//g<Left><Left>")
+map("n", "\\", ':%s/\\v/g<Left><Left>') -- \v模式输入regex符号时，可以不需要额外输入'\'
+map("v", "\\", ':s/\\v/g<Left><Left>')
 map("v", "<c-e>", "<c-u>")
 
 -- window --

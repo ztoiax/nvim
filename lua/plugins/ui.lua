@@ -46,25 +46,6 @@ return {
 		end,
 	},
 
-  -- 文件管理器
-	{
-		"nvim-tree/nvim-tree.lua",
-		config = function()
-			require("nvim-tree").setup({
-				sort_by = "case_sensitive",
-				view = {
-					width = 20,
-				},
-				renderer = {
-					group_empty = true,
-				},
-				filters = {
-					dotfiles = true,
-				},
-			})
-		end,
-	},
-
   -- 增强cmdline
   {
     "gelguy/wilder.nvim",
@@ -179,7 +160,7 @@ return {
 					},
 				},
 				inactive_winbar = {},
-				extensions = { "man", "fzf", "symbols-outline", "lazy", "mason", "nvim-dap-ui" },
+				extensions = { "man", "fzf", "lazy", "mason", "nvim-dap-ui" },
 			})
 		end,
 	},

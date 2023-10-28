@@ -42,7 +42,7 @@ return {
 		      diffview_TOGGLE = 0
 	      end
       end
-      -- vim.keymap.set("n", "<leader>gD", "<Cmd>lua diffview_key_TOGGLE()<CR>")
+      vim.keymap.set("n", "<leader>gd", "<Cmd>lua diffview_key_TOGGLE()<CR>")
 	  end
 	},
 

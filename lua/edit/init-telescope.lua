@@ -31,6 +31,9 @@ require("telescope").setup({
 			"--column",
 			"--smart-case",
 			"--trim",
+			"--max-depth",
+			"3",
+			"--no-ignore"
 		},
 		-- prompt_prefix = " ",
 		prompt_prefix = "   ",
@@ -79,11 +82,14 @@ require("telescope").setup({
 		qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 		-- Developer configurations: Not meant for general override
 		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+    preview = {
+        filesize_limit = 0.1, -- MB
+    },
 	},
 	pickers = {
 		find_files = {
-			theme = "dropdown",
-			find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+			-- theme = "dropdown",
+			find_command = { "rg", "--color=never", "--files", "--hidden", "--follow", "--glob", "!**/.git/*" }
 			-- 参数不支持*，无法用
 			-- find_command = { "rg", "--color=never", "--files", "--hidden", "--follow", "-g", "'!.git'", "*" }
 		},
@@ -179,7 +185,7 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fa", builtin.builtin, {}) -- 所有builtin函数
 
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fm", builtin.oldfiles, {})
+-- vim.keymap.set("n", "<leader>fm", builtin.oldfiles, {})
 vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
 vim.keymap.set("n", "<leader>a", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
@@ -205,7 +211,7 @@ vim.keymap.set("n", "<leader>K", builtin.lsp_definitions, {})
 
 -- git
 vim.keymap.set("n", "<leader>gm", builtin.git_commits, {})
-vim.keymap.set("n", "<leader>gd", builtin.git_bcommits, {}) -- git diff
+vim.keymap.set("n", "<leader>gD", builtin.git_bcommits, {}) -- 当前文本显示不同commit版本。在当前文本未commit之前，要小心不要按保存
 vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
 
 -- 命令行
