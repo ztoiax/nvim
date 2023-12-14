@@ -6,7 +6,9 @@ map("n", "j", "gj", { desc = "Move cursor down" })
 map("n", "k", "gk", { desc = "Move cursor up" })
 
 vim.cmd([[nmap <C-e> <C-u>]])
+vim.cmd([[vmap <C-e> <C-u>]])
 -- map("n", "<C-e>", "<C-u>")
+-- map("v", "<C-e>", "<C-u>")
 
 map("n", "<Leader>w", ":w<CR>", { desc = "Save" })
 map("n", "<Leader>q", ":confirm q<CR>", { desc = "Quit" })
@@ -19,7 +21,6 @@ map('n', '<Leader>p', '"0p')
 map('v', '<Leader>p', '"0p')
 map("n", "\\", ':%s/\\v/g<Left><Left>') -- \v模式输入regex符号时，可以不需要额外输入'\'
 map("v", "\\", ':s/\\v/g<Left><Left>')
-map("v", "<c-e>", "<c-u>")
 
 -- window --
 map("n", "<Leader>sw", ":only<CR>", { desc = "only current window" })

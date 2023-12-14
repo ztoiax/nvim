@@ -25,40 +25,6 @@ end
 -- vim.cmd("autocmd InsertLeave * :lua Fcitx2en()")
 vim.api.nvim_create_autocmd("InsertLeave", { command = "lua Fcitx2en()" })
 
-local buf, win
-function open_float_window()
-	-- 创建一个buffer
-	buf = vim.api.nvim_create_buf(false, true) -- create new emtpy buffer
-
-	-- 当buffer被hidden时删除
-	vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-
-	-- get dimensions
-	local width = vim.api.nvim_get_option("columns")
-	local height = vim.api.nvim_get_option("lines")
-
-	-- calculate our floating window size
-	local win_height = math.ceil(height * 0.8 - 4)
-	local win_width = math.ceil(width * 0.8)
-
-	-- and its starting position
-	local row = math.ceil((height - win_height) / 2 - 1)
-	local col = math.ceil((width - win_width) / 2)
-
-	-- set some options
-	local opts = {
-		style = "minimal",
-		relative = "editor",
-		width = win_width,
-		height = win_height,
-		row = row,
-		col = col,
-	}
-
-	-- 打开一个窗口, 并attached刚才创建的buffer
-	win = vim.api.nvim_open_win(buf, true, opts)
-	vim.api.nvim_command("terminal")
-end
 
 -- toggle ui
 local M = {}

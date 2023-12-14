@@ -19,7 +19,8 @@ lspconfig.pylsp.setup({
 })
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
-lspconfig.tailwindcss.setup({}) -- css、markdown
+-- lspconfig.tailwindcss.setup({}) -- css
+lspconfig.marksman.setup({})
 lspconfig.jsonls.setup({})
 lspconfig.yamlls.setup({})
 lspconfig.bashls.setup({})
@@ -43,7 +44,7 @@ lspconfig.rust_analyzer.setup({})
 -- java
 lspconfig.jdtls.setup({})
 -- js and ts
--- lspconfig.eslint.setup({})
+lspconfig.eslint.setup({})
 -- go
 lspconfig.gopls.setup({
     on_attach = function(client)

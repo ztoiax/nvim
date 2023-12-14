@@ -22,6 +22,7 @@ require("lspkind").init({
         EnumMember = "",
         Constant = "",
         Struct = "",
+        Codeium = "",
     },
 })
 
@@ -39,6 +40,10 @@ end
 cmp.setup({
     formatting = {
         format = require("lspkind").cmp_format({
+            -- mode = "symbol",
+            mode = 'symbol_text',
+            maxwidth = 50,
+            ellipsis_char = '...',
             with_text = true,
             menu = {
                 buffer = "[Buffer]",
@@ -121,6 +126,7 @@ cmp.setup({
 
     -- snip
     sources = {
+        { name = "codeium" }, -- ai 补全
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         -- { name = 'vsnip' }, -- For vsnip users.

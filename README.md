@@ -3,39 +3,28 @@
 * [nvim](#nvim)
     * [why nvim](#why-nvim)
     * [常用命令](#常用命令)
-* [打开文件](#打开文件)
-* [执行命令](#执行命令)
-* [或者:nvr指定path](#或者nvr指定path)
-* [打开文件](#打开文件-1)
-* [查看变量bufname](#查看变量bufname)
-* [输入指定字符](#输入指定字符)
-* [执行命令](#执行命令-1)
-* [查看nvim每个require的启动时间](#查看nvim每个require的启动时间)
-* [or pylsp](#or-pylsp)
-* [html,css,json,js,ts](#htmlcssjsonjsts)
-* [markdown](#markdown)
-* [rust](#rust)
-* [go](#go)
-* [java](#java)
-* [lua-language-server](#lua-language-server)
-* [手动编译(失败)](#手动编译失败)
-* [install ninja](#install-ninja)
-* [python](#python)
-* [lua](#lua)
-* [js ts json html css yaml xml](#js-ts-json-html-css-yaml-xml)
-* [nginx](#nginx)
-* [shell](#shell)
-* [c/cpp](#ccpp)
-* [go](#go-1)
-* [docker](#docker)
-* [markdwon](#markdwon)
-* [sql](#sql)
-* [使用插件floaterm, 定义终端打开后要执行的命令](#使用插件floaterm-定义终端打开后要执行的命令)
-* [按F5调试当前文件](#按f5调试当前文件)
-* [连接socket](#连接socket)
-* [打开文件](#打开文件-2)
-* [执行命令](#执行命令-2)
-* [输入](#输入)
+        * [-V参数debug](#-v参数debug)
+        * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
+        * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
+    * [配置](#配置)
+    * [tips(技巧)](#tips技巧)
+        * [共享远程服务器的剪切板](#共享远程服务器的剪切板)
+    * [vim.loop异步消息循环(libuv)](#vimloop异步消息循环libuv)
+    * [Plugin](#plugin)
+        * [UI 相关](#ui-相关)
+            * [floaterm(浮动终端)](#floaterm浮动终端)
+        * [File manager(文件管理器)](#file-manager文件管理器)
+        * [Search 搜索](#search-搜索)
+        * [tags 跳转](#tags-跳转)
+        * [git](#git)
+            * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
+        * [LSP](#lsp)
+        * [formatter](#formatter)
+        * [DAP](#dap)
+    * [编程语言相关的配置](#编程语言相关的配置)
+        * [部分代码运行SnipRun](#部分代码运行sniprun)
+        * [调试](#调试)
+    * [nvim with python](#nvim-with-python)
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
 * [other vim ui](#other-vim-ui)
@@ -96,6 +85,14 @@ command! Esuse :e scp://root@192.168.100.71//
 
 " 查看autocmd
 :autocmd
+```
+
+- 加密文件
+
+```sh
+# 打开文件需要密码。第一次打开可以设置密码。只支持vim，不支持nvim
+vim -x <filename>
+```
 
 ### -V参数debug
 

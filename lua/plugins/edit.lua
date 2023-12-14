@@ -276,8 +276,6 @@ return {
 	        }
         end,
 			},
-      -- 自定义命令的menu
-      "octarect/telescope-menu.nvim",
       -- luasnip片段
       {
         "benfowler/telescope-luasnip.nvim",
@@ -321,6 +319,8 @@ return {
           }
         end,
       },
+      -- 自定义命令菜单
+      { "LinArcX/telescope-command-palette.nvim" },
 		},
 		config = function()
 			require("edit/init-telescope")

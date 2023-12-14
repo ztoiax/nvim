@@ -83,7 +83,7 @@ require("telescope").setup({
 		-- Developer configurations: Not meant for general override
 		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
     preview = {
-        filesize_limit = 0.1, -- MB
+        filesize_limit = 1, -- MB
     },
 	},
 	pickers = {
@@ -95,52 +95,6 @@ require("telescope").setup({
 		},
 	},
 })
-
--- telescope-menu设置
-local keymap = require("telescope-menu.actions").keymap
-require("telescope").setup({
-	extensions = {
-		menu = {
-			default = {
-				items = {
-					-- You can add an item of menu in the form of { "<display>", "<command>" }
-					{ "Checkhealth", "checkhealth" },
-					{ "Show LSP Info", "LspInfo" },
-					{ "Files", "Telescope find_files" },
-
-					-- The above examples are syntax-sugars of the following;
-					{ display = "Change colorscheme", value = "Telescope colorscheme" },
-
-					-- 调用其他插件
-					{ "Jump to the previous hunk", "<Plug>(GitGutterPrevHunk)", keymap },
-					{ "Jump to the next hunk", "<Plug>(GitGutterNextHunk)", keymap },
-
-					-- 多重菜单
-					{ "Editor", "Telescope menu editor" },
-				},
-			},
-			-- 多重菜单
-			editor = {
-				items = {
-					{ "Split window vertically", "vsplit" },
-					{ "Split window horizontally", "split" },
-					{ "Write", "w" },
-				},
-			},
-			filetype = {
-				lua = {
-					items = {
-						{ "Format", "!stylua %" },
-						{ "Open Luadev menu", "Luadev" },
-						{ "Execute a current buffer", "LuaRun" },
-					},
-				},
-			},
-		},
-	},
-})
-require("telescope").load_extension "menu"
-vim.keymap.set('n', '<leader>m', require"telescope".extensions.menu.menu, {})
 
 -- lazy
 require("telescope").setup({
@@ -216,3 +170,48 @@ vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
 
 -- 命令行
 vim.keymap.set("c", "<C-r>", builtin.command_history, {})
+
+-- telescope-command-palette
+require('telescope').setup({
+  extensions = {
+    command_palette = {
+      {"File",
+        { "entire selection ()", ':call feedkeys("GVgg")' },
+        { "save current file (<leader>-w)", ':w' },
+        { "quit ()", ':qa' },
+        { "search word (<leader>a)", ":lua require('telescope.builtin').live_grep()", 1 },
+        { "git files (<leader>fg)", ":lua require('telescope.builtin').git_files()", 1 },
+        { "files (<leader>ff)",     ":lua require('telescope.builtin').find_files()", 1 },
+      },
+      {"Help",
+        { "tips", ":help tips" },
+        { "cheatsheet", ":help index" },
+        { "tutorial", ":help tutor" },
+        { "summary", ":help summary" },
+        { "quick reference", ":help quickref" },
+        { "search help(F1)", ":lua require('telescope.builtin').help_tags()", 1 },
+      },
+      {"Vim",
+        { "reload vimrc", ":source $MYVIMRC" },
+        { 'check health', ":checkhealth" },
+        { "jumps (<leader>fj)", ":lua require('telescope.builtin').jumplist()" },
+        { "commands (<leader>:)", ":lua require('telescope.builtin').commands()" },
+        { "command history (<C-r>)", ":lua require('telescope.builtin').command_history()" },
+        { 'registers (<leader>f")', ":lua require('telescope.builtin').registers()" },
+        { "colorshceme (<leader>fc)", ":lua require('telescope.builtin').colorscheme()", 1 },
+        { "vim options (<leader>fv)", ":lua require('telescope.builtin').vim_options()" },
+        { "keymaps (<leader>fk)", ":lua require('telescope.builtin').keymaps()" },
+        { "buffers (<leader>fb)", ":Telescope buffers" },
+        { "search history (<leader>/)", ":lua require('telescope.builtin').search_history()" },
+        { "paste mode", ':set paste!' },
+        { 'cursor line', ':set cursorline!' },
+        { 'cursor column', ':set cursorcolumn!' },
+        { "spell checker", ':set spell!' },
+        { "relative number", ':set relativenumber!' },
+        { "search highlighting ()", ':set hlsearch!' },
+      }
+    }
+  }
+})
+
+vim.keymap.set('n', '<leader>f:', require"telescope".extensions.command_palette.command_palette, {})

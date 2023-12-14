@@ -215,9 +215,22 @@ return {
 			vim.keymap.set({ "n" }, "<leader>>>", "<Cmd>BufferLineMoveNext<CR>", kopts)
 			vim.keymap.set({ "n" }, "<leader><<", "<Cmd>BufferLineMovePrev<CR>", kopts)
 
-			vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
+			-- vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
 			-- vim.keymap.set({ "n" }, "X", "<C-^>", kopts)
 		end,
+	},
+
+	{
+    "https://github.com/famiu/bufdelete.nvim",
+		config = function ()
+		    -- 强制删除
+		    -- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+		    -- vim.cmd([[ nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr> ]])
+		    -- 不强制删除
+		    -- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+		    vim.cmd([[ nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr> ]])
+
+		end
 	},
 
 	-- 通知menu
@@ -559,50 +572,16 @@ return {
 	-- },
 
 	-- session
-	{
-		"Shatur/neovim-session-manager",
-		event = "BufWritePost",
-		cmd = "SessionManager",
-		enabled = vim.g.resession_enabled ~= true,
-		config = function()
-			local Path = require("plenary.path")
-			local config = require("session_manager.config")
-			require("session_manager").setup({
-				sessions_dir = Path:new(vim.fn.stdpath("data"), "sessions"), -- The directory where the session files will be saved.
-				session_filename_to_dir = session_filename_to_dir, -- Function that replaces symbols into separators and colons to transform filename into a session directory.
-				dir_to_session_filename = dir_to_session_filename, -- Function that replaces separators and colons into special symbols to transform session directory into a filename. Should use `vim.loop.cwd()` if the passed `dir` is `nil`.
-				autoload_mode = config.AutoloadMode.LastSession, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-				autosave_last_session = true, -- Automatically save last session on exit and on session switch.
-				autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
-				autosave_ignore_dirs = {}, -- A list of directories where the session will not be autosaved.
-				autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
-					"gitcommit",
-					"gitrebase",
-				},
-				autosave_ignore_buftypes = {}, -- All buffers of these bufer types will be closed before the session is saved.
-				autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
-				max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
-			})
-		end,
-		init = function()
-			-- 自动加载和保存
-			-- vim.api.nvim_create_autocmd("VimEnter", {
-			-- 	callback = function()
-			-- 		vim.cmd("SessionManager load_last_session")
-			-- 		-- Only load the session if nvim was started with no args
-			-- 		-- if vim.fn.argc(-1) == 0 then
-			-- 		-- 	-- Save these to a different directory, so our manual sessions don't get polluted
-			-- 		-- 	vim.cmd("SessionManager load_last_session")
-			-- 		-- end
-			-- 	end,
-			-- })
-			vim.api.nvim_create_autocmd("VimLeavePre", {
-				callback = function()
-					vim.cmd("SessionManager save_current_session")
-				end,
-			})
-		end,
-	},
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
+      options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+      pre_save = nil, -- a function to call before saving the session
+      save_empty = false, -- don't save if there are no open file buffers
+    }
+  },
 
 	-- 折叠代码
 	{
