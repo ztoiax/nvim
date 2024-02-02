@@ -470,10 +470,10 @@ pacman -S rust-analyzer
 
 # go
 sudo pacman -S gopls
-go get github.com/lighttiger2505/sqls
+go install github.com/sqls-server/sqls@latest
 
 # java
-yay -S jdtls
+paru -S jdtls
 
 # lua-language-server
 pacman -S lua-language-server
@@ -503,7 +503,8 @@ pip install autopep8
 pacman -S stylua
 
 # js ts json html css yaml xml
-pacman -S prettierd
+pacman -S prettier
+paru -S prettierd
 
 # nginx
 paru -S nginxbeautifier
@@ -589,7 +590,6 @@ nvim.input('')
 
 - [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
 
-
 - [vimcolorschemes：可以查看各种主题的配色](https://vimcolorschemes.com/)
 
 # other vim ui
@@ -609,6 +609,10 @@ nvim.input('')
 
 - [helix：内置了lsp、treesitter的类似vim的编辑器](https://github.com/helix-editor/helix)
 
+- [zed：支持Tree-sitter.类似vim的编辑器](https://github.com/zed-industries/zed)
+
 # online tool
 
 - [在线vim](https://www.vimonlineeditor.com/)
+
+- [Discover and share Neovim plugins](https://dotfyle.com/)

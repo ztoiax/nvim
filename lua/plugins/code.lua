@@ -3,13 +3,13 @@ return {
 	------ ai ------
 
   -- ai补全
-  {
-      "Exafunction/codeium.nvim",
-      config = function()
-          require("codeium").setup({
-          })
-      end
-  },
+  -- {
+  --     "Exafunction/codeium.nvim",
+  --     config = function()
+  --         require("codeium").setup({
+  --         })
+  --     end
+  -- },
 
   -- LLMs with customizable prompts
   {
@@ -79,8 +79,52 @@ return {
 			    -- 加载自定义的snippets
           require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
 
+			    -- 加载nvim-scissors插件的snippets
+          require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+
 			  end
 			},
+
+      -- 创建当前的snippets
+      {
+	      "chrisgrieser/nvim-scissors",
+	      dependencies = "nvim-telescope/telescope.nvim", -- optional
+			  config = function ()
+          require("scissors").setup {
+		        snippetDir = "~/.config/nvim/nvim-scissors",
+	          editSnippetPopup = {
+		          height = 0.4, -- relative to the window, number between 0 and 1
+		          width = 0.6,
+		          border = "rounded",
+		          keymaps = {
+			          cancel = "q",
+			          saveChanges = "<leader>w", -- alternatively, can also use `:w`
+			          goBackToSearch = "<BS>",
+			          deleteSnippet = "<C-BS>",
+			          duplicateSnippet = "<C-d>",
+			          openInFile = "<C-o>",
+			          insertNextToken = "<C-t>", -- insert & normal mode
+			          jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
+		          },
+	          },
+	          telescope = {
+		          -- By default, the query only searches snippet prefixes. Set this to
+		          -- `true` to also search the body of the snippets.
+		          alsoSearchSnippetBody = false,
+	          },
+	          -- `none` writes as a minified json file using `vim.encode.json`.
+	          -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
+	          -- you version control your snippets.
+	          jsonFormatter = "none", -- "yq"|"jq"|"none"
+          }
+
+          vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
+          -- When used in visual mode prefills the selection as body.
+          vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
+
+			  end
+      },
+
 			-- vim-dadbod补全
       {
         "kristijanhusak/vim-dadbod-completion",

@@ -1,0 +1,1 @@
+{"test":{"prefix":"test","body":["for doc in cursor:","    print(doc)"]},"test-1":{"prefix":"test","body":["for doc in cursor:","    print(doc)"]}}

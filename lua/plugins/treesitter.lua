@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
+		-- build = ":TSUpdate",
 		cmd = { "TSModuleInfo", "TSUpdate", "TSInstall", "TSBufEnable", "TSBufDisable" },
 
 		config = function()

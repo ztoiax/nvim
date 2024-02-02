@@ -103,7 +103,13 @@ return {
   },
 
   -- winbar
-  { 'Bekaboo/dropbar.nvim' },
+  {
+    'Bekaboo/dropbar.nvim',
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim'
+    }
+  },
+
 
 	-- 底部栏
 	{
@@ -396,6 +402,26 @@ return {
 		end,
 	},
 
+  -- 高亮代码块
+  -- {
+  --     "HampusHauffman/block.nvim",
+  --     config = function()
+  --         require("block").setup({
+  --           percent = 0.8,
+  --           depth = 4,
+  --           colors = nil,
+  --           -- 自动开启
+  --           automatic = true,
+  --   --      bg = nil,
+  --   --      colors = {
+  --   --          "#ff0000"
+  --   --          "#00ff00"
+  --   --          "#0000ff"
+  --   --      },
+  --     })
+  --     end
+  -- },
+
 	-- 浮动终端窗口
 	-- {
 	-- 	"akinsho/toggleterm.nvim",
@@ -572,16 +598,16 @@ return {
 	-- },
 
 	-- session
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    opts = {
-      dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-      options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-      pre_save = nil, -- a function to call before saving the session
-      save_empty = false, -- don't save if there are no open file buffers
-    }
-  },
+  -- {
+  --   "folke/persistence.nvim",
+  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  --   opts = {
+  --     dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
+  --     options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+  --     pre_save = nil, -- a function to call before saving the session
+  --     save_empty = false, -- don't save if there are no open file buffers
+  --   }
+  -- },
 
 	-- 折叠代码
 	{
