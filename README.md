@@ -16,6 +16,7 @@
         * [File manager(文件管理器)](#file-manager文件管理器)
         * [Search 搜索](#search-搜索)
         * [tags 跳转](#tags-跳转)
+        * [lib](#lib)
         * [git](#git)
             * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
         * [LSP](#lsp)
@@ -432,6 +433,13 @@ nmap <Leader>fd :<C-U><C-R>=printf("Leaderf  gtags -d %s --auto-jump", expand("<
 
 [any-jump](https://github.com/pechorin/any-jump.vim)跳转 tags
 ![avatar](./Pictures/any-jump.gif)
+
+### lib
+
+```sh
+# 安装nvim-oxi
+cargo add nvim-oxi
+```
 
 ### git
 

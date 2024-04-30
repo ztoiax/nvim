@@ -27,6 +27,9 @@ return {
 	--     end,
 	-- },
 
+  -- 运行GUI应用程序
+  -- {'altermo/nwm', branch='x11'},
+
 	-- 图标(icons)
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
 
@@ -46,70 +49,95 @@ return {
 		end,
 	},
 
-  -- 增强cmdline
-  {
-    "gelguy/wilder.nvim",
-    event = 'CmdlineEnter', -- 懒加载：首次进入cmdline时载入
-    config = function()
-      local wilder = require('wilder')
-      wilder.setup({
-        modes = { ':', '/', '?' },
-        next_key = 0, previous_key = 0, reject_key = 0, accept_key = 0
-      })
-      vim.api.nvim_command("silent! UpdateRemotePlugins") -- 需要载入一次py依赖 不然模糊过滤等失效
-      -- 设置source
-      wilder.set_option('pipeline', {
-        wilder.branch(
-          -- 当默认无输入时 展示15条历史记录
-          {
-            wilder.check(function (_, x) return vim.fn.empty(x) end),
-            wilder.history(15)
-          },
-          -- 当输入时 展示所有匹配项(模糊匹配)
-          wilder.cmdline_pipeline({
-            fuzzy = 1,
-            fuzzy_filter = wilder.vim_fuzzy_filter()
-          }),
-          -- pipeline for search
-          wilder.search_pipeline()
-        ),
-      })
-      -- 设置样式
-      wilder.set_option('renderer', wilder.popupmenu_renderer(
-        wilder.popupmenu_border_theme({
-          -- 设置特定高亮
-          highlights = {
-            accent = "WilderAccent",
-            selected_accent = "WilderSelectedAccent",
-          },
-          highlighter = wilder.basic_highlighter(),
-          left = { ' ', wilder.popupmenu_devicons() },   -- 左侧加入icon
-          right = { ' ', wilder.popupmenu_scrollbar() }, -- 右侧加入滚动条
-          border = 'rounded',
-          max_height = 17 -- 最大高度限制 因为要计算上下 所以17支持最多15个选项
-        })
-      ))
-      -- 设置高亮
-      vim.api.nvim_set_hl(0, 'WilderAccent', { fg = '#5f87ff' })
-      vim.api.nvim_set_hl(0, 'WilderSelectedAccent', { fg = '#5f87ff', bg = '#4e4e4e' })
-      -- 设置快捷键
-      vim.api.nvim_set_keymap('c', '<tab>', [[wilder#in_context() ? wilder#next() : '<tab>']],   { noremap = true, expr = true })
-      vim.api.nvim_set_keymap('c', '<c-j>', [[wilder#in_context() ? wilder#next() : '<down>']], { noremap = true, expr = true })
+	-- 增强cmdline
+	{
+		"gelguy/wilder.nvim",
+		event = "CmdlineEnter", -- 懒加载：首次进入cmdline时载入
+		config = function()
+			local wilder = require("wilder")
+			wilder.setup({
+				modes = { ":", "/", "?" },
+				next_key = 0,
+				previous_key = 0,
+				reject_key = 0,
+				accept_key = 0,
+			})
+			vim.api.nvim_command("silent! UpdateRemotePlugins") -- 需要载入一次py依赖 不然模糊过滤等失效
+			-- 设置source
+			wilder.set_option("pipeline", {
+				wilder.branch(
+					-- 当默认无输入时 展示15条历史记录
+					{
+						wilder.check(function(_, x)
+							return vim.fn.empty(x)
+						end),
+						wilder.history(15),
+					},
+					-- 当输入时 展示所有匹配项(模糊匹配)
+					wilder.cmdline_pipeline({
+						fuzzy = 1,
+						fuzzy_filter = wilder.vim_fuzzy_filter(),
+					}),
+					-- pipeline for search
+					wilder.search_pipeline()
+				),
+			})
+			-- 设置样式
+			wilder.set_option(
+				"renderer",
+				wilder.popupmenu_renderer(wilder.popupmenu_border_theme({
+					-- 设置特定高亮
+					highlights = {
+						accent = "WilderAccent",
+						selected_accent = "WilderSelectedAccent",
+					},
+					highlighter = wilder.basic_highlighter(),
+					left = { " ", wilder.popupmenu_devicons() }, -- 左侧加入icon
+					right = { " ", wilder.popupmenu_scrollbar() }, -- 右侧加入滚动条
+					border = "rounded",
+					max_height = 17, -- 最大高度限制 因为要计算上下 所以17支持最多15个选项
+				}))
+			)
+			-- 设置高亮
+			vim.api.nvim_set_hl(0, "WilderAccent", { fg = "#5f87ff" })
+			vim.api.nvim_set_hl(0, "WilderSelectedAccent", { fg = "#5f87ff", bg = "#4e4e4e" })
+			-- 设置快捷键
+			vim.api.nvim_set_keymap(
+				"c",
+				"<tab>",
+				[[wilder#in_context() ? wilder#next() : '<tab>']],
+				{ noremap = true, expr = true }
+			)
+			vim.api.nvim_set_keymap(
+				"c",
+				"<c-j>",
+				[[wilder#in_context() ? wilder#next() : '<down>']],
+				{ noremap = true, expr = true }
+			)
 
-      vim.api.nvim_set_keymap('c', '<S-tab>', [[wilder#in_context() ? wilder#previous() : '<up>']], { noremap = true, expr = true })
-      vim.api.nvim_set_keymap('c', '<c-k>', [[wilder#in_context() ? wilder#previous() : '<up>']], { noremap = true, expr = true })
-      vim.api.nvim_set_keymap('c', '0', '0', {}) -- 不清楚原因导致0无法使用 强制覆盖
-    end
-  },
+			vim.api.nvim_set_keymap(
+				"c",
+				"<S-tab>",
+				[[wilder#in_context() ? wilder#previous() : '<up>']],
+				{ noremap = true, expr = true }
+			)
+			vim.api.nvim_set_keymap(
+				"c",
+				"<c-k>",
+				[[wilder#in_context() ? wilder#previous() : '<up>']],
+				{ noremap = true, expr = true }
+			)
+			vim.api.nvim_set_keymap("c", "0", "0", {}) -- 不清楚原因导致0无法使用 强制覆盖
+		end,
+	},
 
-  -- winbar
-  {
-    'Bekaboo/dropbar.nvim',
-    dependencies = {
-      'nvim-telescope/telescope-fzf-native.nvim'
-    }
-  },
-
+	-- winbar
+	{
+		"Bekaboo/dropbar.nvim",
+		dependencies = {
+			"nvim-telescope/telescope-fzf-native.nvim",
+		},
+	},
 
 	-- 底部栏
 	{
@@ -227,16 +255,15 @@ return {
 	},
 
 	{
-    "https://github.com/famiu/bufdelete.nvim",
-		config = function ()
-		    -- 强制删除
-		    -- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-		    -- vim.cmd([[ nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr> ]])
-		    -- 不强制删除
-		    -- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-		    vim.cmd([[ nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr> ]])
-
-		end
+		"famiu/bufdelete.nvim",
+		config = function()
+			-- 强制删除
+			-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+			vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
+			-- 不强制删除
+			-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+			-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
+		end,
 	},
 
 	-- 通知menu
@@ -318,22 +345,22 @@ return {
 	},
 
 	-- 搜索后自动取消highlight
-  { 'nvimdev/hlsearch.nvim', config = true },
+	{ "nvimdev/hlsearch.nvim", config = true },
 
 	-- highlight cursor pairs
-  {
-    "utilyre/sentiment.nvim",
-    version = "*",
-    event = "VeryLazy", -- keep for lazy loading
-    init = function()
-      -- `matchparen.vim` needs to be disabled manually in case of lazy loading
-      vim.g.loaded_matchparen = 1
-    end,
-    config = function ()
-      require("sentiment").setup({})
-      vim.cmd([[highlight MatchParen cterm=bold ctermbg=red ctermfg=yellow guibg=#878791 guifg=#ddcfbf]])
-    end
-  },
+	{
+		"utilyre/sentiment.nvim",
+		version = "*",
+		event = "VeryLazy", -- keep for lazy loading
+		init = function()
+			-- `matchparen.vim` needs to be disabled manually in case of lazy loading
+			vim.g.loaded_matchparen = 1
+		end,
+		config = function()
+			require("sentiment").setup({})
+			vim.cmd([[highlight MatchParen cterm=bold ctermbg=red ctermfg=yellow guibg=#878791 guifg=#ddcfbf]])
+		end,
+	},
 
 	-- highlight identline导航线
 	{
@@ -353,21 +380,21 @@ return {
 	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
-	     require'colorizer'.setup()
-		end
+			require("colorizer").setup()
+		end,
 	},
 
-  -- 块选后搜索功能
-  {
-    "Ajnasz/nvim-rfind",
-    opts = {},
-    config = function ()
-      -- require("rfind").setup()
-      local rfind = require("rfind")
-      vim.keymap.set("x", "/", rfind.visual)
-      vim.keymap.set("n", "<F7>", rfind.visual)
-    end
-  },
+	-- 块选后搜索功能
+	{
+		"Ajnasz/nvim-rfind",
+		opts = {},
+		config = function()
+			-- require("rfind").setup()
+			local rfind = require("rfind")
+			vim.keymap.set("x", "/", rfind.visual)
+			vim.keymap.set("n", "<F7>", rfind.visual)
+		end,
+	},
 
 	-- 快速移动
 	-- {
@@ -393,34 +420,34 @@ return {
 	-- 	end,
 	-- },
 
-  -- open old file
+	-- open old file
 	{
 		"echasnovski/mini.bracketed",
 		config = function()
-      require('mini.bracketed').setup()
+			require("mini.bracketed").setup()
 			vim.keymap.set("n", "X", ":lua require('mini.bracketed').oldfile('backward')<cr>")
 		end,
 	},
 
-  -- 高亮代码块
-  -- {
-  --     "HampusHauffman/block.nvim",
-  --     config = function()
-  --         require("block").setup({
-  --           percent = 0.8,
-  --           depth = 4,
-  --           colors = nil,
-  --           -- 自动开启
-  --           automatic = true,
-  --   --      bg = nil,
-  --   --      colors = {
-  --   --          "#ff0000"
-  --   --          "#00ff00"
-  --   --          "#0000ff"
-  --   --      },
-  --     })
-  --     end
-  -- },
+	-- 高亮代码块
+	-- {
+	--     "HampusHauffman/block.nvim",
+	--     config = function()
+	--         require("block").setup({
+	--           percent = 0.8,
+	--           depth = 4,
+	--           colors = nil,
+	--           -- 自动开启
+	--           automatic = true,
+	--   --      bg = nil,
+	--   --      colors = {
+	--   --          "#ff0000"
+	--   --          "#00ff00"
+	--   --          "#0000ff"
+	--   --      },
+	--     })
+	--     end
+	-- },
 
 	-- 浮动终端窗口
 	-- {
@@ -559,24 +586,24 @@ return {
 		end,
 	},
 
-  -- 类似vscode 的minimap侧边栏
-  {
-    'echasnovski/mini.map',
-    version = '*',
-    config = function ()
-      local map = require('mini.map')
-      require('mini.map').setup({
-        -- integration
-        integrations = {
-          -- map.gen_integration.builtin_search(),
-          map.gen_integration.diagnostic(),
-          map.gen_integration.gitsigns(),
-        }
-      })
+	-- 类似vscode 的minimap侧边栏
+	{
+		"echasnovski/mini.map",
+		version = "*",
+		config = function()
+			local map = require("mini.map")
+			require("mini.map").setup({
+				-- integration
+				integrations = {
+					-- map.gen_integration.builtin_search(),
+					map.gen_integration.diagnostic(),
+					map.gen_integration.gitsigns(),
+				},
+			})
 
 			vim.keymap.set("n", "<leader>T", ":lua MiniMap.toggle()<cr>")
-    end
-  },
+		end,
+	},
 
 	-- registers menu
 	{
@@ -584,6 +611,24 @@ return {
 		config = function()
 			require("registers").setup({})
 			vim.keymap.set("n", '<leader>"', ":Registers<cr>")
+		end,
+	},
+
+	-- yank history
+	{
+		"ptdewey/yankbank-nvim",
+		config = function()
+			require("yankbank").setup({
+				max_entries = 12,
+				sep = "",
+				keymaps = {
+					navigation_next = "j",
+					navigation_prev = "k",
+				},
+				num_behavior = "prefix",
+			})
+
+      vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true })
 		end,
 	},
 
@@ -598,16 +643,16 @@ return {
 	-- },
 
 	-- session
-  -- {
-  --   "folke/persistence.nvim",
-  --   event = "BufReadPre", -- this will only start session saving when an actual file was opened
-  --   opts = {
-  --     dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-  --     options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-  --     pre_save = nil, -- a function to call before saving the session
-  --     save_empty = false, -- don't save if there are no open file buffers
-  --   }
-  -- },
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		opts = {
+			dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
+			options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+			pre_save = nil, -- a function to call before saving the session
+			save_empty = false, -- don't save if there are no open file buffers
+		},
+	},
 
 	-- 折叠代码
 	{
@@ -701,5 +746,4 @@ return {
 	-- 		vim.keymap.set("n", "<leader>tc", function() require("conceal").toggle_conceal() end, { silent = true })
 	-- 	end,
 	-- },
-
 }

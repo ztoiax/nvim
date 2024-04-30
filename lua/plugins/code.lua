@@ -54,6 +54,9 @@ return {
 			"hrsh7th/cmp-path",
 			"lukas-reineke/cmp-rg",
 
+      -- highlight completion
+      "ray-x/cmp-treesitter",
+
 			-- icon
 			"onsails/lspkind-nvim",
 

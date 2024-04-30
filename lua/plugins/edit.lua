@@ -2,37 +2,36 @@ return {
 	-- 注释
 	{ "echasnovski/mini.comment", config = true },
 
-	-- instead and replace
-	-- "brooth/far.vim",
-
-	{
-		"windwp/nvim-spectre",
+  -- toggle booleans
+  {
+    "nat-418/boole.nvim",
 		config = function()
-			require("spectre").setup({
-				mapping = {
-					-- 选择/取消
-					["toggle_line"] = {
-						map = "dd",
-						cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-						desc = "toggle current item",
-					},
-					-- 确认
-					["replace_cmd"] = {
-						map = "<cr>",
-						cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
-						desc = "input replace vim command",
-					},
-					["open"] = {
-						map = "<cr>",
-						cmd = "<cmd>lua require('spectre').open_file_search()<cr>",
-						desc = "open",
-					},
-				},
-			})
+      require('boole').setup({
+        mappings = {
+          increment = '<C-a>',
+          decrement = '<C-x>'
+        },
+        -- User defined loops
+        additions = {
+          -- {'Foo', 'Bar'},
+          -- {'tic', 'tac', 'toe'}
+        },
+        allow_caps_additions = {
+          {'enable', 'disable'}
+          -- enable → disable
+          -- Enable → Disable
+          -- ENABLE → DISABLE
+        }
+      })
+    end
+  },
 
-			vim.keymap.set("n", "<leader>\\", ":lua require('spectre').open_file_search()<cr>")
-		end,
-	},
+	-- instead and replace
+  {
+    'AckslD/muren.nvim',
+    config = true,
+		vim.keymap.set("n", "<leader>\\", ":MurenToggle<cr>")
+  },
 
 	-- enhance di da
 	"wellle/targets.vim",
@@ -47,16 +46,114 @@ return {
 					-- 是否开启f、F按键
 					enabled = true,
 					jump_labels = true,
-					keys = { f = "f", F = "F", t = "t", T = nil },
+					keys = { f = "f", F = "F", t = nil, T = nil },
 				},
 			},
 		},
 		keys = {
-			{
+      {
+				"<leader>fl",
+				mode = { "n", "x", "o" },
+				function()
+				  -- 行
+          require("flash").jump({
+            search = { mode = "search", max_length = 0 },
+            label = { after = { 0, 0 } },
+            pattern = "^"
+          })
+				end,
+				desc = "Flash",
+			},
+			-- {
+			-- 	"<leader>fw",
+			-- 	mode = { "n", "x", "o" },
+			-- 	function()
+			-- 		require("flash").jump()
+			-- 	end,
+			-- 	desc = "Flash",
+			-- },
+			-- 2个字符匹配
+      {
 				"<leader>fw",
 				mode = { "n", "x", "o" },
 				function()
-					require("flash").jump()
+          local Flash = require("flash")
+
+          ---@param opts Flash.Format
+          local function format(opts)
+            -- always show first and second label
+            return {
+              { opts.match.label1, "FlashMatch" },
+              { opts.match.label2, "FlashLabel" },
+            }
+          end
+
+          Flash.jump({
+            search = { mode = "search" },
+            label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
+            pattern = [[\<]],
+            action = function(match, state)
+              state:hide()
+              Flash.jump({
+                search = { max_length = 0 },
+                highlight = { matches = false },
+                label = { format = format },
+                matcher = function(win)
+                  -- limit matches to the current label
+                  return vim.tbl_filter(function(m)
+                    return m.label == match.label and m.win == win
+                  end, state.results)
+                end,
+                labeler = function(matches)
+                  for _, m in ipairs(matches) do
+                    m.label = m.label2 -- use the second label
+                  end
+                end,
+              })
+            end,
+            labeler = function(matches, state)
+              local labels = state:labels()
+              for m, match in ipairs(matches) do
+                match.label1 = labels[math.floor((m - 1) / #labels) + 1]
+                match.label2 = labels[(m - 1) % #labels + 1]
+                match.label = match.label1
+              end
+            end,
+          })
+				end,
+				desc = "Flash",
+			},
+      {
+				"<leader>V",
+				mode = { "n", "x", "o" },
+				function()
+				  -- 块选单词
+          require("flash").jump({
+            pattern = ".", -- initialize pattern with any char
+            search = {
+              mode = function(pattern)
+                -- remove leading dot
+                if pattern:sub(1, 1) == "." then
+                  pattern = pattern:sub(2)
+                end
+                -- return word pattern and proper skip pattern
+                return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
+              end,
+            },
+            -- select the range
+            jump = { pos = "range" },
+          })
+				end,
+				desc = "Flash",
+			},
+      {
+				"<leader>fW",
+				mode = { "n", "x", "o" },
+				function()
+				  -- 匹配当前单词
+          require("flash").jump({
+            pattern = vim.fn.expand("<cword>"),
+          })
 				end,
 				desc = "Flash",
 			},
@@ -319,7 +416,7 @@ return {
               frecency = {
                 show_scores = true,
                 show_unindexed = true,
-                max_timestamps = 10, -- 10个条目
+                max_timestamps = 30, -- 10个条目
                 ignore_patterns = { "*.git/*", "*/tmp/*" },
                 workspaces = {
                   ["conf"]    = "~/.config",
