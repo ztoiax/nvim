@@ -23,7 +23,7 @@ end
 
 -- 退出插入模式
 -- vim.cmd("autocmd InsertLeave * :lua Fcitx2en()")
-vim.api.nvim_create_autocmd("InsertLeave", { command = "lua Fcitx2en()" })
+vim.api.nvim_create_autocmd("InsertLeave", { command = "lua Fcitx2zh()" })
 
 
 -- toggle ui

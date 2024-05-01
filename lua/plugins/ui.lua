@@ -33,6 +33,9 @@ return {
 	-- 图标(icons)
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
 
+  -- 高亮块选的行。块选在执行:HSHighlight 0  数字表示颜色有0-9种
+  "Pocco81/HighStr.nvim",
+
 	-- statuscolumn左边栏
 	{
 		"luukvbaal/statuscol.nvim",
@@ -181,9 +184,11 @@ return {
 					},
 					lualine_y = {
 						{ "fancy_filetype", ts_icon = "" },
+	          { require("recorder").displaySlots },
 					},
 					lualine_z = {
 						{ "fancy_lsp_servers" },
+	          { require("recorder").recordingStatus },
 					},
 				},
 				inactive_sections = {},
@@ -256,14 +261,12 @@ return {
 
 	{
 		"famiu/bufdelete.nvim",
-		config = function()
-			-- 强制删除
-			-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-			vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
-			-- 不强制删除
-			-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-			-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
-		end,
+		-- 强制删除
+		-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+		vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
+		-- 不强制删除
+		-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+		-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
 	},
 
 	-- 通知menu
@@ -645,10 +648,12 @@ return {
 	-- session
 	{
 		"folke/persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		-- event = "BufDelete", -- this will only start session saving when an actual file was opened
+		event ="VimLeave",
 		opts = {
 			dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-			options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+			-- options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+			options = { "buffers" }, -- sessionoptions used for saving
 			pre_save = nil, -- a function to call before saving the session
 			save_empty = false, -- don't save if there are no open file buffers
 		},
