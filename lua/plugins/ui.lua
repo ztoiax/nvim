@@ -137,9 +137,9 @@ return {
 	-- winbar
 	{
 		"Bekaboo/dropbar.nvim",
-		dependencies = {
-			"nvim-telescope/telescope-fzf-native.nvim",
-		},
+		-- dependencies = {
+		-- 	"nvim-telescope/telescope-fzf-native.nvim",
+		-- },
 	},
 
 	-- 底部栏
@@ -254,20 +254,20 @@ return {
 			vim.keymap.set({ "n" }, "<leader>>>", "<Cmd>BufferLineMoveNext<CR>", kopts)
 			vim.keymap.set({ "n" }, "<leader><<", "<Cmd>BufferLineMovePrev<CR>", kopts)
 
-			-- vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
+			vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
 			-- vim.keymap.set({ "n" }, "X", "<C-^>", kopts)
 		end,
 	},
 
-	{
-		"famiu/bufdelete.nvim",
-		-- 强制删除
-		-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-		vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
-		-- 不强制删除
-		-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-		-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
-	},
+	-- {
+	-- 	"famiu/bufdelete.nvim",
+	-- 	-- 强制删除
+	-- 	-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+	-- 	vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
+	-- 	-- 不强制删除
+	-- 	-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+	-- 	-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
+	-- },
 
 	-- 通知menu
 	-- { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' },
@@ -648,8 +648,7 @@ return {
 	-- session
 	{
 		"folke/persistence.nvim",
-		-- event = "BufDelete", -- this will only start session saving when an actual file was opened
-		event ="VimLeave",
+		event = "BufDelete", -- this will only start session saving when an actual file was opened
 		opts = {
 			dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
 			-- options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving

@@ -25,6 +25,7 @@
     * [编程语言相关的配置](#编程语言相关的配置)
         * [部分代码运行SnipRun](#部分代码运行sniprun)
         * [调试](#调试)
+    * [bob：neovim版本管理器](#bobneovim版本管理器)
     * [nvim with python](#nvim-with-python)
     * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
 * [reference](#reference)
@@ -567,6 +568,20 @@ au FileType python imap  <F5> <ESC>:Pudb<CR>
 ```vim
 au FileType python nmap <F7> :!mypy %:p<CR>
 au FileType python imap <F7> <ESC>:!mypy %:p<CR>
+```
+
+## [bob：neovim版本管理器](https://github.com/MordechaiHadad/bob)
+
+```sh
+# 安装最新版neovim
+bob install nightly
+bob install 0.8.1
+
+# 查看安装的版本
+bob ls
+
+# 使用nightly版本
+bob use nightly
 ```
 
 ## nvim with python

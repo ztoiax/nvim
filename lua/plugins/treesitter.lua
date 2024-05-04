@@ -146,11 +146,13 @@ return {
   -- 自动结束某些结构（if、while等）加end。支持ruby、vimscript、lua等
   {
     "RRethy/nvim-treesitter-endwise",
-    require('nvim-treesitter.configs').setup {
-      endwise = {
-          enable = true,
-      },
-    }
+		config = function()
+      require('nvim-treesitter.configs').setup {
+        endwise = {
+            enable = true,
+        },
+      }
+		end,
   },
 
 	-- highlight if, else语法块
