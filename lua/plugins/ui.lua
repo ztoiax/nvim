@@ -34,7 +34,13 @@ return {
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
 
   -- 高亮块选的行。块选在执行:HSHighlight 0  数字表示颜色有0-9种
-  "Pocco81/HighStr.nvim",
+  {
+    "pocco81/highstr.nvim",
+    -- 高亮
+    vim.api.nvim_set_keymap( "v", "<F3>", ":<c-u>HSHighlight 1<CR>", { noremap = true, silent = true }),
+    -- 取消高亮
+    vim.api.nvim_set_keymap( "v", "<F4>", ":<c-u>HSRmHighlight<CR>", { noremap = true, silent = true })
+  },
 
 	-- statuscolumn左边栏
 	{
@@ -135,12 +141,14 @@ return {
 	},
 
 	-- winbar
-	{
-		"Bekaboo/dropbar.nvim",
-		-- dependencies = {
-		-- 	"nvim-telescope/telescope-fzf-native.nvim",
-		-- },
-	},
+  {
+    'Bekaboo/dropbar.nvim',
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim'
+    },
+		vim.keymap.set("n", "<leader><cr>", function() require('dropbar.api').pick() end, { silent = true }) -- 执行进入pick模式后，按i键可以使用fzf 搜索
+  },
 
 	-- 底部栏
 	{
@@ -184,20 +192,21 @@ return {
 					},
 					lualine_y = {
 						{ "fancy_filetype", ts_icon = "" },
-	          { require("recorder").displaySlots },
+	          -- { require("recorder").displaySlots },
 					},
 					lualine_z = {
 						{ "fancy_lsp_servers" },
-	          { require("recorder").recordingStatus },
+	          -- { require("recorder").recordingStatus },
 					},
 				},
 				inactive_sections = {},
 				tabline = {},
-				winbar = {
-					lualine_b = {
-						-- "aerial", -- 侧边栏aerial插件
-					},
-				},
+				-- 和dropbar插件有冲突
+				-- winbar = {
+				-- 	lualine_b = {
+				-- 		-- "aerial", -- 侧边栏aerial插件
+				-- 	},
+				-- },
 				inactive_winbar = {},
 				extensions = { "man", "fzf", "lazy", "mason", "nvim-dap-ui" },
 			})
@@ -254,20 +263,20 @@ return {
 			vim.keymap.set({ "n" }, "<leader>>>", "<Cmd>BufferLineMoveNext<CR>", kopts)
 			vim.keymap.set({ "n" }, "<leader><<", "<Cmd>BufferLineMovePrev<CR>", kopts)
 
-			vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
+			-- vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
 			-- vim.keymap.set({ "n" }, "X", "<C-^>", kopts)
 		end,
 	},
 
-	-- {
-	-- 	"famiu/bufdelete.nvim",
-	-- 	-- 强制删除
-	-- 	-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-	-- 	vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
-	-- 	-- 不强制删除
-	-- 	-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-	-- 	-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
-	-- },
+	{
+		"famiu/bufdelete.nvim",
+		-- 强制删除
+		-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+		vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
+		-- 不强制删除
+		-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+		-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
+	},
 
 	-- 通知menu
 	-- { "rcarriga/nvim-notify", config = 'vim.notify = require("notify")' },
@@ -518,6 +527,39 @@ return {
 					y = 0.6,
 				},
 			},
+
+	    -- Terminal commands used w/ file manager (have to be in your $PATH)
+	    cmds = {
+		    lf_cmd      = "lf", -- eg: lf_cmd = "lf -command 'set hidden'"
+		    fm_cmd      = "fm",
+		    nnn_cmd     = "nnn",
+		    fff_cmd     = "fff",
+		    twf_cmd     = "twf",
+		    fzf_cmd     = "fzf", -- eg: fzf_cmd = "fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+		    fzy_cmd     = "find . | fzy",
+		    xplr_cmd    = "xplr",
+		    vifm_cmd    = "vifm",
+		    skim_cmd    = "sk",
+		    broot_cmd   = "broot",
+		    gitui_cmd   = "gitui",
+		    ranger_cmd  = "ranger",
+		    joshuto_cmd = "joshuto",
+		    lazygit_cmd = "lazygit",
+		    neomutt_cmd = "neomutt",
+        taskwarrior_cmd = "taskwarrior-tui"
+	    },
+
+	    -- Mappings used with the plugin
+	    mappings = {
+		    vert_split = "<C-v>",
+		    horz_split = "<C-h>",
+		    tabedit    = "<C-t>",
+		    edit       = "<C-e>",
+		    ESC        = "<ESC>"
+	    },
+
+	    -- Path to broot config
+	    broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson"
 		},
 		config = function()
 			vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")

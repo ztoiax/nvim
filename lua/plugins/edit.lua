@@ -205,68 +205,23 @@ return {
 		end,
 	},
 
-  -- 表达式展开并重复多行。输入10|{%d}后执行:lua require("expand_expr").expand()
-  "AllenDang/nvim-expand-expr",
-
   -- 简化宏
   {
-	  "chrisgrieser/nvim-recorder",
-	  dependencies = "rcarriga/nvim-notify", -- optional
-		config = function()
-      require("recorder").setup {
-	      -- Named registers where macros are saved (single lowercase letters only).
-	      -- The first register is the default register used as macro-slot after
-	      -- startup.
-	      slots = { "a", "b" },
-
-	      mapping = {
-		      startStopRecording = "q",
-		      playMacro = "Q",
-		      switchSlot = "<C-q>",
-		      editMacro = "cq",
-		      deleteAllMacros = "dq",
-		      yankMacro = "yq",
-		      -- ⚠️ this should be a string you don't use in insert mode during a macro
-		      addBreakPoint = "##",
-	      },
-
-	      -- Clears all macros-slots on startup.
-	      clear = false,
-
-	      -- Log level used for any notification, mostly relevant for nvim-notify.
-	      -- (Note that by default, nvim-notify does not show the levels `trace` & `debug`.)
-	      logLevel = vim.log.levels.INFO,
-
-	      -- If enabled, only critical notifications are sent.
-	      -- If you do not use a plugin like nvim-notify, set this to `true`
-	      -- to remove otherwise annoying messages.
-	      lessNotifications = false,
-
-	      -- Use nerdfont icons in the status bar components and keymap descriptions
-	      useNerdfontIcons = true,
-
-	      -- Performance optimzations for macros with high count. When `playMacro` is
-	      -- triggered with a count higher than the threshold, nvim-recorder
-	      -- temporarily changes changes some settings for the duration of the macro.
-	      performanceOpts = {
-		      countThreshold = 100,
-		      lazyredraw = true, -- enable lazyredraw (see `:h lazyredraw`)
-		      noSystemClipboard = true, -- remove `+`/`*` from clipboard option
-		      autocmdEventsIgnore = { -- temporarily ignore these autocmd events
-			      "TextChangedI",
-			      "TextChanged",
-			      "InsertLeave",
-			      "InsertEnter",
-			      "InsertCharPre",
-		      },
-	      },
-
-	      -- [experimental] partially share keymaps with nvim-dap.
-	      -- (See README for further explanations.)
-	      dapSharedKeymaps = false,
-      }
-		end,
-
+    "chrisgrieser/nvim-recorder",
+    dependencies = "rcarriga/nvim-notify",
+    keys = {
+      -- these must match the keys in the mapping config below
+      { "q", desc = " Start Recording" },
+      { "Q", desc = " Play Recording" },
+    },
+    config = function()
+      require("recorder").setup({
+  	    mapping = {
+  		    startStopRecording = "q",
+  		    playMacro = "Q",
+  	    },
+      })
+    end,
   },
 
   -- 远程ssh文件
@@ -417,90 +372,6 @@ return {
 	-- 		require("edit/init-fzf")
 	-- 	end,
 	-- },
-
-	-- telescope
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-      "nvim-lua/popup.nvim",
-
-      -- undo tree
-			{
-				"debugloop/telescope-undo.nvim",
-				config = function()
-          require("telescope").load_extension("undo")
-          vim.keymap.set('n', '<leader>u', require("telescope").extensions.undo.undo, {})
-        end,
-			},
-			-- fzf
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-				config = function()
-          require("telescope").load_extension("fzf")
-          require("telescope").setup {
-	          extensions = {
-		          fzf = {
-			          fuzzy = true, -- false will only do exact matching
-			          override_generic_sorter = true, -- override the generic sorter
-			          override_file_sorter = true, -- override the file sorter
-			          case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-		          },
-	          },
-	        }
-        end,
-			},
-      -- luasnip片段
-      {
-        "benfowler/telescope-luasnip.nvim",
-        init = function ()
-          require('telescope').load_extension('luasnip')
-          vim.keymap.set('n', '<leader>fs', require"telescope".extensions.luasnip.luasnip, {})
-        end
-      },
-      -- lazy插件管理器
-      "tsakirist/telescope-lazy.nvim",
-      -- 支持git的diffview插件
-      {
-        "paopaol/telescope-git-diffs.nvim",
-        config = function ()
-          require('telescope').load_extension('git_diffs')
-          vim.keymap.set('n', '<leader>gD', require"telescope".extensions.git_diffs.diff_commits, {})
-        end
-      },
-      -- 使用frecency算法对oldfiles排序，会保存一个sqlite
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        config = function()
-          require("telescope").load_extension "frecency"
-          require("telescope").setup {
-            extensions = {
-              frecency = {
-                show_scores = true,
-                show_unindexed = true,
-                max_timestamps = 30, -- 10个条目
-                ignore_patterns = { "*.git/*", "*/tmp/*" },
-                workspaces = {
-                  ["conf"]    = "~/.config",
-                },
-                -- 需要sqlite.lua 插件
-                use_sqlite = false,
-                -- db_root = vim.fn.stdpath "data", -- ~/.local/share/nvim
-              }
-            },
-
-            vim.keymap.set("n", "<leader>fm", require"telescope".extensions.frecency.frecency, {})
-          }
-        end,
-      },
-      -- 自定义命令菜单
-      { "LinArcX/telescope-command-palette.nvim" },
-		},
-		config = function()
-			require("edit/init-telescope")
-		end,
-	},
 
 	-- sudo
 	"lambdalisue/suda.vim",

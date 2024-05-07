@@ -318,6 +318,19 @@ return {
 	   end,
 	 },
 
+	-- 代码快速重构
+  {
+    "ThePrimeagen/refactoring.nvim",
+    cmd = { "Refactor" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("refactoring").setup()
+    end,
+  },
+
 	-- lsp menu
 	-- 'glepnir/lspsaga.nvim'
 

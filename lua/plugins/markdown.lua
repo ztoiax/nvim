@@ -1,21 +1,36 @@
 return {
 	-- preview
-	{
-		"iamcco/markdown-preview.nvim",
-		-- call mkdp#util#install()
-		build = function() vim.fn["mkdp#util#install"]() end,
-		ft = { "markdown" },
-		opts = {},
-    config = function ()
-		  vim.cmd([[
-        let g:mkdp_auto_close = 0        " 切换buffer后不关闭预览
-        let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
-        let g:mkdp_markdown_css = ''     " 设置自定义css路径
-
-		    nmap <Leader>rr <Plug>MarkdownPreviewToggle
-		  ]])
-		end
-	},
+	-- {
+	-- 	"iamcco/markdown-preview.nvim",
+	-- 	-- call mkdp#util#install()
+	-- 	build = function() vim.fn["mkdp#util#install"]() end,
+	-- 	ft = { "markdown" },
+	-- 	opts = {},
+	--    config = function ()
+	-- 	  vim.cmd([[
+	--        let g:mkdp_auto_close = 0        " 切换buffer后不关闭预览
+	--        let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
+	--        let g:mkdp_markdown_css = ''     " 设置自定义css路径
+	--
+	-- 	    nmap <Leader>rr <Plug>MarkdownPreviewToggle
+	-- 	  ]])
+	-- 	end
+	-- },
+	-- 需要安装bun（js包管理器）。安装后进入插件目录运行bun install（安装很慢）
+  {
+    "wallpants/github-preview.nvim",
+    cmd = { "GithubPreviewToggle" },
+    keys = { "<leader>rr" },
+    opts = {
+      -- config goes here
+    },
+    config = function(_, opts)
+      require("github-preview").setup(opts)
+      vim.keymap.set("n", "<leader>rr", require("github-preview").fns.toggle)
+      vim.keymap.set("n", "<leader>rs", require("github-preview").fns.single_file_toggle)
+      vim.keymap.set("n", "<leader>mpd", require("github-preview").fns.details_tags_toggle)
+    end,
+  },
 	-- typst preview
   {
     'chomosuke/typst-preview.nvim',
