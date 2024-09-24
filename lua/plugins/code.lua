@@ -286,23 +286,10 @@ return {
 
 	-- diagnosis诊断
 	{
-    url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-			-- 启动lsp_lines
-			vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
-
-			-- 关闭默认的lsp diagnosis
-			vim.diagnostic.config({ virtual_text = false })
-
-			-- icons
-			local signs = { Error = " ", Warn = " ", Hint = " ", Info = " ", other = "﫠" }
-			for type, icon in pairs(signs) do
-				local hl = "DiagnosticSign" .. type
-				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-			end
-		end,
-	},
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    opts = true
+  },
 
   -- 统计当前关键字的引用次数。
 	{

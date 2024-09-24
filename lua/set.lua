@@ -32,6 +32,7 @@ vim.opt.signcolumn = "auto:4" -- 左边数字栏可以同时显示多个状态�
 vim.opt.showtabline = 2       -- 顶部栏
 vim.opt.showmode = false      -- 是否在底部栏显示当前状态（NORMAL, INSERT...）
 vim.opt.fillchars = { vert = "|", fold = "-", eob = " " } -- 设置 fillchars 为 vert:|, fold:-, eob:空格
+vim.diagnostic.config({ virtual_text = false }) -- 关闭默认diagnostic诊断
 
 -- tab，空格，换行
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible

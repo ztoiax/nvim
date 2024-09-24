@@ -19,7 +19,7 @@ lspconfig.pylsp.setup({
 })
 lspconfig.tsserver.setup({})
 lspconfig.html.setup({})
--- lspconfig.tailwindcss.setup({}) -- css
+lspconfig.tailwindcss.setup({}) -- css
 lspconfig.marksman.setup({})
 lspconfig.jsonls.setup({})
 lspconfig.yamlls.setup({})

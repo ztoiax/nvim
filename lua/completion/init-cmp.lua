@@ -38,21 +38,31 @@ local has_words_before = function()
 end
 
 cmp.setup({
-    formatting = {
-        format = require("lspkind").cmp_format({
-            -- mode = "symbol",
-            mode = 'symbol_text',
-            maxwidth = 50,
-            ellipsis_char = '...',
-            with_text = true,
-            menu = {
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[Lua]",
-                latex_symbols = "[Latex]",
-            },
-        }),
-    },
+  formatting = {
+    -- 配置nvim-highlight-colors插件 + lspkind插件
+    format = function(entry, item)
+      local color_item = require("nvim-highlight-colors").format(entry, { kind = item.kind })
+      item = require("lspkind").cmp_format({
+        -- any lspkind format settings here
+        -- mode = "symbol",
+        mode = 'skkymbol_text',
+        maxwidth = 50,
+        ellipsis_char = '...',
+        with_text = true,
+        menu = {
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[Latex]",
+        },
+      })(entry, item)
+      if color_item.abbr_hl_group then
+        item.kind_hl_group = color_item.abbr_hl_group
+        item.kind = color_item.abbr
+      end
+      return item
+    end
+  },
     snippet = {
         expand = function(args)
             --vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.

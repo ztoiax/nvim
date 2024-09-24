@@ -500,6 +500,15 @@ cd ../..
 ./3rd/luamake/luamake rebuild
 ```
 
+### markdown插件需要安装软件
+
+```sh
+# markdown转思维导图
+sudo npm install -g @mermaid-js/mermaid-cli
+pacman -S plantuml
+pacman -S d2
+```
+
 ### [formatter]()
 
 - [Configurations](https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md)

@@ -13,6 +13,27 @@ return {
 	-- magit
 	"jreybert/vimagit",
 
+  {
+    'SuperBo/fugit2.nvim',
+    opts = {
+      width = 80,
+    },
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'nvim-lua/plenary.nvim',
+      {
+        'chrisgrieser/nvim-tinygit', -- optional: for Github PR view
+        dependencies = { 'stevearc/dressing.nvim' }
+      },
+    },
+    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
+    keys = {
+      { '<leader>gf', mode = 'n', '<cmd>Fugit2<cr>' },
+      { '<leader>gd', mode = 'n', '<cmd>Fugit2Diff<cr>' }
+    }
+  },
+
 	-- 当前行显示commit信息
 	{
 		"f-person/git-blame.nvim",
@@ -23,28 +44,6 @@ return {
 
 	-- 显示文件变动
 	{ "lewis6991/gitsigns.nvim", config = true },
-
-	-- diff 当前项目
-	{
-	  "sindrets/diffview.nvim",
-	  opts = {},
-	  config = function ()
-			vim.keymap.set("n", "<leader>gh", "<Cmd>DiffviewFileHistory %<CR>", { desc = "当前文件的历史git "})
-
-      local diffview_TOGGLE = 0
-
-      function diffview_key_TOGGLE()
-	      if diffview_TOGGLE == 0 then
-		      vim.cmd(":DiffviewOpen")
-		      diffview_TOGGLE = 1
-	      else
-		      vim.cmd(":DiffviewClose")
-		      diffview_TOGGLE = 0
-	      end
-      end
-      vim.keymap.set("n", "<leader>gd", "<Cmd>lua diffview_key_TOGGLE()<CR>")
-	  end
-	},
 
   -- 处理git conflict
   {
@@ -62,6 +61,36 @@ return {
         },
       }
     end
+  },
+
+  -- git分支
+  {
+    'isakbm/gitgraph.nvim',
+    dependencies = { 'sindrets/diffview.nvim' },
+    ---@type I.GGConfig
+    opts = {
+      hooks = {
+        -- Check diff of a commit
+        on_select_commit = function(commit)
+          vim.notify('DiffviewOpen ' .. commit.hash .. '^!')
+          vim.cmd(':DiffviewOpen ' .. commit.hash .. '^!')
+        end,
+        -- Check diff from commit a -> commit b
+        on_select_range_commit = function(from, to)
+          vim.notify('DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+          vim.cmd(':DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+        end,
+      },
+      keys = {
+        {
+          "<leader>gl",
+          function()
+            require('gitgraph').draw({}, { all = true, max_count = 5000 })
+          end,
+          desc = "GitGraph - Draw",
+        },
+      },
+    },
   },
 
 	-- github

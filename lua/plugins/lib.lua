@@ -12,6 +12,8 @@ return {
 	"nvim-lua/plenary.nvim",
 
   -- 一些库函数
+  { 'echasnovski/mini.nvim', version = '*' },
+
   {
     'echasnovski/mini.misc',
     version = '*',
@@ -33,4 +35,7 @@ return {
 
 	-- fennel的repl
 	-- "Olical/conjure",
+
+	-- neovim lua开发提示
+	{ "folke/neodev.nvim", opts = {} },
 }

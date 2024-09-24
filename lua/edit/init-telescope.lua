@@ -15,8 +15,8 @@ require("telescope").setup({
 				["<C-k>"] = require("telescope.actions").move_selection_previous,
 				["<down>"] = actions.cycle_history_next,
 				["<up>"] = actions.cycle_history_prev,
-				["<C-p>"] = require("telescope.actions").preview_scrolling_up,
-				["<C-n>"] = require("telescope.actions").preview_scrolling_down,
+				["<A-k>"] = require("telescope.actions").preview_scrolling_up,
+				["<A-j>"] = require("telescope.actions").preview_scrolling_down,
 
 				-- [""] = actions.select_vertical, -- open selection in new vertical split
 				-- [""] = actions.select_horizontal, -- open selection in new horizantal split
@@ -96,58 +96,20 @@ require("telescope").setup({
 	},
 })
 
--- lazy
-require("telescope").setup({
-  extensions = {
-    lazy = {
-      -- Optional theme (the extension doesn't set a default theme)
-      theme = "ivy",
-      -- Whether or not to show the icon in the first column
-      show_icon = true,
-      -- Mappings for the actions
-      mappings = {
-        open_in_browser = "<C-o>",
-        open_in_file_browser = "<M-b>",
-        open_in_find_files = "<C-f>",
-        open_in_live_grep = "<C-g>",
-        open_in_terminal = "<C-t>",
-        open_plugins_picker = "<C-b>", -- Works only after having called first another action
-        open_lazy_root_find_files = "<C-r>f",
-        open_lazy_root_live_grep = "<C-r>g",
-        change_cwd_to_plugin = "<C-c>d",
-      },
-      -- Configuration that will be passed to the window that hosts the terminal
-      -- For more configuration options check 'nvim_open_win()'
-      terminal_opts = {
-        relative = "editor",
-        style = "minimal",
-        border = "rounded",
-        title = "Telescope lazy",
-        title_pos = "center",
-        -- width = 0.5,
-        -- height = 0.5,
-      },
-      -- Other telescope configuration options
-    },
-  },
-})
-require("telescope").load_extension "lazy"
-vim.keymap.set('n', '<leader>fl', require"telescope".extensions.lazy.lazy, {})
-
 -- key map
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fa", builtin.builtin, {}) -- 所有builtin函数
+-- vim.keymap.set("n", "<leader>fa", builtin.builtin, {}) -- 所有builtin函数
 
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
--- vim.keymap.set("n", "<leader>fm", builtin.oldfiles, {})
-vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
+-- vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+-- -- vim.keymap.set("n", "<leader>fm", builtin.oldfiles, {})
+-- vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
 -- vim.keymap.set("n", "<leader>a", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>a", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+-- vim.keymap.set("n", "<leader>a", require('telescope').extensions.live_grep_args.live_grep_args)
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>ft", builtin.treesitter, {})
+-- vim.keymap.set("n", "<leader>ft", builtin.treesitter, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>f/", builtin.current_buffer_fuzzy_find, {})
-vim.keymap.set("n", "<leader>f.", builtin.current_buffer_fuzzy_find, {})
+-- vim.keymap.set("n", "<leader>f/", builtin.current_buffer_fuzzy_find, {})
+-- vim.keymap.set("n", "<leader>f.", builtin.current_buffer_fuzzy_find, {})
 
 vim.keymap.set("n", "<leader>/", builtin.search_history, {})
 vim.keymap.set("n", "<leader><space>", builtin.marks, {})
@@ -160,59 +122,14 @@ vim.keymap.set("n", '<leader>f"', builtin.registers, {})
 vim.keymap.set("n", "<leader>:", builtin.commands, {})
 
 -- lsp
-vim.keymap.set("n", "<leader>ft", builtin.lsp_document_symbols, {})
+-- vim.keymap.set("n", "<leader>ft", builtin.lsp_document_symbols, {})
 vim.keymap.set("n", "<leader>J", builtin.lsp_references, {})
 vim.keymap.set("n", "<leader>K", builtin.lsp_definitions, {})
 
 -- git
-vim.keymap.set("n", "<leader>gm", builtin.git_commits, {})
-vim.keymap.set("n", "<leader>gD", builtin.git_bcommits, {}) -- 当前文本显示不同commit版本。在当前文本未commit之前，要小心不要按保存
-vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
+-- vim.keymap.set("n", "<leader>gm", builtin.git_commits, {})
+-- vim.keymap.set("n", "<leader>gD", builtin.git_bcommits, {}) -- 当前文本显示不同commit版本。在当前文本未commit之前，要小心不要按保存
+-- vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
 
 -- 命令行
 vim.keymap.set("c", "<C-r>", builtin.command_history, {})
-
--- telescope-command-palette
-require('telescope').setup({
-  extensions = {
-    command_palette = {
-      {"File",
-        { "entire selection ()", ':call feedkeys("GVgg")' },
-        { "save current file (<leader>-w)", ':w' },
-        { "quit ()", ':qa' },
-        { "search word (<leader>a)", ":lua require('telescope.builtin').live_grep()", 1 },
-        { "git files (<leader>fg)", ":lua require('telescope.builtin').git_files()", 1 },
-        { "files (<leader>ff)",     ":lua require('telescope.builtin').find_files()", 1 },
-      },
-      {"Help",
-        { "tips", ":help tips" },
-        { "cheatsheet", ":help index" },
-        { "tutorial", ":help tutor" },
-        { "summary", ":help summary" },
-        { "quick reference", ":help quickref" },
-        { "search help(F1)", ":lua require('telescope.builtin').help_tags()", 1 },
-      },
-      {"Vim",
-        { "reload vimrc", ":source $MYVIMRC" },
-        { 'check health', ":checkhealth" },
-        { "jumps (<leader>fj)", ":lua require('telescope.builtin').jumplist()" },
-        { "commands (<leader>:)", ":lua require('telescope.builtin').commands()" },
-        { "command history (<C-r>)", ":lua require('telescope.builtin').command_history()" },
-        { 'registers (<leader>f")', ":lua require('telescope.builtin').registers()" },
-        { "colorshceme (<leader>fc)", ":lua require('telescope.builtin').colorscheme()", 1 },
-        { "vim options (<leader>fv)", ":lua require('telescope.builtin').vim_options()" },
-        { "keymaps (<leader>fk)", ":lua require('telescope.builtin').keymaps()" },
-        { "buffers (<leader>fb)", ":Telescope buffers" },
-        { "search history (<leader>/)", ":lua require('telescope.builtin').search_history()" },
-        { "paste mode", ':set paste!' },
-        { 'cursor line', ':set cursorline!' },
-        { 'cursor column', ':set cursorcolumn!' },
-        { "spell checker", ':set spell!' },
-        { "relative number", ':set relativenumber!' },
-        { "search highlighting ()", ':set hlsearch!' },
-      }
-    }
-  }
-})
-
-vim.keymap.set('n', '<leader>f:', require"telescope".extensions.command_palette.command_palette, {})

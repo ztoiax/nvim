@@ -1,6 +1,11 @@
 return {
 	-- 注释
-	{ "echasnovski/mini.comment", config = true },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
+  },
 
   -- toggle booleans
   {
@@ -28,10 +33,29 @@ return {
 
 	-- instead and replace
   {
-    'AckslD/muren.nvim',
-    config = true,
-		vim.keymap.set("n", "<leader>\\", ":MurenToggle<cr>")
+	  "chrisgrieser/nvim-rip-substitute",
+	  cmd = "RipSubstitute",
+	  keys = {
+		  {
+			  "<leader>\\",
+			  function() require("rip-substitute").sub() end,
+			  mode = { "n", "x" },
+			  desc = " rip substitute",
+		  },
+	  },
   },
+
+  -- {
+  --   'MagicDuck/grug-far.nvim',
+  --   config = function()
+  --     require('grug-far').setup({
+  --
+  --       vim.keymap.set("n", "<leader>\\", ":lua require('grug-far').grug_far({ prefills = { flags = vim.fn.expand('%') } })<cr>"),
+  --       vim.keymap.set("v", "<leader>\\", ":<C-u>lua require('grug-far').with_visual_selection({ prefills = { paths = vim.fn.expand('%') } })")
+  --     });
+  --
+  --   end
+  -- },
 
 	-- enhance di da
 	"wellle/targets.vim",
@@ -51,16 +75,16 @@ return {
 			},
 		},
 		keys = {
-      {
+	     {
 				"<leader>fl",
 				mode = { "n", "x", "o" },
 				function()
 				  -- 行
-          require("flash").jump({
-            search = { mode = "search", max_length = 0 },
-            label = { after = { 0, 0 } },
-            pattern = "^"
-          })
+	         require("flash").jump({
+	           search = { mode = "search", max_length = 0 },
+	           label = { after = { 0, 0 } },
+	           pattern = "^"
+	         })
 				end,
 				desc = "Flash",
 			},
@@ -73,87 +97,87 @@ return {
 			-- 	desc = "Flash",
 			-- },
 			-- 2个字符匹配
-      {
+	     {
 				"<leader>fw",
 				mode = { "n", "x", "o" },
 				function()
-          local Flash = require("flash")
+	         local Flash = require("flash")
 
-          ---@param opts Flash.Format
-          local function format(opts)
-            -- always show first and second label
-            return {
-              { opts.match.label1, "FlashMatch" },
-              { opts.match.label2, "FlashLabel" },
-            }
-          end
+	         ---@param opts Flash.Format
+	         local function format(opts)
+	           -- always show first and second label
+	           return {
+	             { opts.match.label1, "FlashMatch" },
+	             { opts.match.label2, "FlashLabel" },
+	           }
+	         end
 
-          Flash.jump({
-            search = { mode = "search" },
-            label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
-            pattern = [[\<]],
-            action = function(match, state)
-              state:hide()
-              Flash.jump({
-                search = { max_length = 0 },
-                highlight = { matches = false },
-                label = { format = format },
-                matcher = function(win)
-                  -- limit matches to the current label
-                  return vim.tbl_filter(function(m)
-                    return m.label == match.label and m.win == win
-                  end, state.results)
-                end,
-                labeler = function(matches)
-                  for _, m in ipairs(matches) do
-                    m.label = m.label2 -- use the second label
-                  end
-                end,
-              })
-            end,
-            labeler = function(matches, state)
-              local labels = state:labels()
-              for m, match in ipairs(matches) do
-                match.label1 = labels[math.floor((m - 1) / #labels) + 1]
-                match.label2 = labels[(m - 1) % #labels + 1]
-                match.label = match.label1
-              end
-            end,
-          })
+	         Flash.jump({
+	           search = { mode = "search" },
+	           label = { after = false, before = { 0, 0 }, uppercase = false, format = format },
+	           pattern = [[\<]],
+	           action = function(match, state)
+	             state:hide()
+	             Flash.jump({
+	               search = { max_length = 0 },
+	               highlight = { matches = false },
+	               label = { format = format },
+	               matcher = function(win)
+	                 -- limit matches to the current label
+	                 return vim.tbl_filter(function(m)
+	                   return m.label == match.label and m.win == win
+	                 end, state.results)
+	               end,
+	               labeler = function(matches)
+	                 for _, m in ipairs(matches) do
+	                   m.label = m.label2 -- use the second label
+	                 end
+	               end,
+	             })
+	           end,
+	           labeler = function(matches, state)
+	             local labels = state:labels()
+	             for m, match in ipairs(matches) do
+	               match.label1 = labels[math.floor((m - 1) / #labels) + 1]
+	               match.label2 = labels[(m - 1) % #labels + 1]
+	               match.label = match.label1
+	             end
+	           end,
+	         })
 				end,
 				desc = "Flash",
 			},
-      {
-				"<leader>V",
+	     {
+				"<leader>W",
 				mode = { "n", "x", "o" },
 				function()
 				  -- 块选单词
-          require("flash").jump({
-            pattern = ".", -- initialize pattern with any char
-            search = {
-              mode = function(pattern)
-                -- remove leading dot
-                if pattern:sub(1, 1) == "." then
-                  pattern = pattern:sub(2)
-                end
-                -- return word pattern and proper skip pattern
-                return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
-              end,
-            },
-            -- select the range
-            jump = { pos = "range" },
-          })
+	         require("flash").jump({
+	           pattern = ".", -- initialize pattern with any char
+	           search = {
+	             mode = function(pattern)
+	               -- remove leading dot
+	               if pattern:sub(1, 1) == "." then
+	                 pattern = pattern:sub(2)
+	               end
+	               -- return word pattern and proper skip pattern
+	               return ([[\<%s\w*\>]]):format(pattern), ([[\<%s]]):format(pattern)
+	             end,
+	           },
+	           -- select the range
+	           jump = { pos = "range" },
+	         })
 				end,
 				desc = "Flash",
 			},
-      {
+	     {
 				"<leader>fW",
 				mode = { "n", "x", "o" },
 				function()
 				  -- 匹配当前单词
-          require("flash").jump({
-            pattern = vim.fn.expand("<cword>"),
-          })
+	         require("flash").jump({
+	           pattern = vim.fn.expand("<cword>"),
+	         })
 				end,
 				desc = "Flash",
 			},
@@ -177,10 +201,30 @@ return {
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		config = function()
-			require("nvim-surround").setup()
-
-			vim.cmd("nmap s  ys")
-			vim.cmd("vmap s  S")
+			require("nvim-surround").setup({
+        keymaps = {
+            insert = "<C-g>s",
+            insert_line = "<C-g>S",
+            normal = "s",
+            normal_cur = "yss",
+            normal_line = "yS",
+            normal_cur_line = "S",
+            visual = "s",
+            visual_line = "S",
+            delete = "ds",
+            change = "cs",
+            change_line = "cS",
+        },
+        surrounds = {
+          ["c"] = {
+              add = { "```", "```" },
+              find = function()
+                  return M.get_selection({ motion = "a```" })
+              end,
+              delete = "^(.)().-(.)()$",
+          },
+        },
+      })
 		end,
 	},
 

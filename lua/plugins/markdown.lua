@@ -1,36 +1,65 @@
 return {
+
+  -- highlight
+  -- {
+  --   'MeanderingProgrammer/markdown.nvim',
+  --   main = "render-markdown",
+  --   opts = {},
+  --   name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+  -- },
+
 	-- preview
-	-- {
-	-- 	"iamcco/markdown-preview.nvim",
-	-- 	-- call mkdp#util#install()
-	-- 	build = function() vim.fn["mkdp#util#install"]() end,
-	-- 	ft = { "markdown" },
-	-- 	opts = {},
-	--    config = function ()
-	-- 	  vim.cmd([[
-	--        let g:mkdp_auto_close = 0        " 切换buffer后不关闭预览
-	--        let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
-	--        let g:mkdp_markdown_css = ''     " 设置自定义css路径
-	--
-	-- 	    nmap <Leader>rr <Plug>MarkdownPreviewToggle
-	-- 	  ]])
-	-- 	end
-	-- },
-	-- 需要安装bun（js包管理器）。安装后进入插件目录运行bun install（安装很慢）
-  {
-    "wallpants/github-preview.nvim",
-    cmd = { "GithubPreviewToggle" },
-    keys = { "<leader>rr" },
-    opts = {
-      -- config goes here
-    },
-    config = function(_, opts)
-      require("github-preview").setup(opts)
-      vim.keymap.set("n", "<leader>rr", require("github-preview").fns.toggle)
-      vim.keymap.set("n", "<leader>rs", require("github-preview").fns.single_file_toggle)
-      vim.keymap.set("n", "<leader>mpd", require("github-preview").fns.details_tags_toggle)
-    end,
-  },
+	{
+		"iamcco/markdown-preview.nvim",
+		-- call mkdp#util#install()
+		build = function() vim.fn["mkdp#util#install"]() end,
+		ft = { "markdown" },
+		opts = {},
+	   config = function ()
+		  vim.cmd([[
+	       let g:mkdp_auto_close = 0        " 切换buffer后不关闭预览
+	       let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
+	       let g:mkdp_markdown_css = ''     " 设置自定义css路径
+
+		    nmap <Leader>rr <Plug>MarkdownPreviewToggle
+		  ]])
+		end
+	},
+
+
+  -- 完全lua写，不需要外部程序。
+  -- {
+  --   'brianhuster/live-preview.nvim',
+  --   dependencies = {'brianhuster/autosave.nvim'}, -- Not required, but recomended for autosaving
+  --   config = function ()
+  --     vim.keymap.set('n', '<Leader>rr', ':LivePreview<CR>')
+  --   end
+  -- },
+
+	-- 需要安装bun（js包管理器）。安装后进入插件目录运行bun install（安装很慢，大概300多M）
+  -- {
+  --   "wallpants/github-preview.nvim",
+  --   cmd = { "GithubPreviewToggle" },
+  --   keys = { "<leader>rr" },
+  --   opts = {
+  --     -- config goes here
+  --   },
+  --   config = function(_, opts)
+  --     require("github-preview").setup(opts)
+  --     vim.keymap.set("n", "<leader>rr", require("github-preview").fns.toggle)
+  --     vim.keymap.set("n", "<leader>rs", require("github-preview").fns.single_file_toggle)
+  --     vim.keymap.set("n", "<leader>mpd", require("github-preview").fns.details_tags_toggle)
+  --   end,
+  -- },
+
+  -- highlight markdown
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,      -- Recommended
+  --   ft = "markdown" -- If you decide to lazy-load anyway
+  -- },
+
 	-- typst preview
   {
     'chomosuke/typst-preview.nvim',
@@ -40,63 +69,66 @@ return {
   },
 
 	-- 自动生成目录
-	{
-		"mzlogin/vim-markdown-toc",
-		ft = { "markdown" },
-		opts = {},
+  {
+    "hedyhli/markdown-toc.nvim",
+    ft = "markdown",  -- Lazy load on markdown filetype
+    cmd = { "Mtoc" }, -- Or, lazy load on "Mtoc" command
     config = function ()
-		  vim.cmd([[ nmap <Leader>rd :GenTocGFM<cr> ]])
-		end
-	},
-
-	-- 快速插入markdown表格
-	{
-		"dhruvasagar/vim-table-mode",
-		ft = { "markdown" },
-    init = function ()
-      		vim.cmd([[ let g:table_mode_tableize_map = '<leader>m' ]])
+      require('mtoc').setup({})
+      vim.keymap.set('n', '<Leader>rd', ':Mtoc<CR>')
     end
-	},
-
-  -- 使用ui快速插入markdown表格
-	{
-    "Myzel394/easytables.nvim",
-		ft = { "markdown" },
-    config = function ()
-      require("easytables").setup({})
-    end,
   },
 
-	-- 表格自动对齐
-	{
-		"masukomi/vim-markdown-folding",
-		ft = { "markdown" },
-		opts = {},
-		config = function()
-			vim.cmd([[
-        function! s:isAtStartOfLine(mapping)
-            let text_before_cursor = getline('.')[0 : col('.')-1]
-            let mapping_pattern = '\V' . escape(a:mapping, '\')
-            let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-            return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-        endfunction
-
-        inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-
-        inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-      ]])
-		end,
-	},
-  -- 快速编辑表格中的其中一个选项
+	-- 快速插入markdown表格
   {
-      'kiran94/edit-markdown-table.nvim',
-		  ft = { "markdown" },
-      config = true,
-      cmd = "EditMarkdownTable",
+    'SCJangra/table-nvim',
+    ft = 'markdown',
+    opts =
+      {
+        padd_column_separators = true,   -- Insert a space around column separators.
+        mappings = {                     -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
+          next = 'tt',                -- Go to next cell.
+          prev = 'tT',              -- Go to previous cell.
+          insert_row_up = 'tK',       -- Insert a row above the current row.
+          insert_row_down = 'tJ',     -- Insert a row below the current row.
+          move_row_up = 'tk',       -- Move the current row up.
+          move_row_down = 'tj',     -- Move the current row down.
+          insert_column_left = 'tH',  -- Insert a column to the left of current column.
+          insert_column_right = 'tL', -- Insert a column to the right of current column.
+          move_column_left = 'th',  -- Move the current column to the left.
+          move_column_right = 'tl', -- Move the current column to the right.
+          insert_table = 'ti',        -- Insert a new table.
+          insert_table_alt = 'tI',  -- Insert a new table that is not surrounded by pipes.
+          delete_column = 'dt',       -- Delete the column under cursor.
+        }
+      }
+  },
+
+  -- 显示思维导图。支持mermai、d2、d2
+  {
+    "3rd/diagram.nvim",
+    dependencies = {
+      "3rd/image.nvim",
+    },
+    config = function ()
+      require("diagram").setup({
+        integrations = {
+          require("diagram.integrations.markdown"),
+          require("diagram.integrations.neorg"),
+        },
+        renderer_options = {
+          mermaid = {
+            theme = "forest",
+          },
+          plantuml = {
+            charset = "utf-8",
+          },
+          d2 = {
+            theme_id = 1,
+          },
+        },
+      })
+    end
   },
 
   -- 集成markmap

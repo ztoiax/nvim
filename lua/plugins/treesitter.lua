@@ -10,7 +10,7 @@ return {
 				highlight = {
 					enable = true, -- false will disable the whole extension
 					-- markdown大文件，输入模式会卡
-					disable = { "markdown" },
+					-- disable = { "markdown" },
 					additional_vim_regex_highlighting = false, -- highlight, 可能会变卡
 				},
 				ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -121,18 +121,35 @@ return {
 	},
 
 	-- 彩虹括号
-	{
-		"p00f/nvim-ts-rainbow",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				-- 彩虹括号
-				rainbow = {
-					enable = true,
-					extended_mode = true,
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"p00f/nvim-ts-rainbow",
+	-- 	config = function()
+	-- 		require("nvim-treesitter.configs").setup({
+	-- 			-- 彩虹括号
+	-- 			rainbow = {
+	-- 				enable = true,
+	-- 				extended_mode = true,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+
+  {
+    "hiphish/rainbow-delimiters.nvim",
+    config = function ()
+      require('rainbow-delimiters.setup').setup {
+        strategy = {
+          -- ...
+        },
+        query = {
+          -- ...
+        },
+        highlight = {
+          -- ...
+        },
+      }
+    end
+  },
 
 	-- 移动时显示函数上下文
 	{

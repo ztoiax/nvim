@@ -192,11 +192,11 @@ return {
 					},
 					lualine_y = {
 						{ "fancy_filetype", ts_icon = "" },
-	          -- { require("recorder").displaySlots },
+	          { require("recorder").displaySlots },
 					},
 					lualine_z = {
 						{ "fancy_lsp_servers" },
-	          -- { require("recorder").recordingStatus },
+	          { require("recorder").recordingStatus },
 					},
 				},
 				inactive_sections = {},
@@ -329,6 +329,12 @@ return {
 	--     end
 	-- },
 
+  {
+    'echasnovski/mini.notify',
+    version = '*',
+    opts = {}
+  },
+
 	-- highlight / * #
 	{
 		"kevinhwang91/nvim-hlslens",
@@ -388,13 +394,13 @@ return {
 		end,
 	},
 
-	-- highlight color
-	{
-		"norcalli/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup()
-		end,
-	},
+  -- highlight color
+  {
+    "brenoprata10/nvim-highlight-colors",
+    config = function ()
+      require('nvim-highlight-colors').setup({})
+    end
+  },
 
 	-- 块选后搜索功能
 	{
@@ -539,6 +545,7 @@ return {
 		    fzy_cmd     = "find . | fzy",
 		    xplr_cmd    = "xplr",
 		    vifm_cmd    = "vifm",
+		    yazi_cmd    = "yazi",
 		    skim_cmd    = "sk",
 		    broot_cmd   = "broot",
 		    gitui_cmd   = "gitui",
@@ -562,10 +569,18 @@ return {
 	    broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson"
 		},
 		config = function()
+			-- vim.keymap.set("n", "<Leader>fr", ":Yazi<cr>")
 			vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")
 			vim.keymap.set("n", "<Leader>gg", ":Lazygit<cr>")
 		end,
 	},
+
+  -- 类似ranger的文件管理器
+  -- {
+  --   'simonmclean/triptych.nvim',
+  --   event = 'VeryLazy',
+  --   opts = {},
+  -- },
 
 	-- 翻译
 	-- {
@@ -688,17 +703,40 @@ return {
 	-- },
 
 	-- session
-	{
-		"folke/persistence.nvim",
-		event = "BufDelete", -- this will only start session saving when an actual file was opened
-		opts = {
-			dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-			-- options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-			options = { "buffers" }, -- sessionoptions used for saving
-			pre_save = nil, -- a function to call before saving the session
-			save_empty = false, -- don't save if there are no open file buffers
-		},
-	},
+	-- {
+	-- 	"folke/persistence.nvim",
+	-- 	event = "BufDelete", -- this will only start session saving when an actual file was opened
+	-- 	opts = {
+	-- 		dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
+	-- 		-- options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+	-- 		options = { "buffers" }, -- sessionoptions used for saving
+	-- 		pre_save = nil, -- a function to call before saving the session
+	-- 		save_empty = false, -- don't save if there are no open file buffers
+	-- 	},
+	-- },
+
+  {
+      "gennaro-tedesco/nvim-possession",
+      dependencies = {
+          "ibhagwan/fzf-lua",
+      },
+      config = true,
+      init = function()
+          local possession = require("nvim-possession")
+          vim.keymap.set("n", "<leader>ss", function()
+              possession.list()
+          end)
+          vim.keymap.set("n", "<leader>sn", function()
+              possession.new()
+          end)
+          vim.keymap.set("n", "<leader>su", function()
+              possession.update()
+          end)
+          vim.keymap.set("n", "<leader>sd", function()
+              possession.delete()
+          end)
+      end,
+  },
 
 	-- 折叠代码
 	{
