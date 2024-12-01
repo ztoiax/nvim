@@ -73,6 +73,18 @@ map("c", "<C-e>", "<End>")
 map("c", "<C-d>", "<Del>")
 map("c", "<C-h>", "<BS>")
 
+-- 清除行尾多余空格的函数
+local function trim_trailing_whitespace()
+    -- 保存光标位置
+    local save_cursor = vim.fn.getpos(".")
+    -- 清除多余空格
+    vim.cmd([[%s/\s\+$//e]])
+    -- 恢复光标位置
+    vim.fn.setpos(".", save_cursor)
+end
+-- 绑定到 <F7> 键
+vim.api.nvim_set_keymap('n', '<F7>', ':lua trim_trailing_whitespace()<CR>', { noremap = true, silent = true })
+
 -- toggle ui
 local Util = require("function")
 map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })

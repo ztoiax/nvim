@@ -10,6 +10,15 @@ require("formatter").setup({
 				}
 			end,
 		},
+		toml = {
+			function()
+				return {
+					exe = "taplo",
+					args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--double-quote" },
+					stdin = true,
+				}
+			end,
+		},
 		python = {
 			function()
 				return {

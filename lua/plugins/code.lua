@@ -15,7 +15,7 @@ return {
   {
       "David-Kunz/gen.nvim",
       opts = {
-          model = "mistral", -- The default model to use.
+          model = "gemma2:2b", -- The default model to use.
           display_mode = "float", -- The display mode. Can be "float" or "split".
           show_prompt = false, -- Shows the Prompt submitted to Ollama.
           show_model = false, -- Displays which model you are using at the beginning of your chat session.
@@ -29,7 +29,10 @@ return {
           -- (context property is optional).
           list_models = '<function>', -- Retrieves a list of model names
           debug = false -- Prints errors and the command which is run.
-      }
+      },
+    config = function ()
+      vim.keymap.set({ 'n', 'v' }, '<leader>o', ':Gen<CR>')
+    end
   },
 
 	------ completion ------
@@ -45,109 +48,262 @@ return {
 	-- },
 
 	-- cmp
-	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"lukas-reineke/cmp-rg",
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	dependencies = {
+	-- 		"hrsh7th/cmp-nvim-lsp",
+	-- 		"hrsh7th/cmp-nvim-lua",
+	-- 		"hrsh7th/cmp-buffer",
+	-- 		"hrsh7th/cmp-path",
+	-- 		"lukas-reineke/cmp-rg",
+	--
+	--      -- highlight completion
+	--      "ray-x/cmp-treesitter",
+	--
+	-- 		-- icon
+	-- 		"onsails/lspkind-nvim",
+	--
+	-- 		-- luasnip
+	-- 		"saadparwaiz1/cmp_luasnip",
+	-- 		{
+	-- 		  "L3MON4D3/LuaSnip",
+	--       -- follow latest release.
+	--       version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	--       -- install jsregexp (optional!).
+	--       build = "make install_jsregexp",
+	--       config = function ()
+	-- 		    require("lua-snip")
+	--       end
+	-- 		},
+	-- 		{
+	-- 		  "rafamadriz/friendly-snippets",
+	-- 		  config = function ()
+	--          -- 加载friendly-snippets
+	--          local dir = vim.fn.stdpath("data") .. "/lazy" .. "/friendly-snippets"
+	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
+	--
+	-- 		    -- 加载自定义的snippets
+	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+	--
+	-- 		    -- 加载nvim-scissors插件的snippets
+	--          require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+	--
+	-- 		  end
+	-- 		},
+	--
+	--      -- 创建当前的snippets
+	--      {
+	--       "chrisgrieser/nvim-scissors",
+	--       dependencies = "nvim-telescope/telescope.nvim", -- optional
+	-- 		  config = function ()
+	--          require("scissors").setup {
+	-- 	        snippetDir = "~/.config/nvim/nvim-scissors",
+	--           editSnippetPopup = {
+	-- 	          height = 0.4, -- relative to the window, number between 0 and 1
+	-- 	          width = 0.6,
+	-- 	          border = "rounded",
+	-- 	          keymaps = {
+	-- 		          cancel = "q",
+	-- 		          saveChanges = "<leader>w", -- alternatively, can also use `:w`
+	-- 		          goBackToSearch = "<BS>",
+	-- 		          deleteSnippet = "<C-BS>",
+	-- 		          duplicateSnippet = "<C-d>",
+	-- 		          openInFile = "<C-o>",
+	-- 		          insertNextToken = "<C-t>", -- insert & normal mode
+	-- 		          jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
+	-- 	          },
+	--           },
+	--           telescope = {
+	-- 	          -- By default, the query only searches snippet prefixes. Set this to
+	-- 	          -- `true` to also search the body of the snippets.
+	-- 	          alsoSearchSnippetBody = false,
+	--           },
+	--           -- `none` writes as a minified json file using `vim.encode.json`.
+	--           -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
+	--           -- you version control your snippets.
+	--           jsonFormatter = "none", -- "yq"|"jq"|"none"
+	--          }
+	--
+	--          vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
+	--          -- When used in visual mode prefills the selection as body.
+	--          vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
+	--
+	-- 		  end
+	--      },
+	--
+	-- 		-- vim-dadbod补全
+	--      {
+	--        "kristijanhusak/vim-dadbod-completion",
+	--        init = function()
+	--          vim.api.nvim_create_autocmd("FileType", {
+	--            desc = "dadbod completion",
+	--            group = vim.api.nvim_create_augroup("dadbod_cmp", { clear = true }),
+	--            pattern = { "sql", "mysql", "plsql" },
+	--            callback = function() require("cmp").setup.buffer { sources = { { name = "vim-dadbod-completion" } } } end,
+	--          })
+	--        end,
+	--      },
+	-- 	},
+	-- 	config = function()
+	-- 		require("completion/init-cmp")
+	-- 	end,
+	-- },
 
-      -- highlight completion
-      "ray-x/cmp-treesitter",
-
-			-- icon
-			"onsails/lspkind-nvim",
-
-			-- luasnip
-			"saadparwaiz1/cmp_luasnip",
-			{
-			  "L3MON4D3/LuaSnip",
-	      -- follow latest release.
-	      version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-	      -- install jsregexp (optional!).
-	      build = "make install_jsregexp",
+  {
+    'saghen/blink.cmp',
+    lazy = false, -- lazy loading handled internally
+    -- optional: provides snippets for the snippet source
+    dependencies = {
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      -- lock compat to tagged versions, if you've also locked blink.cmp to tagged versions
+      { 'saghen/blink.compat', version = '*', opts = { impersonate_nvim_cmp = true } },
+      {
+	      "rafamadriz/friendly-snippets",
 	      config = function ()
-			    require("lua-snip")
+	        -- 加载friendly-snippets
+	        local dir = vim.fn.stdpath("data") .. "/lazy" .. "/friendly-snippets"
+	        require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
+
+	        -- 加载自定义的snippets
+	        require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+
+	        -- 加载nvim-scissors插件的snippets
+	        require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+
 	      end
-			},
-			{
-			  "rafamadriz/friendly-snippets",
-			  config = function ()
-          -- 加载friendly-snippets
-          local dir = vim.fn.stdpath("data") .. "/lazy" .. "/friendly-snippets"
-          require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
+	 		},
+    },
 
-			    -- 加载自定义的snippets
-          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+    -- use a release tag to download pre-built binaries
+    version = 'v0.*',
+    -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
 
-			    -- 加载nvim-scissors插件的snippets
-          require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' for mappings similar to built-in completion
+      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+      -- see the "default configuration" section below for full documentation on how to define
+      -- your own keymap.
+      keymap = {
+        preset = 'default',
+        ['<Tab>'] = { 'show', 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+        ['<C-e>'] = { 'hide' },
+        ['<CR>'] = { 'accept', 'fallback' },
 
-			  end
-			},
+        ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+        ['<C-j>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<C-k>'] = { 'select_prev', 'snippet_backward', 'fallback' },
 
-      -- 创建当前的snippets
-      {
-	      "chrisgrieser/nvim-scissors",
-	      dependencies = "nvim-telescope/telescope.nvim", -- optional
-			  config = function ()
-          require("scissors").setup {
-		        snippetDir = "~/.config/nvim/nvim-scissors",
-	          editSnippetPopup = {
-		          height = 0.4, -- relative to the window, number between 0 and 1
-		          width = 0.6,
-		          border = "rounded",
-		          keymaps = {
-			          cancel = "q",
-			          saveChanges = "<leader>w", -- alternatively, can also use `:w`
-			          goBackToSearch = "<BS>",
-			          deleteSnippet = "<C-BS>",
-			          duplicateSnippet = "<C-d>",
-			          openInFile = "<C-o>",
-			          insertNextToken = "<C-t>", -- insert & normal mode
-			          jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
-		          },
-	          },
-	          telescope = {
-		          -- By default, the query only searches snippet prefixes. Set this to
-		          -- `true` to also search the body of the snippets.
-		          alsoSearchSnippetBody = false,
-	          },
-	          -- `none` writes as a minified json file using `vim.encode.json`.
-	          -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
-	          -- you version control your snippets.
-	          jsonFormatter = "none", -- "yq"|"jq"|"none"
-          }
-
-          vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
-          -- When used in visual mode prefills the selection as body.
-          vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
-
-			  end
+        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
       },
 
-			-- vim-dadbod补全
-      {
-        "kristijanhusak/vim-dadbod-completion",
-        init = function()
-          vim.api.nvim_create_autocmd("FileType", {
-            desc = "dadbod completion",
-            group = vim.api.nvim_create_augroup("dadbod_cmp", { clear = true }),
-            pattern = { "sql", "mysql", "plsql" },
-            callback = function() require("cmp").setup.buffer { sources = { { name = "vim-dadbod-completion" } } } end,
-          })
+      blocked_filetypes = {},
+
+      snippets = {
+        expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+        active = function(filter)
+          if filter and filter.direction then
+            return require('luasnip').jumpable(filter.direction)
+          end
+          return require('luasnip').in_snippet()
         end,
+        jump = function(direction) require('luasnip').jump(direction) end,
       },
-		},
-		config = function()
-			require("completion/init-cmp")
-		end,
-	},
+
+      -- default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, via `opts_extend`
+      sources = {
+        completion = {
+          enabled_providers = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip' },
+          -- menu像cmp
+          menu = {
+            draw = {
+              columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+            },
+          },
+        },
+        providers = {
+          luasnip = {
+            name = 'luasnip',
+            module = 'blink.compat.source',
+
+            score_offset = -3,
+
+            opts = {
+              use_show_condition = false,
+              show_autosnippets = true,
+            },
+          },
+        },
+      },
+
+      completion = {
+        -- Experimental auto-brackets support
+        -- accept = { auto_brackets = { enabled = true } }
+      },
+
+      -- experimental signature help support
+      signature = { enabled = true },
+
+      appearance = {
+        highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
+        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- Useful for when your theme doesn't support blink.cmp
+        -- Will be removed in a future release
+        use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono',
+        kind_icons = {
+          Text = '',
+          Method = 'ƒ',
+          Function = '',
+          Constructor = '',
+
+          Field = '󰜢',
+          Variable = '󰆦',
+          Property = '󰖷',
+
+          Class = '',
+          Interface = 'ﰮ',
+          Module = '',
+          Struct = '',
+
+          Unit = '󰪚',
+          Value = '',
+          Enum = '󰦨',
+          EnumMember = '',
+
+          Keyword = '',
+          Constant = '',
+
+          Snippet = '﬌',
+          Color = '󰏘',
+          File = '󰈔',
+          Reference = '󰬲',
+          Folder = '',
+          Event = '󱐋',
+          Operator = '󰪚',
+          TypeParameter = '󰬛',
+        },
+      },
+    },
+    -- allows extending the enabled_providers array elsewhere in your config
+    -- without having to redefine it
+    opts_extend = { "sources.completion.enabled_providers" }
+  },
 
   -- nvim api的文档补全
-  { "folke/neodev.nvim", opts = {} },
+  -- { "folke/neodev.nvim", opts = {} },
 
 	------ lsp ------
 
@@ -227,11 +383,86 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "nanotee/sqls.nvim" },
-		config = function()
-			require("code/init-lsp")
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap=true, silent=true })
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap=true, silent=true, desc = "显示函数的definition"})
-		end,
+
+    opts = {
+      servers = {
+        -- lua
+        lua_ls = {
+
+          settings = {
+            Lua = {
+              -- 设置vim是globals的一部分，避免warning
+              diagnostics = {
+                globals = { 'vim' }
+              },
+              workspace = { checkThirdParty = false },
+              telemetry = { enable = false },
+              -- hints = { enable = true }
+            }
+          }
+        },
+        -- c、c++
+        clangd = {
+          init_options = { clangdFileStatus = true, },
+        },
+        -- python
+        pylsp = {
+          settings = { python = { workspaceSymbols = { enabled = true } } },
+        },
+
+        -- pyright = {
+        --     settings = { python = { workspaceSymbols = { enabled = true } } },
+        -- },
+        tsserver = {},
+        html = {},
+        -- css
+        -- tailwindcss = {},
+        taplo = {},
+        marksman = {},
+        jsonls = {},
+        yamlls = {},
+        bashls = {},
+        vimls = {},
+        dockerls = {},
+        rust_analyzer = {},
+        -- java
+        jdtls = {},
+        -- js and ts
+        eslint = {},
+        -- go
+        gopls = {
+          on_attach = function(client)
+            -- [[ other on_attach code ]]
+            -- illuminate highlight cursor word
+            require("illuminate").on_attach(client)
+          end,
+        },
+        cmake = {},
+        ansiblels = {},
+        sqlls = {
+          on_attach = function(client)
+            client.resolved_capabilities.execute_command = true
+
+            require("sqlls").setup({})
+          end,
+        },
+      }
+    },
+
+    config = function(_, opts)
+      -- blink.cmp
+      local lspconfig = require('lspconfig')
+      for server, config in pairs(opts.servers) do
+        -- passing config.capabilities to blink.cmp merges with the capabilities in your
+        -- `opts[server].capabilities, if you've defined it
+        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+        lspconfig[server].setup(config)
+      end
+
+      -- keymap
+		  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap=true, silent=true })
+		  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap=true, silent=true, desc = "显示函数的definition"})
+    end
 	},
 
   {

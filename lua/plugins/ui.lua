@@ -569,8 +569,8 @@ return {
 	    broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson"
 		},
 		config = function()
-			-- vim.keymap.set("n", "<Leader>fr", ":Yazi<cr>")
-			vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")
+			vim.keymap.set("n", "<Leader>fr", ":Yazi<cr>")
+			-- vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")
 			vim.keymap.set("n", "<Leader>gg", ":Lazygit<cr>")
 		end,
 	},
@@ -703,39 +703,22 @@ return {
 	-- },
 
 	-- session
-	-- {
-	-- 	"folke/persistence.nvim",
-	-- 	event = "BufDelete", -- this will only start session saving when an actual file was opened
-	-- 	opts = {
-	-- 		dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-	-- 		-- options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-	-- 		options = { "buffers" }, -- sessionoptions used for saving
-	-- 		pre_save = nil, -- a function to call before saving the session
-	-- 		save_empty = false, -- don't save if there are no open file buffers
-	-- 	},
-	-- },
+  {
+    "olimorris/persisted.nvim",
+    lazy = false, -- make sure the plugin is always loaded at startup
+    config = true
+  },
+
+  -- menu
+  { "nvchad/volt" , lazy = true },
 
   {
-      "gennaro-tedesco/nvim-possession",
-      dependencies = {
-          "ibhagwan/fzf-lua",
-      },
-      config = true,
-      init = function()
-          local possession = require("nvim-possession")
-          vim.keymap.set("n", "<leader>ss", function()
-              possession.list()
-          end)
-          vim.keymap.set("n", "<leader>sn", function()
-              possession.new()
-          end)
-          vim.keymap.set("n", "<leader>su", function()
-              possession.update()
-          end)
-          vim.keymap.set("n", "<leader>sd", function()
-              possession.delete()
-          end)
-      end,
+    "nvchad/menu",
+    lazy = true,
+    opts = true,
+    vim.keymap.set("n", "<leader>m", function()
+      require("menu").open("default")
+    end, {})
   },
 
 	-- 折叠代码

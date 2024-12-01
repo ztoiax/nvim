@@ -6,6 +6,7 @@ require("lspkind").init({
         Method = "ƒ",
         Function = "",
         Constructor = "",
+
         Variable = "",
         Class = "",
         Interface = "ﰮ",
