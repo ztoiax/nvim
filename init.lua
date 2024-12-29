@@ -6,5 +6,5 @@ require("function")
 require("highlight")
 require("neovide")
 
--- 启动nvim时调用persistence插件，恢复session
--- require("persistence").load({ last = true })
+-- 恢复session
+vim.cmd([[SessionLoadLast]])

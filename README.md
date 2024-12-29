@@ -533,6 +533,9 @@ pacman -S shfmt
 # c/cpp
 paru -S clang-format-static-bin
 
+# toml
+paru -S taplo
+
 # go
 paru -S gofumpt
 
@@ -642,6 +645,10 @@ nvim.input('')
 - [helix：内置了lsp、treesitter的类似vim的编辑器](https://github.com/helix-editor/helix)
 
 - [zed：支持Tree-sitter.类似vim的编辑器](https://github.com/zed-industries/zed)
+
+- [vscodium：vscode去除ms服务的开源版](https://github.com/VSCodium/vscodium)
+
+- [marktext：markdown编辑器](https://github.com/marktext/marktext)
 
 # online tool
 

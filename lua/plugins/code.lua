@@ -2,7 +2,14 @@ return {
 
 	------ ai ------
 
-  -- ai补全
+  -- ai补全 github copilot
+  -- 需要运行:Copilot auth
+  {
+    "zbirenbaum/copilot.lua",
+    opts = true
+  },
+
+  -- ai补全 codeium
   -- {
   --     "Exafunction/codeium.nvim",
   --     config = function()
@@ -173,6 +180,9 @@ return {
 
 	      end
 	 		},
+
+      -- blink的github copilot补全。需要安装插件copilot.lua
+      "giuxtaposition/blink-cmp-copilot",
     },
 
     -- use a release tag to download pre-built binaries
@@ -192,21 +202,22 @@ return {
       -- your own keymap.
       keymap = {
         preset = 'default',
-        ['<Tab>'] = { 'show', 'select_next', 'snippet_forward', 'fallback' },
+        -- ['<Tab>'] = { 'show', 'select_next', 'snippet_forward', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
         ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
-        ['<C-e>'] = { 'hide' },
+        ['<C-e>'] = { 'hide', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' },
 
-        ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback' },
-        ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback' },
-        ['<C-j>'] = { 'select_next', 'snippet_forward', 'fallback' },
-        ['<C-k>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+        ['<C-n>'] = { 'snippet_forward', 'fallback' },
+        ['<C-p>'] = { 'snippet_backward', 'fallback' },
+        ['<C-j>'] = { 'select_next', 'fallback' },
+        ['<C-k>'] = { 'select_prev', 'fallback' },
 
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
       },
-
-      blocked_filetypes = {},
 
       snippets = {
         expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
@@ -219,36 +230,76 @@ return {
         jump = function(direction) require('luasnip').jump(direction) end,
       },
 
-      -- default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, via `opts_extend`
-      sources = {
-        completion = {
-          enabled_providers = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip' },
-          -- menu像cmp
-          menu = {
-            draw = {
-              columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+      completion = {
+        -- 'prefix' will fuzzy match on the text before the cursor
+        -- 'full' will fuzzy match on the text before *and* after the cursor
+        -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+        keyword = { range = 'full' },
+
+        -- Disable auto brackets
+        -- NOTE: some LSPs may add auto brackets themselves anyway
+        accept = { auto_brackets = { enabled = false }, },
+
+        -- Insert completion item on selection, don't select by default
+        -- list = { selection = 'auto_insert' },
+        -- or set per mode
+        -- list = { selection = function(ctx) return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect' end },
+
+        menu = {
+          -- Don't automatically show the completion menu
+          auto_show = false,
+
+          -- nvim-cmp style menu
+          draw = {
+            columns = {
+              { "label", "label_description", gap = 1 },
+              { "kind_icon", "kind" }
             },
-          },
+            treesitter = { 'lsp' },
+          }
         },
+
+        -- Show documentation when selecting a completion item
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+
+        -- Display a preview of the selected item on the current line
+        ghost_text = { enabled = false },
+      },
+
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip', 'copilot' },
+        cmdline = {},
         providers = {
           luasnip = {
             name = 'luasnip',
             module = 'blink.compat.source',
 
-            score_offset = -3,
+            score_offset = 0,
 
             opts = {
               use_show_condition = false,
               show_autosnippets = true,
             },
           },
-        },
-      },
 
-      completion = {
-        -- Experimental auto-brackets support
-        -- accept = { auto_brackets = { enabled = true } }
+          copilot = {
+            name = "copilot",
+            module = "blink-cmp-copilot",
+            score_offset = 100,
+            async = true,
+
+            -- icon
+            transform_items = function(_, items)
+              local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = "Copilot"
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          },
+        },
       },
 
       -- experimental signature help support
@@ -264,6 +315,7 @@ return {
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
         kind_icons = {
+          Copilot = '',
           Text = '',
           Method = 'ƒ',
           Function = '',
@@ -299,7 +351,7 @@ return {
     },
     -- allows extending the enabled_providers array elsewhere in your config
     -- without having to redefine it
-    opts_extend = { "sources.completion.enabled_providers" }
+    opts_extend = { "sources.default" }
   },
 
   -- nvim api的文档补全
@@ -406,13 +458,13 @@ return {
           init_options = { clangdFileStatus = true, },
         },
         -- python
-        pylsp = {
-          settings = { python = { workspaceSymbols = { enabled = true } } },
-        },
-
-        -- pyright = {
-        --     settings = { python = { workspaceSymbols = { enabled = true } } },
+        -- pylsp = {
+        --   settings = { python = { workspaceSymbols = { enabled = true } } },
         -- },
+
+        pyright = {
+            settings = { python = { workspaceSymbols = { enabled = true } } },
+        },
         tsserver = {},
         html = {},
         -- css
@@ -510,9 +562,9 @@ return {
 	-- lsp 右下角进度ui
 	{
 	  "j-hui/fidget.nvim",
-    tag = "legacy",
-    event = "LspAttach",
-    config = true
+	   tag = "legacy",
+	   event = "LspAttach",
+	   config = true
 	},
 
 	-- diagnosis诊断
