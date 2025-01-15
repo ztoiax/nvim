@@ -18,6 +18,62 @@ return {
   --     end
   -- },
 
+  --ai代码助手
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+    opts = {
+      -- add any opts here
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      -- {
+      --   -- Make sure to set this up properly if you have lazy=true
+      --   'MeanderingProgrammer/render-markdown.nvim',
+      --   opts = {
+      --     file_types = { "markdown", "Avante" },
+      --   },
+      --   ft = { "markdown", "Avante" },
+      -- },
+    },
+    config = function ()
+      require("avante").setup({
+        ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+        -- add any setup here
+        provider = "copilot", -- Recommend using Claude
+        auto_suggestions_provider = "copilot", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+      })
+    end
+  },
+
   -- LLMs with customizable prompts
   {
       "David-Kunz/gen.nvim",
@@ -163,7 +219,7 @@ return {
     dependencies = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      -- lock compat to tagged versions, if you've also locked blink.cmp to tagged versions
+      -- 可以add cmp的source 如 { 'dmitmel/cmp-digraphs' },
       { 'saghen/blink.compat', version = '*', opts = { impersonate_nvim_cmp = true } },
       {
 	      "rafamadriz/friendly-snippets",
@@ -247,7 +303,11 @@ return {
 
         menu = {
           -- Don't automatically show the completion menu
-          auto_show = false,
+          -- auto_show = false,
+          -- Telescope下不显示窗口
+          auto_show = function()
+            return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false and vim.bo.filetype ~= "TelescopePrompt"
+          end,
 
           -- nvim-cmp style menu
           draw = {
@@ -267,9 +327,41 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'luasnip', 'copilot' },
+        default = {
+          'lsp',
+          'path',
+          'snippets',
+          'buffer',
+          'luasnip',
+          'copilot',
+          -- avante ai插件
+          'avante_commands',
+          'avante_mentions',
+          'avante_files',
+        },
         cmdline = {},
         providers = {
+          -- avante ai插件
+          avante_commands = {
+            name = "avante_commands",
+            module = "blink.compat.source",
+            score_offset = 90, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_files = {
+            name = "avante_commands",
+            module = "blink.compat.source",
+            score_offset = 100, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_mentions = {
+            name = "avante_mentions",
+            module = "blink.compat.source",
+            score_offset = 1000, -- show at a higher priority than lsp
+            opts = {},
+          },
+
+          -- luasnip插件
           luasnip = {
             name = 'luasnip',
             module = 'blink.compat.source',
@@ -282,6 +374,7 @@ return {
             },
           },
 
+          -- github的copilot ai插件
           copilot = {
             name = "copilot",
             module = "blink-cmp-copilot",
@@ -465,7 +558,7 @@ return {
         pyright = {
             settings = { python = { workspaceSymbols = { enabled = true } } },
         },
-        tsserver = {},
+        ts_ls = {},
         html = {},
         -- css
         -- tailwindcss = {},

@@ -36,7 +36,7 @@ vim.diagnostic.config({ virtual_text = false }) -- 关闭默认diagnostic诊断
 
 -- tab，空格，换行
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible
-vim.opt.smartindent = true    -- Smarter autoindentation
+vim.opt.smartindent = false   -- Smarter autoindentation。如果是true。markdown文件中，对于开头是#的行，无法按>>进行缩进。
 vim.opt.expandtab = true      -- 空格代替tab
 
 vim.opt.shiftwidth = 2        -- 多少个空格为一个tab

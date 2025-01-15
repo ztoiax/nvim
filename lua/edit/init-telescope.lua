@@ -133,3 +133,6 @@ vim.keymap.set("n", "<leader>K", builtin.lsp_definitions, {})
 
 -- 命令行
 vim.keymap.set("c", "<C-r>", builtin.command_history, {})
+
+-- 通知notify
+vim.keymap.set("n", "<leader>fn", require('telescope').extensions.notify.notify, {})
