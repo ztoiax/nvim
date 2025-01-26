@@ -22,7 +22,7 @@ return {
 	       let g:mkdp_open_to_the_world = 0 " 如果set 1，那么网络其他人也可以访问
 	       let g:mkdp_markdown_css = ''     " 设置自定义css路径
 
-		    nmap <Leader>rr <Plug>MarkdownPreviewToggle
+		    nmap <Leader>rr :MarkdownPreviewToggle<cr>
 		  ]])
 		end
 	},
@@ -31,9 +31,15 @@ return {
   -- 完全lua写，不需要外部程序。
   -- {
   --   'brianhuster/live-preview.nvim',
-  --   dependencies = {'brianhuster/autosave.nvim'}, -- Not required, but recomended for autosaving
+  --   dependencies = {
+  --       -- You can choose one of the following pickers
+  --       'nvim-telescope/telescope.nvim',
+  --       'ibhagwan/fzf-lua',
+  --       'echasnovski/mini.pick',
+  --   },
+  --   opts = {},
   --   config = function ()
-  --     vim.keymap.set('n', '<Leader>rr', ':LivePreview<CR>')
+  --     vim.keymap.set('n', '<Leader>rr', ':LivePreview start<CR>')
   --   end
   -- },
 

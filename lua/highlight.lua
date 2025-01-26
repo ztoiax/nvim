@@ -11,8 +11,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- 空格颜色
-vim.cmd('hi ExtraWhitespace ctermbg=lightblue guibg=LightBlue')
-vim.cmd('match ExtraWhitespace /\\s\\+$/')
+-- vim.cmd('hi ExtraWhitespace ctermbg=lightblue guibg=LightBlue')
+-- vim.cmd('match ExtraWhitespace /\\s\\+$/')
 
 -- 去除分屏后的边框
 vim.cmd('hi WinSeparator guibg=None')

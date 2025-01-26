@@ -1,7 +1,7 @@
 return {
 	-- 主题
 	{
-		"glepnir/oceanic-material",
+		"nvimdev/oceanic-material",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- 默认为50
 		config = function()
@@ -33,7 +33,121 @@ return {
 	-- 图标(icons)
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
 
-  -- 高亮块选的行。块选在执行:HSHighlight 0  数字表示颜色有0-9种
+  -- 各种功能集合
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      -- 检测到大文件就自动阻止LSP和Treesitter等附加到缓冲区
+      bigfile = {
+        enabled = true,
+        notify = true, -- show notification when big file detected
+        size = 1.5 * 1024 * 1024, -- 1.5MB
+      },
+      -- 启动界面
+      dashboard = {
+        -- 主题
+        example = "compact_files",
+
+        preset = {
+          keys = {
+            { icon = " ", key = "f", desc = "Find File", action = ':Telescope find_files' },
+            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "Find Text", action = ":Telescope live_grep_args" },
+            { icon = " ", key = "r", desc = "Recent Files", action = 'Telescope frecency' },
+            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = " ", key = "s", desc = "Restore Session", action = ":SessionLoadLast" },
+            { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+        },
+      },
+      -- nvim debug
+      debug = { enabled = true },
+      -- 专注当前函数、调暗其他部分
+      dim = { enabled = true },
+      -- 导航线
+      indent = { enabled = true },
+      -- input函数
+      input = { enabled = true },
+      -- blame
+      git = { enabled = false },
+      -- 在浏览器打开当前github仓库，并定位到当前行
+      gitbrowse = { enabled = true },
+      -- lazygit
+      lazygit = { enabled = false },
+      -- 类似telescope
+      picker = { enabled = false },
+      -- 通知
+      notifier = { enabled = true },
+      notify = { enabled = true },
+      -- lua性能分析器
+      profiler = { enabled = false },
+      -- 在插件加载之前渲染文件
+      quickfile = {
+        enabled = true,
+        exclude = { "markdown" },
+      },
+      -- 平滑移动动画
+      scroll = { enabled = true },
+      -- 类似vscode那样的方式启动终端
+      terminal = { enabled = true },
+      -- 这个插件的功能开关
+      toggle = { enabled = true },
+    },
+    keys = {
+      { "<leader>gX", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
+      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+      { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
+      { "<leader>fn",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+      { "<c-/>",      function() Snacks.terminal() end, desc = "Toggle Terminal" },
+      { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- debug
+          _G.dd = function(...)
+            Snacks.debug.inspect(...)
+          end
+          _G.bt = function()
+            Snacks.debug.backtrace()
+          end
+          vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+          -- toggle ui
+          local Util = require("function")
+          vim.keymap.set("n", "<leader>ul", Util.toggle_lsp, { desc = "Toggle Lsp" })
+          vim.keymap.set("n", "<leader>uf", Util.toggle_fold, { desc = "Toggle Fold" })
+          vim.keymap.set("n", "<leader>ug", ":GitBlameToggle<cr>", { desc = "Toggle GitBlame" })
+
+          Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+          Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+          Snacks.toggle.diagnostics():map("<leader>ud")
+          Snacks.toggle.line_number():map("<leader>uN")
+          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
+          Snacks.toggle.treesitter():map("<leader>ut")
+          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+          Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle.indent():map("<leader>ui")
+          Snacks.toggle.dim():map("<leader>uD")
+        end,
+      })
+    end,
+  },
+
+  -- highlight whitespace
+  -- {
+  --   "lukoshkin/highlight-whitespace",
+  --   config=true,
+  -- },
+
+  -- highlight自己块选的行。块选在执行:HSHighlight 0  数字表示颜色有0-9种
   {
     "pocco81/highstr.nvim",
     -- 高亮
@@ -279,12 +393,12 @@ return {
 	},
 
 	-- 通知menu
-	{
-    "rcarriga/nvim-notify",
-    config = function ()
-      vim.notify = require("notify")
-    end
-  },
+	-- {
+	--    "rcarriga/nvim-notify",
+	--    config = function ()
+	--      vim.notify = require("notify")
+	--    end
+	--  },
 
 	-- {
 	--   "folke/noice.nvim",
@@ -386,20 +500,6 @@ return {
 		end,
 	},
 
-	-- highlight identline导航线
-	{
-		"echasnovski/mini.indentscope",
-		config = function()
-			require("mini.indentscope").setup({
-				options = { try_as_border = true },
-				symbol = "│",
-			})
-
-			-- 颜色
-			vim.api.nvim_command("highlight MiniIndentscopeSymbol guifg=orange")
-		end,
-	},
-
   -- highlight color
   {
     "brenoprata10/nvim-highlight-colors",
@@ -419,30 +519,6 @@ return {
 			vim.keymap.set("n", "<F7>", rfind.visual)
 		end,
 	},
-
-	-- 快速移动
-	-- {
-	-- 	"rainbowhxch/accelerated-jk.nvim",
-	-- 	vim.cmd([[
-	--            nmap j <Plug>(accelerated_jk_gj)
-	--            nmap k <Plug>(accelerated_jk_gk)
-	--            ]]),
-	-- },
-
-	-- 移动动画
-	"psliwka/vim-smoothie",
-
-	-- 窗口动画
-	-- {
-	-- 	"camspiers/animate.vim",
-	-- 	opts = {},
-	-- 	config = function()
-	-- 		vim.keymap.set("n", "<Up>", ":call animate#window_delta_height(10)<CR>")
-	-- 		vim.keymap.set("n", "<Down>", ":call animate#window_delta_height(-10)<CR>")
-	-- 		vim.keymap.set("n", "<Left>", ":call animate#window_delta_width(10)<CR>")
-	-- 		vim.keymap.set("n", "<Right>", ":call animate#window_delta_width(-10)<CR>")
-	-- 	end,
-	-- },
 
 	-- open old file
 	{
@@ -474,44 +550,6 @@ return {
 	-- },
 
 	-- 浮动终端窗口
-	-- {
-	-- 	"akinsho/toggleterm.nvim",
-	-- 	cmd = { "ToggleTerm", "TermExec" },
-	-- 	config = function()
-	-- 		require("toggleterm").setup({
-	-- 			size = 10,
-	--                hidden = true,
-	--                close_on_exit = true,
-	-- 			on_create = function()
-	-- 				vim.opt.foldcolumn = "0"
-	-- 				vim.opt.signcolumn = "no"
-	-- 			end,
-	-- 			open_mapping = [[<F7>]],
-	-- 			shading_factor = 2,
-	-- 			direction = "float",
-	-- 			float_opts = {
-	-- 				border = "curved",
-	-- 				highlights = { border = "Normal", background = "Normal" },
-	-- 			},
-	--
-	-- 		})
-	--
-	-- 		local Terminal = require("toggleterm.terminal").Terminal
-	--
-	-- 		local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
-	-- 		function _lazygit_toggle()
-	-- 			lazygit:toggle()
-	-- 		end
-	-- 		vim.keymap.set("n", "<leader>gg", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
-	--
-	--            local ranger = Terminal:new({ cmd = "ranger", hidden = true , close_on_exit = true})
-	-- 		function _ranger_toggle()
-	-- 			ranger:toggle()
-	-- 		end
-	-- 		vim.keymap.set("n", "<leader>fr", "<cmd>lua _ranger_toggle()<CR>", { noremap = true, silent = true })
-	-- 	end,
-	-- },
-
 	{
 		"is0n/fm-nvim",
 		opts = {
@@ -551,13 +589,12 @@ return {
 		    fzy_cmd     = "find . | fzy",
 		    xplr_cmd    = "xplr",
 		    vifm_cmd    = "vifm",
-		    yazi_cmd    = "yazi",
 		    skim_cmd    = "sk",
 		    broot_cmd   = "broot",
 		    gitui_cmd   = "gitui",
 		    ranger_cmd  = "ranger",
 		    joshuto_cmd = "joshuto",
-		    lazygit_cmd = "lazygit",
+		    -- lazygit_cmd = "lazygit",
 		    neomutt_cmd = "neomutt",
         taskwarrior_cmd = "taskwarrior-tui"
 	    },
@@ -575,18 +612,31 @@ return {
 	    broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson"
 		},
 		config = function()
-			vim.keymap.set("n", "<Leader>fr", ":Yazi<cr>")
 			-- vim.keymap.set("n", "<Leader>fr", ":Ranger<cr>")
-			vim.keymap.set("n", "<Leader>gg", ":Lazygit<cr>")
+			-- vim.keymap.set("n", "<Leader>gg", ":Lazygit<cr>")
 		end,
 	},
 
-  -- 类似ranger的文件管理器
-  -- {
-  --   'simonmclean/triptych.nvim',
-  --   event = 'VeryLazy',
-  --   opts = {},
-  -- },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>fr",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+    },
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+  },
 
 	-- 翻译
 	-- {

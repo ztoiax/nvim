@@ -89,9 +89,7 @@ require("telescope").setup({
 	pickers = {
 		find_files = {
 			-- theme = "dropdown",
-			find_command = { "rg", "--color=never", "--files", "--hidden", "--follow", "--glob", "!**/.git/*" }
-			-- 参数不支持*，无法用
-			-- find_command = { "rg", "--color=never", "--files", "--hidden", "--follow", "-g", "'!.git'", "*" }
+			find_command = { "rg", "--color=never", "--files", "--hidden", "--follow", "--glob", "!**/.git/*", "--no-ignore" }
 		},
 	},
 })

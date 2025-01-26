@@ -5,6 +5,3 @@ require("plugins-lazy")
 require("function")
 require("highlight")
 require("neovide")
-
--- 恢复session
-vim.cmd([[SessionLoadLast]])

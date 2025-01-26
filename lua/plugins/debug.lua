@@ -28,10 +28,12 @@ return {
 	},
 
 	------ dap ------
-	{
-		"rcarriga/nvim-dap-ui",
-		dependencies = { "mfussenegger/nvim-dap", "thehamsta/nvim-dap-virtual-text" },
-	},
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      { "igorlfs/nvim-dap-view", opts = {} },
+    },
+  },
 
 	-- nvim lua dap
 	"jbyuki/one-small-step-for-vimkind",

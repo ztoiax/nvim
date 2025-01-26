@@ -1,14 +1,8 @@
 if vim.g.neovide then
-    -- Put anything you want to happen only in Neovide here
-  -- 字体
-  vim.o.guifont = "DroidSansMono Nerd Font:h16"
   vim.g.neovide_scale_factor = 1.0
 
   -- 滚动动画长度
-  vim.g.neovide_scroll_animation_length = 0.3
-
-  -- 当一次滚动多个屏幕时，只有滚动动作末尾的这几行才会显示动画。将其设置为0以在没有任何动画的情况下捕捉到最终位置，或者设置为9999之类的大值以始终滚动整个屏幕，就像Neovide<=0.10.4所做的那样。
-  vim.g.neovide_scroll_animation_far_lines = 1
+  vim.g.neovide_cursor_animation_length = 0.01
 
   -- 输入时隐藏鼠标
   vim.g.neovide_hide_mouse_when_typing = true
@@ -27,4 +21,11 @@ if vim.g.neovide then
   vim.g.neovide_refresh_rate_idle = 5
   -- 全屏
   vim.g.neovide_fullscreen = true
+
+  -- 快捷键
+  vim.keymap.set('v', '<A-c>', '"+y')    -- Copy
+  vim.keymap.set('n', '<A-v>', '"+P')    -- Paste normal mode
+  vim.keymap.set('v', '<A-v>', '"+P')    -- Paste visual mode
+  vim.keymap.set('c', '<A-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<A-v>', '<C-R>+') -- Paste insert mode
 end

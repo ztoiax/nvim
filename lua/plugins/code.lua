@@ -2,13 +2,6 @@ return {
 
 	------ ai ------
 
-  -- ai补全 github copilot
-  -- 需要运行:Copilot auth
-  {
-    "zbirenbaum/copilot.lua",
-    opts = true
-  },
-
   -- ai补全 codeium
   -- {
   --     "Exafunction/codeium.nvim",
@@ -37,7 +30,12 @@ return {
       --- The below dependencies are optional,
       -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      -- ai补全 github copilot
+      -- 需要运行:Copilot auth
+      {
+        "zbirenbaum/copilot.lua",
+        opts = true
+      },
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -212,6 +210,8 @@ return {
 	-- 	end,
 	-- },
 
+  { "xzbdmw/colorful-menu.nvim", opts = true },
+
   {
     'saghen/blink.cmp',
     lazy = false, -- lazy loading handled internally
@@ -229,7 +229,7 @@ return {
 	        require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
 
 	        -- 加载自定义的snippets
-	        require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+	        require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets" })
 
 	        -- 加载nvim-scissors插件的snippets
 	        require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
@@ -238,7 +238,7 @@ return {
 	 		},
 
       -- blink的github copilot补全。需要安装插件copilot.lua
-      "giuxtaposition/blink-cmp-copilot",
+      "fang2hou/blink-copilot",
     },
 
     -- use a release tag to download pre-built binaries
@@ -274,7 +274,7 @@ return {
         ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
         ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
       },
-
+      -- snippets = { preset = 'luasnip' },
       snippets = {
         expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
         active = function(filter)
@@ -311,9 +311,22 @@ return {
 
           -- nvim-cmp style menu
           draw = {
-            columns = {
-              { "label", "label_description", gap = 1 },
-              { "kind_icon", "kind" }
+            -- columns = {
+            --   { "label", "label_description", gap = 1 },
+            --   { "kind_icon", "kind" }
+            -- },
+
+            columns = { { "kind_icon" }, { "label", gap = 1 } },
+            -- colorful-menu插件
+            components = {
+              label = {
+                text = function(ctx)
+                  return require("colorful-menu").blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require("colorful-menu").blink_components_highlight(ctx)
+                end,
+              },
             },
             treesitter = { 'lsp' },
           }
@@ -332,7 +345,6 @@ return {
           'path',
           'snippets',
           'buffer',
-          'luasnip',
           'copilot',
           -- avante ai插件
           'avante_commands',
@@ -361,36 +373,18 @@ return {
             opts = {},
           },
 
-          -- luasnip插件
-          luasnip = {
-            name = 'luasnip',
-            module = 'blink.compat.source',
-
-            score_offset = 0,
-
-            opts = {
-              use_show_condition = false,
-              show_autosnippets = true,
-            },
-          },
-
           -- github的copilot ai插件
           copilot = {
             name = "copilot",
-            module = "blink-cmp-copilot",
+            module = "blink-copilot",
             score_offset = 100,
             async = true,
-
-            -- icon
-            transform_items = function(_, items)
-              local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = "Copilot"
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
+            opts = {
+              -- Local options override global ones
+              -- Final settings: max_completions = 3, max_attempts = 2, kind = "Copilot"
+              max_completions = 3,  -- Override global max_completions
+              max_attempts = 4,
+            }
           },
         },
       },
@@ -650,14 +644,6 @@ return {
 				},
 			})
 		end,
-	},
-
-	-- lsp 右下角进度ui
-	{
-	  "j-hui/fidget.nvim",
-	   tag = "legacy",
-	   event = "LspAttach",
-	   config = true
 	},
 
 	-- diagnosis诊断
