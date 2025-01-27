@@ -20,48 +20,48 @@
 		"body": ["##### "]
 	},
 	"url(网页连接)": {
-		"prefix": ",u",
+		"prefix": "uu",
     "body": ["<${1}> ${0}"]
 	},
 	"纯url(网页连接)": {
-		"prefix": ",a",
+		"prefix": "aa",
 		"body": ["[$1]($0)"]
 	},
 	"Image(图片)": {
-		"prefix": ",p",
+		"prefix": "up",
 		"body": ["![image](${1:path})$0"]
 	},
 	"标签": {
-		"prefix": ",sp",
+		"prefix": "sp",
 		"body": [
 			"<span id='$1'>$2</span>$0"
 		]
 	},
 	"Task(打勾)": {
-		"prefix": ",m",
+		"prefix": "mm",
 		"body": ["- [ ]$0"]
 	},
 	"分段": {
-		"prefix": ",n",
+		"prefix": "nn",
 		"body": [
 			"---",
 			"$0"
 		]
 	},
 	"Italic(斜体)": {
-		"prefix": ",i",
+		"prefix": "ii",
 		"body": ["*$1*$0"]
 	},
 	"Bold(粗体)": {
-		"prefix": ",b",
+		"prefix": "bb",
 		"body": ["**$1**$0"]
 	},
 	"Strikethrough(删除线)": {
-		"prefix": ",s",
+		"prefix": "ss",
 		"body": ["~~$1~~$0"]
 	},
 	"underline(下划线)": {
-		"prefix": ",_",
+		"prefix": "__",
 		"body": ["<u>$1</u>$0"]
 	},
 	"big(放大)": {
@@ -77,15 +77,15 @@
 		"body": ["<font color=teal>$1</font>$0"]
 	},
 	"Key(按键)": {
-		"prefix": ",k",
+		"prefix": "kk",
 		"body": ["<kbd>$1</kbd>$0"]
 	},
 	"Code(代码)": {
-		"prefix": ",d",
+		"prefix": "dd",
 		"body": ["`$1`$0"]
 	},
 	"Codeblock(代码块)": {
-		"prefix": ",c",
+		"prefix": "cc",
 		"body": [
 			"```$1",
 			"$0",

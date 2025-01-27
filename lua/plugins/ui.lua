@@ -7,7 +7,7 @@ return {
 		config = function()
 			vim.cmd.colorscheme("oceanic_material")
 		end,
-	},
+  },
 
 	-- {
 	-- 	"AstroNvim/astrotheme",
@@ -32,6 +32,18 @@ return {
 
 	-- 图标(icons)
 	{ "kyazdani42/nvim-web-devicons", lazy = true },
+
+	-- 动态光标
+  -- {
+  --   "sphamba/smear-cursor.nvim",
+  --   opts = {                         -- Default  Range
+  --     stiffness = 0.8,               -- 0.6      [0, 1]
+  --     trailing_stiffness = 0.6,      -- 0.3      [0, 1]
+  --     trailing_exponent = 0,         -- 0.1      >= 0
+  --     distance_stop_animating = 0.5, -- 0.1      > 0
+  --     hide_target_hack = false,      -- true     boolean
+  --   },
+  -- },
 
   -- 各种功能集合
   {
@@ -97,7 +109,7 @@ return {
       toggle = { enabled = true },
     },
     keys = {
-      { "<leader>gX", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+      { "gX", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
       { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
@@ -384,12 +396,14 @@ return {
 
 	{
 		"famiu/bufdelete.nvim",
-		-- 强制删除
-		-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-		vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
-		-- 不强制删除
-		-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-		-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
+		init = function()
+		  -- 强制删除
+		  -- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
+		  vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
+		  -- 不强制删除
+		  -- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
+		  -- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
+		end
 	},
 
 	-- 通知menu
@@ -744,7 +758,7 @@ return {
 				num_behavior = "prefix",
 			})
 
-      vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true })
+	     vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true })
 		end,
 	},
 
@@ -782,34 +796,70 @@ return {
 		"kevinhwang91/nvim-ufo",
 		dependencies = { "kevinhwang91/promise-async" },
 		config = function()
+
+      -- Option 2: nvim lsp as LSP client
+      -- Tell the server the capability of foldingRange,
+      -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true
+      }
+      local language_servers = require("lspconfig").util._available_servers() -- or list servers manually like {'gopls', 'clangd'}
+      for _, ls in ipairs(language_servers) do
+        require('lspconfig')[ls].setup({
+          capabilities = capabilities
+          -- you can add other fields for setting up lsp server in this table
+        })
+      end
+
 			require("ufo").setup({
 				provider_selector = function(bufnr, filetype, buftype)
-					vim.opt.foldcolumn = "1" -- 开启折叠列
-					-- vim.opt.foldlevelstart = 99 -- start with all code unfolded
-					vim.opt.foldenable = true -- enable fold for nvim-ufo
-					vim.opt.foldlevel = 99 -- set high foldlevel for nvim-ufo
-					vim.opt.fillchars = {
-						foldopen = "",
-						foldclose = "",
-						foldsep = "│",
-						fold = "·",
-						diff = "/",
-						eob = " ", -- use 'space' for lines after the last buffer line in a window
-					}
-
-					vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-					vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-					vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-					vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-					vim.keymap.set("n", "zp", require("ufo").peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
 					return { "treesitter", "indent" }
 				end,
 			})
+
+
+			vim.opt.foldcolumn = "1" -- 开启折叠列
+			-- vim.opt.foldlevelstart = 99 -- start with all code unfolded
+			vim.opt.foldenable = true -- enable fold for nvim-ufo
+			vim.opt.foldlevel = 99 -- set high foldlevel for nvim-ufo
+			vim.opt.fillchars = {
+				foldopen = "",
+				foldclose = "",
+				foldsep = "│",
+				fold = "·",
+				diff = "/",
+				eob = " ", -- use 'space' for lines after the last buffer line in a window
+			}
+
+			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+			vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+			vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+			vim.keymap.set("n", "zp", require("ufo").peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
 		end,
 	},
 
 	-- 按键提示
-	-- { "folke/which-key.nvim", config = true },
+  -- {
+  --   "folke/which-key.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     -- your configuration comes here
+  --     -- or leave it empty to use the default settings
+  --     -- refer to the configuration section below
+  --   },
+  --   keys = {
+  --     {
+  --       "<leader>?",
+  --       function()
+  --         require("which-key").show({ global = false })
+  --       end,
+  --       desc = "Buffer Local Keymaps (which-key)",
+  --     },
+  --   },
+  -- },
 
 	-- visual模式下使用Norm命令，可以实时显示
 	{

@@ -9,6 +9,11 @@ return {
   --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
   -- },
 
+  -- {
+  --     "OXY2DEV/markview.nvim",
+  --     lazy = false,
+  -- },
+
 	-- preview
 	{
 		"iamcco/markdown-preview.nvim",
