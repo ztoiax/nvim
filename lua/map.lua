@@ -12,7 +12,7 @@ vim.cmd([[vmap <C-e> <C-u>]])
 -- map("v", "<C-e>", "<C-u>")
 
 map("n", "<Leader>w", ":w<CR>", { desc = "Save" })
-map("n", "<Leader>q", ":confirm q<CR>", { desc = "Quit" })
+map("n", "q", ":confirm q<CR>", { desc = "Quit" })
 map("n", "<C-t>", ":enew<CR>", { desc = "New File" })
 map("n", "<C-p>", "<Tab>", { noremap = true })
 map({ "n", "v" } , "<Leader><Leader>", "%")

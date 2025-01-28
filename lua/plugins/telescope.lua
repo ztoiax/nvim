@@ -49,7 +49,8 @@ return {
                 tabs = {
                   { name = "lsp_document_symbols", tele_func = builtin.lsp_document_symbols },
                   { name = "treesitter", tele_func = builtin.treesitter },
-                  { name = "snippet", tele_func = require("telescope").extensions.luasnip.luasnip },
+
+                  -- { name = "snippet", tele_func = require("telescope").extensions.luasnip.luasnip },
                 }
               },
               other = {
@@ -233,7 +234,7 @@ return {
 						},
 					})
 					require("telescope").load_extension("command_palette")
-          -- vim.keymap.set('n', '<leader>f:', require"telescope".extensions.command_palette.command_palette, {})
+          vim.keymap.set('n', '<leader>f:', require"telescope".extensions.command_palette.command_palette, {})
 				end,
 			},
 

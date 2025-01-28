@@ -1,38 +1,42 @@
-<!-- vim-markdown-toc GFM -->
+<!-- mtoc-start -->
 
 * [nvim](#nvim)
-    * [why nvim](#why-nvim)
-    * [常用命令](#常用命令)
-        * [-V参数debug](#-v参数debug)
-        * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
-        * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
-    * [配置](#配置)
-    * [tips(技巧)](#tips技巧)
-        * [共享远程服务器的剪切板](#共享远程服务器的剪切板)
-    * [vim.loop异步消息循环(libuv)](#vimloop异步消息循环libuv)
-    * [Plugin](#plugin)
-        * [UI 相关](#ui-相关)
-            * [floaterm(浮动终端)](#floaterm浮动终端)
-        * [File manager(文件管理器)](#file-manager文件管理器)
-        * [Search 搜索](#search-搜索)
-        * [tags 跳转](#tags-跳转)
-        * [lib](#lib)
-        * [git](#git)
-            * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
-        * [LSP](#lsp)
-        * [formatter](#formatter)
-        * [DAP](#dap)
-    * [编程语言相关的配置](#编程语言相关的配置)
-        * [部分代码运行SnipRun](#部分代码运行sniprun)
-        * [调试](#调试)
-    * [bob：neovim版本管理器](#bobneovim版本管理器)
-    * [nvim with python](#nvim-with-python)
-    * [goneovim: go语言写的qt前端](#goneovim-go语言写的qt前端)
+  * [why nvim](#why-nvim)
+  * [常用命令](#常用命令)
+    * [-d 对比文件内容（diff）](#-d-对比文件内容diff)
+    * [-V参数debug](#-v参数debug)
+    * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
+    * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
+  * [配置](#配置)
+  * [tips(技巧)](#tips技巧)
+    * [共享远程服务器的剪切板](#共享远程服务器的剪切板)
+  * [vim.loop异步消息循环(libuv)](#vimloop异步消息循环libuv)
+  * [Plugin](#plugin)
+    * [UI 相关](#ui-相关)
+      * [floaterm(浮动终端)](#floaterm浮动终端)
+    * [File manager(文件管理器)](#file-manager文件管理器)
+    * [Search 搜索](#search-搜索)
+    * [tags 跳转](#tags-跳转)
+    * [lib](#lib)
+    * [git](#git)
+      * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
+    * [LSP](#lsp)
+    * [markdown插件需要安装软件](#markdown插件需要安装软件)
+    * [formatter](#formatter)
+    * [DAP](#dap)
+  * [编程语言相关的配置](#编程语言相关的配置)
+    * [部分代码运行SnipRun](#部分代码运行sniprun)
+    * [调试](#调试)
+  * [bob：neovim版本管理器](#bobneovim版本管理器)
+  * [nvim with python](#nvim-with-python)
 * [reference](#reference)
-* [other vim ui](#other-vim-ui)
+* [nvim gui](#nvim-gui)
+* [nvim ide](#nvim-ide)
+* [其他编辑器](#其他编辑器)
 * [online tool](#online-tool)
 
-<!-- vim-markdown-toc -->
+<!-- mtoc-end -->
+
 # nvim
 
 ## why nvim
@@ -60,8 +64,6 @@ awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
 - 左为 `nvim`
 - 右为 `vim`
   ![avatar](./Pictures/strace.png)
-
-可以用 `nvim -d` 代替 `vimdiff`
 
 - 编辑远程文件
 
@@ -96,10 +98,30 @@ command! Esuse :e scp://root@192.168.100.71//
 vim -x <filename>
 ```
 
+### -d 对比文件内容（diff）
+
+- 可以代替 `vimdiff`
+
+```sh
+# 在比较文件差异的同时能够编辑文件
+nvim -d file file1
+# 只需要查看文件差异而不希望修改文件
+nvim -Rd file file1
+```
+
+- 如果在nvim里并打开了file
+```vim
+" 水平比较
+:vertical diffsplit file1
+" 垂直比较
+:diffsplit file1
+```
+
 ### -V参数debug
 
 - 默认
-```
+
+```vim
 " 查看mapped key
 :verbose map s
 v  s             S
@@ -110,7 +132,7 @@ n  s             ys
 
 - 'nvim -V1'，显示更详细的日志
 
-```
+```vim
 :verbose map s
 v  s             S
         Last set from ~/.config/nvim/vim/_editor.lua
@@ -126,18 +148,29 @@ nvim -V20vimlog
 ### socket通信(需要neovim 0.7)
 
 - server
-```sh
-nvim --listen /tmp/nvim.pipe
-```
+    ```sh
+    nvim --listen /tmp/nvim.socket
+    ```
 
 - client
-```sh
-# 打开文件
-nvim --server /tmp/nvim.pipe --remote file
+    ```sh
+    # 打开文件
+    nvim --server /tmp/nvim.socket --remote file
 
-# 执行命令
-nvim --server /tmp/nvim.pipe --remote-send ':echo "hello world"<cr>'
-```
+    # 执行命令
+    nvim --server /tmp/nvim.socket --remote-send ':echo "hello world"<cr>'
+    ```
+
+- 也可以设置环境变量。每次打开nvim都会开启socket。但由于socket文件同名，这样只能开启一个nvim
+
+    ```sh
+    export NVIM_LISTEN_ADDRESS="/tmp/nvim.socket"
+    ```
+
+- neovide的启动socket的参数
+    ```sh
+    neovide -- --listen /tmp/nvim.socket
+    ```
 
 ### [nvr: shell命令控制nvim](https://github.com/mhinz/neovim-remote)
 
@@ -613,8 +646,6 @@ nvim.command('exe "edit " . g:file_to_edit1')
 nvim.input('')
 ```
 
-## [goneovim: go语言写的qt前端](https://github.com/akiyosi/goneovim)
-
 # reference
 
 - [Vim 从入门到精通](https://github.com/wsdjeg/vim-galore-zh_cn)
@@ -627,28 +658,39 @@ nvim.input('')
 
 - [vimcolorschemes：可以查看各种主题的配色](https://vimcolorschemes.com/)
 
-# other vim ui
+# nvim gui
 
-- [gonvim](https://github.com/dzhou121/gonvim)
+- [neovide：rust写的gui](https://github.com/neovide/neovide)
 
-- [nvui](https://github.com/rohit-px2/nvui)
+- [goneovim: go写的qt gui](https://github.com/akiyosi/goneovim)
+
+# nvim ide
+
+- [LazyVim](https://github.com/LazyVim/LazyVim)
 
 - [LunarVim](https://github.com/LunarVim/LunarVim)
 
+- [AstroNvim](https://github.com/AstroNvim/astrocommunity)
+
 - [Spacevim](https://github.com/SpaceVim/SpaceVim)
 
-- [oni 用 typescript 开发的 Electron 增强版 nvim](https://github.com/onivim/oni)
+# 其他编辑器
 
-- [kakoune](https://github.com/mawww/kakoune)
-  > 一个类似 vim 操作模式的编辑器
+- [kakoune：C++写的vim编辑器](https://github.com/mawww/kakoune)
 
-- [helix：内置了lsp、treesitter的类似vim的编辑器](https://github.com/helix-editor/helix)
+- [helix：rust写的vim编辑器。内置了lsp、treesitter](https://github.com/helix-editor/helix)
 
-- [zed：支持Tree-sitter.类似vim的编辑器](https://github.com/zed-industries/zed)
+- [zed：rust写的vim编辑器。支持Tree-sitter](https://github.com/zed-industries/zed)
+
+- [marktext：markdown编辑器](https://github.com/marktext/marktext)
+
+- [vscode](https://github.com/microsoft/vscode)
 
 - [vscodium：vscode去除ms服务的开源版](https://github.com/VSCodium/vscodium)
 
-- [marktext：markdown编辑器](https://github.com/marktext/marktext)
+- [cursor：基于vscode的ai编辑器](https://github.com/getcursor/cursor)
+
+- [trae：字节跳动的基于vscode的ai编辑器（目前只支持mac os）](https://www.trae.ai/)
 
 # online tool
 

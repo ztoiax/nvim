@@ -1,25 +1,9 @@
 {
-	"name": "example-snippets",
+	"name": "my-snippets",
 	"contributes": {
 		"snippets": [
-			{
-				"language": [
-					"all"
-				],
-				"path": "./snippets/all.json"
-			},
-			{
-				"language": [
-					"lua"
-				],
-				"path": "./snippets/lua.json"
-			},
-			{
-				"language": [
-					"markdown"
-				],
-				"path": "./snippets/markdown.json"
-			}
+			{"path": "./all.json", "language": ["all"]},
+			{"path": "./markdown.json", "language": ["markdown"]}
 		]
 	}
 }

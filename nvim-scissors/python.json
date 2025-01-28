@@ -1,1 +1,1 @@
-{"test":{"prefix":"test","body":["for doc in cursor:","    print(doc)"]},"ttt":{"prefix":"ttt","body":["for doc in cursor:","    print(doc)"]}}
+{"test":{"body":"{\"role\": \"user\", \"content\": \"Where was it played?\"}","prefix":"test"}}

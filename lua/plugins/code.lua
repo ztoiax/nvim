@@ -11,6 +11,42 @@ return {
   --     end
   -- },
 
+  {
+    'milanglacier/minuet-ai.nvim',
+    config = function()
+      require('minuet').setup {
+        provider = 'openai_compatible',
+        provider_options = {
+          openai_compatible = {
+            end_point = 'https://api.deepseek.com/v1/chat/completions',
+            api_key = 'DEEPSEEK_API_KEY',
+            name = 'deepseek',
+            optional = {
+              max_tokens = 256,
+              top_p = 0.9,
+            },
+          },
+        },
+        virtualtext = {
+          auto_trigger_ft = {},
+          keymap = {
+            -- accept whole completion
+            accept = '<leader>a',
+            -- accept one line
+            accept_line = '<leader>L',
+            -- accept n lines (prompts for number)
+            accept_n_lines = '<A-z>',
+            -- Cycle to prev completion item, or manually invoke completion
+            prev = '<A-[>',
+            -- Cycle to next completion item, or manually invoke completion
+            next = '<A-]>',
+            dismiss = '<A-e>',
+          },
+        },
+      }
+    end,
+  },
+
   --ai代码助手
   {
     "yetone/avante.nvim",
@@ -18,7 +54,24 @@ return {
     lazy = false,
     version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
     opts = {
-      -- add any opts here
+      ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+
+      -- provider = "copilot",
+      -- auto_suggestions_provider = "copilot",
+
+      provider = "openai", -- 设置deepseek
+      auto_suggestions_provider = "openai", -- 设置deepseek
+
+      -- deepseek设置
+      openai = {
+        endpoint = "https://api.deepseek.com/v1",
+        model = "deepseek-chat",
+        timeout = 30000, -- Timeout in milliseconds
+        temperature = 0,
+        max_tokens = 4096,
+        -- optional
+        api_key_name = "DEEPSEEK_API_KEY", -- linux环境变量
+      },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
@@ -36,65 +89,34 @@ return {
         "zbirenbaum/copilot.lua",
         opts = true
       },
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      -- {
-      --   -- Make sure to set this up properly if you have lazy=true
-      --   'MeanderingProgrammer/render-markdown.nvim',
-      --   opts = {
-      --     file_types = { "markdown", "Avante" },
-      --   },
-      --   ft = { "markdown", "Avante" },
-      -- },
     },
-    config = function ()
-      require("avante").setup({
-        ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-        -- add any setup here
-        provider = "copilot", -- Recommend using Claude
-        auto_suggestions_provider = "copilot", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-      })
-    end
+
+    vim.keymap.set({ 'n', 'v' }, '<leader>aa', ':AvanteToggle<CR>'),
   },
 
   -- LLMs with customizable prompts
-  {
-      "David-Kunz/gen.nvim",
-      opts = {
-          model = "gemma2:2b", -- The default model to use.
-          display_mode = "float", -- The display mode. Can be "float" or "split".
-          show_prompt = false, -- Shows the Prompt submitted to Ollama.
-          show_model = false, -- Displays which model you are using at the beginning of your chat session.
-          no_auto_close = false, -- Never closes the window automatically.
-          init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
-          -- Function to initialize Ollama
-          command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
-          -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
-          -- This can also be a lua function returning a command string, with options as the input parameter.
-          -- The executed command must return a JSON object with { response, context }
-          -- (context property is optional).
-          list_models = '<function>', -- Retrieves a list of model names
-          debug = false -- Prints errors and the command which is run.
-      },
-    config = function ()
-      vim.keymap.set({ 'n', 'v' }, '<leader>o', ':Gen<CR>')
-    end
-  },
+  -- {
+  --     "David-Kunz/gen.nvim",
+  --     opts = {
+  --         model = "gemma2:2b", -- The default model to use.
+  --         display_mode = "float", -- The display mode. Can be "float" or "split".
+  --         show_prompt = false, -- Shows the Prompt submitted to Ollama.
+  --         show_model = false, -- Displays which model you are using at the beginning of your chat session.
+  --         no_auto_close = false, -- Never closes the window automatically.
+  --         init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
+  --         -- Function to initialize Ollama
+  --         command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
+  --         -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
+  --         -- This can also be a lua function returning a command string, with options as the input parameter.
+  --         -- The executed command must return a JSON object with { response, context }
+  --         -- (context property is optional).
+  --         list_models = '<function>', -- Retrieves a list of model names
+  --         debug = false -- Prints errors and the command which is run.
+  --     },
+  --   config = function ()
+  --     vim.keymap.set({ 'n', 'v' }, '<leader>l', ':Gen<CR>')
+  --   end
+  -- },
 
 	------ completion ------
 
@@ -144,53 +166,71 @@ return {
 	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
 	--
 	-- 		    -- 加载自定义的snippets
-	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/my_snippets" })
+	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets" })
 	--
 	-- 		    -- 加载nvim-scissors插件的snippets
-	--          require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+	--        -- require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/nvim-scissors" })
 	--
 	-- 		  end
 	-- 		},
 	--
-	--      -- 创建当前的snippets
-	--      {
-	--       "chrisgrieser/nvim-scissors",
-	--       dependencies = "nvim-telescope/telescope.nvim", -- optional
-	-- 		  config = function ()
-	--          require("scissors").setup {
-	-- 	        snippetDir = "~/.config/nvim/nvim-scissors",
-	--           editSnippetPopup = {
-	-- 	          height = 0.4, -- relative to the window, number between 0 and 1
-	-- 	          width = 0.6,
-	-- 	          border = "rounded",
-	-- 	          keymaps = {
-	-- 		          cancel = "q",
-	-- 		          saveChanges = "<leader>w", -- alternatively, can also use `:w`
-	-- 		          goBackToSearch = "<BS>",
-	-- 		          deleteSnippet = "<C-BS>",
-	-- 		          duplicateSnippet = "<C-d>",
-	-- 		          openInFile = "<C-o>",
-	-- 		          insertNextToken = "<C-t>", -- insert & normal mode
-	-- 		          jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
-	-- 	          },
-	--           },
-	--           telescope = {
-	-- 	          -- By default, the query only searches snippet prefixes. Set this to
-	-- 	          -- `true` to also search the body of the snippets.
-	-- 	          alsoSearchSnippetBody = false,
-	--           },
-	--           -- `none` writes as a minified json file using `vim.encode.json`.
-	--           -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
-	--           -- you version control your snippets.
-	--           jsonFormatter = "none", -- "yq"|"jq"|"none"
-	--          }
-	--
-	--          vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
-	--          -- When used in visual mode prefills the selection as body.
-	--          vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
-	--
-	-- 		  end
-	--      },
+
+	-- 创建当前的snippets
+	{
+	  "chrisgrieser/nvim-scissors",
+	  dependencies = "nvim-telescope/telescope.nvim", -- optional
+	 	config = function ()
+	    require("scissors").setup {
+	      -- "~/.config/nvim/nvim-scissors",
+	 	    snippetDir = vim.fn.stdpath("config") .. "/nvim-scissors",
+	      editSnippetPopup = {
+	 	      height = 0.4, -- relative to the window, number between 0 and 1
+	 	      width = 0.6,
+	 	      border = "rounded",
+	 	      keymaps = {
+	 		      cancel = "q",
+	 		      saveChanges = "<leader>w", -- alternatively, can also use `:w`
+	 		      goBackToSearch = "<BS>",
+	 		      deleteSnippet = "<C-BS>",
+	 		      duplicateSnippet = "<C-d>",
+	 		      openInFile = "<C-o>",
+	 		      insertNextToken = "<C-t>", -- insert & normal mode
+	 		      jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
+	 	      },
+	      },
+	      telescope = {
+	 	      -- By default, the query only searches snippet prefixes. Set this to
+	 	      -- `true` to also search the body of the snippets.
+	 	      alsoSearchSnippetBody = false,
+
+          -- accepts the common telescope picker config
+		      opts = {
+			      layout_strategy = "horizontal",
+			      layout_config = {
+				      horizontal = { width = 0.9 },
+				      preview_width = 0.6,
+			      },
+		      },
+	      },
+	      -- `none` writes as a minified json file using `vim.encode.json`.
+	      -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
+	      -- you version control your snippets.
+	      jsonFormatter = "none", -- "yq"|"jq"|"none"
+
+	      backdrop = {
+		      enabled = true,
+		      blend = 50, -- between 0-100
+	      },
+	      icons = {
+		      scissors = "󰩫",
+	      },
+	    }
+
+	    vim.keymap.set("n", "<leader>se", function() require("scissors").editSnippet() end)
+	    -- When used in visual mode prefills the selection as body.
+	    vim.keymap.set({ "n", "x" }, "<leader>sa", function() require("scissors").addNewSnippet() end)
+	 	end
+	},
 	--
 	-- 		-- vim-dadbod补全
 	--      {
@@ -229,10 +269,10 @@ return {
 	        require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
 
 	        -- 加载自定义的snippets
-	        require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets" })
+	        -- require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets" })
 
 	        -- 加载nvim-scissors插件的snippets
-	        require("luasnip.loaders.from_vscode").lazy_load { paths = { "~/.config/nvim/nvim-scissors" } }
+	        -- require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/nvim-scissors" })
 
 	      end
 	 		},
@@ -346,11 +386,14 @@ return {
           'snippets',
           'buffer',
           'copilot',
-          'lazydev',
           -- avante ai插件
           'avante_commands',
           'avante_mentions',
           'avante_files',
+          -- lazydev插件
+          'lazydev',
+          -- minuet ai插件
+          'minuet',
         },
         cmdline = {},
         providers = {
@@ -382,6 +425,13 @@ return {
             score_offset = 100,
           },
 
+          -- minuet ai插件
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
+            score_offset = 8, -- Gives minuet higher priority among suggestions
+          },
+
           -- github的copilot ai插件
           copilot = {
             name = "copilot",
@@ -395,8 +445,21 @@ return {
               max_attempts = 4,
             }
           },
+
+		      snippets = {
+				    opts = {
+					    search_paths = {
+                -- 加载自定义snippets
+                "~/.config/nvim/snippets",
+                -- 加载nvim-scissors插件的snippets
+                "~/.config/nvim/nvim-scissors"
+              }
+				    },
+			    }
         },
       },
+
+      -- completion = { trigger = { prefetch_on_insert = false } },
 
       -- experimental signature help support
       signature = { enabled = true },
@@ -449,9 +512,6 @@ return {
     -- without having to redefine it
     opts_extend = { "sources.default" }
   },
-
-  -- nvim api的文档补全
-  -- { "folke/neodev.nvim", opts = {} },
 
 	------ lsp ------
 
@@ -728,6 +788,4 @@ return {
 
 	-- lsp menu
 	-- 'glepnir/lspsaga.nvim'
-
-	-- 'github/copilot.vim',
 }

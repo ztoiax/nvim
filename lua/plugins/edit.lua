@@ -240,12 +240,7 @@ return {
 		dependencies = { "nvim-treesitter" },
 		opts = {},
 		config = function()
-			vim.keymap.set(
-				{ "n" },
-				"<leader>e",
-				require("ts-node-action").node_action,
-				{ desc = "Trigger Node Action" }
-			)
+			vim.keymap.set({ "n" }, "<leader>ii", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
 		end,
 	},
 
@@ -255,13 +250,13 @@ return {
     dependencies = "rcarriga/nvim-notify",
     keys = {
       -- these must match the keys in the mapping config below
-      { "q", desc = " Start Recording" },
+      { "<leader>q", desc = " Start Recording" },
       { "Q", desc = " Play Recording" },
     },
     config = function()
       require("recorder").setup({
   	    mapping = {
-  		    startStopRecording = "q",
+  		    startStopRecording = "<leader>q",
   		    playMacro = "Q",
   	    },
       })
@@ -301,24 +296,6 @@ return {
 	},
 
 	-- 光标多选
-	-- {
-	-- 	"smoka7/multicursors.nvim",
-	-- 	event = "VeryLazy",
-	-- 	dependencies = {
-	-- 		"smoka7/hydra.nvim",
-	-- 	},
-	-- 	opts = {},
-	-- 	cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-	-- 	keys = {
-	-- 		{
-	-- 			mode = { "v", "n" },
-	-- 			"<Leader>I",
-	-- 			"<cmd>MCstart<cr>",
-	-- 			desc = "Create a selection for selected text or word under the cursor",
-	-- 		},
-	-- 	},
-	-- },
-
   {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
@@ -392,9 +369,10 @@ return {
 		"mizlan/iswap.nvim",
 		opts = {},
 		config = function()
-			vim.keymap.set("n", "<leader>rl", ":ISwapNodeWithRight<cr>")
-			vim.keymap.set("n", "<leader>rh", ":ISwapNodeWithLeft<cr>")
-			vim.keymap.set("n", "<leader>is", ":ISwapWith<cr>")
+			vim.keymap.set("n", "<leader>il", ":ISwapNodeWithRight<cr>")
+			vim.keymap.set("n", "<leader>ih", ":ISwapNodeWithLeft<cr>")
+			vim.keymap.set("n", "<leader>is", ":ISwapNodeWith<cr>")
+			vim.keymap.set("n", "<leader>iS", ":ISwapNode<cr>")
 		end,
 	},
 
@@ -474,20 +452,6 @@ return {
 
 	-- sudo
 	"lambdalisue/suda.vim",
-
-	-- 异步执行shell命令
-	-- {
-	-- 	"skywind3000/asyncrun.vim",
-	-- 	config = function ()
-	--
-	--     vim.keymap.set("n", "<leader>ie", ":execute getline(line('.'))<cr>", { desc = "Run the current line" })
-	--     vim.keymap.set("n", "<leader>el", ":execute '!'.getline('.')<cr>", { desc = "Run the current line in sh" })
-	--     vim.keymap.set("n", "<leader>io", ":AsyncRun! -mode=term ")
-	--     vim.keymap.set("n", "<leader>ii", ":AsyncRun! ")
-	--     vim.keymap.set("n", "<leader>il", ":AsyncRun! -mode=term ")
-	--     vim.keymap.set("n", "<leader>il", ":execute 'AsyncRun! -mode=term '.getline('.')<cr>", { desc = "Run the current line in terminal" })
-	-- 	end
-	-- },
 
 	-- 部分代码运行
 	{ "michaelb/sniprun", build = "bash ./install.sh" },

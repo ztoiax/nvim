@@ -110,7 +110,7 @@ return {
     },
     keys = {
       { "gX", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
+      -- { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
       { "<leader>fn",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
@@ -610,7 +610,7 @@ return {
 		    joshuto_cmd = "joshuto",
 		    -- lazygit_cmd = "lazygit",
 		    neomutt_cmd = "neomutt",
-        taskwarrior_cmd = "taskwarrior-tui"
+        taskwarrior_cmd = "taskwarrior-tui",
 	    },
 
 	    -- Mappings used with the plugin
@@ -875,48 +875,10 @@ return {
 		end,
 	},
 
-	-- conceal隐藏keyword
-	-- {
-	-- 	"Jxstxs/conceal.nvim",
-	-- 	opt = {},
-	-- 	config = function()
-	-- 		local conceal = require("conceal")
-	--
-	-- 		-- should be run before .generate_conceals to use user Configuration
-	-- 		conceal.setup({
-	-- 			--[[ ["language"] = {
-	--        enabled = bool,
-	--        ["keyword"] = {
-	--            enabled     = bool,
-	--            conceal     = string,
-	--            highlight   = string
-	--        }
-	--    } ]]
-	-- 			["lua"] = {
-	-- 				["local"] = {
-	-- 					enabled = false, -- to disable concealing for "local"
-	-- 				},
-	-- 				["return"] = {
-	-- 					conceal = "R", -- to set the concealing to "R"
-	-- 				},
-	-- 				["for"] = {
-	-- 					highlight = "keyword", -- to set the Highlight group to "@keyword"
-	-- 				},
-	-- 				["if"] = {
-	-- 					highlight = "keyword", -- to set the Highlight group to "@keyword"
-	-- 				},
-	-- 			},
-	-- 			["language"] = {
-	-- 				enabled = false, -- to disable the whole language
-	-- 			},
-	-- 		})
-	--
-	-- 		-- generate the scm queries
-	-- 		-- only need to be run when the Configuration changes
-	-- 		conceal.generate_conceals()
-	--
-	-- 		-- bind a <leader>tc to toggle the concealing level
-	-- 		vim.keymap.set("n", "<leader>tc", function() require("conceal").toggle_conceal() end, { silent = true })
-	-- 	end,
-	-- },
+  -- 任务管理器
+  {
+    'stevearc/overseer.nvim',
+    opts = {},
+  },
+
 }

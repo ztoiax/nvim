@@ -37,8 +37,6 @@ return {
 	-- "Olical/conjure",
 
 	-- neovim lua开发提示
-	{ "folke/neodev.nvim", opts = {} },
-	-- neovim lsp支持
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files

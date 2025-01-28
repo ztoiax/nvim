@@ -1,1 +1,1 @@
-{}
+{"qwe":{"prefix":"qwe","body":"require(\"luasnip.loaders.from_vscode\").lazy_load({ paths = \"~/.config/nvim/nvim-scissors\" })"}}
