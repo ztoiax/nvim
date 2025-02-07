@@ -36,7 +36,7 @@ return {
 	-- fennel的repl
 	-- "Olical/conjure",
 
-	-- neovim lua开发提示
+	-- neovim lua 的lsp识别。不会出现Undefined global `vim`.
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files

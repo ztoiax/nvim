@@ -515,81 +515,94 @@ return {
 
 	------ lsp ------
 
-	-- 安装界面
-	-- {
-	-- 	"williamboman/mason.nvim",
-	-- 	build = ":MasonUpdate",
-	-- 	config = true,
-	-- },
+	-- 安装
+	{
+    "williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					---- lsp ----
+					-- 注释的条目需要在mason下手动安装
+					"awk_ls", -- awk
+					"bashls", -- bash
+					"clangd", -- c/cpp
+					"pyright", -- python
+					-- "rust-analyzer", -- rust
+					"gopls", -- go
+					"jdtls", -- java
+					"lua_ls", -- lua
+					-- "typescript-language-server", -- js, ts
+					"html", -- html
+					"cssls", -- css
+					"jsonls", -- json
+					"yamlls", -- yaml
+					"taplo", -- toml
+					"lemminx", -- xml
+					-- "harper_ls", -- 语法检查器
+					"sqls", -- sql
+					"cmake", -- cmake
+					"dockerls", -- docker
+					"docker_compose_language_service", --docker compose
+					"diagnosticls", -- diagnostic
+					"vimls", -- vimls
+					"ansiblels", -- ansible
+          "marksman", -- markdown
+          "tinymist", -- typst
+          "nginx_language_server", -- nginx
+          "jinja_lsp", -- jinga
+          "nil_ls", -- nix
 
-	-- {
-	-- 	"williamboman/mason-lspconfig.nvim",
-	-- 	config = function()
-	-- 		require("mason-lspconfig").setup({
-	-- 			ensure_installed = {
-	-- 				---- lsp ----
-	-- 				"awk_ls", -- awk
-	-- 				"bashls", -- bash
-	-- 				"clangd", -- c/cpp
-	-- 				"pylsp",         -- python
-	-- 				-- "pyright", -- python
-	-- 				"rust-analyzer", -- rust
-	-- 				"gopls", -- go
-	-- 				"jdtls", -- java
-	-- 				"lua_ls", -- lua
-	-- 				"tsserver", -- js, ts
-	-- 				"html", -- html
-	-- 				"tailwindcss-language-server", -- css
-	-- 				"jsonls", -- json
-	-- 				"yamlls", -- yaml
-	-- 				"sqlls", -- sql
-	-- 				"cmake", -- cmake
-	-- 				"dockerls", -- docker
-	-- 				"diagnosticls", -- diagnostic
-	-- 				"vimls", -- vimls
-	-- 				"ansiblels", -- ansible
-	--
-	-- 				---- formatter ----
-	-- 				"beautysh", -- bash, csh, ksh, sh, zsh
-	-- 				"clang-format", -- c/cpp
-	-- 				"autopep8", -- python
-	-- 				"rustfmt", -- rust
-	-- 				"gofumpt", -- go
-	-- 				"google-java-format", -- java
-	-- 				"stylua", -- lua
-	-- 				"prettierd", -- js ts json html css yaml xml
-	-- 				"markdownlint", -- markdown
-	-- 				"sqlfmt", -- sql
-	-- 				"gersemi", -- cmake
-	-- 				-- "dockfmt",            -- docker
-	-- 				-- "nginxbeautifier",    -- nginx
-	--
-	-- 				---- lint ----
-	-- 				"shellcheck", -- bash
-	-- 				"sonarlint-language-server", -- c, c++, css, go, html, java, javascript, typescript, python, php, terraform, text
-	-- 				"luacheck", -- lua
-	-- 				"cfn-lint", -- json, yaml
-	-- 				"cmakelint", -- cmake
-	-- 				"vale", -- text, markdown, latex
-	-- 				"sqlfluff", -- sql
-	-- 				"ansible-lint", -- ansible
-	-- 				"ruff", -- python
-	--
-	-- 				---- dap ----
-	-- 				"bash-debug-adapter", -- bash
-	-- 				"cpptools", -- c/cpp, rust
-	-- 				"debugpy", -- python
-	-- 				"delve", -- go
-	-- 				"java-debug-adapter", -- java
-	-- 				"js-debug-adapter", -- js, ts
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
+					---- formatter ----
+					-- 需要在mason下手动安装
+					-- "beautysh", -- bash, csh, ksh, sh, zsh
+					-- "clang-format", -- c/cpp
+					-- "autopep8", -- python
+					-- "rustfmt", -- rust
+					-- "gofumpt", -- go
+					-- "google-java-format", -- java
+					-- "stylua", -- lua
+					-- "prettierd", -- js ts json html css yaml xml
+					-- "markdownlint", -- markdown
+					-- "sqlfmt", -- sql
+					-- "gersemi", -- cmake
 
-	-- 配置
+					-- "dockfmt",            -- docker
+					-- "nginxbeautifier",    -- nginx
+
+					---- lint ----
+					-- 需要在mason下手动安装
+					-- "shellcheck", -- bash
+					-- "sonarlint-language-server", -- c, c++, css, go, html, java, javascript, typescript, python, php, terraform, text
+					-- "luacheck", -- lua
+					-- "cfn-lint", -- json, yaml
+					-- "cmakelint", -- cmake
+					-- "vale", -- text, markdown, latex
+					-- "sqlfluff", -- sql
+					-- "ansible-lint", -- ansible
+					-- "ruff", -- python
+
+					---- dap ----
+					-- 需要在mason下手动安装
+					-- "bash-debug-adapter", -- bash
+					-- "cpptools", -- c/cpp, rust
+					-- "debugpy", -- python
+					-- "delve", -- go
+					-- "java-debug-adapter", -- java
+					-- "js-debug-adapter", -- js, ts
+				},
+			})
+		end,
+  },
+	{
+		"williamboman/mason.nvim",
+		-- build = ":MasonUpdate",
+    config = true
+  },
+
+	-- 官方参考配置https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 	{
 		"neovim/nvim-lspconfig",
+		-- go语言写的sql language server
 		dependencies = { "nanotee/sqls.nvim" },
 
     opts = {
@@ -614,46 +627,56 @@ return {
           init_options = { clangdFileStatus = true, },
         },
         -- python
-        -- pylsp = {
-        --   settings = { python = { workspaceSymbols = { enabled = true } } },
-        -- },
-
         pyright = {
             settings = { python = { workspaceSymbols = { enabled = true } } },
         },
+        -- ts、js
         ts_ls = {},
         html = {},
         -- css
-        -- tailwindcss = {},
-        taplo = {},
+        cssls = {},
+        -- markdown
         marksman = {},
+        -- typst
+        tinymist = {},
         jsonls = {},
         yamlls = {},
+        -- xml
+        lemminx = {},
+        -- toml
+        taplo = {},
         bashls = {},
         vimls = {},
         dockerls = {},
+        docker_compose_language_service = {},
         rust_analyzer = {},
         -- java
         jdtls = {},
         -- js and ts
         eslint = {},
         -- go
-        gopls = {
-          on_attach = function(client)
-            -- [[ other on_attach code ]]
-            -- illuminate highlight cursor word
-            require("illuminate").on_attach(client)
-          end,
-        },
-        cmake = {},
-        ansiblels = {},
-        sqlls = {
-          on_attach = function(client)
-            client.resolved_capabilities.execute_command = true
+        gopls = {},
 
-            require("sqlls").setup({})
-          end,
-        },
+        -- cmake
+        cmake = {},
+        -- ansible
+        ansiblels = {},
+
+        -- nginx
+        nginx_language_server = {},
+        -- jinja
+        jinja_lsp = {},
+        -- nix
+        nil_ls = {},
+
+        -- mircosoft的sql-language-server
+        -- sqlls = {},
+
+		    -- go语言写的sql language server
+        sqls = {},
+
+        -- diagnostic
+        -- diagnosticls = {},
       }
     },
 
@@ -667,16 +690,10 @@ return {
         lspconfig[server].setup(config)
       end
 
-      -- keymap
-		  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap=true, silent=true })
-		  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap=true, silent=true, desc = "显示函数的definition"})
+
     end
 	},
 
-  {
-    'kevinhwang91/nvim-bqf',
-    opts = {},
-  },
 
   -- lint
 	{
@@ -684,6 +701,7 @@ return {
 		config = function()
 			require("lint").linters_by_ft = {
 				bash = { "shellcheck" },
+				zsh = { "shellcheck" },
 				python = { "ruff" },
 				c = { "sonarlint" },
 				cpp = { "sonarlint" },
@@ -692,12 +710,13 @@ return {
 				js = { "sonarlint" },
 				ts = { "sonarlint" },
 				html = { "sonarlint" },
-				lua = { "lua-lint" },
+				lua = { "lua-check" },
 				json = { "cfn-lint" },
 				yaml = { "cfn-lint" },
 				cmake = { "cmakelint" },
 				markdown = { "vale" },
 				ansible = { "ansible-lint" },
+				sql = { "sqlfluff" },
 			}
 		end,
 	},
@@ -787,5 +806,22 @@ return {
   },
 
 	-- lsp menu
-	-- 'glepnir/lspsaga.nvim'
+	{
+    'nvimdev/lspsaga.nvim',
+    opts = {},
+    config = function()
+      vim.keymap.set('n', 'K', ':Lspsaga hover_doc')
+      vim.keymap.set('n', '<leader>ca', ':Lspsaga hover_doc')
+
+    end
+  },
+
+  -- lsp进度
+	-- {
+	--    "j-hui/fidget.nvim",
+	--    opts = {},
+	--    config = function ()
+	--      vim.api.nvim_set_keymap("n", "<leader>uS", ":Fidget suppress", { noremap = true, silent = true })
+	--    end
+	--  },
 }

@@ -71,6 +71,9 @@ map("c", "<C-e>", "<End>")
 map("c", "<C-d>", "<Del>")
 map("c", "<C-h>", "<BS>")
 
+-- 打开quickfix
+map("n", "<leader>fq", ":copen<cr>")
+
 -- 清除行尾多余空格的函数
 local function trim_trailing_whitespace()
     -- 保存光标位置

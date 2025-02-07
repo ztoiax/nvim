@@ -1,15 +1,18 @@
 <!-- mtoc-start -->
 
 * [nvim](#nvim)
-  * [why nvim](#why-nvim)
+  * [nvim对比vim](#nvim对比vim)
+  * [配置](#配置)
   * [常用命令](#常用命令)
     * [-d 对比文件内容（diff）](#-d-对比文件内容diff)
     * [-V参数debug](#-v参数debug)
     * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
     * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
-  * [配置](#配置)
+    * [编辑远程文件](#编辑远程文件)
   * [tips(技巧)](#tips技巧)
-    * [共享远程服务器的剪切板](#共享远程服务器的剪切板)
+    * [qucikfix和grep、vimgrep、vimgrepadd、cexpr、make|cdo、cfdo](#qucikfix和grepvimgrepvimgrepaddcexprmakecdocfdo)
+    * [location和lgrep、lvimgrep、lmake、ldo、lfdo](#location和lgreplvimgreplmakeldolfdo)
+    * [共享远程服务uff器的剪切板](#共享远程服务uff器的剪切板)
   * [vim.loop异步消息循环(libuv)](#vimloop异步消息循环libuv)
   * [Plugin](#plugin)
     * [UI 相关](#ui-相关)
@@ -22,6 +25,7 @@
       * [通过 `floaterm` 插件打开 lazygit 一个 git tui:](#通过-floaterm-插件打开-lazygit-一个-git-tui)
     * [LSP](#lsp)
     * [markdown插件需要安装软件](#markdown插件需要安装软件)
+    * [lint](#lint)
     * [formatter](#formatter)
     * [DAP](#dap)
   * [编程语言相关的配置](#编程语言相关的配置)
@@ -31,7 +35,7 @@
   * [nvim with python](#nvim-with-python)
 * [reference](#reference)
 * [nvim gui](#nvim-gui)
-* [nvim ide](#nvim-ide)
+* [nvim ide 发行版](#nvim-ide-发行版)
 * [其他编辑器](#其他编辑器)
 * [online tool](#online-tool)
 
@@ -39,44 +43,55 @@
 
 # nvim
 
-## why nvim
+## nvim对比vim
 
-即使是最新的 vim8.2 也还在用 `select` 系统调用 ，而 nvim 已经用 `epoll` 了
+- 即使是最新的 vim8.2 也还在用 `select` 系统调用 ，而 nvim 已经用 `epoll` 了
 
-![avatar](./Pictures/epoll.png)
+    ![avatar](./Pictures/epoll.png)
 
-以下统计是 nvim 和 vim 的系统调用测试：
+    以下统计是 nvim 和 vim 的系统调用测试：
 
-先打开 nvim 和 vim , 然后通过 `strace` 查看它们的系统调用
+    先打开 nvim 和 vim , 然后通过 `strace` 查看它们的系统调用
 
-```bash
-sudo strace -p $(pgrep -of nvim) 2>&1 | tee /tmp/nvim.log
-sudo strace -p $(pgrep -of vim) 2>&1 | tee /tmp/vim.log
-```
+    ```bash
+    sudo strace -p $(pgrep -of nvim) 2>&1 | tee /tmp/nvim.log
+    sudo strace -p $(pgrep -of vim) 2>&1 | tee /tmp/vim.log
+    ```
 
-分别在 vim 和 nvim 简单的操作后关闭，通过 `awk` 进行统计
+    分别在 vim 和 nvim 简单的操作后关闭，通过 `awk` 进行统计
 
-```bash
-awk -F '(' '{print $1}'  /tmp/nvim.log | sort | uniq -c | sort -n
-awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
-```
+    ```bash
+    awk -F '(' '{print $1}'  /tmp/nvim.log | sort | uniq -c | sort -n
+    awk -F '(' '{print $1}'  /tmp/vim.log | sort | uniq -c | sort -n
+    ```
 
-- 左为 `nvim`
-- 右为 `vim`
-  ![avatar](./Pictures/strace.png)
+    - 左为 `nvim`
+    - 右为 `vim`
+      ![avatar](./Pictures/strace.png)
 
-- 编辑远程文件
+- nvim的优缺点：追求功能，但缺乏稳定性
 
-```bash
-nvim scp://user@host//etc/fstab
-```
+    - [韦易笑回答](https://www.zhihu.com/question/517490969/answer/87006875538)
 
-在 vim 配置文件加入
+## 配置
 
-```vim
-command! Ecentos :e scp://root@192.168.100.208//
-command! Esuse :e scp://root@192.168.100.71//
-```
+- 在学 `linux` 等开源软件的过程中，了解 `vim` 的操作到安装各种高效率**插件**.花费了大量的时间,打造成现在的**配置**.
+
+一共有`80` 个插件
+![avatar](./Pictures/init.png)
+
+- 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
+  ![avatar](./Pictures/floaterm.gif)
+
+- 快速打开**最近**使用过的文件
+  ![avatar](./Pictures/leaderf.gif)
+  ![avatar](./Pictures/ranger.gif)
+
+- `ag插件(类似 grep)`预览包含`linux`(我这里输入的是`linux`)的文件,选择文件后在 `vim` 里打开
+  ![avatar](./Pictures/ag.gif)
+
+使用`lazygit`,对`git`进行快速管理
+![avatar](./Pictures/lazygit.gif)
 
 ## 常用命令
 
@@ -211,41 +226,133 @@ nvr -cc terminal
 nvr -c terminal
 ```
 
-## 配置
+### 编辑远程文件
 
-- 在学 `linux` 等开源软件的过程中，了解 `vim` 的操作到安装各种高效率**插件**.花费了大量的时间,打造成现在的**配置**.
+```sh
+nvim scp://user@host//etc/fstab
+```
 
-- 早期参考最多是 [Thinkvim](https://github.com/hardcoreplayers/ThinkVim)
+在配置文件下加入
 
-- 现在已经根据自己的需求, 自定义化了
+```vim
+command! Ecentos :e scp://root@192.168.100.208//
+command! Esuse :e scp://root@192.168.100.71//
+```
 
-一共有`80` 个插件
-![avatar](./Pictures/init.png)
-
-- 可以在 `vim` 打开 `htop` `glance` 等终端命令,进行监控
-  ![avatar](./Pictures/floaterm.gif)
-
-- 快速打开**最近**使用过的文件
-  ![avatar](./Pictures/leaderf.gif)
-  ![avatar](./Pictures/ranger.gif)
-
-- `ag插件(类似 grep)`预览包含`linux`(我这里输入的是`linux`)的文件,选择文件后在 `vim` 里打开
-  ![avatar](./Pictures/ag.gif)
-
-使用`lazygit`,对`git`进行快速管理
-![avatar](./Pictures/lazygit.gif)
-
----
-
-- 以上几个插件是比较直观，使用比较多的
-- 还有几十个插件,有机会我会一并整理出来
+ 还有几十个插件,有机会我会一并整理出来
 
 ## tips(技巧)
 
 查找中文:
 按下 <kbd>/</kbd> 输入 `[^\x00-\xffk]`
 
-### 共享远程服务器的剪切板
+### qucikfix和grep、vimgrep、vimgrepadd、cexpr、make|cdo、cfdo
+
+- quickfix 通过一个特殊的缓冲区（quickfix window）显示错误或匹配项的列表。每个条目都包含文件名、行号和描述信息，用户可以通过快捷命令跳转到具体的错误位置。
+
+- 以下的`vimgrep`命令可以替换为`grep`命令，`grep`命令只是外部的linux命令。
+    - 两者都可以导入到quickfix里面
+
+    |quickfix命令|描述                                                                  |
+    |------------|------------------------------                                        |
+    |:copen      |打开quickfix                                                          |
+    |:cclose     |关闭quickfix                                                          |
+    |:cwindow    |在一个新窗口打开quickfix                                              |
+    |:cnext      |跳转到下一个结果                                                      |
+    |:cprev      |跳转到上一个结果                                                      |
+    |:cfirst     |跳转到第一个结果                                                      |
+    |:clast      |跳转到最后一个结果                                                    |
+    |:cfdo       |对quickfix中的每个文件执行指定的命令                                  |
+    |:cdo       |对quickfix中的每个行执行指定的命令                                  |
+    |:ldo       |对quickfix中的有效行执行指定的命令                                  |
+
+- `vimgrep`命令和`:copen`打开qucikfix
+
+    ```vim
+    " 在当前buffer下，匹配dmenu的文本
+    :vimgrep dmenu %
+    " 或者使用vim，vim是vimgrep的简写
+    :vim dmenu %
+    " 使用quickfix打开匹配结果
+    :copen
+
+    " 在.mybin目录下，匹配dmenu的文本
+    :vimgrep dmenu .mybin/**
+    " 使用quickfix打开匹配结果
+    :copen
+
+    " 在.mybin目录下，后缀为.sh的文件下，匹配dmenu的文本
+    :vimgrep dmenu .mybin/*.sh
+    " 使用quickfix打开匹配结果
+    :copen
+    ```
+
+- `vimgrepadd`命令追加结果到quickfix
+    ```vim
+    " 在当前buffer下，匹配dmenu的文本
+    :vimgrep dmenu %
+    " 在当前buffer下，追加匹配map的文本
+    :vimgrepadd map %
+    " 使用quickfix打开匹配结果
+    :copen
+    ```
+
+- `cfdo`和`cdo`
+
+    - `cfdo`性能更好一点
+    - 如果你不想保存修改，可以不加` | update`
+
+    ```vim
+    " 匹配dmenu
+    :vimgrep dmenu %
+    " 打开quickfix 
+    :copen
+    ```
+
+    ```vim
+    " 替换dmenu为replacement
+    :cfdo %s/dmenu/replacement/g
+    " 替换dmenu为replacement
+    :cdo %s/dmenu/replacement/g
+
+    " 删除
+    :cdo delete | update
+    " 删除
+    :cfdo g/dmenu/d | update
+
+    " 进入normal后执行dd命令
+    :cdo normal dd
+
+    " 进入normal后执行@a宏命令
+    :cdo normal @a
+
+    " !执行外部命令
+    :cdo !echo %
+    ```
+
+- `cexpr`：执行外部命令
+
+    ```vim
+    " 调用外部命令grep，并将结果导入到quickfix里面
+    :cexpr system('grep -n "dmenu" *')
+    " 打开quickfix 
+    :copen
+
+    " 调用外部命令find，并将结果导入到quickfix里面
+    :cexpr system('find . -name *.lua') 
+    " 打开quickfix 
+    :copen
+    ```
+
+### location和lgrep、lvimgrep、lmake、ldo、lfdo
+
+- Quickfix List 是全局的，适用于整个 Neovim 会话。它包含所有文件的错误或匹配项。
+
+- location 是局部的，与特定的窗口（buffer）关联。它只包含当前窗口相关的内容。
+
+- 两者用法差不多
+
+### 共享远程服务uff器的剪切板
 
 - [本地与SSH远程同步NVIM剪切板](https://yaocc.cc/remoteclipboard/)
 
@@ -498,20 +605,31 @@ sudo npm i -g vscode-langservers-extracted
 # markdown
 paru -S marksman-bin
 
+# typst
+paru -S tinymist
+
 sudo npm i -g typescript typescript-language-server
 sudo npm i -g yaml-language-server
 sudo npm i -g bash-language-server
 sudo npm i -g vim-language-server
 sudo npm i -g dockerfile-language-server-nodejs
+sudo npm i -g compose-language-service
 sudo npm i -g diagnostic-languageserver
 sudo npm install -g ansible-language-server
 pip3 install cmake-language-server
+pip install nginx-language-server
+paru -S diagnostic-languageserver
 
 # rust
 pacman -S rust-analyzer
 
 # go
 sudo pacman -S gopls
+
+# sql
+sudo npm i -g sql-language-server
+paru -S go-sqls-git
+# or
 go install github.com/sqls-server/sqls@latest
 
 # java
@@ -542,7 +660,24 @@ pacman -S plantuml
 pacman -S d2
 ```
 
-### [formatter]()
+### lint
+
+```sh
+paru -S sonarlint
+paru -S luacheck
+# python
+paru -S python-ruff
+paru -S shellcheck
+pip install cmakelint
+paru -S ansible-lint
+paru -S sqlfluff
+# markdown
+paru -S vale
+# json、yaml
+paru -S cfn-lint
+```
+
+### formatter
 
 - [Configurations](https://github.com/mhartington/formatter.nvim/blob/master/CONFIG.md)
 
@@ -568,6 +703,12 @@ paru -S clang-format-static-bin
 
 # toml
 paru -S taplo
+
+# xml
+paru -S lemminx
+
+# nix
+paru -S nil-git
 
 # go
 paru -S gofumpt
@@ -664,7 +805,7 @@ nvim.input('')
 
 - [goneovim: go写的qt gui](https://github.com/akiyosi/goneovim)
 
-# nvim ide
+# nvim ide 发行版
 
 - [LazyVim](https://github.com/LazyVim/LazyVim)
 

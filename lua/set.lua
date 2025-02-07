@@ -46,6 +46,15 @@ vim.opt.copyindent = true     -- 是否根据语法自动缩进，默认为false
 vim.opt.linebreak = false     -- 单词中间换行
 vim.opt.wrap = true           -- 长行会在第二行显示
 
+-- 命令参数
+vim.opt.grepprg = "rg\\ --vimgrep\\ --smart-case\\ --no-heading"
+-- %f：文件名。
+-- %l：行号。
+-- %c：列号。
+-- %m：匹配的文本。
+vim.opt.grepformat = { "%f:%l:%c:%m" }
+vim.opt.errorformat = { "%f:%l:%c:%m" }
+
 -- tab 字符的显示
 vim.g.list = true
 vim.opt.listchars = {
@@ -75,6 +84,13 @@ vim.g.autopairs_enabled = true        -- enable autopairs at start
 vim.g.diagnostics_mode = 3            -- set the visibility of diagnostics in the UI (0=off 1=only show in status line 2=virtual text off 3=all on)
 vim.g.icons_enabled = true            -- disable icons in the UI (disable if no nerd font is available)
 vim.g.ui_notifications_enabled = true -- disable notifications when toggling UI elements
+
+-- diagnostic
+vim.diagnostic.config{
+  virtual_text = {
+    virt_text_pos = 'eol_right_align',
+  },
+}
 
 -- 关闭默认的文件管理器
 vim.g.loaded_netrw = 1

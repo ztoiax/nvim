@@ -4,8 +4,17 @@ return {
 		"nvimdev/oceanic-material",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- 默认为50
+		-- config = function()
+		-- 	vim.cmd.colorscheme("oceanic_material")
+		-- end,
+	 },
+
+	{
+		"nvimdev/zephyr-nvim",
+	  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	  priority = 1000, -- 默认为50
 		config = function()
-			vim.cmd.colorscheme("oceanic_material")
+			vim.cmd.colorscheme("zephyr")
 		end,
   },
 
@@ -287,6 +296,7 @@ return {
 				options = {
 					-- theme = "OceanicNext",
 					-- theme = bubbles_theme,
+					-- theme = "zephyr",
 					theme = "seoul256",
 					section_separators = { left = "", right = "" },
 					component_separators = { left = "", right = "" },
@@ -796,48 +806,29 @@ return {
 		"kevinhwang91/nvim-ufo",
 		dependencies = { "kevinhwang91/promise-async" },
 		config = function()
-
-      -- Option 2: nvim lsp as LSP client
-      -- Tell the server the capability of foldingRange,
-      -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true
-      }
-      local language_servers = require("lspconfig").util._available_servers() -- or list servers manually like {'gopls', 'clangd'}
-      for _, ls in ipairs(language_servers) do
-        require('lspconfig')[ls].setup({
-          capabilities = capabilities
-          -- you can add other fields for setting up lsp server in this table
-        })
-      end
-
 			require("ufo").setup({
 				provider_selector = function(bufnr, filetype, buftype)
+					vim.opt.foldcolumn = "1" -- 开启折叠列
+					-- vim.opt.foldlevelstart = 99 -- start with all code unfolded
+					vim.opt.foldenable = true -- enable fold for nvim-ufo
+					vim.opt.foldlevel = 99 -- set high foldlevel for nvim-ufo
+					vim.opt.fillchars = {
+						foldopen = "",
+						foldclose = "",
+						foldsep = "│",
+						fold = "·",
+						diff = "/",
+						eob = " ", -- use 'space' for lines after the last buffer line in a window
+					}
+
+					vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+					vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+					vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+					vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+					vim.keymap.set("n", "zp", require("ufo").peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
 					return { "treesitter", "indent" }
 				end,
 			})
-
-
-			vim.opt.foldcolumn = "1" -- 开启折叠列
-			-- vim.opt.foldlevelstart = 99 -- start with all code unfolded
-			vim.opt.foldenable = true -- enable fold for nvim-ufo
-			vim.opt.foldlevel = 99 -- set high foldlevel for nvim-ufo
-			vim.opt.fillchars = {
-				foldopen = "",
-				foldclose = "",
-				foldsep = "│",
-				fold = "·",
-				diff = "/",
-				eob = " ", -- use 'space' for lines after the last buffer line in a window
-			}
-
-			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-			vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
-			vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-			vim.keymap.set("n", "zp", require("ufo").peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
 		end,
 	},
 
@@ -881,4 +872,30 @@ return {
     opts = {},
   },
 
+  -- Better quickfix window
+  {
+    'kevinhwang91/nvim-bqf',
+     config = true,
+  },
+
+  -- 中文分词跳转
+  {
+    'noearc/jieba.nvim',
+    dependencies = {'noearc/jieba-lua'},
+    opts = {},
+    config = function()
+      vim.keymap.set({'x', 'n'}, 'B', '<cmd>lua require("jieba_nvim").wordmotion_B()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'b', '<cmd>lua require("jieba_nvim").wordmotion_b()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'w', '<cmd>lua require("jieba_nvim").wordmotion_w()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'W', '<cmd>lua require("jieba_nvim").wordmotion_W()<CR>', {noremap = false, silent = true})
+      -- vim.keymap.set({'x', 'n'}, 'E', '<cmd>lua require("jieba_nvim").wordmotion_E()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'e', '<cmd>lua require("jieba_nvim").wordmotion_e()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'ge', '<cmd>lua require("jieba_nvim").wordmotion_ge()<CR>', {noremap = false, silent = true})
+      vim.keymap.set({'x', 'n'}, 'gE', '<cmd>lua require("jieba_nvim").wordmotion_gE()<CR>', {noremap = false, silent = true})
+
+      vim.keymap.set('n', 'ce', ":lua require'jieba_nvim'.change_w()<CR>", {noremap = false, silent = true})
+      vim.keymap.set('n', 'de', ":lua require'jieba_nvim'.delete_w()<CR>",  {noremap = false, silent = true})
+      -- vim.keymap.set('n', '<leader>fW' , ":lua require'jieba_nvim'.select_w()<CR>", {noremap = false, silent = true})
+    end
+  },
 }

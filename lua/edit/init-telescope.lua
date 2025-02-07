@@ -121,8 +121,12 @@ vim.keymap.set("n", "<leader>:", builtin.commands, {})
 
 -- lsp
 -- vim.keymap.set("n", "<leader>ft", builtin.lsp_document_symbols, {})
+
 vim.keymap.set("n", "<leader>J", builtin.lsp_references, {})
 vim.keymap.set("n", "<leader>K", builtin.lsp_definitions, {})
+
+-- diagnostic
+vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
 
 -- git
 -- vim.keymap.set("n", "<leader>gm", builtin.git_commits, {})
