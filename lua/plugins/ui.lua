@@ -1,4 +1,5 @@
 return {
+
 	-- 主题
 	{
 		"nvimdev/oceanic-material",
@@ -7,7 +8,35 @@ return {
 		-- config = function()
 		-- 	vim.cmd.colorscheme("oceanic_material")
 		-- end,
-	 },
+	},
+  {
+    'uloco/bluloco.nvim',
+    lazy = false,
+    priority = 1000,
+    dependencies = { 'rktjmp/lush.nvim' },
+    config = function()
+			-- vim.cmd.colorscheme("bluloco")
+    end,
+  },
+
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+			-- vim.cmd.colorscheme("gruvbox")
+    end,
+  },
+
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+			-- vim.cmd.colorscheme("tokyonight")
+    end,
+  },
 
   {
     'uloco/bluloco.nvim',
