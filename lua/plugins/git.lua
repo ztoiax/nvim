@@ -1,36 +1,39 @@
 return {
-	-- 在 vim 里使用 git
-	-- {
-	-- 	"tpope/vim-fugitive",
-	--    init = function ()
-	-- 	  vim.cmd([[
-	--        let g:fugitive_no_maps = v:true
-	--      ]])
-	-- 		vim.keymap.set("n", "<leader>gd", "<Cmd>Gvdiffsplit<CR>")
-	--    end
-	-- },
-
-	-- magit
-	"jreybert/vimagit",
-
   {
-    'SuperBo/fugit2.nvim',
-    opts = {
-      width = 100,
-    },
+    "NeogitOrg/neogit",
     dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'nvim-lua/plenary.nvim',
-      {
-        'chrisgrieser/nvim-tinygit', -- optional: for Github PR view
-        dependencies = { 'stevearc/dressing.nvim' }
-      },
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
     },
-    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
+    config = true,
     keys = {
-      { '<leader>gf', mode = 'n', '<cmd>Fugit2<cr>' },
-      { '<leader>gd', mode = 'n', '<cmd>Fugit2Diff<cr>' },
+      { '<leader>gG', mode = 'n', '<cmd>Neogit<cr>' },
+    }
+  },
+
+  -- diff
+  {
+    'sindrets/diffview.nvim',
+    opts = {
+      view = {
+        default = {
+          -- diff2_horizontal
+          layout = "diff2_vertical",
+        },
+        merge_tool = {
+          layout = "diff3_horizontal",
+        },
+        file_history = {
+          layout = "diff2_horizontal",
+        },
+      },
+      keymaps = {
+        disable_defaults = true, -- Disable the default keymaps
+      }
+    },
+    keys = {
+      { '<leader>gL', mode = 'n', '<cmd>DiffviewFileHistory<cr>' },
+      { '<leader>gD', mode = 'n', '<cmd>DiffviewOpen<cr>' },
     }
   },
 
@@ -43,7 +46,14 @@ return {
 	},
 
 	-- 显示文件变动
-	{ "lewis6991/gitsigns.nvim", config = true },
+	{
+    "lewis6991/gitsigns.nvim",
+    opts = {},
+    conifg = function ()
+      vim.keymap.set("n", "<leader>gd", "Gitsigns diffthis<cr>")
+      vim.keymap.set("n", "<leader>ud", "Gitsigns toggle_current_line_blame<cr>")
+	  end,
+  },
 
   -- 处理git conflict
   {
@@ -87,14 +97,14 @@ return {
   --     require("nvim-github-codesearch").setup({
   --       -- an optional table entry to explicitly configure the API key to use for Github API requests.
   --       -- alternatively, you can configure this parameter by export an environment variable named "GITHUB_AUTH_TOKEN"
-  --       github_auth_token = "",
+  --       github_auth_token = "GITHUB_AUTH_TOKEN",
   --
   --       -- this table entry is optional, if not provided "https://api.github.com" will be used by default
   --       -- otherwise this parameter can be used to configure a different Github API URL.
   --       github_api_url = "https://api.github.com",
   --
   --       -- whether to use telescope to display the github search results or not
-  --       use_telescope = false,
+  --       use_telescope = true,
   --     })
   --
   --     -- Usage

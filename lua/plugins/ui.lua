@@ -9,6 +9,35 @@ return {
 		-- end,
 	 },
 
+  {
+    'uloco/bluloco.nvim',
+    lazy = false,
+    priority = 1000,
+    dependencies = { 'rktjmp/lush.nvim' },
+    config = function()
+			-- vim.cmd.colorscheme("bluloco")
+    end,
+  },
+
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+			-- vim.cmd.colorscheme("gruvbox")
+    end,
+  },
+
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+			-- vim.cmd.colorscheme("tokyonight")
+    end,
+  },
+
 	{
 		"nvimdev/zephyr-nvim",
 	  lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -294,9 +323,7 @@ return {
 		config = function()
 			require("lualine").setup({
 				options = {
-					-- theme = "OceanicNext",
-					-- theme = bubbles_theme,
-					-- theme = "zephyr",
+					-- theme = "auto",
 					theme = "seoul256",
 					section_separators = { left = "", right = "" },
 					component_separators = { left = "", right = "" },

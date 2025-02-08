@@ -831,6 +831,8 @@ nvim.input('')
 
 - [cursor：基于vscode的ai编辑器](https://github.com/getcursor/cursor)
 
+- [aide：ai编辑器](https://github.com/codestoryai/aide)
+
 - [trae：字节跳动的基于vscode的ai编辑器（目前只支持mac os）](https://www.trae.ai/)
 
 # online tool

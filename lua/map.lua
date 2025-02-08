@@ -37,6 +37,11 @@ map("n", "<C-j>", ":wincmd j<CR>", { noremap = true })
 map("n", "<C-k>", ":wincmd k<CR>", { noremap = true })
 map("n", "<C-l>", ":wincmd l<CR>", { noremap = true })
 
+map("n", "<Left>", "<C-w>>", { noremap = true })
+map("n", "<Right>", "<C-w><", { noremap = true })
+map("n", "<Up>", "<C-w>+", { noremap = true })
+map("n", "<Down>", "<C-w>-", { noremap = true })
+
 -- virtual --
 map("n", "Y", "y$")
 map("n", "y0", "v0y")
