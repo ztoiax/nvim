@@ -11,18 +11,18 @@ return {
 	-- lua库函数 如vim.keymap.set
 	"nvim-lua/plenary.nvim",
 
-  -- 一些库函数
-  { 'echasnovski/mini.nvim', version = '*' },
+	-- 一些库函数
+	{ "echasnovski/mini.nvim", version = "*" },
 
-  {
-    'echasnovski/mini.misc',
-    version = '*',
-    init = function()
-      local misc = require("mini.misc")
-      -- 设置自动目录
-      misc.setup_auto_root()
-    end,
-  },
+	{
+		"echasnovski/mini.misc",
+		version = "*",
+		init = function()
+			local misc = require("mini.misc")
+			-- 设置自动目录
+			misc.setup_auto_root()
+		end,
+	},
 
 	-- popup弹窗库函数
 	"nvim-lua/popup.nvim",
@@ -37,15 +37,18 @@ return {
 	-- "Olical/conjure",
 
 	-- neovim lua 的lsp识别。不会出现Undefined global `vim`.
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-      },
-    },
-  },
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+
+	-- sqlite
+	"kkharji/sqlite.lua",
 }

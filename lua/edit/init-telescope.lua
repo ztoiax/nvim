@@ -111,7 +111,7 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
 vim.keymap.set("n", "<leader>/", builtin.search_history, {})
 vim.keymap.set("n", "<leader><space>", builtin.marks, {})
-vim.keymap.set("n", "<leader>fc", builtin.colorscheme, {})
+vim.keymap.set("n", "<leader>fC", builtin.colorscheme, {})
 vim.keymap.set("n", "<leader>fj", builtin.jumplist, {})
 vim.keymap.set("n", "<leader>fv", builtin.vim_options, {})
 vim.keymap.set("n", "<leader>ca", builtin.autocommands, {})
