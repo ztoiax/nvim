@@ -32,7 +32,6 @@ vim.opt.signcolumn = "auto:4" -- 左边数字栏可以同时显示多个状态�
 vim.opt.showtabline = 2       -- 顶部栏
 vim.opt.showmode = false      -- 是否在底部栏显示当前状态（NORMAL, INSERT...）
 vim.opt.fillchars = { vert = "|", fold = "-", eob = " " } -- 设置 fillchars 为 vert:|, fold:-, eob:空格
-vim.diagnostic.config({ virtual_text = false }) -- 关闭默认diagnostic诊断
 
 -- tab，空格，换行
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible
@@ -81,14 +80,17 @@ vim.g.autoformat_enabled = true       -- enable or disable auto formatting at st
 vim.g.codelens_enabled = true         -- enable or disable automatic codelens refreshing for lsp that support it
 vim.g.lsp_handlers_enabled = true     -- enable or disable default vim.lsp.handlers (hover and signatureHelp)
 vim.g.autopairs_enabled = true        -- enable autopairs at start
-vim.g.diagnostics_mode = 3            -- set the visibility of diagnostics in the UI (0=off 1=only show in status line 2=virtual text off 3=all on)
 vim.g.icons_enabled = true            -- disable icons in the UI (disable if no nerd font is available)
 vim.g.ui_notifications_enabled = true -- disable notifications when toggling UI elements
 
--- diagnostic
+vim.g.diagnostics_mode = 3            -- set the visibility of diagnostics in the UI (0=off 1=only show in status line 2=virtual text off 3=all on)
 vim.diagnostic.config{
+  -- 在侧边栏显示诊断标记
+  signs = true,
+
+  -- 行尾显示诊断信息
   virtual_text = {
-    virt_text_pos = 'eol_right_align',
+    virt_text_pos = 'eol',
   },
 }
 

@@ -6,15 +6,17 @@ return {
 			"sindrets/diffview.nvim", -- optional - Diff integration
 		},
 		event = "VeryLazy",
-		config = true,
+		cmd = { "Neogit" },
 		keys = {
 			{ "<leader>gG", mode = "n", "<cmd>Neogit<cr>" },
 		},
+		opts = {},
 	},
 
 	-- diff
 	{
 		"sindrets/diffview.nvim",
+		every = "VeryLazy",
 		opts = {
 			view = {
 				default = {
@@ -41,19 +43,25 @@ return {
 	-- 当前行显示commit信息
 	{
 		"f-person/git-blame.nvim",
-		confing = function()
-			vim.cmd([[ let g:gitblame_date_format = '%x, %X']])
-		end,
+		every = "VeryLazy",
+    opts = {
+      enabled = true,  -- if you want to enable the plugin
+      message_template = " <summary> • <date> • <author> • <<sha>>", -- template for the blame message, check the Message template section for more options
+      date_format = "%Y-%m-%d %H:%M:%S", -- template for the date, check Date format section for more options
+      virtual_text_column = 1,  -- virtual text start column, check Start virtual text at column section for more options
+    },
 	},
 
 	-- 显示文件变动
 	{
 		"lewis6991/gitsigns.nvim",
+		lazy = false,
+		every = "VeryLazy",
+		keys = {
+			{ "<leader>gd", ":Gitsigns diffthis <cr>", mode = "n" },
+			{ "<leader>ud", ":Gitsigns toggle_current_line_blame <cr>", mode = "n" },
+		},
 		opts = {},
-		config = function()
-			vim.keymap.set("n", "<leader>gd", "Gitsigns diffthis<cr>")
-			vim.keymap.set("n", "<leader>ud", "Gitsigns toggle_current_line_blame<cr>")
-		end,
 	},
 
 	-- 处理git conflict

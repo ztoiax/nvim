@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
+		lazy = false,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-lua/popup.nvim",
@@ -95,12 +96,27 @@ return {
 						':lua require("search").open({ collection = "git" })<CR>',
 						{ noremap = true, silent = true }
 					)
+
+					-- 如果是markdown文件就执行:ObsidianTOC；如果不是就执行require('search').open({ collection = 'code' })
+					-- vim.keymap.set("n", "<leader>ft", function()
+					-- 	if vim.bo.filetype == "markdown" then
+					-- 		vim.cmd("ObsidianTOC")
+					-- 	else
+					-- 		require("search").open({ collection = "code" })
+					-- 	end
+					-- end, {
+					-- 	noremap = true,
+					-- 	silent = true,
+					-- 	desc = "如果是markdown文件就执行:ObsidianTOC；如果不是就执行require('search').open({ collection = 'code' })",
+					-- })
+
 					vim.api.nvim_set_keymap(
 						"n",
 						"<leader>ft",
 						':lua require("search").open({ collection = "code" })<CR>',
 						{ noremap = true, silent = true }
 					)
+
 					vim.api.nvim_set_keymap(
 						"n",
 						"<leader>fo",

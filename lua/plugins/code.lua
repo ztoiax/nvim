@@ -22,6 +22,7 @@ return {
 	-- ai补全 fittencode
 	{
 		"luozhiya/fittencode.nvim",
+		lazy = false,
 		event = "InsertEnter",
 		cmd = {
 			"Fitten start_chat",
@@ -146,6 +147,7 @@ return {
 	{
 		"Kurama622/llm.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" },
+		event = "VeryLazy",
 		cmd = { "LLMSessionToggle", "LLMSelectedTextHandler", "LLMAppHandler" },
 		config = function()
 			local tools = require("llm.common.tools")
@@ -325,68 +327,14 @@ Based on this format, generate appropriate commit messages. Respond with message
 	--   end
 	-- },
 
-	------ completion ------
-
-	-- coq
-	-- {
-	--     "ms-jpq/coq_nvim", branch = "coq",
-	--     dependencies = {
-	--          "ms-jpq/coq.artifacts", branch = "artifacts" ,
-	--          "ms-jpq/coq.thirdparty", branch = "3p" ,
-	--     },
-	--     config = function() require("completion/init-coq") end,
-	-- },
-
-	-- cmp
-	-- {
-	-- 	"hrsh7th/nvim-cmp",
-	-- 	dependencies = {
-	-- 		"hrsh7th/cmp-nvim-lsp",
-	-- 		"hrsh7th/cmp-nvim-lua",
-	-- 		"hrsh7th/cmp-buffer",
-	-- 		"hrsh7th/cmp-path",
-	-- 		"lukas-reineke/cmp-rg",
-	--
-	--      -- highlight completion
-	--      "ray-x/cmp-treesitter",
-	--
-	-- 		-- icon
-	-- 		"onsails/lspkind-nvim",
-	--
-	-- 		-- luasnip
-	-- 		"saadparwaiz1/cmp_luasnip",
-	-- 		{
-	-- 		  "L3MON4D3/LuaSnip",
-	--       -- follow latest release.
-	--       version = "<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-	--       -- install jsregexp (optional!).
-	--       build = "make install_jsregexp",
-	--       config = function ()
-	-- 		    require("lua-snip")
-	--       end
-	-- 		},
-	-- 		{
-	-- 		  "rafamadriz/friendly-snippets",
-	-- 		  config = function ()
-	--          -- 加载friendly-snippets
-	--          local dir = vim.fn.stdpath("data") .. "/lazy" .. "/friendly-snippets"
-	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = dir })
-	--
-	-- 		    -- 加载自定义的snippets
-	--          require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/snippets" })
-	--
-	-- 		    -- 加载nvim-scissors插件的snippets
-	--        -- require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/nvim-scissors" })
-	--
-	-- 		  end
-	-- 		},
-	--
-
 	-- 创建当前的snippets
 	{
 		"chrisgrieser/nvim-scissors",
 		event = "VeryLazy",
-		dependencies = "nvim-telescope/telescope.nvim", -- optional
+		keys = {
+			{ "<leader>se", function() require("scissors").editSnippet() end, mode = "n" },
+			{ "<leader>sa", function() require("scissors").addNewSnippet() end, mode = { "n", "x" } },
+		},
 		config = function()
 			require("scissors").setup({
 				-- "~/.config/nvim/nvim-scissors",
@@ -434,33 +382,8 @@ Based on this format, generate appropriate commit messages. Respond with message
 				},
 			})
 
-			vim.keymap.set("n", "<leader>se", function()
-				require("scissors").editSnippet()
-			end)
-			-- When used in visual mode prefills the selection as body.
-			vim.keymap.set({ "n", "x" }, "<leader>sa", function()
-				require("scissors").addNewSnippet()
-			end)
 		end,
 	},
-	--
-	-- 		-- vim-dadbod补全
-	--      {
-	--        "kristijanhusak/vim-dadbod-completion",
-	--        init = function()
-	--          vim.api.nvim_create_autocmd("FileType", {
-	--            desc = "dadbod completion",
-	--            group = vim.api.nvim_create_augroup("dadbod_cmp", { clear = true }),
-	--            pattern = { "sql", "mysql", "plsql" },
-	--            callback = function() require("cmp").setup.buffer { sources = { { name = "vim-dadbod-completion" } } } end,
-	--          })
-	--        end,
-	--      },
-	-- 	},
-	-- 	config = function()
-	-- 		require("completion/init-cmp")
-	-- 	end,
-	-- },
 
 	{ "xzbdmw/colorful-menu.nvim", opts = true },
 
@@ -545,7 +468,7 @@ Based on this format, generate appropriate commit messages. Respond with message
 				-- 'prefix' will fuzzy match on the text before the cursor
 				-- 'full' will fuzzy match on the text before *and* after the cursor
 				-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
-				keyword = { range = "full" },
+				keyword = { range = "prefix" },
 
 				-- Disable auto brackets
 				-- NOTE: some LSPs may add auto brackets themselves anyway
@@ -556,23 +479,99 @@ Based on this format, generate appropriate commit messages. Respond with message
 				-- or set per mode
 				-- list = { selection = function(ctx) return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect' end },
 
+				trigger = {
+					-- When true, will prefetch the completion items when entering insert mode
+					prefetch_on_insert = false,
+
+					-- When false, will not show the completion window automatically when in a snippet
+					show_in_snippet = true,
+
+					-- When true, will show the completion window after typing any of alphanumerics, `-` or `_`
+					show_on_keyword = true,
+
+					-- When true, will show the completion window after typing a trigger character
+					show_on_trigger_character = true,
+
+					-- LSPs can indicate when to show the completion window via trigger characters
+					-- however, some LSPs (i.e. tsserver) return characters that would essentially
+					-- always show the window. We block these by default.
+					show_on_blocked_trigger_characters = function()
+						if vim.api.nvim_get_mode().mode == "c" then
+							return {}
+						end
+
+						-- you can also block per filetype, for example:
+						-- if vim.bo.filetype == 'markdown' then
+						--   return { ' ', '\n', '\t', '.', '/', '(', '[' }
+						-- end
+
+						return { " ", "\n", "\t" }
+					end,
+
+					-- When both this and show_on_trigger_character are true, will show the completion window
+					-- when the cursor comes after a trigger character after accepting an item
+					show_on_accept_on_trigger_character = true,
+
+					-- When both this and show_on_trigger_character are true, will show the completion window
+					-- when the cursor comes after a trigger character when entering insert mode
+					show_on_insert_on_trigger_character = true,
+
+					-- List of trigger characters (on top of `show_on_blocked_trigger_characters`) that won't trigger
+					-- the completion window when the cursor comes after a trigger character when
+					-- entering insert mode/accepting an item
+					show_on_x_blocked_trigger_characters = { "'", '"', "(" },
+					-- or a function, similar to show_on_blocked_trigger_character
+				},
+
+				list = {
+					-- Maximum number of items to display
+					max_items = 200,
+
+					selection = {
+						-- When `true`, will automatically select the first item in the completion list
+						-- preselect = true,
+						preselect = function(ctx)
+							return ctx.mode ~= "cmdline"
+						end,
+
+						-- When `true`, inserts the completion item automatically when selecting it
+						-- You may want to bind a key to the `cancel` command (default <C-e>) when using this option,
+						-- which will both undo the selection and hide the completion menu
+						-- auto_insert = true,
+						auto_insert = function(ctx)
+							return ctx.mode ~= "cmdline"
+						end,
+					},
+				},
+
 				menu = {
-					-- Don't automatically show the completion menu
+					enabled = true,
+					min_width = 15,
+					max_height = 10,
+					border = "none",
+					winblend = 0,
+					winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
+					-- Keep the cursor X lines away from the top/bottom of the window
+					scrolloff = 2,
+					-- Note that the gutter will be disabled when border ~= 'none'
+					scrollbar = true,
+					-- Which directions to show the window,
+					-- falling back to the next direction when there's not enough space
+					direction_priority = { "s", "n" },
 					-- auto_show = false,
-					-- Telescope下不显示窗口
-					auto_show = function()
+					auto_show = function(ctx)
 						return vim.bo.buftype ~= "prompt"
+							-- Telescope下不显示窗口补全
 							and vim.b.completion ~= false
 							and vim.bo.filetype ~= "TelescopePrompt"
+						-- cmdline模式下不显示窗口补全
+						-- and ctx.mode ~= "cmdline"
+						-- serach模式下不显示窗口补全
+						-- and vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype())
 					end,
 
 					-- nvim-cmp style menu
 					draw = {
-						-- columns = {
-						--   { "label", "label_description", gap = 1 },
-						--   { "kind_icon", "kind" }
-						-- },
-
 						columns = { { "kind_icon" }, { "label", gap = 1 } },
 						-- colorful-menu插件
 						components = {
@@ -593,7 +592,13 @@ Based on this format, generate appropriate commit messages. Respond with message
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 
 				-- Display a preview of the selected item on the current line
-				ghost_text = { enabled = false },
+				ghost_text = {
+					enabled = false,
+					-- Show the ghost text when an item has been selected
+					show_with_selection = true,
+					-- Show the ghost text when no item has been selected, defaulting to the first item
+					show_without_selection = false,
+				},
 			},
 
 			sources = {
@@ -615,7 +620,6 @@ Based on this format, generate appropriate commit messages. Respond with message
 					-- minuet ai插件
 					"minuet",
 				},
-				cmdline = {},
 				providers = {
 					-- copilot ai补全插件
 					copilot = {
@@ -685,10 +689,46 @@ Based on this format, generate appropriate commit messages. Respond with message
 				},
 			},
 
-			-- completion = { trigger = { prefetch_on_insert = false } },
-
 			-- experimental signature help support
 			signature = { enabled = true },
+
+			fuzzy = {
+				-- Allows for a number of typos relative to the length of the query
+				-- Set this to 0 to match the behavior of fzf
+				max_typos = function(keyword)
+					return math.floor(#keyword / 4)
+				end,
+				-- Frecency tracks the most recently/frequently used items and boosts the score of the item
+				use_frecency = true,
+				-- Proximity bonus boosts the score of items matching nearby words
+				use_proximity = true,
+				-- UNSAFE!! When enabled, disables the lock and fsync when writing to the frecency database. This should only be used on unsupported platforms (i.e. alpine termux)
+				use_unsafe_no_lock = false,
+				-- Controls which sorts to use and in which order, falling back to the next sort if the first one returns nil
+				-- You may pass a function instead of a string to customize the sorting
+				sorts = { "score", "sort_text" },
+
+				prebuilt_binaries = {
+					-- Whether or not to automatically download a prebuilt binary from github. If this is set to `false`
+					-- you will need to manually build the fuzzy binary dependencies by running `cargo build --release`
+					download = true,
+					-- Ignores mismatched version between the built binary and the current git sha, when building locally
+					ignore_version_mismatch = false,
+					-- When downloading a prebuilt binary, force the downloader to resolve this version. If this is unset
+					-- then the downloader will attempt to infer the version from the checked out git tag (if any).
+					--
+					-- Beware that if the fuzzy matcher changes while tracking main then this may result in blink breaking.
+					force_version = nil,
+					-- When downloading a prebuilt binary, force the downloader to use this system triple. If this is unset
+					-- then the downloader will attempt to infer the system triple from `jit.os` and `jit.arch`.
+					-- Check the latest release for all available system triples
+					--
+					-- Beware that if the fuzzy matcher changes while tracking main then this may result in blink breaking.
+					force_system_triple = nil,
+					-- Extra arguments that will be passed to curl like { 'curl', ..extra_curl_args, ..built_in_args }
+					extra_curl_args = {},
+				},
+			},
 
 			appearance = {
 				highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
@@ -749,6 +789,8 @@ Based on this format, generate appropriate commit messages. Respond with message
 	------ lsp ------
 	{
 		"williamboman/mason-lspconfig.nvim",
+		event = "VeryLazy",
+		-- build = ":MasonUpdate",
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
@@ -792,6 +834,7 @@ Based on this format, generate appropriate commit messages. Respond with message
 	-- lint
 	{
 		"rshkarin/mason-nvim-lint",
+		event = "VeryLazy",
 		config = function()
 			require("mason-nvim-lint").setup({
 				ensure_installed = {
@@ -815,6 +858,7 @@ Based on this format, generate appropriate commit messages. Respond with message
 	-- formatters
 	{
 		"zapling/mason-conform.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("mason-conform").setup({
 				ensure_installed = {
@@ -844,6 +888,7 @@ Based on this format, generate appropriate commit messages. Respond with message
 	-- dap
 	{
 		"jay-babu/mason-nvim-dap.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("mason-nvim-dap").setup({
 				"bash-debug-adapter", -- bash
@@ -985,6 +1030,7 @@ Based on this format, generate appropriate commit messages. Respond with message
 	-- 参数提示
 	{
 		"ray-x/lsp_signature.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("lsp_signature").setup({
 				bind = true, -- This is mandatory, otherwise border config won't get registered.
@@ -1055,51 +1101,60 @@ Based on this format, generate appropriate commit messages. Respond with message
 	},
 
 	-- lsp menu
-	{
-		"nvimdev/lspsaga.nvim",
-		event = "VeryLazy",
-		cmd = { "Lspsaga" },
-		keys = {
-			{ "K", ":Lspsaga peek_definition <cr>", mode = "n" },
-			{ "T", ":Lspsaga outline <cr>", mode = "n", desc = "lsp侧边栏，代替aerial.nvim" },
-			{ "<leader>fc", ":Lspsaga code_action <cr>", mode = "n" },
-			{ "<leader>fT", ":Lspsaga finder <cr>", mode = "n" },
-			-- { "<leader>rw", ":Lspsaga rename <cr>", mode = "n" },
-			{ "[d", ":Lspsaga diagnostic_jump_next <cr>", mode = "n" },
-			{ "]d", ":Lspsaga diagnostic_jump_prev <cr>", mode = "n" },
-
-			-- { "K", ":Lspsaga peek_type_definition <cr>", mode = "n" },
-			-- { "K", ":Lspsaga hover_doc<cr>", mode = "n" },
-		},
-		config = function()
-			require("lspsaga").setup({
-				-- lsp侧边栏
-				outline = {
-					win_position = "right",
-					keys = {
-						jump = "<cr>",
-						toggle_or_jump = "o",
-						quit = { "q" },
-					},
-				},
-
-				code_action = {
-					keys = {
-						quit = { "q", "<esc>", "<c-n>" },
-						exec = "<cr>",
-					},
-				},
-
-        finder = {
-          max_width = 0.9,
-          max_height = 0.9,
-          keys = {
-            vsplit = 'v',
-          },
-        }
-			})
-		end,
-	},
+	-- {
+	-- 	"nvimdev/lspsaga.nvim",
+	-- 	event = "VeryLazy",
+	-- 	cmd = { "Lspsaga" },
+	-- 	keys = {
+	-- 		{ "K", ":Lspsaga peek_definition <cr>", mode = "n" },
+	-- 		{ "T", ":Lspsaga outline <cr>", mode = "n", desc = "lsp侧边栏，代替aerial.nvim" },
+	-- 		{ "<leader>fc", ":Lspsaga code_action <cr>", mode = "n" },
+	-- 		{ "<leader>fT", ":Lspsaga finder <cr>", mode = "n" },
+	-- 		-- { "<leader>rw", ":Lspsaga rename <cr>", mode = "n" },
+	-- 		{ "[d", ":Lspsaga diagnostic_jump_next <cr>", mode = "n" },
+	-- 		{ "]d", ":Lspsaga diagnostic_jump_prev <cr>", mode = "n" },
+	--
+	-- 		-- { "K", ":Lspsaga peek_type_definition <cr>", mode = "n" },
+	-- 		-- { "K", ":Lspsaga hover_doc<cr>", mode = "n" },
+	-- 	},
+	-- 	config = function()
+	-- 		require("lspsaga").setup({
+	-- 			-- winbar
+	-- 			symbol_in_winbar = {
+	-- 				enable = false,
+	-- 			},
+	-- 			-- lsp侧边栏
+	-- 			outline = {
+	-- 				win_position = "right",
+	-- 				keys = {
+	-- 					jump = "<cr>",
+	-- 					toggle_or_jump = "o",
+	-- 					quit = { "q" },
+	-- 				},
+	-- 			},
+	--
+	-- 			code_action = {
+	-- 				keys = {
+	-- 					quit = { "q", "<esc>", "<c-n>" },
+	-- 					exec = "<cr>",
+	-- 				},
+	-- 			},
+	--
+	-- 			-- 💡code_action
+	-- 			lightbulb = {
+	-- 				enable = false,
+	-- 			},
+	--
+	-- 			finder = {
+	-- 				max_width = 0.9,
+	-- 				max_height = 0.9,
+	-- 				keys = {
+	-- 					vsplit = "v",
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	-- lsp进度
 	-- {
