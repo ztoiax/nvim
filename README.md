@@ -829,6 +829,8 @@ nvim.input('')
 
 - [vscodium：vscode去除ms服务的开源版](https://github.com/VSCodium/vscodium)
 
+- [scripton：python ide。可以实时可视化代码运行结果](https://scripton.dev/)
+
 # online tool
 
 - [在线vim](https://www.vimonlineeditor.com/)

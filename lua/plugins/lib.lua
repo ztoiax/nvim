@@ -1,7 +1,4 @@
 return {
-	-- 自己
-	"wbthomason/packer.nvim",
-
 	-- 对当前缓冲区, 打开一个lua的repl
 	{ "rafcamlet/nvim-luapad", cmd = { "Luapad", "LuaRun" } },
 
@@ -51,4 +48,7 @@ return {
 
 	-- sqlite
 	"kkharji/sqlite.lua",
+
+	-- postman版nvim
+	{ "mistweaverco/kulala.nvim", opts = {} },
 }

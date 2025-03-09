@@ -31,7 +31,7 @@ return {
 				},
 			},
 			keymaps = {
-				disable_defaults = true, -- Disable the default keymaps
+				-- disable_defaults = true, -- Disable the default keymaps
 			},
 		},
 		keys = {

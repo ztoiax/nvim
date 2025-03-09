@@ -477,8 +477,20 @@ return {
 	-- 数据库
 	{
 		"kristijanhusak/vim-dadbod-ui",
-		dependencies = "tpope/vim-dadbod",
-		event = "VeryLazy",
+		dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      {
+        "kristijanhusak/vim-dadbod-completion",
+        ft = { 'sql', 'mysql', 'plsql' },
+        lazy = true
+      },
+    },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
 		config = function()
 			-- 数据库路径
 			vim.cmd([[

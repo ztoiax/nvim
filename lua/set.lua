@@ -12,7 +12,7 @@ vim.opt.relativenumber = true                           -- 显示相对行
 vim.opt.autochdir = false                                -- 根据当前文件，自动切换目录
 vim.opt.autoread = true                                 -- 文件发生外部改变，会自动更新，并发出提示
 vim.opt.swapfile = false                                -- 关闭swap file
-vim.opt.conceallevel = 0                                -- 关闭隐藏keyword
+vim.opt.conceallevel = 2
 
 vim.opt.scrolloff = 8         -- Number of lines to keep above and below the cursor
 vim.opt.sidescrolloff = 8     -- Number of columns to keep at the sides of the cursor
@@ -32,6 +32,7 @@ vim.opt.signcolumn = "auto:4" -- 左边数字栏可以同时显示多个状态�
 vim.opt.showtabline = 2       -- 顶部栏
 vim.opt.showmode = false      -- 是否在底部栏显示当前状态（NORMAL, INSERT...）
 vim.opt.fillchars = { vert = "|", fold = "-", eob = " " } -- 设置 fillchars 为 vert:|, fold:-, eob:空格
+vim.opt.splitkeep = "screen"  -- 分割窗口时保持屏幕不变
 
 -- tab，空格，换行
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible

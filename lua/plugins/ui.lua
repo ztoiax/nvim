@@ -127,6 +127,8 @@ return {
 		priority = 1000,
 		lazy = false,
 		opts = {
+			-- 动画库
+			animate = {},
 			-- 检测到大文件就自动阻止LSP和Treesitter等附加到缓冲区
 			bigfile = {
 				enabled = true,
@@ -173,6 +175,8 @@ return {
 			debug = { enabled = true },
 			-- 专注当前函数、调暗其他部分
 			dim = { enabled = true },
+			-- markdown文件显示图片
+			image = {},
 			-- 导航线
 			indent = { enabled = true },
 			-- input函数
@@ -183,6 +187,8 @@ return {
 			gitbrowse = { enabled = true },
 			-- lazygit
 			lazygit = { enabled = false },
+			-- 文件管理器
+			explorer = {},
 			-- 类似telescope
 			picker = { enabled = false },
 			-- 通知
@@ -203,6 +209,20 @@ return {
 			toggle = { enabled = true },
 		},
 		keys = {
+			{
+				"<leader>.",
+				function()
+					Snacks.scratch()
+				end,
+				desc = "Toggle Scratch Buffer",
+			},
+			{
+				"<leader>S",
+				function()
+					Snacks.scratch.select()
+				end,
+				desc = "Select Scratch Buffer",
+			},
 			{
 				"gX",
 				function()
@@ -227,11 +247,25 @@ return {
 				desc = "Lazygit Log (cwd)",
 			},
 			{
+				"<leader>fR",
+				function()
+					Snacks.explorer()
+				end,
+				desc = "Lazygit Log (cwd)",
+			},
+			{
 				"<leader>fn",
 				function()
 					Snacks.notifier.show_history()
 				end,
 				desc = "Notification History",
+			},
+			{
+				"<c-w>",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "which_key_ignore",
 			},
 			{
 				"<leader>un",
@@ -294,6 +328,23 @@ return {
 		end,
 	},
 
+	-- 通知menu
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+	},
+
 	-- highlight whitespace
 	-- {
 	--   "lukoshkin/highlight-whitespace",
@@ -307,6 +358,13 @@ return {
 			{ "<F3>", ":<c-u>HSHighlight 1 <cr>", mode = "v", desc = "高亮选中的字符" },
 			{ "<F4>", ":<c-u>HSRmHighlight <cr>", mode = "v", desc = "取消高亮" },
 		},
+	},
+
+  -- highlight 光标所在的单词当前单词，并有动画
+	{
+		"tzachar/local-highlight.nvim",
+		event = "VeryLazy",
+		config = true
 	},
 
 	-- statuscolumn左边栏
@@ -453,69 +511,10 @@ return {
 			vim.keymap.set({ "n" }, "<leader>>>", "<Cmd>BufferLineMoveNext<CR>", kopts)
 			vim.keymap.set({ "n" }, "<leader><<", "<Cmd>BufferLineMovePrev<CR>", kopts)
 
-			vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
+			-- vim.keymap.set({ "n" }, "<C-w>", "<Cmd>bdelete!<CR>", kopts)
 			-- vim.keymap.set({ "n" }, "X", "<C-^>", kopts)
 		end,
 	},
-
-	-- {
-	-- 	"famiu/bufdelete.nvim",
-	-- 	config = function()
-	-- 		-- 强制删除
-	-- 		-- vim.keymap.set({ "n" }, "<C-w>", "lua require('bufdelete').bufdelete(0, true)<cr>")
-	-- 		vim.cmd([[nmap <C-w> :lua require('bufdelete').bufdelete(0, true)<cr>]])
-	-- 		-- 不强制删除
-	-- 		-- vim.keymap.set('n', '<C-w>', "lua require('bufdelete').bufwipeout(0, true)", {})
-	-- 		-- vim.cmd([[nmap <C-w> :lua require('bufdelete').bufwipeout(0, true)<cr>]])
-	-- 	end,
-	-- },
-
-	-- 通知menu
-	-- {
-	--    "rcarriga/nvim-notify",
-	--    config = function ()
-	--      vim.notify = require("notify")
-	--    end
-	--  },
-
-	-- {
-	--   "folke/noice.nvim",
-	--    event = "VeryLazy",
-	--   dependencies = {
-	--     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-	--     "MunifTanjim/nui.nvim",
-	--     -- OPTIONAL:
-	--     --   `nvim-notify` is only needed, if you want to use the notification view.
-	--     --   If not available, we use `mini` as the fallback
-	--     "rcarriga/nvim-notify",
-	--   },
-	--   config = function()
-	--     require("noice").setup({
-	--       lsp = {
-	--         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-	--         override = {
-	--           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-	--           ["vim.lsp.util.stylize_markdown"] = true,
-	--            -- ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-	--         },
-	--       },
-	--        -- you can enable a preset for easier configuration
-	--        presets = {
-	--          bottom_search = true, -- use a classic bottom cmdline for search
-	--          command_palette = true, -- position the cmdline and popupmenu together
-	--          long_message_to_split = true, -- long messages will be sent to a split
-	--          inc_rename = false, -- enables an input dialog for inc-rename.nvim
-	--          lsp_doc_border = false, -- add a border to hover docs and signature help
-	--        },
-	--     })
-	--   end,
-	-- },
-
-	-- {
-	--   'echasnovski/mini.notify',
-	--   version = '*',
-	--   opts = {}
-	-- },
 
 	-- mark
 	-- {
