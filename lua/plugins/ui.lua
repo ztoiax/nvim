@@ -5,8 +5,7 @@ return {
 		"nvimdev/oceanic-material",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- 默认为50
-		-- config = function()
-		-- 	vim.cmd.colorscheme("oceanic_material")
+		-- config = function() vim.cmd.colorscheme("oceanic_material")
 		--  vim.o.background = "dark"
 		-- end,
 	},
@@ -152,7 +151,7 @@ return {
 							desc = "Config",
 							action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
 						},
-						{ icon = " ", key = "s", desc = "Restore Session", action = ":SessionLoadLast" },
+						{ icon = " ", key = "s", desc = "Restore Session", action = ":Persisted load_last" },
 						{
 							icon = "󰩡",
 							key = "L",
@@ -307,6 +306,8 @@ return {
 					vim.keymap.set("n", "<leader>ul", Util.toggle_lsp, { desc = "Toggle Lsp" })
 					vim.keymap.set("n", "<leader>uf", Util.toggle_fold, { desc = "Toggle Fold" })
 					vim.keymap.set("n", "<leader>ug", ":GitBlameToggle<cr>", { desc = "Toggle GitBlame" })
+					vim.keymap.set("n", "<leader>um", ":RenderMarkdown toggle<cr>", { desc = "Toggle RenderMarkdown" })
+					vim.keymap.set("n", "<leader>uh", ":TSHighlightDisable<cr>", { desc = "Toggle RenderMarkdown" })
 
 					Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
 					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
@@ -360,11 +361,11 @@ return {
 		},
 	},
 
-  -- highlight 光标所在的单词当前单词，并有动画
+	-- highlight 光标所在的单词当前单词，并有动画
 	{
 		"tzachar/local-highlight.nvim",
 		event = "VeryLazy",
-		config = true
+		config = true,
 	},
 
 	-- statuscolumn左边栏
@@ -696,6 +697,7 @@ return {
 
 	{
 		"mikavilpas/yazi.nvim",
+    version = "*", -- use the latest stable version
 		event = "VeryLazy",
 		keys = {
 			-- 👇 in this section, choose your own keymappings!
@@ -716,6 +718,29 @@ return {
 	},
 
 	-- 翻译
+	-- {
+	-- 	"uga-rosa/translate.nvim",
+	--   config = function()
+	-- 	  vim.api.nvim_set_keymap('n', '<leader>tr', "viw:Translate ZH -output=replace<CR>", { noremap = true, silent = true })
+	-- 	  vim.api.nvim_set_keymap('v', '<leader>tr', ":'<,'>Translate ZH -output=replace<CR>", { noremap = true, silent = true })
+	-- 	  vim.api.nvim_set_keymap('n', '<leader>ts', "viw:Translate ZH<CR>", { noremap = true, silent = true })
+	-- 	  vim.api.nvim_set_keymap('v', '<leader>ts', ":'<,'>Translate ZH<CR>",
+	-- 		  { noremap = true, silent = true })
+	-- 	  require("translate").setup({
+	-- 		  default = {
+	-- 			  command = "translate_shell",
+	-- 		  },
+	-- 		  preset = {
+	-- 			  command = {
+	-- 				  translate_shell = {
+	-- 					  args = { "-e", "bing" }
+	-- 				  }
+	-- 			  }
+	-- 		  }
+	-- 	  })
+	--   end
+	--  },
+
 	{
 		"JuanZoran/Trans.nvim",
 		build = function()
@@ -805,11 +830,11 @@ return {
 	-- },
 
 	-- session
-	{
-		"olimorris/persisted.nvim",
-		lazy = false, -- make sure the plugin is always loaded at startup
-		config = true,
-	},
+	-- Lua
+  {
+    "olimorris/persisted.nvim",
+    opts = {},
+  },
 
 	-- menu
 	{ "nvchad/volt", lazy = true },
@@ -902,59 +927,24 @@ return {
 		config = true,
 	},
 
+  -- 在短时间内阻止重复按键
+  -- 提供更高效的 Vim motion 提示
+  -- 报告你最常犯的坏习惯
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   lazy = false,
+  --   dependencies = { "MunifTanjim/nui.nvim" },
+  --   opts = {},
+  -- },
+
 	-- 中文分词跳转
 	{
-		"noearc/jieba.nvim",
-		dependencies = { "noearc/jieba-lua" },
-		opts = {},
-		config = function()
-			vim.keymap.set(
-				{ "x", "n" },
-				"B",
-				'<cmd>lua require("jieba_nvim").wordmotion_B()<CR>',
-				{ noremap = false, silent = true }
-			)
-			vim.keymap.set(
-				{ "x", "n" },
-				"b",
-				'<cmd>lua require("jieba_nvim").wordmotion_b()<CR>',
-				{ noremap = false, silent = true }
-			)
-			vim.keymap.set(
-				{ "x", "n" },
-				"w",
-				'<cmd>lua require("jieba_nvim").wordmotion_w()<CR>',
-				{ noremap = false, silent = true }
-			)
-			vim.keymap.set(
-				{ "x", "n" },
-				"W",
-				'<cmd>lua require("jieba_nvim").wordmotion_W()<CR>',
-				{ noremap = false, silent = true }
-			)
-			-- vim.keymap.set({'x', 'n'}, 'E', '<cmd>lua require("jieba_nvim").wordmotion_E()<CR>', {noremap = false, silent = true})
-			vim.keymap.set(
-				{ "x", "n" },
-				"e",
-				'<cmd>lua require("jieba_nvim").wordmotion_e()<CR>',
-				{ noremap = false, silent = true }
-			)
-			vim.keymap.set(
-				{ "x", "n" },
-				"ge",
-				'<cmd>lua require("jieba_nvim").wordmotion_ge()<CR>',
-				{ noremap = false, silent = true }
-			)
-			vim.keymap.set(
-				{ "x", "n" },
-				"gE",
-				'<cmd>lua require("jieba_nvim").wordmotion_gE()<CR>',
-				{ noremap = false, silent = true }
-			)
-
-			vim.keymap.set("n", "ce", ":lua require'jieba_nvim'.change_w()<CR>", { noremap = false, silent = true })
-			vim.keymap.set("n", "de", ":lua require'jieba_nvim'.delete_w()<CR>", { noremap = false, silent = true })
-			-- vim.keymap.set('n', '<leader>fW' , ":lua require'jieba_nvim'.select_w()<CR>", {noremap = false, silent = true})
-		end,
-	},
+    "kkew3/jieba.vim",
+    tag = "v2.1.0",
+    build = ":call jieba_vim#install()",
+    init = function()
+      vim.g.jieba_vim_lazy = 1
+      vim.g.jieba_vim_keymap = 1
+    end,
+  },
 }

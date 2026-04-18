@@ -9,9 +9,16 @@ return {
 				-- parser_install_dir = "/some/path/to/store/parsers", -- 安装目录
 				highlight = {
 					enable = true, -- false will disable the whole extension
-					-- markdown大文件，输入模式会卡
+
 					-- disable = { "markdown" },
-					additional_vim_regex_highlighting = false, -- highlight, 可能会变卡
+
+					disable = function(lang, buf)
+					       -- 如果文件超过2000行，也禁用高亮
+					       if vim.api.nvim_buf_line_count(buf) > 2000 then
+					         return true
+					       end
+					     end,
+					additional_vim_regex_highlighting = false, -- 正则highlight, 可能会变卡
 				},
 				ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 				auto_install = true, -- 进入缓冲区时自动安装缺少的解析器
@@ -151,19 +158,6 @@ return {
 	},
 
 	-- 彩虹括号
-	-- {
-	-- 	"p00f/nvim-ts-rainbow",
-	-- 	config = function()
-	-- 		require("nvim-treesitter.configs").setup({
-	-- 			-- 彩虹括号
-	-- 			rainbow = {
-	-- 				enable = true,
-	-- 				extended_mode = true,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-
 	{
 		"hiphish/rainbow-delimiters.nvim",
 		config = function()
@@ -181,34 +175,34 @@ return {
 		end,
 	},
 
-	-- 移动时显示函数上下文
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		cmd = { "TSContextEnable", "TSContextDisable", "TSContextToggle" },
-		config = function()
-			require("treesitter-context").setup({ enable = true })
-		end,
-	},
+	-- 移动时显示函数上下文。有点卡
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-context",
+	-- 	cmd = { "TSContextEnable", "TSContextDisable", "TSContextToggle" },
+	-- 	config = function()
+	-- 		require("treesitter-context").setup({ enable = true })
+	-- 	end,
+	-- },
 
 	-- 自动结束某些结构（if、while等）加end。支持ruby、vimscript、lua等
-	{
-		"RRethy/nvim-treesitter-endwise",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				endwise = {
-					enable = true,
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"RRethy/nvim-treesitter-endwise",
+	-- 	config = function()
+	-- 		require("nvim-treesitter.configs").setup({
+	-- 			endwise = {
+	-- 				enable = true,
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
-	-- highlight if, else语法块
-	{
-		"andymass/vim-matchup",
-		config = function()
-			require("nvim-treesitter.configs").setup({ matchup = { enable = true } })
-		end,
-	},
+	-- highlight if, else语法块。有点卡
+	-- {
+	-- 	"andymass/vim-matchup",
+	-- 	config = function()
+	-- 		require("nvim-treesitter.configs").setup({ matchup = { enable = true } })
+	-- 	end,
+	-- },
 
 	-- highlight 同一单词
 	-- {
@@ -217,5 +211,5 @@ return {
 	-- },
 
 	-- highlight 参数
-	{ "m-demare/hlargs.nvim", config = true },
+	-- { "m-demare/hlargs.nvim", config = true },
 }

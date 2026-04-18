@@ -204,20 +204,20 @@ return {
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
 		config = function()
-			require("nvim-surround").setup({
-				keymaps = {
-					insert = "<C-g>s",
-					insert_line = "<C-g>S",
-					normal = "s",
-					normal_cur = "yss",
-					normal_line = "yS",
-					normal_cur_line = "S",
-					visual = "s",
-					visual_line = "S",
-					delete = "ds",
-					change = "cs",
-					change_line = "cS",
-				},
+      vim.g.nvim_surround_config = {
+				-- keymaps = {
+				-- 	insert = "<C-g>s",
+				-- 	insert_line = "<C-g>S",
+				-- 	normal = "s",
+				-- 	normal_cur = "yss",
+				-- 	normal_line = "yS",
+				-- 	normal_cur_line = "S",
+				-- 	visual = "s",
+				-- 	visual_line = "S",
+				-- 	delete = "ds",
+				-- 	change = "cs",
+				-- 	change_line = "cS",
+				-- },
 				surrounds = {
 					["c"] = {
 						add = { "```", "```" },
@@ -227,7 +227,7 @@ return {
 						delete = "^(.)().-(.)()$",
 					},
 				},
-			})
+			}
 		end,
 	},
 
@@ -572,4 +572,11 @@ return {
 			})
 		end,
 	},
+
+	-- ethersync: 一个同步服务器，使用者安装后，再选择它的编辑器插件（NeoVim/VScode/Web），就可以实现编辑器同步。
+  {
+    "ethersync/ethersync-nvim",
+    -- keys = { { "<leader>j", "<cmd>EthersyncJumpToCursor<cr>" } },
+    lazy = false,
+  },
 }

@@ -19,6 +19,9 @@ return {
 	--   end,
 	-- },
 
+	-- 微软和谷歌的工程师离职开发的
+	-- { "augmentcode/augment.vim" },
+
 	-- ai补全 fittencode
 	{
 		"luozhiya/fittencode.nvim",
@@ -67,8 +70,7 @@ return {
 		lazy = false,
 		version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 		opts = {
-			provider = "deepseek",
-			vendors = {
+			providers = {
 				deepseek = {
 					__inherited_from = "openai",
 					api_key_name = "DEEPSEEK_API_KEY",
@@ -145,32 +147,35 @@ return {
 						jumpBetweenBodyAndPrefix = "<Tab>", -- insert & normal mode
 					},
 				},
-				telescope = {
-					-- By default, the query only searches snippet prefixes. Set this to
-					-- `true` to also search the body of the snippets.
-					alsoSearchSnippetBody = false,
 
-					-- accepts the common telescope picker config
-					opts = {
-						layout_strategy = "horizontal",
-						layout_config = {
-							horizontal = { width = 0.9 },
-							preview_width = 0.6,
-						},
-					},
-				},
-				-- `none` writes as a minified json file using `vim.encode.json`.
-				-- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
-				-- you version control your snippets.
-				jsonFormatter = "none", -- "yq"|"jq"|"none"
+	      snippetSelection = {
+				  telescope = {
+					  -- By default, the query only searches snippet prefixes. Set this to
+					  -- `true` to also search the body of the snippets.
+					  alsoSearchSnippetBody = false,
 
-				backdrop = {
-					enabled = true,
-					blend = 50, -- between 0-100
-				},
-				icons = {
-					scissors = "󰩫",
-				},
+					  -- accepts the common telescope picker config
+					  opts = {
+						  layout_strategy = "horizontal",
+						  layout_config = {
+							  horizontal = { width = 0.9 },
+							  preview_width = 0.6,
+						  },
+					  },
+				  },
+				  -- `none` writes as a minified json file using `vim.encode.json`.
+				  -- `yq`/`jq` ensure formatted & sorted json files, which is relevant when
+				  -- you version control your snippets.
+				  jsonFormatter = "none", -- "yq"|"jq"|"none"
+
+				  backdrop = {
+					  enabled = true,
+					  blend = 50, -- between 0-100
+				  },
+				  icons = {
+					  scissors = "󰩫",
+				  },
+			  }
 			})
 		end,
 	},
@@ -222,8 +227,6 @@ return {
 			-- your own keymap.
 			keymap = {
 				preset = "default",
-				-- ['<Tab>'] = { 'show', 'select_next', 'snippet_forward', 'fallback' },
-				-- ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
 				["<Tab>"] = {
 					function(cmp)
 						if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
@@ -268,13 +271,22 @@ return {
 			cmdline = {
 				keymap = {
 					-- recommended, as the default keymap will only show and select the next item
-					["<Tab>"] = { "show", "accept" },
+					-- ["<Tab>"] = { "show", "accept" },
+				  ["<C-j>"] = { "select_next", "fallback" },
+				  ["<C-k>"] = { "select_prev", "fallback" },
 					["<CR>"] = { "accept_and_enter", "fallback" },
 				},
 				completion = {
 					menu = { auto_show = true },
 					ghost_text = { enabled = true },
-				},
+
+          list = {
+            selection = {
+              preselect = false,
+              auto_insert = false
+            }
+				  },
+			  },
 			},
 
 			completion = {
@@ -341,19 +353,8 @@ return {
 					max_items = 200,
 
 					selection = {
-						-- When `true`, will automatically select the first item in the completion list
-						-- preselect = true,
-						preselect = function(ctx)
-							return ctx.mode ~= "cmdline"
-						end,
-
-						-- When `true`, inserts the completion item automatically when selecting it
-						-- You may want to bind a key to the `cancel` command (default <C-e>) when using this option,
-						-- which will both undo the selection and hide the completion menu
-						-- auto_insert = true,
-						auto_insert = function(ctx)
-							return ctx.mode ~= "cmdline"
-						end,
+            preselect = false,   -- 不自动选中第一个候选项
+            auto_insert = false, -- 选中时不自动插入预览
 					},
 				},
 
@@ -424,7 +425,7 @@ return {
 					-- copilot ai补全插件
 					"copilot",
 					-- fittencode ai补全插件
-					"fittencode",
+					-- "fittencode",
 					-- avante ai插件
 					"avante_commands",
 					"avante_mentions",
@@ -437,17 +438,6 @@ return {
 					sql = { "snippets", "dadbod", "buffer" },
 				},
 				providers = {
-					cmdline = {
-						-- 超过3个字符才自动补全
-						min_keyword_length = function(ctx)
-							-- when typing a command, only show when the keyword is 3 characters or longer
-							if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
-								return 3
-							end
-							return 0
-						end,
-					},
-
 					-- kristijanhusak/vim-dadbod-completion插件
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 
@@ -606,10 +596,9 @@ return {
 
 	-- 安装lsp、lint、format、dap插件
 	{
-		"williamboman/mason.nvim",
-		-- build = ":MasonUpdate",
-		config = true,
-	},
+    "mason-org/mason.nvim",
+    opts = {}
+  },
 	------ lsp ------
 	{
 		-- 可安装列表 https://mason-registry.dev/registry/list
@@ -637,7 +626,7 @@ return {
 					"yamlls", -- yaml
 					"taplo", -- toml
 					"lemminx", -- xml
-					-- "harper_ls", -- 语法检查器
+					-- "harper-ls", -- 只支持英语的语法检查器
 					"sqls", -- sql
 					"cmake", -- cmake
 					"dockerls", -- docker
@@ -665,7 +654,8 @@ return {
 			require("mason-nvim-lint").setup({
 				ensure_installed = {
 					"shellcheck", -- bash
-					"ast-grep", -- c, c++, rust, go, java, python, c#, javascript, jsx, typescript, html, css, kotlin, dart, lua
+					-- "ast-grep", -- c, c++, rust, go, java, python, c#, javascript, jsx, typescript, html, css, kotlin, dart, lua
+          "trivy", -- (keywords: c, c#, c++, dart, docker, elixir, go, helm, java, javascript, php, python, ruby, rust, terraform, typescript)
 					"cfn-lint", -- json, yaml
 					"cmakelint", -- cmake
 					"vale", -- text, markdown, latex
@@ -756,9 +746,9 @@ return {
 					init_options = { clangdFileStatus = true },
 				},
 				-- python
-				pyright = {
-					settings = { python = { workspaceSymbols = { enabled = true } } },
-				},
+				-- pyright = {
+				-- 	settings = { python = { workspaceSymbols = { enabled = true } } },
+				-- },
 				-- ts、js
 				ts_ls = {},
 				html = {},
@@ -819,6 +809,7 @@ return {
 		config = function(_, opts)
 			-- blink.cmp
 			local lspconfig = require("lspconfig")
+			-- local lspconfig = vim.lsp.config
 
 			for server, config in pairs(opts.servers) do
 				-- passing config.capabilities to blink.cmp merges with the capabilities in your
@@ -829,6 +820,7 @@ return {
 
 			-- systemd
 			local configs = require("lspconfig.configs")
+			-- local configs = vim.lsp.config
 			if not configs.systemd_ls then
 				configs.systemd_ls = {
 					default_config = {
@@ -842,10 +834,10 @@ return {
 					},
 					docs = {
 						description = [[
-              https://github.com/psacawa/systemd-language-server
+	             https://github.com/psacawa/systemd-language-server
 
-              Language Server for Systemd unit files.
-            ]],
+	             Language Server for Systemd unit files.
+	           ]],
 					},
 				}
 			end
@@ -861,20 +853,22 @@ return {
 				bash = { "shellcheck" },
 				zsh = { "shellcheck" },
 				python = { "ruff" },
-				c = { "ast-grep" },
-				cpp = { "ast-grep" },
-				go = { "ast-grep" },
-				java = { "ast-grep" },
-				js = { "ast-grep" },
-				ts = { "ast-grep" },
-				html = { "ast-grep" },
-				css = { "ast-grep" },
-				lua = { "ast-grep" },
-				json = { "cfn-lint" },
-				yaml = { "cfn-lint" },
+				c = { "trivy" },
+				cpp = { "trivy" },
+				go = { "trivy" },
+				java = { "trivy" },
+				js = { "trivy" },
+				ts = { "trivy" },
+				html = { "trivy" },
+				css = { "trivy" },
+				lua = { "trivy" },
+				kotlin = { "trivy" },
+				dart = { "trivy" },
+				json = { "cfn_lint" },
+				yaml = { "cfn_lint" },
 				cmake = { "cmakelint" },
 				markdown = { "vale" },
-				ansible = { "ansible-lint" },
+				ansible = { "ansible_lint" },
 				sql = { "sqlfluff" },
 				vimscript = { "vint" },
 				dockerfile = { "hadolint" },
@@ -1017,6 +1011,34 @@ return {
 	--    opts = {},
 	--    config = function ()
 	--      vim.api.nvim_set_keymap("n", "<leader>uS", ":Fidget suppress", { noremap = true, silent = true })
+	--    end
+	--  },
+
+  -- lsp 在web上的3d图形显示
+	{
+    "nvimdev/visualizer.nvim",
+
+    -- === Visualizer.nvim 命令 ===
+		-- Visualizer incoming
+		-- Visualizer outgoing
+		-- Visualizer full
+		-- Visualizer workspace_symbol
+
+		opts = {},
+	  config = function ()
+	    vim.api.nvim_set_keymap("n", "<leader>rl", ":Visualizer workspace_symbol<cr>", { noremap = true, silent = true })
+	  end
+  },
+
+	-- mcp
+	-- {
+	--    "ravitemer/mcphub.nvim",
+	--    dependencies = {
+	--        "nvim-lua/plenary.nvim",
+	--    },
+	--    build = "npm install -g mcp-hub@latest",  -- Installs `mcp-hub` node binary globally
+	--    config = function()
+	--        require("mcphub").setup()
 	--    end
 	--  },
 }

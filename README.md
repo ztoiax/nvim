@@ -9,6 +9,7 @@
     * [socket通信(需要neovim 0.7)](#socket通信需要neovim-07)
     * [nvr: shell命令控制nvim](#nvr-shell命令控制nvim)
     * [编辑远程文件](#编辑远程文件)
+      * [ethersync: 一个同步服务器，使用者安装后，再选择它的编辑器插件（NeoVim/VScode/Web），就可以实现编辑器同步。](#ethersync-一个同步服务器使用者安装后再选择它的编辑器插件neovimvscodeweb就可以实现编辑器同步)
   * [tips(技巧)](#tips技巧)
     * [qucikfix和grep、vimgrep、vimgrepadd、cexpr、make|cdo、cfdo](#qucikfix和grepvimgrepvimgrepaddcexprmakecdocfdo)
     * [location和lgrep、lvimgrep、lmake、ldo、lfdo](#location和lgreplvimgreplmakeldolfdo)
@@ -240,6 +241,9 @@ command! Esuse :e scp://root@192.168.100.71//
 ```
 
  还有几十个插件,有机会我会一并整理出来
+
+#### [ethersync: 一个同步服务器，使用者安装后，再选择它的编辑器插件（NeoVim/VScode/Web），就可以实现编辑器同步。](https://github.com/ethersync/ethersync)
+- [ethersync/ethersync-nvim: ethersync的nvim插件](https://github.com/ethersync/ethersync-nvim)
 
 ## tips(技巧)
 
@@ -608,6 +612,9 @@ paru -S marksman-bin
 # typst
 paru -S tinymist
 
+# rime补全中文
+paru -S rime-ls
+
 sudo npm i -g typescript typescript-language-server
 sudo npm i -g yaml-language-server
 sudo npm i -g bash-language-server
@@ -798,6 +805,7 @@ nvim.input('')
 - [awesome-neovim](https://github.com/rockerBOO/awesome-neovim)
 
 - [vimcolorschemes：可以查看各种主题的配色](https://vimcolorschemes.com/)
+- [Neovim 中文周刊](https://weekly.nvimer.org/)
 
 # nvim gui
 
@@ -829,7 +837,27 @@ nvim.input('')
 
 - [vscodium：vscode去除ms服务的开源版](https://github.com/VSCodium/vscodium)
 
+- [lapce:基于Rust语言开发的开源代码gui编辑器](https://github.com/lapce/lapce)
+    - Lapce利用Rust的极致性能和原生GUI（图形用户界面），结合GPU加速渲染，实现了从启动到每一次按键都“快如闪电”的体验。
+    - Lapce不仅速度快，还内置了丰富的功能：支持语言服务器协议（LSP）带来的智能补全、错误诊断，内置终端、Vim模式、远程开发支持，以及基于WASI（WebAssembly System Interface）的插件生态。
+
+    - [lapce插件](https://plugins.lapce.dev/)
+
 - [scripton：python ide。可以实时可视化代码运行结果](https://scripton.dev/)
+
+- [xtool-org/xtool: Xcode 的替代品，在 Linux/Win/macOS 开发 iOS 应用。](https://github.com/xtool-org/xtool)
+
+- [microsoft/edit: Rust 开发的终端（TUI）文本编辑器，致敬经典的 MS-DOS Editor。它体积小、启动快、跨平台，并提供了类似 VSCode 的快捷键和交互体验，适用于简单的文本编辑场景。](https://github.com/microsoft/edit)
+
+- [ox: rust开发的文本编辑器类似nvim，支持lua插件](https://github.com/curlpipe/ox)
+
+- [flow: Zig 语言开发！高性能终端代码编辑器，启动时间 ≤6 毫秒！](https://github.com/neurocyte/flow?tab=readme-ov-file)
+
+- [fresh: Text editor for your terminal: easy, powerful and fast](https://github.com/sinelaw/fresh)
+
+- [micro: A modern and intuitive terminal-based text editor](https://github.com/zyedidia/micro)
+
+- [positron：数据科学 IDE。基于 VSCode 构建了一个可复制的编写和发布的桌面开发环境，支持运行 Python 和 R 代码、自动补全等功能](https://github.com/posit-dev/positron)
 
 # online tool
 
