@@ -1,16 +1,15 @@
 -- 如果lazy插件不存在, 就下载
-
 -- 目录：/home/tz/.local/share/nvim/lazy/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
 -- runtimepath添加lazy.nvim的目录，让nvim每识别它
@@ -18,14 +17,25 @@ vim.opt.rtp:prepend(lazypath)
 
 -- 加载lua/plugins目录下的插件
 require("lazy").setup("plugins", {
-    -- 插件安装的目录~/.local/share/nvim/lazy/
-    root = vim.fn.stdpath("data") .. "/lazy",
-    -- 插件版本的目录
-    lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
-    defaults = {
-        lazy = false, -- should plugins be lazy-loaded?
-        version = nil,
-        -- version = "*", -- enable this to try installing the latest stable versions of plugins
-    },
+  -- 插件安装的目录~/.local/share/nvim/lazy/
+  root = vim.fn.stdpath("data") .. "/lazy",
+  -- 插件版本的目录
+  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
+
+  -- 建议使用这种方式导入，方便管理
+  -- spec = {
+  --   { import = "plugins" },
+  -- },
+  --
+  -- -- [关键] 必须彻底关闭，防止路径污染
+  -- rocks = {
+  --   enabled = false,
+  --   hererocks = false, -- 同时也建议关闭这个，避免 lazy 尝试自动安装 luarocks
+  -- },
+
+  defaults = {
+    lazy = false,
+    version = nil,
+    -- version = "*", -- enable this to try installing the latest stable versions of plugins
+  },
 })
--- require("lazy").setup({{import = "lib"}, {import = "ui"}})

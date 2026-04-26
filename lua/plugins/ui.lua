@@ -175,7 +175,7 @@ return {
 			-- 专注当前函数、调暗其他部分
 			dim = { enabled = true },
 			-- markdown文件显示图片
-			image = {},
+			image = { enabled = true },
 			-- 导航线
 			indent = { enabled = true },
 			-- input函数
@@ -187,11 +187,14 @@ return {
 			-- lazygit
 			lazygit = { enabled = false },
 			-- 文件管理器
-			explorer = {},
+			explorer = { enable = true},
 			-- 类似telescope
 			picker = { enabled = false },
 			-- 通知
-			notifier = { enabled = true },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
 			notify = { enabled = true },
 			-- lua性能分析器
 			profiler = { enabled = false },
@@ -206,6 +209,8 @@ return {
 			terminal = { enabled = true },
 			-- 这个插件的功能开关
 			toggle = { enabled = true },
+			-- lsp_signature 
+			words = { enabled = true },
 		},
 		keys = {
 			{
@@ -250,7 +255,7 @@ return {
 				function()
 					Snacks.explorer()
 				end,
-				desc = "Lazygit Log (cwd)",
+				desc = "文件管理器",
 			},
 			{
 				"<leader>fn",
@@ -280,13 +285,6 @@ return {
 				end,
 				desc = "Toggle Terminal",
 			},
-			{
-				"<c-_>",
-				function()
-					Snacks.terminal()
-				end,
-				desc = "which_key_ignore",
-			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
@@ -304,7 +302,14 @@ return {
 					-- toggle ui
 					local Util = require("function")
 					vim.keymap.set("n", "<leader>ul", Util.toggle_lsp, { desc = "Toggle Lsp" })
-					vim.keymap.set("n", "<leader>uf", Util.toggle_fold, { desc = "Toggle Fold" })
+          vim.keymap.set('n', '<leader>uf', function()
+            local foldlevel = vim.wo.foldlevel
+            if foldlevel > 0 then
+              vim.opt_local.foldlevel = 0
+            else
+              vim.opt_local.foldlevel = 99
+            end
+          end, { desc = "Toggle all folds" })
 					vim.keymap.set("n", "<leader>ug", ":GitBlameToggle<cr>", { desc = "Toggle GitBlame" })
 					vim.keymap.set("n", "<leader>um", ":RenderMarkdown toggle<cr>", { desc = "Toggle RenderMarkdown" })
 					vim.keymap.set("n", "<leader>uh", ":TSHighlightDisable<cr>", { desc = "Toggle RenderMarkdown" })
@@ -880,24 +885,24 @@ return {
 	},
 
 	-- 按键提示
-	-- {
-	--   "folke/which-key.nvim",
-	--   event = "VeryLazy",
-	--   opts = {
-	--     -- your configuration comes here
-	--     -- or leave it empty to use the default settings
-	--     -- refer to the configuration section below
-	--   },
-	--   keys = {
-	--     {
-	--       "<leader>?",
-	--       function()
-	--         require("which-key").show({ global = false })
-	--       end,
-	--       desc = "Buffer Local Keymaps (which-key)",
-	--     },
-	--   },
-	-- },
+	{
+	  "folke/which-key.nvim",
+	  event = "VeryLazy",
+	  opts = {
+	    -- your configuration comes here
+	    -- or leave it empty to use the default settings
+	    -- refer to the configuration section below
+	  },
+	  keys = {
+	    {
+	      "<leader>?",
+	      function()
+	        require("which-key").show({ global = false })
+	      end,
+	      desc = "Buffer Local Keymaps (which-key)",
+	    },
+	  },
+	},
 
 	-- visual模式下使用Norm命令，可以实时显示
 	{
@@ -946,5 +951,18 @@ return {
       vim.g.jieba_vim_lazy = 1
       vim.g.jieba_vim_keymap = 1
     end,
+  },
+
+  -- undotree
+  {
+    "XXiaoA/atone.nvim",
+    cmd = "Atone",
+    ---@module "atone"
+    ---@type AtoneConfig
+    opts = {},
+		keys = {
+			{ "<leader>uu", ":Atone toggle<cr>" , desc = "Toggle atone", },
+		}
+
   },
 }

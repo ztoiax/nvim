@@ -283,7 +283,7 @@ return {
           list = {
             selection = {
               preselect = false,
-              auto_insert = false
+              auto_insert = true
             }
 				  },
 			  },
@@ -614,12 +614,12 @@ return {
 					"awk_ls", -- awk
 					"bashls", -- bash
 					"clangd", -- c/cpp
-					"pyright", -- python
-					-- "rust-analyzer", -- rust
+          "basedpyright", -- python
+					"rust_analyzer", -- rust
 					"gopls", -- go
 					"jdtls", -- java
 					"lua_ls", -- lua
-					-- "typescript-language-server", -- js, ts
+					"vtsls", -- js, ts
 					"html", -- html
 					"cssls", -- css
 					"jsonls", -- json
@@ -745,12 +745,14 @@ return {
 				clangd = {
 					init_options = { clangdFileStatus = true },
 				},
+				-- rust
+				rust_analyzer = {},
 				-- python
-				-- pyright = {
-				-- 	settings = { python = { workspaceSymbols = { enabled = true } } },
-				-- },
+				basedpyright = {
+					settings = { python = { workspaceSymbols = { enabled = true } } },
+				},
 				-- ts、js
-				ts_ls = {},
+				vtsls = {},
 				html = {},
 				-- css
 				cssls = {},
@@ -768,7 +770,6 @@ return {
 				vimls = {},
 				dockerls = {},
 				docker_compose_language_service = {},
-				rust_analyzer = {},
 				-- java
 				jdtls = {},
 				-- js and ts
@@ -876,25 +877,24 @@ return {
 		end,
 	},
 
-	-- 参数提示
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("lsp_signature").setup({
-				bind = true, -- This is mandatory, otherwise border config won't get registered.
-				handler_opts = {
-					border = "rounded",
-				},
-			})
-		end,
-	},
-
 	-- diagnosis诊断
 	{
 		"rachartier/tiny-inline-diagnostic.nvim",
 		event = "VeryLazy", -- Or `LspAttach`
-		opts = true,
+		opts = {
+      options = {
+        add_messages = {
+            display_count = true,
+        },
+        multilines = {
+          enabled = true,
+        },
+        -- show_source = {
+        --   enabled = true,
+        -- },
+        virt_texts_line_position = "bottom", -- 或者 "top"
+      },
+		},
 	},
 	-- {
 	--   "folke/trouble.nvim",

@@ -87,11 +87,13 @@ vim.g.ui_notifications_enabled = true -- disable notifications when toggling UI 
 vim.g.diagnostics_mode = 3            -- set the visibility of diagnostics in the UI (0=off 1=only show in status line 2=virtual text off 3=all on)
 vim.diagnostic.config{
   -- 在侧边栏显示诊断标记
-  signs = true,
+  signs = false,
 
   -- 行尾显示诊断信息
   virtual_text = {
     virt_text_pos = 'eol',
+    -- 高优先级，避免被git-blame.nvim插件覆盖
+    priority = 200,
   },
 }
 

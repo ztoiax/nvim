@@ -205,19 +205,19 @@ return {
 		event = "VeryLazy",
 		config = function()
       vim.g.nvim_surround_config = {
-				-- keymaps = {
-				-- 	insert = "<C-g>s",
-				-- 	insert_line = "<C-g>S",
-				-- 	normal = "s",
-				-- 	normal_cur = "yss",
-				-- 	normal_line = "yS",
-				-- 	normal_cur_line = "S",
-				-- 	visual = "s",
-				-- 	visual_line = "S",
-				-- 	delete = "ds",
-				-- 	change = "cs",
-				-- 	change_line = "cS",
-				-- },
+				keymaps = {
+					insert = "<C-g>s",
+					insert_line = "<C-g>S",
+					normal = "s",
+					normal_cur = "yss",
+					normal_line = "yS",
+					normal_cur_line = "S",
+					visual = "s",
+					visual_line = "S",
+					delete = "ds",
+					change = "cs",
+					change_line = "cS",
+				},
 				surrounds = {
 					["c"] = {
 						add = { "```", "```" },
@@ -394,12 +394,12 @@ return {
 	},
 
 	-- 函数、语句跳转和块选
-	{
-		"ziontee113/syntax-tree-surfer",
-		config = function()
-			require("edit/map-syntax-tree-surfer")
-		end,
-	},
+	-- {
+	-- 	"ziontee113/syntax-tree-surfer",
+	-- 	config = function()
+	-- 		require("edit/map-syntax-tree-surfer")
+	-- 	end,
+	-- },
 
 	-- 块选
 	-- {
